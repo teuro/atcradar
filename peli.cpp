@@ -99,7 +99,7 @@ int peli::aja() {
 		}
 
 		if (alku == koska_uusi_kone) {
-			if (koneet.size() < ohjelma::anna_asetus("maks_konemaara") && onko_vapaata()) {
+			if (koneet.size() < ohjelma::anna_asetus("maks_konemaara")) {
 				luo_kone();
 				koska_uusi_kone += apuvalineet::arvo_luku(ohjelma::anna_asetus("koska_uusi_ala"), ohjelma::anna_asetus("koska_uusi_yla"));
 			}
@@ -266,6 +266,10 @@ void peli::luo_kone() {
 	int j = apuvalineet::arvo_luku(10, 100) % 2;
 
 	std::string tunnus = generoi_tunnus();
+
+	if (j == LAHTEVA && onko_vapaata()) {
+		j = SAAPUVA;
+	}
 
 	if (j == LAHTEVA) {
 		double suunta = kentta.kiitotiet[atis::lahtokiitotie].suunta;
