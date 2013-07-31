@@ -2,7 +2,7 @@
 #include "ohjelma.hpp"
 #include <iostream>
 #include <stdexcept>
-#include <SDL.h>
+#include <SDL/SDL.h>
 #include <SDL_gfxPrimitives.h>
 #include <SDL_ttf.h>
 
@@ -443,7 +443,8 @@ void ohjelma::piirra_ohje(std::string ohje) {
 
 void ohjelma::piirra_tilasto(std::vector <peli::tilasto> ajat) {
 	std::clog << "ohjelma::piirra_tilasto()" << std::endl;
-	SDL_FillRect(ruutu, NULL, 0);
+	piirra_kuva(kuvat::tausta_valikko, 0, 0);
+
 	int y = 30;
 	int x = 200;
 	kirjoita_tekstia(kuvat::tilasto, "kutsutunnus", x, y-15);
@@ -478,7 +479,7 @@ void ohjelma::piirra_virhe(std::string virhe) {
 }
 
 void ohjelma::piirra_atis() {
-	SDL_FillRect(ruutu, NULL, 0);
+	piirra_kuva(kuvat::tausta_valikko, 0, 0);
 	int y = 30;
 	for (unsigned int i = 0; i < peli::kentta.kiitotiet.size(); ++i) {
 		kirjoita_tekstia(kuvat::atis, peli::kentta.kiitotiet[i].nimi, 400, y);
