@@ -35,6 +35,7 @@ namespace peli {
 	static int etsi_valittu_kone();
 	static void anna_lahestymisselvitys();
 	static void pyyda_atis();
+	static bool tarkista_atis();
 	static void generoi_metar();
 	static bool onko_vapaata();
 	lentokentta kentta;
@@ -111,6 +112,12 @@ int peli::aja() {
 
 		if (alku == koska_metar) {
 			generoi_metar();
+
+			if (!tarkista_atis()) {
+				atis::ok = false;
+				pyyda_atis();
+			}
+
 			koska_metar += ohjelma::anna_asetus("koska_metar");
 		}
 
@@ -638,6 +645,17 @@ static bool peli::onko_vapaata() {
 		} else if (koneet[i].laskuselvitys && apuvalineet::etaisyys(koneet[i].paikka, kentta.kiitotiet[atis::laskukiitotie].alkupiste) < 5.0) {
 			return false;
 		}
+	}
+
+	return true;
+}
+
+static bool peli::tarkista_atis() {
+	double vasta_lahto = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].suunta - peli::metar::tuuli));
+	double vasta_lasku = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta - peli::metar::tuuli));
+
+	if (vasta_lahto < 0 && vasta_lasku < 0) {
+		return false;
 	}
 
 	return true;
