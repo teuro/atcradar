@@ -1,4 +1,4 @@
-FLAGS = -O2 -lSDL -lSDL -lSDL_ttf -lSDL_gfx
+FLAGS = -O2 -lSDL -lSDL_ttf -lSDL_gfx
 
 all: radar
 
