@@ -6,8 +6,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
-#include <regex>
-#include <iterator>
 
 namespace peli {
 	const float ajan_muutos = 0.02;
