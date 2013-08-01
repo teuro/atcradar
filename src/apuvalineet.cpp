@@ -21,12 +21,6 @@ double apuvalineet::deg2rad(double deg) {
 double apuvalineet::rad2deg(double rad) {
 	double deg = (rad * 180.0) / PII;
 
-	if (deg < 0) {
-		deg += 360;
-	} else if (deg > 360) {
-		deg -= 360;
-	}
-
 	return deg;
 }
 int apuvalineet::arvo_luku(int ala, int yla){
@@ -53,6 +47,7 @@ double apuvalineet::laske_kulma(const piste& a, const piste& b) {
 
 apuvalineet::vektori apuvalineet::suunta_vektori(const apuvalineet::piste& a, const apuvalineet::piste& b) {
 	apuvalineet::vektori tmp;
+
 	tmp.alku = a;
 	tmp.loppu = b;
 
@@ -65,8 +60,16 @@ apuvalineet::vektori apuvalineet::suunta_vektori(const apuvalineet::piste& a, co
 apuvalineet::piste apuvalineet::uusi_paikka(const apuvalineet::piste& a, double suunta, double pituus) {
 	apuvalineet::piste b;
 
+	if (suunta < 0) {
+		suunta += 360;
+	} else if (suunta > 360) {
+		suunta -= 360;
+	}
+
 	b.x = a.x + std::cos(deg2rad(suunta - 90.0)) * apuvalineet::nm2px(pituus);
 	b.y = a.y + std::sin(deg2rad(suunta - 90.0)) * apuvalineet::nm2px(pituus);
+
+	std::clog << "vanha paikka " << a.x << ", " << a.y << " uusi paikka " << b.x << ", " << b.y << std::endl;
 
 	return b;
 }

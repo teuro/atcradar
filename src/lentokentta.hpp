@@ -10,7 +10,7 @@ public:
 	apuvalineet::piste loppupiste;
 	apuvalineet::piste hidastuspiste;
 	apuvalineet::piste lahestymispiste;
-	apuvalineet::piste odotuspiste;
+
 	std::string nimi;
 
 	double suunta;
@@ -21,12 +21,7 @@ public:
 
 	kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunousuuunta);
 
-	apuvalineet::piste laske_loppupiste();
-	apuvalineet::piste laske_lahestymispiste();
-	apuvalineet::piste laske_hidastuspiste();
-	apuvalineet::piste laske_odotuspiste();
-
-	bool operator==(std::string n) {
+	bool operator ==(std::string n) {
 		return n == nimi;
 	}
 };
@@ -38,7 +33,5 @@ public:
 	apuvalineet::piste paikka;
 	std::string nimi;
 };
-
-
 
 #endif
