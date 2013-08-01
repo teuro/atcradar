@@ -443,6 +443,7 @@ void peli::hoida_koneet() {
 			if (koneet[i].nopeus > 150) {
 				koneet[i].muuta_selvityskorkeutta(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].alkunousukorkeus);
 				koneet[i].muuta_selvitysnopeutta(ohjelma::anna_asetus("alkunousunopeus"));
+				koneet[i].muuta_selvityssuuntaa(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].alkunoususuunta);
 			}
 		}
 
