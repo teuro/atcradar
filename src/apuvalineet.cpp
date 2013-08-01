@@ -69,8 +69,6 @@ apuvalineet::piste apuvalineet::uusi_paikka(const apuvalineet::piste& a, double 
 	b.x = a.x + std::cos(deg2rad(suunta - 90.0)) * apuvalineet::nm2px(pituus);
 	b.y = a.y + std::sin(deg2rad(suunta - 90.0)) * apuvalineet::nm2px(pituus);
 
-	std::clog << "vanha paikka " << a.x << ", " << a.y << " uusi paikka " << b.x << ", " << b.y << std::endl;
-
 	return b;
 }
 
