@@ -6,15 +6,6 @@ namespace apuvalineet {
 	static double PII = 3.1415927;
 }
 
-double apuvalineet::jana::pituus() {
-	double x_jana = std::abs(alku.x - loppu.x);
-	double y_jana = std::abs(alku.y - loppu.y);
-
-	double pituus = std::sqrt(std::pow(x_jana, 2.0) + std::pow(y_jana, 2.0));
-
-	return pituus;
-}
-
 double apuvalineet::px2nm(double px) {
 	return px / (ohjelma::anna_asetus("ruutu_leveys") / ohjelma::anna_asetus("matka_vaaka"));
 }
@@ -55,8 +46,20 @@ double apuvalineet::etaisyys(const piste& a, const piste& b) {
 	return matka;
 }
 
-double apuvalineet::kulma(const piste& a, const piste& b) {
+double apuvalineet::laske_kulma(const piste& a, const piste& b) {
 	return (apuvalineet::rad2deg(std::atan2((a.y - b.y), (a.x - b.x))) -90.0);
+}
+
+
+apuvalineet::vektori apuvalineet::suunta_vektori(const apuvalineet::piste& a, const apuvalineet::piste& b) {
+	apuvalineet::vektori tmp;
+	tmp.alku = a;
+	tmp.loppu = b;
+
+	tmp.pituus = etaisyys(tmp.alku, tmp.loppu);
+	tmp.suunta = laske_kulma(tmp.alku, tmp.loppu);
+
+	return tmp;
 }
 
 apuvalineet::piste apuvalineet::uusi_paikka(const apuvalineet::piste& a, double suunta, double pituus) {

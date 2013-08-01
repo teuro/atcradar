@@ -11,11 +11,12 @@ namespace apuvalineet {
 		double y;
 	};
 
-	struct jana {
+	struct vektori {
 		piste alku;
 		piste loppu;
 
-		double pituus();
+		double pituus;
+		double suunta;
 	};
 
 	double nm2px(double nm);
@@ -49,6 +50,7 @@ namespace apuvalineet {
 
 	double etaisyys(const piste& a, const piste& b);
 	piste uusi_paikka(const piste& a, double suunta, double pituus);
-	double kulma(const piste& a, const piste& b);
+	vektori suunta_vektori(const piste& a, const piste& b);
+	double laske_kulma(const piste& a, const piste& b);
 }
 #endif
