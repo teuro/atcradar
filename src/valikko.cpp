@@ -11,7 +11,7 @@ valikko::valinta valikko::aja(int pelin_tulos) {
 
 	// Valikon silmukka.
 	while (true) {
-		// Piirret√§√§n valikon tilanne, odotetaan valintaa.
+		// Piirret‰‰n valikon tilanne, odotetaan valintaa.
 		ohjelma::piirra_valikko(pelin_tulos, valittu);
 		ohjelma::nappi n = ohjelma::odota_nappi();
 
