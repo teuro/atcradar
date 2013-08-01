@@ -21,6 +21,7 @@ namespace peli {
 
 	int kasitellyt = 0;
 	std::vector <lentokone> koneet;
+	std::vector <lentokone> odottavat;
 	std::vector <navipiste> navipisteet;
 	static std::string generoi_tunnus();
 	static void valitse_kone(const apuvalineet::piste& hiiri);
@@ -269,20 +270,31 @@ void peli::aseta_virhe(int virhe) {
 
 void peli::luo_kone() {
 	int j = apuvalineet::arvo_luku(10, 100) % 2;
-
+	apuvalineet::piste paikka;
+	bool odotus;
 	std::string tunnus = generoi_tunnus();
-
-	if (j == LAHTEVA && !onko_vapaata()) {
-		j = SAAPUVA;
-	}
 
 	if (j == LAHTEVA) {
 		double suunta = kentta.kiitotiet[atis::lahtokiitotie].suunta;
-		koneet.push_back(lentokone(tunnus, kentta.kiitotiet[atis::lahtokiitotie].alkupiste, kentta.korkeus, 0.0, suunta, LAHTEVA));
+
+		if (!onko_vapaata()) {
+			paikka = kentta.kiitotiet[atis::lahtokiitotie].odotuspiste;
+			odotus = true;
+		} else {
+			paikka = kentta.kiitotiet[atis::lahtokiitotie].alkupiste;
+			odotus = false;
+		}
+
+		koneet.push_back(lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
 		koneet.back().ulosmenopiste = apuvalineet::arvo_luku(0, navipisteet.size());
+
+		if (koneet.back().odotus) {
+			odottavat.push_back(koneet.back());
+		}
+
 	} else {
 		int i = apuvalineet::arvo_luku(0, navipisteet.size());
-		koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA));
+		koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 	}
 
 	tilasto tmp;
@@ -384,7 +396,7 @@ void peli::tarkista_porrastus() {
 				continue;
 			}
 
-			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].korkeus - koneet[j].korkeus) < 1000 && (koneet[i].korkeus > 1000 || koneet[j].korkeus > 1000)) {
+			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].korkeus - koneet[j].korkeus) < 1000 && (koneet[i].korkeus > 1000 && koneet[j].korkeus > 1000)) {
 				alittuu.push_back(i);
 				alittuu.push_back(j);
 
@@ -411,6 +423,14 @@ void peli::tarkista_porrastus() {
 
 void peli::hoida_koneet() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
+		if (koneet[i].odotus) {
+			if (onko_vapaata()) {
+				koneet[i].paikka = kentta.kiitotiet[atis::lahtokiitotie].alkupiste;
+				koneet[i].odotus = false;
+				odottavat.erase(odottavat.begin()+0);
+			}
+		}
+
 		if (koneet[i].ulkona) {
 			aseta_virhe(VIRHE_ALUEELTA);
 			poista_kone(i);
@@ -435,7 +455,7 @@ void peli::hoida_koneet() {
 			}
 		}
 
-		if (koneet[i].tyyppi == peli::LAHTEVA && koneet[i].korkeus < 1200) {
+		if (koneet[i].tyyppi == peli::LAHTEVA && koneet[i].korkeus < 1200 && koneet[i].odotus == false) {
 			if (koneet[i].nopeus == 0) {
 				koneet[i].muuta_selvitysnopeutta(ohjelma::anna_asetus("alkunopeus"));
 			}
@@ -639,7 +659,7 @@ static void peli::generoi_metar() {
 
 static bool peli::onko_vapaata() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (koneet[i].korkeus < (kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty"))) {
+		if (koneet[i].korkeus < (kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) && koneet[i].tyyppi == LAHTEVA && koneet[i].odotus == false) {
 			return false;
 		} else if (koneet[i].laskuselvitys && apuvalineet::etaisyys(koneet[i].paikka, kentta.kiitotiet[atis::laskukiitotie].alkupiste) < 5.0) {
 			return false;

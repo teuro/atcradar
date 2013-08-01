@@ -17,4 +17,5 @@ kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus
 	this->loppupiste 		= apuvalineet::uusi_paikka(this->alkupiste, this->suunta, this->pituus);
 	this->lahestymispiste 	= apuvalineet::uusi_paikka(this->alkupiste, this->suunta - 180.0, ohjelma::anna_asetus("lahestymispiste"));
 	this->hidastuspiste 	= apuvalineet::uusi_paikka(this->alkupiste, this->suunta - 180.0, ohjelma::anna_asetus("hidastuspiste"));
+	this->odotuspiste		= apuvalineet::uusi_paikka(this->alkupiste, this->suunta - 90.0, 0.15);
 }

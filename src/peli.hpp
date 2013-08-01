@@ -11,6 +11,7 @@
 namespace peli {
 	extern std::vector <apuvalineet::piste> navigointi;
 	extern std::vector <lentokone> koneet;
+	extern std::vector <lentokone> odottavat;
 	extern const float ajan_muutos;
 	extern int kasitellyt;
 	extern std::string ohje;

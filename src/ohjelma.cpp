@@ -18,6 +18,7 @@ namespace ohjelma {
 	static void piirra_ohje(std::string ohje);
 	static void piirra_virhe(std::string virheteksti);
 	static void piirra_metar();
+	static void piirra_odottavat();
 	std::map <std::string, double> asetukset;
 
 	namespace kuvat {
@@ -30,7 +31,7 @@ namespace ohjelma {
 		static SDL_Surface *valikko_lopetus, *valikko_lopetus_valittu;
 		static SDL_Surface *tilanne, *tilasto;
 		static SDL_Surface *kirjoitus, *ohje, *virhe, *nimi, *atis;
-		static SDL_Surface *tekstipinta, *metar;
+		static SDL_Surface *tekstipinta, *metar, *odottavat;
 	}
 
 	static void kirjoita_tekstia(SDL_Surface* tekstipinta, std::string teksti, int x, int y);
@@ -221,6 +222,7 @@ void ohjelma::piirra_peli() {
 	piirra_lentokentta();
 	piirra_ohje(peli::ohje);
 	piirra_virhe(peli::virheteksti);
+	piirra_odottavat();
 
 	piirra_metar();
 
@@ -240,31 +242,33 @@ void ohjelma::piirra_koneet() {
 	Uint32 ng = 0xFF0000FF;
 
 	for (unsigned int i = 0; i < peli::koneet.size(); ++i) {
-		int x = peli::koneet[i].paikka.x + apuvalineet::nm2px(peli::koneet[i].nopeus * (60.0 / 3600.0)) * cos(apuvalineet::deg2rad(peli::koneet[i].suunta - 90));
-		int y = peli::koneet[i].paikka.y + apuvalineet::nm2px(peli::koneet[i].nopeus * (60.0 / 3600.0)) * sin(apuvalineet::deg2rad(peli::koneet[i].suunta - 90));
+		if (peli::koneet[i].odotus == false) {
+			int x = peli::koneet[i].paikka.x + apuvalineet::nm2px(peli::koneet[i].nopeus * (60.0 / 3600.0)) * cos(apuvalineet::deg2rad(peli::koneet[i].suunta - 90));
+			int y = peli::koneet[i].paikka.y + apuvalineet::nm2px(peli::koneet[i].nopeus * (60.0 / 3600.0)) * sin(apuvalineet::deg2rad(peli::koneet[i].suunta - 90));
 
-		if (peli::koneet[i].onko_porrastus) {
-			vari = ok;
-		} else {
-			vari = ng;
-		}
+			if (peli::koneet[i].onko_porrastus) {
+				vari = ok;
+			} else {
+				vari = ng;
+			}
 
- 		rectangleColor(ruutu, peli::koneet[i].paikka.x-3, peli::koneet[i].paikka.y-3, peli::koneet[i].paikka.x+3, peli::koneet[i].paikka.y+3, vari);
-		lineColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, x, y, vari);
-		circleColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
+			rectangleColor(ruutu, peli::koneet[i].paikka.x-3, peli::koneet[i].paikka.y-3, peli::koneet[i].paikka.x+3, peli::koneet[i].paikka.y+3, vari);
+			lineColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, x, y, vari);
+			circleColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
 
-		kirjoita_tekstia(tunnus, peli::koneet[i].kutsutunnus, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y);
-		kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(peli::koneet[i].korkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
-		kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(peli::koneet[i].selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(tunnus, peli::koneet[i].kutsutunnus, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y);
+			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(peli::koneet[i].korkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(peli::koneet[i].selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
 
-		if (peli::koneet[i].valittu) {
-			kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
-			kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].selvitysnopeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
-			kirjoita_tekstia(suunta, apuvalineet::tekstiksi(peli::koneet[i].suunta) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
-			kirjoita_tekstia(suunta, apuvalineet::tekstiksi(peli::koneet[i].selvityssuunta), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
+			if (peli::koneet[i].valittu) {
+				kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
+				kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].selvitysnopeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
+				kirjoita_tekstia(suunta, apuvalineet::tekstiksi(peli::koneet[i].suunta) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
+				kirjoita_tekstia(suunta, apuvalineet::tekstiksi(peli::koneet[i].selvityssuunta), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
 
-			if (peli::koneet[i].tyyppi == peli::LAHTEVA) {
-				kirjoita_tekstia(ulos, peli::navipisteet[peli::koneet[i].ulosmenopiste].nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
+				if (peli::koneet[i].tyyppi == peli::LAHTEVA) {
+					kirjoita_tekstia(ulos, peli::navipisteet[peli::koneet[i].ulosmenopiste].nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
+				}
 			}
 		}
 	}
@@ -516,5 +520,14 @@ void ohjelma::piirra_metar() {
 	}
 
 	kirjoita_tekstia(kuvat::metar, tuuli + "/" + voimakkuus + " " + apuvalineet::tekstiksi(peli::metar::paine), 30, 10);
+}
+
+static void ohjelma::piirra_odottavat() {
+	int y = 100;
+	for (unsigned int i = 0; i < peli::odottavat.size(); ++i) {
+		kirjoita_tekstia(kuvat::odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 100, y);
+
+		y += fontin_koko + 5;
+	}
 }
 

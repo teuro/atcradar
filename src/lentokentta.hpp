@@ -10,6 +10,7 @@ public:
 	apuvalineet::piste loppupiste;
 	apuvalineet::piste hidastuspiste;
 	apuvalineet::piste lahestymispiste;
+	apuvalineet::piste odotuspiste;
 
 	std::string nimi;
 
