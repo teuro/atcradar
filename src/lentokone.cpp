@@ -219,15 +219,10 @@ void lentokone::lahesty() {
 }
 
 void lentokone::tarkista_suunta_kohteeseen() {
-	double x = this->kohde.x - this->paikka.x;
-	double y = this->kohde.y - this->paikka.y;
+	double suunta_kohteeseen = apuvalineet::kulma(this->kohde, this->paikka);
 
-	double uusi_kulma = apuvalineet::rad2deg(std::atan2(y, x)) + 90.0;
-
-	this->kaarto = this->kaarron_suunta(uusi_kulma);
-	this->muuta_selvityssuuntaa(uusi_kulma, this->kaarto);
-
-	//std::clog << "uusi_suunta = " << uusi_kulma << " suunta = " << this->suunta << " selvityssuunta = " << this->selvityssuunta << std::endl;
+	this->kaarto = this->kaarron_suunta(suunta_kohteeseen);
+	this->muuta_selvityssuuntaa(suunta_kohteeseen, this->kaarto);
 }
 
 void lentokone::ota_selvitys(std::string tmp, int toiminto) {
