@@ -219,7 +219,7 @@ void lentokone::lahesty() {
 }
 
 void lentokone::tarkista_suunta_kohteeseen() {
-	double suunta_kohteeseen = apuvalineet::kulma(this->kohde, this->paikka);
+	double suunta_kohteeseen = apuvalineet::kulma(this->paikka, this->kohde);
 
 	this->kaarto = this->kaarron_suunta(suunta_kohteeseen);
 	this->muuta_selvityssuuntaa(suunta_kohteeseen, this->kaarto);

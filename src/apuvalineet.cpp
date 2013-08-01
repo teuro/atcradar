@@ -56,7 +56,7 @@ double apuvalineet::etaisyys(const piste& a, const piste& b) {
 }
 
 double apuvalineet::kulma(const piste& a, const piste& b) {
-	return (apuvalineet::rad2deg(std::atan2((b.y - a.y), (b.x - a.x))) -90.0);
+	return (apuvalineet::rad2deg(std::atan2((a.y - b.y), (a.x - b.x))) -90.0);
 }
 
 apuvalineet::piste apuvalineet::uusi_paikka(const apuvalineet::piste& a, double suunta, double pituus) {
