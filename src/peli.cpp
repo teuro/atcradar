@@ -272,7 +272,7 @@ void peli::luo_kone() {
 
 	std::string tunnus = generoi_tunnus();
 
-	if (j == LAHTEVA && onko_vapaata()) {
+	if (j == LAHTEVA && !onko_vapaata()) {
 		j = SAAPUVA;
 	}
 
