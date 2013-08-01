@@ -380,8 +380,12 @@ apuvalineet::piste ohjelma::anna_hiiri() {
 	int x, y;
 
 	SDL_GetMouseState(&x, &y);
+	apuvalineet::piste tmp;
 
-	return apuvalineet::piste {x, y};
+	tmp.x = x;
+	tmp.y = y;
+
+	return tmp;
 }
 
 bool ohjelma::lue_hiiri() {

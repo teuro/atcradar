@@ -7,8 +7,13 @@ lentokone::lentokone() {}
 lentokone::lentokone(std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi) {
 	//std::clog << "Kone luotu " << kutsutunnus << " " << x << " " << y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
 	this->kutsutunnus = kutsutunnus;
-	this->paikka = {x, y};
-	this->kohde = {0, 0};
+
+	this->paikka.x = x;
+	this->paikka.y = y;
+
+	this->kohde.x = 0;
+	this->kohde.y = 0;
+
 	this->laskubaana = -1;
 	this->onko_porrastus = true;
 	this->ulkona = false;
@@ -33,7 +38,10 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	//std::clog << "Kone luotu " << kutsutunnus << " " << " " << paikka.x << " " << paikka.y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
 	this->kutsutunnus = kutsutunnus;
 	this->paikka = paikka;
-	this->kohde = {0, 0};
+
+	this->kohde.x = 0;
+	this->kohde.y = 0;
+
 	this->laskubaana = -1;
 	this->onko_porrastus = true;
 	this->ulkona = false;
@@ -163,7 +171,8 @@ void lentokone::liiku(double aika) {
 	double x = this->paikka.x + apuvalineet::nm2px(this->nopeus * (aika / 3600.0)) * cos(apuvalineet::deg2rad(this->suunta - 90));
 	double y = this->paikka.y + apuvalineet::nm2px(this->nopeus * (aika / 3600.0)) * sin(apuvalineet::deg2rad(this->suunta - 90));
 
-	this->paikka = {x, y};
+	this->paikka.x = x;
+	this->paikka.y = y;
 
 	if (this->paikka.x > ohjelma::anna_asetus("ruutu_leveys") || this->paikka.x < 0 || this->paikka.y < 0 || this->paikka.y > ohjelma::anna_asetus("ruutu_korkeus")) {
 		this->ulkona = true;
