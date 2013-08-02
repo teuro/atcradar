@@ -238,6 +238,9 @@ void ohjelma::piirra_koneet() {
 	SDL_Surface* suunta;
 	SDL_Surface* ulos;
 
+	double lentokorkeus;
+	double selvityskorkeus;
+
 	Uint32 ok = 0x000000FF;
 	Uint32 ng = 0xFF0000FF;
 
@@ -257,8 +260,17 @@ void ohjelma::piirra_koneet() {
 			circleColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
 
 			kirjoita_tekstia(tunnus, peli::koneet[i].kutsutunnus, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y);
-			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(peli::koneet[i].korkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
-			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(peli::koneet[i].selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
+
+			lentokorkeus = peli::koneet[i].korkeus;
+			selvityskorkeus = peli::koneet[i].selvityskorkeus;
+
+			if (peli::koneet[i].korkeus > peli::atis::siirtokorkeus) {
+				lentokorkeus = peli::koneet[i].korkeus / 100;
+				selvityskorkeus = peli::koneet[i].selvityskorkeus / 100;
+			}
+
+			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(lentokorkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
 
 			if (peli::koneet[i].valittu) {
 				kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);

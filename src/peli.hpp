@@ -63,6 +63,7 @@ namespace peli {
 		extern std::string lahto;
 		extern std::string lasku;
 		extern double siirtopinta;
+		extern int siirtokorkeus;
 		extern bool ok;
 	}
 

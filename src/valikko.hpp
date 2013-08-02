@@ -6,7 +6,7 @@ namespace valikko {
 	enum valinta {
 		LOPETUS, PELI
 	};
-	// Valikon p√§√§funktio; tarvitsee pelin tuloksen, palauttaa valinnan.
+	// Valikon p‰‰funktio; tarvitsee pelin tuloksen, palauttaa valinnan.
 	valinta aja(int pelin_tulos);
 }
 

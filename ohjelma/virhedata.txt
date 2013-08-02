@@ -8,3 +8,4 @@ Porrastusminimi alittui aikaan 66.849
 Porrastusminimi alittui aikaan 145.864
 Porrastusminimi alittui aikaan 66.849
 Annettu selvitysnopeus on suuri pieni aikaan 79.833
+Annettu selvitysnopeus on liian pieni aikaan 81.928

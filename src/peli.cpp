@@ -51,6 +51,7 @@ namespace peli {
 		std::string lahto;
 		std::string lasku;
 		double siirtopinta = -1;
+		int siirtokorkeus;
 		bool ok = false;
 	}
 
@@ -647,6 +648,7 @@ void peli::pyyda_atis() {
 
 		if (siirto_ok && lahto_ok && lasku_ok) {
 			atis::ok = true;
+			atis::siirtokorkeus = 5000;
 		}
 	}
 }
