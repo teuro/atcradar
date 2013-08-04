@@ -80,12 +80,14 @@ void lentokone::muuta_selvityskorkeutta(double korkeus) {
 
 void lentokone::muuta_selvitysnopeutta(double nopeus) {
 	if (!this->lahestymisselvitys) {
-		if (nopeus > ohjelma::anna_asetus("selvitysnopeus_yla")) {
-			peli::aseta_virhe(peli::VIRHE_NOPEUS_YLA);
-			return;
-		} else if (nopeus < ohjelma::anna_asetus("selvitysnopeus_ala")) {
-			peli::aseta_virhe(peli::VIRHE_NOPEUS_ALA);
-			return;
+		if (this->korkeus < ohjelma::anna_asetus("nopeusrajoituskorkeus")) {
+			if (nopeus > ohjelma::anna_asetus("selvitysnopeus_yla")) {
+				peli::aseta_virhe(peli::VIRHE_NOPEUS_YLA);
+				return;
+			} else if (nopeus < ohjelma::anna_asetus("selvitysnopeus_ala")) {
+				peli::aseta_virhe(peli::VIRHE_NOPEUS_ALA);
+				return;
+			}
 		}
 	}
 
@@ -170,6 +172,7 @@ void lentokone::muuta_suuntaa(double aika) {
 
 void lentokone::liiku(double aika) {
 	this->paikka = apuvalineet::uusi_paikka(this->paikka, this->suunta, this->nopeus * (aika / 3600.0));
+	this->polttoaine -= ohjelma::anna_asetus("polttoaineen_kulutus") * (aika / 3600.0);
 }
 
 void lentokone::aseta_navipiste(apuvalineet::piste paikka) {

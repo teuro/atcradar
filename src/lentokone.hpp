@@ -54,6 +54,7 @@ public:
 	void aseta_navipiste(apuvalineet::piste paikka);
 
 	int laskubaana;
+	double polttoaine;
 	void lahesty();
 
 	int kaarto;
