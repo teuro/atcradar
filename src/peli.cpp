@@ -655,9 +655,7 @@ static void peli::generoi_metar() {
 
 static bool peli::onko_vapaata() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (koneet[i].korkeus < (kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) && koneet[i].tyyppi == LAHTEVA && koneet[i].odotus == false) {
-			return false;
-		} else if (koneet[i].laskuselvitys && apuvalineet::etaisyys(koneet[i].paikka, kentta.kiitotiet[atis::laskukiitotie].alkupiste) < 5.0) {
+		if (koneet[i].korkeus < kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) {
 			return false;
 		}
 	}
