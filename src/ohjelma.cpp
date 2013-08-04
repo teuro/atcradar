@@ -261,12 +261,15 @@ void ohjelma::piirra_koneet() {
 
 			kirjoita_tekstia(tunnus, peli::koneet[i].kutsutunnus, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y);
 
-			lentokorkeus = peli::koneet[i].korkeus;
-			selvityskorkeus = peli::koneet[i].selvityskorkeus;
+			lentokorkeus 	= std::floor(peli::koneet[i].korkeus);
+			selvityskorkeus = std::floor(peli::koneet[i].selvityskorkeus);
 
 			if (peli::koneet[i].korkeus > peli::atis::siirtokorkeus) {
-				lentokorkeus = peli::koneet[i].korkeus / 100;
-				selvityskorkeus = peli::koneet[i].selvityskorkeus / 100;
+				lentokorkeus 	= std::floor(peli::koneet[i].korkeus / 100);
+			}
+
+			if (peli::koneet[i].selvityskorkeus > peli::atis::siirtokorkeus) {
+				selvityskorkeus = std::floor(peli::koneet[i].selvityskorkeus / 100);
 			}
 
 			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(lentokorkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
