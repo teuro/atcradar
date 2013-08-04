@@ -298,6 +298,7 @@ void peli::luo_kone() {
 
 		koneet.push_back(lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
 		koneet.back().ulosmenopiste = apuvalineet::arvo_luku(0, navipisteet.size());
+		koneet.back().polttoaine = apuvalineet::arvo_luku(8000, 25000);
 
 		if (koneet.back().odotus) {
 			odottavat.push_back(koneet.back());
@@ -306,6 +307,7 @@ void peli::luo_kone() {
 	} else {
 		int i = apuvalineet::arvo_luku(0, navipisteet.size());
 		koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
+		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
 
 	tilasto tmp;
@@ -481,6 +483,10 @@ void peli::hoida_koneet() {
 
 		koneet[i].muuta_tilaa(ajan_muutos);
 		koneet[i].liiku(ajan_muutos);
+
+		if (koneet[i].polttoaine < ohjelma::anna_asetus("minimi_polttoaine")) {
+			ohje = "Koneella " + koneet[i].kutsutunnus + " on polttoaine lopussa";
+		}
 	}
 }
 
@@ -655,9 +661,7 @@ static void peli::generoi_metar() {
 
 static bool peli::onko_vapaata() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (koneet[i].korkeus < (kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) && koneet[i].tyyppi == LAHTEVA && koneet[i].odotus == false) {
-			return false;
-		} else if (koneet[i].laskuselvitys && apuvalineet::etaisyys(koneet[i].paikka, kentta.kiitotiet[atis::laskukiitotie].alkupiste) < 5.0) {
+		if (koneet[i].korkeus < (kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) && koneet[i].odotus == false) {
 			return false;
 		}
 	}
