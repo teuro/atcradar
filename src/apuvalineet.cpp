@@ -23,12 +23,13 @@ double apuvalineet::rad2deg(double rad) {
 
 	return deg;
 }
-int apuvalineet::arvo_luku(int ala, int yla){
-    int tmp_luku;
 
-    tmp_luku = ala + std::rand() % (yla - ala);
+int apuvalineet::arvo_luku(int min, int max) {
+	float tmp = (float)min + (rand() / (float)RAND_MAX) * ((float)max - (float)min);
 
-    return tmp_luku;
+	std::clog << tmp << std::endl;
+
+	return tmp;
 }
 
 double apuvalineet::etaisyys(const piste& a, const piste& b) {

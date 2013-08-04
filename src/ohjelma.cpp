@@ -268,12 +268,11 @@ void ohjelma::piirra_koneet() {
 				lentokorkeus 	= std::floor(peli::koneet[i].korkeus / 100);
 			}
 
-			if (peli::koneet[i].selvityskorkeus > peli::atis::siirtokorkeus) {
+			if ((peli::koneet[i].selvityskorkeus / 100) > peli::atis::siirtopinta) {
 				selvityskorkeus = std::floor(peli::koneet[i].selvityskorkeus / 100);
 			}
 
-			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(lentokorkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
-			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(lentokorkeus) + " / " + apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
 
 			if (peli::koneet[i].valittu) {
 				kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);

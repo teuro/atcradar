@@ -648,8 +648,8 @@ void peli::pyyda_atis() {
 }
 
 static void peli::generoi_metar() {
-	metar::tuuli = apuvalineet::arvo_luku(0, 360);
-	metar::voimakkuus = apuvalineet::arvo_luku(2, 22);
+	metar::tuuli = apuvalineet::arvo_luku(peli::kentta.kiitotiet.front().suunta, peli::kentta.kiitotiet.back().suunta);
+	metar::voimakkuus = apuvalineet::arvo_luku(0, 22);
 	metar::paine = apuvalineet::arvo_luku(950, 1060);
 }
 
