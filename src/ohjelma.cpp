@@ -500,8 +500,20 @@ void ohjelma::piirra_virhe(std::string virhe) {
 	kirjoita_tekstia(kuvat::virhe, virhe, 550, 100);
 }
 
-void ohjelma::piirra_atis() {
+void ohjelma::piirra_atis(int toiminto) {
 	piirra_kuva(kuvat::tausta_valikko, 0, 0);
+
+	switch (toiminto) {
+		case peli::LAHTO:
+			kirjoita_tekstia(kuvat::atis, "Valitse lähtökiitotie", 400, 70);
+			break;
+		case peli::LASKU:
+			kirjoita_tekstia(kuvat::atis, "Valitse laskukiitotie", 400, 70);
+			break;
+		case peli::SIIRTOPINTA:
+			kirjoita_tekstia(kuvat::atis, "Valitse siirtopinta", 400, 70);
+			break;
+	}
 
 	int y = 30;
 	for (unsigned int i = 0; i < peli::kentta.kiitotiet.size(); ++i) {

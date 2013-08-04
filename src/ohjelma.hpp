@@ -53,7 +53,7 @@ namespace ohjelma {
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
 	void piirra_tilasto();
-	void piirra_atis();
+	void piirra_atis(int toiminto);
 	void kirjoita_tekstia(std::string teksti, int x, int y);
 }
 

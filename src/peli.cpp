@@ -553,21 +553,11 @@ void peli::pyyda_atis() {
 	std::clog << "peli::pyyda_atis" << std::endl;
 	ohjelma::syotteenluku lukija;
 	peli::atis::lue_paineet("painerajat.txt");
+	int toiminto = LAHTO;
 
 	while (atis::ok == false) {
 		lukija.lue_syote();
 		ohjelma::odota(20);
-		int toiminto;
-
-		if (ohjelma::lue_nappi(ohjelma::NAPPI_F5)) {
-			toiminto = LAHTO;
-		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F6)) {
-			toiminto = LASKU;
-		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
-			toiminto = SIIRTOPINTA;
-		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_ESCAPE)) {
-			break;
-		}
 
 		if (lukija.anna_viesti().length() > 1 && ohjelma::lue_nappi(ohjelma::NAPPI_ENTER)) {
 			std::vector <kiitotie>::iterator tmp;
@@ -583,6 +573,7 @@ void peli::pyyda_atis() {
 						atis::lahto = lukija.anna_viesti();
 						lukija.tyhjenna();
 					}
+					toiminto = LASKU;
 					break;
 				case LASKU:
 					tmp = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), lukija.anna_viesti());
@@ -593,6 +584,7 @@ void peli::pyyda_atis() {
 						atis::lasku = lukija.anna_viesti();
 						lukija.tyhjenna();
 					}
+					toiminto = SIIRTOPINTA;
 					break;
 				case SIIRTOPINTA:
 					atis::siirtopinta = apuvalineet::luvuksi<int>(lukija.anna_viesti());
@@ -605,7 +597,7 @@ void peli::pyyda_atis() {
 		bool lahto_ok = false;
 		bool lasku_ok = false;
 
-		ohjelma::piirra_atis();
+		ohjelma::piirra_atis(toiminto);
 		ohjelma::kirjoita_tekstia(lukija.anna_viesti(), 300, 20);
 
 		if (atis::lahtokiitotie > -1 && atis::laskukiitotie > -1 && atis::siirtopinta > -1) {
@@ -631,18 +623,21 @@ void peli::pyyda_atis() {
 				siirto_ok = true;
 			} else {
 				ohje = "Siirtopinta v‰‰rin tulisi olla " + apuvalineet::tekstiksi(siirtopinta);
+				toiminto = SIIRTOPINTA;
 			}
 
 			if (vastakomponentti_lahto > 0) {
 				lahto_ok = true;
 			} else {
 				ohje = "L‰htˆkiitotie valittu v‰‰rin";
+				toiminto = LAHTO;
 			}
 
 			if (vastakomponentti_lasku > 0) {
 				lasku_ok = true;
 			} else {
 				ohje = "Laskukiitotie valittu v‰‰rin";
+				toiminto = LASKU;
 			}
 		}
 
