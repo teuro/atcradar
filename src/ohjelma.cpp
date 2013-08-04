@@ -243,6 +243,7 @@ void ohjelma::piirra_koneet() {
 
 	Uint32 ok = 0x000000FF;
 	Uint32 ng = 0xFF0000FF;
+	Uint32 fuel = 0xFFA000FF;
 
 	for (unsigned int i = 0; i < peli::koneet.size(); ++i) {
 		if (peli::koneet[i].odotus == false) {
@@ -251,6 +252,8 @@ void ohjelma::piirra_koneet() {
 
 			if (peli::koneet[i].onko_porrastus) {
 				vari = ok;
+			} else if (peli::koneet[i].polttoaine < anna_asetus("minimi_polttoaine")) {
+				vari = fuel;
 			} else {
 				vari = ng;
 			}
