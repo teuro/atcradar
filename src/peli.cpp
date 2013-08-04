@@ -310,6 +310,8 @@ void peli::luo_kone() {
 		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
 
+	std::clog << koneet.back().kutsutunnus << " " << koneet.back().polttoaine  << std::endl;
+
 	tilasto tmp;
 
 	tmp.tunnus = tunnus;
