@@ -16,7 +16,6 @@ lentokone::lentokone(std::string kutsutunnus, double x, double y, double korkeus
 
 	this->laskubaana = -1;
 	this->onko_porrastus = true;
-	this->ulkona = false;
 	this->tyyppi = tyyppi;
 
 	this->korkeus = korkeus;
@@ -46,7 +45,6 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 
 	this->laskubaana = -1;
 	this->onko_porrastus = true;
-	this->ulkona = false;
 	this->tyyppi = tyyppi;
 
 	this->korkeus = korkeus;
@@ -171,16 +169,7 @@ void lentokone::muuta_suuntaa(double aika) {
 }
 
 void lentokone::liiku(double aika) {
-	//std::clog << "lentokone::liiku(" << aika << ")" << std::endl;
-	double x = this->paikka.x + apuvalineet::nm2px(this->nopeus * (aika / 3600.0)) * cos(apuvalineet::deg2rad(this->suunta - 90));
-	double y = this->paikka.y + apuvalineet::nm2px(this->nopeus * (aika / 3600.0)) * sin(apuvalineet::deg2rad(this->suunta - 90));
-
-	this->paikka.x = x;
-	this->paikka.y = y;
-
-	if (this->paikka.x > ohjelma::anna_asetus("ruutu_leveys") || this->paikka.x < 0 || this->paikka.y < 0 || this->paikka.y > ohjelma::anna_asetus("ruutu_korkeus")) {
-		this->ulkona = true;
-	}
+	this->paikka = apuvalineet::uusi_paikka(this->paikka, this->suunta, this->nopeus * (aika / 3600.0));
 }
 
 void lentokone::aseta_navipiste(apuvalineet::piste paikka) {

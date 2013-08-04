@@ -37,7 +37,6 @@ public:
 	bool valittu;
 	int tyyppi;
 
-	bool ulkona;
 	bool lahestymisselvitys;
 	bool laskuselvitys;
 	bool ylosveto;
