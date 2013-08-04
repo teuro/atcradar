@@ -268,11 +268,12 @@ void ohjelma::piirra_koneet() {
 				lentokorkeus 	= std::floor(peli::koneet[i].korkeus / 100);
 			}
 
-			if ((peli::koneet[i].selvityskorkeus / 100) > peli::atis::siirtopinta) {
+			if (peli::koneet[i].selvityskorkeus > peli::atis::siirtokorkeus) {
 				selvityskorkeus = std::floor(peli::koneet[i].selvityskorkeus / 100);
 			}
 
-			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(lentokorkeus) + " / " + apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(lentokorkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
 
 			if (peli::koneet[i].valittu) {
 				kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
@@ -463,7 +464,7 @@ void ohjelma::piirra_ohje(std::string ohje) {
 	kirjoita_tekstia(kuvat::ohje, ohje.c_str(), anna_asetus("ruutu_leveys") - (ohje.length() * (fontin_koko / 2)), 80);
 }
 
-void ohjelma::piirra_tilasto(std::vector <peli::tilasto> ajat) {
+void ohjelma::piirra_tilasto() {
 	std::clog << "ohjelma::piirra_tilasto()" << std::endl;
 	piirra_kuva(kuvat::tausta_valikko, 0, 0);
 	int y = 30;
@@ -474,12 +475,12 @@ void ohjelma::piirra_tilasto(std::vector <peli::tilasto> ajat) {
 	kirjoita_tekstia(kuvat::tilasto, "alueella", x+300, y-15);
 	kirjoita_tekstia(kuvat::tilasto, "selvitykset", x+400, y-15);
 
-	for (unsigned int i = 0; i < ajat.size(); ++i) {
-		kirjoita_tekstia(kuvat::tilasto, ajat[i].tunnus, x, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(ajat[i].sisaan).c_str(), x+100, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(ajat[i].pois).c_str(), x+200, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(ajat[i].pois - ajat[i].sisaan).c_str(), x+300, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(ajat[i].selvitykset).c_str(), x+400, y);
+	for (unsigned int i = 0; i < peli::ajat.size(); ++i) {
+		kirjoita_tekstia(kuvat::tilasto, peli::ajat[i].tunnus, x, y);
+		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].sisaan).c_str(), x+100, y);
+		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].pois).c_str(), x+200, y);
+		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].pois - peli::ajat[i].sisaan).c_str(), x+300, y);
+		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].selvitykset).c_str(), x+400, y);
 
 		y += 15;
 	}

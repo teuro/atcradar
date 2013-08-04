@@ -198,7 +198,7 @@ int peli::aja() {
 	}
 
 	ohjelma::tyhjenna_syote();
-	ohjelma::piirra_tilasto(ajat);
+	ohjelma::piirra_tilasto();
 
 	for (unsigned int i = 0; i < ajat.size(); ++i) {
 		std::clog << ajat[i].tunnus << " " << ajat[i].sisaan << " " << ajat[i].pois << " " << (ajat[i].pois - ajat[i].sisaan) << " " << ajat[i].selvitykset << std::endl;
@@ -648,14 +648,16 @@ void peli::pyyda_atis() {
 }
 
 static void peli::generoi_metar() {
-	metar::tuuli = apuvalineet::arvo_luku(peli::kentta.kiitotiet.front().suunta, peli::kentta.kiitotiet.back().suunta);
-	metar::voimakkuus = apuvalineet::arvo_luku(0, 22);
+	metar::tuuli = apuvalineet::arvo_luku(0, 360);
+	metar::voimakkuus = apuvalineet::arvo_luku(2, 22);
 	metar::paine = apuvalineet::arvo_luku(950, 1060);
 }
 
 static bool peli::onko_vapaata() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (koneet[i].korkeus < kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) {
+		if (koneet[i].korkeus < (kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) && koneet[i].tyyppi == LAHTEVA && koneet[i].odotus == false) {
+			return false;
+		} else if (koneet[i].laskuselvitys && apuvalineet::etaisyys(koneet[i].paikka, kentta.kiitotiet[atis::laskukiitotie].alkupiste) < 5.0) {
 			return false;
 		}
 	}

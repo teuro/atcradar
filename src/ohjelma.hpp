@@ -52,7 +52,7 @@ namespace ohjelma {
 	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2);
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
-	void piirra_tilasto(std::vector <peli::tilasto> ajat);
+	void piirra_tilasto();
 	void piirra_atis();
 	void kirjoita_tekstia(std::string teksti, int x, int y);
 }
