@@ -11,3 +11,10 @@ Annettu selvitysnopeus on suuri pieni aikaan 79.833
 Annettu selvitysnopeus on liian pieni aikaan 81.928
 Annettu selvityskorkeus liian alhainen aikaan 11.658
 Porrastusminimi alittui aikaan 362.5
+Annettu selvitysnopeus on suuri pieni aikaan 873.619
+Koneen suunnan tulee olla +- 30
+Annettu selvitysnopeus on liian pieni aikaan 919.288
+Koneen suunnan tulee olla +- 30
+Annettu selvitysnopeus on liian pieni aikaan 1099.93
+Koneen suunnan tulee olla +- 30
+Annettu selvitysnopeus on liian pieni aikaan 1103.74
