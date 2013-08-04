@@ -53,6 +53,16 @@ namespace peli {
 		double siirtopinta = -1;
 		int siirtokorkeus;
 		bool ok = false;
+
+		struct paine {
+			double alaraja;
+			double ylaraja;
+			double siirtopinta;
+		};
+
+		std::vector <paine> paineet;
+		void lue_paineet(std::string nimi);
+		double etsi_siirtopinta(double paine);
 	}
 
 	namespace metar {
@@ -432,10 +442,11 @@ void peli::hoida_koneet() {
 			}
 		}
 
-		if (koneet[i].ulkona) {
+		if (koneet[i].paikka.x < 0 || koneet[i].paikka.x > ohjelma::anna_asetus("ruutu_leveys") || koneet[i].paikka.y < 0 || koneet[i].paikka.y > ohjelma::anna_asetus("ruutu_korkeus")) {
 			aseta_virhe(VIRHE_ALUEELTA);
 			poista_kone(i);
 		}
+
 		if (koneet[i].kohde.x > 0 && koneet[i].kohde.y > 0) {
 			koneet[i].tarkista_suunta_kohteeseen();
 		}
@@ -535,6 +546,7 @@ void peli::anna_lahestymisselvitys() {
 void peli::pyyda_atis() {
 	std::clog << "peli::pyyda_atis" << std::endl;
 	ohjelma::syotteenluku lukija;
+	peli::atis::lue_paineet("painerajat.txt");
 
 	while (atis::ok == false) {
 		lukija.lue_syote();
@@ -596,25 +608,7 @@ void peli::pyyda_atis() {
 			double vastakomponentti_lahto = std::cos(apuvalineet::deg2rad(metar::tuuli) - apuvalineet::deg2rad(kentta.kiitotiet[atis::lahtokiitotie].suunta)) * metar::voimakkuus;
 			double vastakomponentti_lasku = std::cos(apuvalineet::deg2rad(metar::tuuli) - apuvalineet::deg2rad(kentta.kiitotiet[atis::laskukiitotie].suunta)) * metar::voimakkuus;
 
-
-
-			double siirtopinta;
-
-			if (metar::paine < 960) {
-				siirtopinta = 70;
-			} else if (metar::paine >= 960 && metar::paine <977.9) {
-				siirtopinta = 65;
-			} else if (metar::paine >= 978 && metar::paine <995.9) {
-				siirtopinta = 60;
-			} else if (metar::paine >= 996 && metar::paine <1012.9) {
-				siirtopinta = 55;
-			} else if (metar::paine >= 1013 && metar::paine <1030.9) {
-				siirtopinta = 50;
-			} else if (metar::paine >= 1031 && metar::paine <1050.9) {
-				siirtopinta = 45;
-			} else if (metar::paine > 1051) {
-				siirtopinta = 40;
-			}
+			double siirtopinta = peli::atis::etsi_siirtopinta(peli::metar::paine);
 
 			double max_vasta = 0;
 			double vasta;
@@ -672,6 +666,7 @@ static bool peli::onko_vapaata() {
 }
 
 static bool peli::tarkista_atis() {
+	peli::atis::lue_paineet("painerajat.txt");
 	double vasta_lahto = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].suunta - peli::metar::tuuli));
 	double vasta_lasku = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta - peli::metar::tuuli));
 
@@ -681,3 +676,35 @@ static bool peli::tarkista_atis() {
 
 	return true;
 }
+
+void peli::atis::lue_paineet(std::string nimi) {
+	std::clog << "peli::atis::paine::lue_paineet(" << nimi << ")" << std::endl;
+	std::ifstream sisaan(nimi.c_str(), std::ios::in);
+
+	if (!sisaan) {
+		throw std::runtime_error("Tiedostoa " + nimi + " ei löydy tai se ei aukea");
+	}
+
+	double ala, yla, pinta;
+
+	while (sisaan >> ala >> yla >> pinta) {
+		peli::atis::paine tmp;
+		tmp.alaraja = ala;
+		tmp.ylaraja = yla;
+		tmp.siirtopinta = pinta;
+
+		peli::atis::paineet.push_back(tmp);
+	}
+
+	sisaan.close();
+}
+
+double peli::atis::etsi_siirtopinta(double paine) {
+	for (unsigned int i = 0; i < peli::atis::paineet.size(); ++i) {
+
+		if (paine >= peli::atis::paineet[i].alaraja && paine < peli::atis::paineet[i].ylaraja) {
+			return peli::atis::paineet[i].siirtopinta;
+		}
+	}
+}
+
