@@ -8,8 +8,6 @@ kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus
 	this->pituus = pituus;
 	this->suunta = suunta;
 
-	this->valittu = false;
-
 	this->alkunousukorkeus = alkunousukorkeus;
 	this->alkunoususuunta = alkunoususuunta;
 	this->nimi = nimi;

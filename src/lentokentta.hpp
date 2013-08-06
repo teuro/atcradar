@@ -18,7 +18,6 @@ public:
 	double pituus;
 	double alkunousukorkeus;
 	double alkunoususuunta;
-	bool valittu;
 
 	kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunousuuunta);
 
