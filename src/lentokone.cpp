@@ -31,6 +31,7 @@ lentokone::lentokone(std::string kutsutunnus, double x, double y, double korkeus
 	this->valittu = false;
 
 	this->odotus = odotus;
+	this->mitataan = false;
 
 	std::clog << this->kutsutunnus << " luotu paikkaan " << this->paikka.x << ", " << this->paikka.y << std::endl;
 }
@@ -60,6 +61,7 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	this->valittu = false;
 
 	this->odotus = odotus;
+	this->mitataan = false;
 
 	std::clog << this->kutsutunnus << " luotu paikkaan " << this->paikka.x << ", " << this->paikka.y << std::endl;
 }
@@ -102,12 +104,6 @@ void lentokone::muuta_selvityssuuntaa(double _suunta, int kaarto) {
 	}
 	this->selvityssuunta = _suunta;
 	this->kaarto = kaarto;
-}
-
-void lentokone::muuta_selvityksia(double korkeus, double nopeus, double suunta, int kaarto) {
-	this->muuta_selvityskorkeutta(korkeus);
-	this->muuta_selvitysnopeutta(nopeus);
-	this->muuta_selvityssuuntaa(suunta, kaarto);
 }
 
 void lentokone::muuta_tilaa(double aika) {
@@ -171,6 +167,7 @@ void lentokone::muuta_suuntaa(double aika) {
 }
 
 void lentokone::liiku(double aika) {
+	this->muuta_tilaa(aika);
 	this->paikka = apuvalineet::uusi_paikka(this->paikka, this->suunta, this->nopeus * (aika / 3600.0));
 	this->polttoaine -= ohjelma::anna_asetus("polttoaineen_kulutus") * (aika / 3600.0);
 }

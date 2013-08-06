@@ -20,7 +20,6 @@ public:
 
 	void ota_selvitys(std::string tmp, int toiminto);
 
-	void muuta_selvityksia(double korkeus, double nopeus, double suunta, int kaarto = VASEN);
 	void muuta_tilaa(double aika);
 
 	void muuta_selvityskorkeutta(double korkeus);
@@ -50,6 +49,7 @@ public:
 	void muuta_suuntaa(double aika);
 
 	void tarkista_suunta_kohteeseen();
+	bool mitataan;
 
 	void aseta_navipiste(apuvalineet::piste paikka);
 
