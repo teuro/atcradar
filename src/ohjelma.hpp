@@ -19,7 +19,7 @@ namespace ohjelma {
 	void odota(double ms = 1);
 
 	enum nappi {
-		NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F6, NAPPI_F8, NAPPI_I
+		NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F7, NAPPI_F8, NAPPI_I
 	};
 
 	extern std::map <std::string, double> asetukset;

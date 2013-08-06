@@ -137,7 +137,7 @@ bool ohjelma::lue_nappi(nappi n) {
 		case NAPPI_ENTER: return napit[SDLK_RETURN];
 		case NAPPI_ESCAPE: return napit[SDLK_ESCAPE];
 		case NAPPI_F5: return napit[SDLK_F5];
-		case NAPPI_F6: return napit[SDLK_F6];
+		case NAPPI_F7: return napit[SDLK_F7];
 		case NAPPI_F8: return napit[SDLK_F8];
 		case NAPPI_I: return napit[SDLK_i];
 		default: return false;
@@ -243,7 +243,6 @@ void ohjelma::piirra_koneet() {
 
 	Uint32 ok = 0x000000FF;
 	Uint32 ng = 0xFF0000FF;
-	Uint32 fuel = 0xFFA000FF;
 
 	for (unsigned int i = 0; i < peli::koneet.size(); ++i) {
 		if (peli::koneet[i].odotus == false) {
@@ -252,8 +251,6 @@ void ohjelma::piirra_koneet() {
 
 			if (peli::koneet[i].onko_porrastus) {
 				vari = ok;
-			} else if (peli::koneet[i].polttoaine < anna_asetus("minimi_polttoaine")) {
-				vari = fuel;
 			} else {
 				vari = ng;
 			}
@@ -287,6 +284,18 @@ void ohjelma::piirra_koneet() {
 				if (peli::koneet[i].tyyppi == peli::LAHTEVA) {
 					kirjoita_tekstia(ulos, peli::navipisteet[peli::koneet[i].ulosmenopiste].nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
 				}
+
+				apuvalineet::piste hiiri = anna_hiiri();
+				apuvalineet::piste kone = peli::koneet[i].paikka;
+
+				apuvalineet::vektori uusi_kohde = apuvalineet::suunta_vektori(kone, hiiri);
+
+				lineColor(ruutu, kone.x, kone.y, hiiri.x, hiiri.y, vari);
+				std::string teksti = apuvalineet::tekstiksi(uusi_kohde.pituus) + " " + apuvalineet::tekstiksi(uusi_kohde.suunta);
+				kirjoita_tekstia(ruutu, teksti, std::abs((kone.x + hiiri.x) / 2), std::abs((kone.y + hiiri.y) / 2));
+
+				teksti =  "polttoaine " + apuvalineet::tekstiksi(peli::koneet[i].polttoaine);
+				kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 140);
 			}
 		}
 	}
@@ -454,13 +463,19 @@ void ohjelma::kirjoita_tekstia(std::string teksti, int x, int y) {
 
 void ohjelma::piirra_tilanne() {
 	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli::kasitellyt) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("vaadittavat_kasitellyt"));
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 20);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 20);
 
 	teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli::porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("maks_porrastusvirhe"));
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 40);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 40);
 
 	teksti =  "muut virheet " + apuvalineet::tekstiksi(peli::muut_virheet);
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 60);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 60);
+
+	teksti =  "laskubaana " + apuvalineet::tekstiksi(peli::atis::lasku);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 100);
+
+	teksti =  "lähtöbaana " + apuvalineet::tekstiksi(peli::atis::lahto);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 120);
 }
 
 void ohjelma::piirra_ohje(std::string ohje) {
@@ -553,7 +568,7 @@ void ohjelma::piirra_metar() {
 }
 
 static void ohjelma::piirra_odottavat() {
-	int y = 100;
+	int y = 160;
 	for (unsigned int i = 0; i < peli::odottavat.size(); ++i) {
 		kirjoita_tekstia(kuvat::odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 100, y);
 
