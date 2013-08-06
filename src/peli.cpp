@@ -37,6 +37,7 @@ namespace peli {
 	static bool tarkista_atis();
 	static void generoi_metar();
 	static bool onko_vapaata();
+	static void ajata_odotuskuvio();
 	lentokentta kentta;
 
 	int alku;
@@ -138,7 +139,7 @@ int peli::aja() {
 
 		if (ohjelma::lue_nappi(ohjelma::NAPPI_F5)) {
 			toiminto = SUUNTA;
-		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F6)) {
+		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F7)) {
 			toiminto = NOPEUS;
 		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
 			toiminto = KORKEUS;
@@ -232,7 +233,7 @@ void peli::aseta_virhe(int virhe) {
 	std::clog << "peli::aseta_virhe(" << virhe << ")" << std::endl;
 	peli::virheteksti = " ";
 	++peli::muut_virheet;
-	std::ofstream ulos("virhedata.txt", std::ios::app);
+	std::ofstream ulos("virhedata.txt");
 
 	switch (virhe) {
 		case VIRHE_KORKEUS_ALA:
@@ -309,8 +310,6 @@ void peli::luo_kone() {
 		koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
-
-	std::clog << koneet.back().kutsutunnus << " " << koneet.back().polttoaine  << std::endl;
 
 	tilasto tmp;
 
@@ -396,6 +395,7 @@ void peli::valitse_kone(const apuvalineet::piste& hiiri) {
 
 			if (ohjelma::onko_alueella(hiiri, koneet[i].paikka)) {
 				koneet[i].valittu = true;
+				koneet[i].mitataan = true;
 			}
 		}
 	}
@@ -483,7 +483,6 @@ void peli::hoida_koneet() {
 			}
 		}
 
-		koneet[i].muuta_tilaa(ajan_muutos);
 		koneet[i].liiku(ajan_muutos);
 
 		if (koneet[i].polttoaine < ohjelma::anna_asetus("minimi_polttoaine")) {
@@ -707,5 +706,9 @@ double peli::atis::etsi_siirtopinta(double paine) {
 			return peli::atis::paineet[i].siirtopinta;
 		}
 	}
+}
+
+void peli::ajata_odotuskuvio() {
+
 }
 
