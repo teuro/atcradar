@@ -1,6 +1,7 @@
 #include "lentokone.hpp"
 #include "peli.hpp"
 #include "ohjelma.hpp"
+#include <algorithm>
 
 lentokone::lentokone() {}
 
@@ -31,7 +32,6 @@ lentokone::lentokone(std::string kutsutunnus, double x, double y, double korkeus
 	this->valittu = false;
 
 	this->odotus = odotus;
-	this->mitataan = false;
 
 	std::clog << this->kutsutunnus << " luotu paikkaan " << this->paikka.x << ", " << this->paikka.y << std::endl;
 }
@@ -61,7 +61,6 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	this->valittu = false;
 
 	this->odotus = odotus;
-	this->mitataan = false;
 
 	std::clog << this->kutsutunnus << " luotu paikkaan " << this->paikka.x << ", " << this->paikka.y << std::endl;
 }
@@ -104,6 +103,12 @@ void lentokone::muuta_selvityssuuntaa(double _suunta, int kaarto) {
 	}
 	this->selvityssuunta = _suunta;
 	this->kaarto = kaarto;
+}
+
+void lentokone::muuta_selvityksia(double korkeus, double nopeus, double suunta, int kaarto) {
+	this->muuta_selvityskorkeutta(korkeus);
+	this->muuta_selvitysnopeutta(nopeus);
+	this->muuta_selvityssuuntaa(suunta, kaarto);
 }
 
 void lentokone::muuta_tilaa(double aika) {
@@ -167,7 +172,6 @@ void lentokone::muuta_suuntaa(double aika) {
 }
 
 void lentokone::liiku(double aika) {
-	this->muuta_tilaa(aika);
 	this->paikka = apuvalineet::uusi_paikka(this->paikka, this->suunta, this->nopeus * (aika / 3600.0));
 	this->polttoaine -= ohjelma::anna_asetus("polttoaineen_kulutus") * (aika / 3600.0);
 }
@@ -212,14 +216,26 @@ void lentokone::lahesty() {
 }
 
 void lentokone::tarkista_suunta_kohteeseen() {
-	apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde);
+	if (this->kohde.x > 0 && this->kohde.y > 0) {
+		apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde);
 
-	this->kaarto = this->kaarron_suunta(vektori_kohteeseen.suunta);
-	this->muuta_selvityssuuntaa(vektori_kohteeseen.suunta, this->kaarto);
+		this->kaarto = this->kaarron_suunta(vektori_kohteeseen.suunta);
+		this->muuta_selvityssuuntaa(vektori_kohteeseen.suunta, this->kaarto);
+	}
 }
 
 void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 	if (toiminto == peli::SUUNTA) {
+		std::vector <navipiste>::iterator etsi = std::find(peli::navipisteet.begin(), peli::navipisteet.end(), tmp);
+
+		if (etsi != peli::navipisteet.end()) {
+			this->reitti.push_back(*etsi);
+		}
+
+		if (this->kohde.x == 0 && this->kohde.y == 0) {
+			this->kohde = anna_piste().paikka;
+		}
+
 		if (tmp.substr(0, 1) == "V" || tmp.substr(0, 1) == "v") {
 			kaarto = VASEN;
 			tmp = tmp.substr(1, std::string::npos);
@@ -244,4 +260,10 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 			this->muuta_selvitysnopeutta(luku);
 			break;
 	}
+}
+
+navipiste lentokone::anna_piste() {
+	navipiste tmp = this->reitti.back();
+	this->reitti.pop_back();
+	return tmp;
 }
