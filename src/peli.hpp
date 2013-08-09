@@ -7,9 +7,9 @@
 #include "apuvalineet.hpp"
 #include "lentokone.hpp"
 #include "lentokentta.hpp"
+#include "navipiste.hpp"
 
 namespace peli {
-	extern std::vector <apuvalineet::piste> navigointi;
 	extern std::vector <lentokone> koneet;
 	extern std::vector <lentokone> odottavat;
 	extern const float ajan_muutos;
@@ -24,27 +24,6 @@ namespace peli {
 	enum toiminto {LAHTO, LASKU, SIIRTOPINTA};
 	void luo_kone();
 	void tuhoa_kone(int kone);
-
-	class navipiste {
-	public:
-		std::string nimi;
-		apuvalineet::piste paikka;
-		double lentosuunta;
-		double lentokorkeus;
-		double lentonopeus;
-
-		navipiste(std::string nimi, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta) {
-			this->nimi = nimi;
-			this->paikka = paikka;
-			this->lentokorkeus = korkeus;
-			this->lentonopeus = nopeus;
-			this->lentosuunta = suunta;
-		}
-
-		bool operator ==(std::string n) {
-			return (nimi == n);
-		}
-	};
 
 	struct tilasto {
 		std::string tunnus;

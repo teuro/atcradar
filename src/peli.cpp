@@ -1,6 +1,7 @@
 // peli.cpp
 #include "peli.hpp"
 #include "ohjelma.hpp"
+#include "lukija.hpp"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -37,7 +38,6 @@ namespace peli {
 	static bool tarkista_atis();
 	static void generoi_metar();
 	static bool onko_vapaata();
-	static void ajata_odotuskuvio();
 	lentokentta kentta;
 
 	int alku;
@@ -96,7 +96,7 @@ int peli::aja() {
 	ohjelma::tyhjenna_syote();
 
 	apuvalineet::piste hiiri;
-	ohjelma::syotteenluku lukija;
+	syotteenluku lukija;
 	koska_metar = ohjelma::anna_asetus("koska_metar");
 
 	while (!loppu) {
@@ -139,12 +139,10 @@ int peli::aja() {
 
 		if (ohjelma::lue_nappi(ohjelma::NAPPI_F5)) {
 			toiminto = SUUNTA;
-		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F7)) {
+		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F6)) {
 			toiminto = NOPEUS;
 		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
 			toiminto = KORKEUS;
-		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_I)) {
-			toiminto = LAHESTYMIS;
 		}
 
 		lukija.lue_syote();
@@ -233,7 +231,7 @@ void peli::aseta_virhe(int virhe) {
 	std::clog << "peli::aseta_virhe(" << virhe << ")" << std::endl;
 	peli::virheteksti = " ";
 	++peli::muut_virheet;
-	std::ofstream ulos("virhedata.txt");
+	std::ofstream ulos("virhedata.txt", std::ios::app);
 
 	switch (virhe) {
 		case VIRHE_KORKEUS_ALA:
@@ -298,7 +296,7 @@ void peli::luo_kone() {
 		}
 
 		koneet.push_back(lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
-		koneet.back().ulosmenopiste = apuvalineet::arvo_luku(0, navipisteet.size());
+		koneet.back().ulosmenopiste = navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())];
 		koneet.back().polttoaine = apuvalineet::arvo_luku(8000, 25000);
 
 		if (koneet.back().odotus) {
@@ -395,7 +393,6 @@ void peli::valitse_kone(const apuvalineet::piste& hiiri) {
 
 			if (ohjelma::onko_alueella(hiiri, koneet[i].paikka)) {
 				koneet[i].valittu = true;
-				koneet[i].mitataan = true;
 			}
 		}
 	}
@@ -438,6 +435,11 @@ void peli::tarkista_porrastus() {
 
 void peli::hoida_koneet() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
+		if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde) && koneet[i].reitti.size()) {
+			navipiste tmp = koneet[i].anna_piste();
+			koneet[i].kohde = tmp.paikka;
+		}
+
 		if (koneet[i].odotus) {
 			if (onko_vapaata()) {
 				koneet[i].paikka = kentta.kiitotiet[atis::lahtokiitotie].alkupiste;
@@ -483,6 +485,7 @@ void peli::hoida_koneet() {
 			}
 		}
 
+		koneet[i].muuta_tilaa(ajan_muutos);
 		koneet[i].liiku(ajan_muutos);
 
 		if (koneet[i].polttoaine < ohjelma::anna_asetus("minimi_polttoaine")) {
@@ -543,7 +546,7 @@ void peli::anna_lahestymisselvitys() {
 		if (koneet[valittu].korkeus < ohjelma::anna_asetus("oikotie")) {
 			aseta_virhe(VIRHE_OIKOTIE);
 		} else {
-			koneet[valittu].aseta_navipiste(navipisteet[koneet[valittu].ulosmenopiste].paikka);
+			koneet[valittu].aseta_navipiste(koneet[valittu].ulosmenopiste.paikka);
 		}
 	}
 
@@ -552,7 +555,7 @@ void peli::anna_lahestymisselvitys() {
 
 void peli::pyyda_atis() {
 	std::clog << "peli::pyyda_atis" << std::endl;
-	ohjelma::syotteenluku lukija;
+	syotteenluku lukija;
 	peli::atis::lue_paineet("painerajat.txt");
 	int toiminto = LAHTO;
 
@@ -706,9 +709,5 @@ double peli::atis::etsi_siirtopinta(double paine) {
 			return peli::atis::paineet[i].siirtopinta;
 		}
 	}
-}
-
-void peli::ajata_odotuskuvio() {
-
 }
 
