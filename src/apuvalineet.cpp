@@ -23,8 +23,12 @@ double apuvalineet::rad2deg(double rad) {
 
 	return deg;
 }
-int apuvalineet::arvo_luku(int ala, int yla) {
-    return ala + rand() % (yla - ala + 1);
+int apuvalineet::arvo_luku(int ala, int yla){
+    int tmp_luku;
+
+    tmp_luku = ala + std::rand() % (yla - ala);
+
+    return tmp_luku;
 }
 
 double apuvalineet::etaisyys(const piste& a, const piste& b) {
@@ -49,12 +53,6 @@ apuvalineet::vektori apuvalineet::suunta_vektori(const apuvalineet::piste& a, co
 
 	tmp.pituus = etaisyys(tmp.alku, tmp.loppu);
 	tmp.suunta = laske_kulma(tmp.alku, tmp.loppu);
-
-	if (tmp.suunta < 0) {
-		tmp.suunta += 360;
-	} else if (tmp.suunta > 360) {
-		tmp.suunta -= 360;
-	}
 
 	return tmp;
 }
