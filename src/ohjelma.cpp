@@ -232,11 +232,7 @@ void ohjelma::piirra_peli() {
 void ohjelma::piirra_koneet() {
 	Uint32 vari;
 
-	SDL_Surface* tunnus;
-	SDL_Surface* korkeus;
-	SDL_Surface* nopeus;
-	SDL_Surface* suunta;
-	SDL_Surface* ulos;
+	SDL_Surface* tiedot;
 
 	double lentokorkeus;
 	double selvityskorkeus;
@@ -246,8 +242,7 @@ void ohjelma::piirra_koneet() {
 
 	for (unsigned int i = 0; i < peli::koneet.size(); ++i) {
 		if (peli::koneet[i].odotus == false) {
-			int x = peli::koneet[i].paikka.x + apuvalineet::nm2px(peli::koneet[i].nopeus * (60.0 / 3600.0)) * cos(apuvalineet::deg2rad(peli::koneet[i].suunta - 90));
-			int y = peli::koneet[i].paikka.y + apuvalineet::nm2px(peli::koneet[i].nopeus * (60.0 / 3600.0)) * sin(apuvalineet::deg2rad(peli::koneet[i].suunta - 90));
+			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli::koneet[i].paikka, peli::koneet[i].suunta, peli::koneet[i].nopeus * (60.0 / 3600.0));
 
 			if (peli::koneet[i].onko_porrastus) {
 				vari = ok;
@@ -256,10 +251,10 @@ void ohjelma::piirra_koneet() {
 			}
 
 			rectangleColor(ruutu, peli::koneet[i].paikka.x-3, peli::koneet[i].paikka.y-3, peli::koneet[i].paikka.x+3, peli::koneet[i].paikka.y+3, vari);
-			lineColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, x, y, vari);
+			lineColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, loppupiste.x, loppupiste.y, vari);
 			circleColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
 
-			kirjoita_tekstia(tunnus, peli::koneet[i].kutsutunnus, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y);
+			kirjoita_tekstia(tiedot, peli::koneet[i].kutsutunnus, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y);
 
 			lentokorkeus 	= std::floor(peli::koneet[i].korkeus);
 			selvityskorkeus = std::floor(peli::koneet[i].selvityskorkeus);
@@ -272,30 +267,18 @@ void ohjelma::piirra_koneet() {
 				selvityskorkeus = std::floor(peli::koneet[i].selvityskorkeus / 100);
 			}
 
-			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(lentokorkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
-			kirjoita_tekstia(korkeus, apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(lentokorkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
 
 			if (peli::koneet[i].valittu) {
-				kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
-				kirjoita_tekstia(nopeus, apuvalineet::tekstiksi(peli::koneet[i].selvitysnopeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
-				kirjoita_tekstia(suunta, apuvalineet::tekstiksi(peli::koneet[i].suunta) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
-				kirjoita_tekstia(suunta, apuvalineet::tekstiksi(peli::koneet[i].selvityssuunta), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
+				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
+				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].selvitysnopeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
+				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].suunta) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
+				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].selvityssuunta), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
 
 				if (peli::koneet[i].tyyppi == peli::LAHTEVA) {
-					kirjoita_tekstia(ulos, peli::navipisteet[peli::koneet[i].ulosmenopiste].nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
+					kirjoita_tekstia(tiedot, peli::koneet[i].ulosmenopiste.nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
 				}
-
-				apuvalineet::piste hiiri = anna_hiiri();
-				apuvalineet::piste kone = peli::koneet[i].paikka;
-
-				apuvalineet::vektori uusi_kohde = apuvalineet::suunta_vektori(kone, hiiri);
-
-				lineColor(ruutu, kone.x, kone.y, hiiri.x, hiiri.y, vari);
-				std::string teksti = apuvalineet::tekstiksi(uusi_kohde.pituus) + " " + apuvalineet::tekstiksi(uusi_kohde.suunta);
-				kirjoita_tekstia(ruutu, teksti, std::abs((kone.x + hiiri.x) / 2), std::abs((kone.y + hiiri.y) / 2));
-
-				teksti =  "polttoaine " + apuvalineet::tekstiksi(peli::koneet[i].polttoaine);
-				kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 140);
 			}
 		}
 	}
@@ -342,60 +325,6 @@ double ohjelma::anna_asetus(std::string asetus) {
 	}
 
 	return ohjelma::asetukset[asetus];
-}
-
-ohjelma::syotteenluku::syotteenluku() {
-    //Initialize the string
-    str = "";
-
-    //Enable Unicode
-    SDL_EnableUNICODE( SDL_ENABLE );
-}
-
-void ohjelma::syotteenluku::lue_syote() {
-    //If a key was pressed
-    SDL_Event event;
-    SDL_PollEvent(&event);
-    if( event.type == SDL_KEYDOWN )
-    {
-        //Keep a copy of the current version of the string
-        std::string temp = str;
-
-        //If the string less than maximum size
-        if( str.length() <= 16 )
-        {
-        	//If the key is a space
-            if( event.key.keysym.unicode == (Uint16)' ' )
-            {
-                //Append the character
-                str += (char)event.key.keysym.unicode;
-            }
-             //If the key is a number
-            else if( ( event.key.keysym.unicode >= (Uint16)'0' ) && ( event.key.keysym.unicode <= (Uint16)'9' ) )
-            {
-                //Append the character
-                str += (char)event.key.keysym.unicode;
-            }
-            //If the key is a uppercase letter
-            else if( ( event.key.keysym.unicode >= (Uint16)'A' ) && ( event.key.keysym.unicode <= (Uint16)'Ä' ) )
-            {
-                //Append the character
-                str += (char)event.key.keysym.unicode;
-            }
-            //If the key is a lowercase letter
-            else if( ( event.key.keysym.unicode >= (Uint16)'a' ) && ( event.key.keysym.unicode <= (Uint16)'z' ) )
-            {
-                //Append the character
-                str += (char)event.key.keysym.unicode;
-            }
-        }
-        //If backspace was pressed and the string isn't blank
-        if( ( event.key.keysym.sym == SDLK_BACKSPACE ) && ( str.length() != 0 ) )
-        {
-            //Remove a character from the end
-            str.erase( str.length() - 1 );
-        }
-    }
 }
 
 bool ohjelma::onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade) {
@@ -463,19 +392,13 @@ void ohjelma::kirjoita_tekstia(std::string teksti, int x, int y) {
 
 void ohjelma::piirra_tilanne() {
 	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli::kasitellyt) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("vaadittavat_kasitellyt"));
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 20);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 20);
 
 	teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli::porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("maks_porrastusvirhe"));
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 40);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 40);
 
 	teksti =  "muut virheet " + apuvalineet::tekstiksi(peli::muut_virheet);
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 60);
-
-	teksti =  "laskubaana " + apuvalineet::tekstiksi(peli::atis::lasku);
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 100);
-
-	teksti =  "lähtöbaana " + apuvalineet::tekstiksi(peli::atis::lahto);
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * fontin_koko), 120);
+	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 60);
 }
 
 void ohjelma::piirra_ohje(std::string ohje) {
@@ -568,7 +491,7 @@ void ohjelma::piirra_metar() {
 }
 
 static void ohjelma::piirra_odottavat() {
-	int y = 160;
+	int y = 100;
 	for (unsigned int i = 0; i < peli::odottavat.size(); ++i) {
 		kirjoita_tekstia(kuvat::odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 100, y);
 

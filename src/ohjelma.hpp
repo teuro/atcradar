@@ -1,4 +1,4 @@
-// ohjelma.hpp
+<// ohjelma.hpp
 #ifndef _OHJELMA_HPP
 #define _OHJELMA_HPP
 
@@ -34,20 +34,6 @@ namespace ohjelma {
 
 	void piirra_peli();
 	void piirra_kirjoitus(std::string teksti);
-
-	class syotteenluku {
-    private:
-		//The storage string
-		std::string str;
-
-    public:
-		//Initializes variables
-		syotteenluku();
-		std::string anna_viesti() { return this->str; }
-		void aseta_viesti(std::string viesti) { this->str = viesti; }
-		void lue_syote();
-		void tyhjenna() { this->str = ""; }
-	};
 
 	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2);
 	apuvalineet::piste anna_hiiri();
