@@ -152,7 +152,19 @@ int peli::aja() {
 		if (ohjelma::lue_nappi(ohjelma::NAPPI_ENTER) && etsi_valittu_kone() >= 0) {
 			std::string tmp = lukija.anna_viesti();
 
-			if (toiminto != LAHESTYMIS) {
+			if (tmp == "ILS" && koneet[etsi_valittu_kone()].tyyppi == SAAPUVA) {
+				toiminto = LAHESTYMIS;
+			} else if (tmp == "DCT" && koneet[etsi_valittu_kone()].tyyppi == LAHTEVA) {
+				toiminto = OIKOTIE;
+			}
+
+			std::vector <navipiste>::iterator kohde = std::find(sisapisteet.begin(), sisapisteet.end(), tmp);
+
+			if (kohde != sisapisteet.end()) {
+				koneet[etsi_valittu_kone()].aseta_navipiste(kohde->paikka);
+			}
+
+			if (toiminto != LAHESTYMIS && toiminto != OIKOTIE) {
 				koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
 			} else {
 				anna_lahestymisselvitys();
