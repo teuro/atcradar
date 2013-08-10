@@ -33,7 +33,6 @@ namespace ohjelma {
 	void piirra_valikko(int pelin_tulos, valikko::valinta valittu);
 
 	void piirra_peli();
-	void piirra_kirjoitus(std::string teksti);
 
 	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2);
 	apuvalineet::piste anna_hiiri();

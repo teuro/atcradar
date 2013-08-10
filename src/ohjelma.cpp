@@ -1,5 +1,7 @@
 // ohjelma.cpp
 #include "ohjelma.hpp"
+#include "kuvavarasto.hpp"
+#include "lukija.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <SDL/SDL.h>
@@ -16,7 +18,6 @@ namespace ohjelma {
 	static void piirra_tilanne();
 	static int fontin_koko = 12;
 	static void piirra_ohje(std::string ohje);
-	static void piirra_virhe(std::string virheteksti);
 	static void piirra_metar();
 	static void piirra_odottavat();
 	std::map <std::string, double> asetukset;
@@ -24,14 +25,6 @@ namespace ohjelma {
 	namespace kuvat {
 		// Funktio kuvan lataukseen ja virheen heittämiseen.
 		static SDL_Surface *lataa(const char *nimi, bool lapinakyva);
-
-		// Kuvat.
-		static SDL_Surface *tausta_valikko, *tausta_peli;
-		static SDL_Surface *valikko_peli, *valikko_peli_valittu;
-		static SDL_Surface *valikko_lopetus, *valikko_lopetus_valittu;
-		static SDL_Surface *tilanne, *tilasto;
-		static SDL_Surface *kirjoitus, *ohje, *virhe, *nimi, *atis;
-		static SDL_Surface *tekstipinta, *metar, *odottavat;
 	}
 
 	static void kirjoita_tekstia(SDL_Surface* tekstipinta, std::string teksti, int x, int y);
@@ -61,13 +54,6 @@ void ohjelma::alku() {
 	// Nollataan sekuntilaskuri.
 	sekunnit(true);
 
-	kuvat::tausta_peli = kuvat::lataa("kuvat/tausta_peli.bmp", false);
-	kuvat::tausta_valikko = kuvat::lataa("kuvat/tausta_valikko.bmp", false);
-	kuvat::valikko_peli = kuvat::lataa("kuvat/valikko_peli.bmp", false);
-	kuvat::valikko_peli_valittu = kuvat::lataa("kuvat/valikko_peli_valittu.bmp", false);
-	kuvat::valikko_lopetus = kuvat::lataa("kuvat/valikko_lopetus.bmp", false);
-	kuvat::valikko_lopetus_valittu = kuvat::lataa("kuvat/valikko_lopetus_valittu.bmp", false);
-
 	if (TTF_Init() != 0) {
 		throw std::runtime_error(TTF_GetError());
 	}
@@ -79,12 +65,6 @@ void ohjelma::alku() {
 // Lopetusfunktio.
 void ohjelma::loppu() {
 	std::clog << "ohjelma::loppu()" << std::endl;
-
-	SDL_FreeSurface(kuvat::tausta_peli);
-	SDL_FreeSurface(kuvat::valikko_lopetus);
-	SDL_FreeSurface(kuvat::valikko_lopetus_valittu);
-	SDL_FreeSurface(kuvat::valikko_peli);
-	SDL_FreeSurface(kuvat::valikko_peli_valittu);
 
 	// Suljetaan SDL.
 	SDL_Quit();
@@ -188,20 +168,20 @@ void ohjelma::piirra_valikko(int pelin_tulos, valikko::valinta valittu) {
 	std::clog << "ohjelma::piirra_valikko(tulos, valittu)" << std::endl;
 
 	// Valitaan oikeat kuvat.
-	SDL_Surface *kuva_peli = kuvat::valikko_peli;
-	SDL_Surface *kuva_lopetus = kuvat::valikko_lopetus;
+	SDL_Surface *kuva_peli 		= image_cache::common().get("kuvat/valikko_peli.bmp");
+	SDL_Surface *kuva_lopetus 	= image_cache::common().get("kuvat/valikko_lopetus.bmp");
 
 	switch (valittu) {
 		case valikko::PELI:
-			kuva_peli = kuvat::valikko_peli_valittu;
+			kuva_peli = image_cache::common().get("kuvat/valikko_peli_valittu.bmp");
 			break;
 		case valikko::LOPETUS:
-			kuva_lopetus = kuvat::valikko_lopetus_valittu;
+			kuva_lopetus = image_cache::common().get("kuvat/valikko_lopetus_valittu.bmp");
 			break;
 	}
 
 	int x = 20, y = 16;
-	piirra_kuva(kuvat::tausta_valikko, 0, 0);
+	piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.bmp"), 0, 0);
 
 	piirra_kuva(kuva_peli, x, y);
 	piirra_kuva(kuva_lopetus, x, y + kuva_peli->h + 5);
@@ -212,7 +192,7 @@ void ohjelma::piirra_valikko(int pelin_tulos, valikko::valinta valittu) {
 
 // Piirtää pelin.
 void ohjelma::piirra_peli() {
-	piirra_kuva(kuvat::tausta_peli, 0, 0);
+	piirra_kuva(image_cache::common().get("kuvat/tausta_peli.bmp"), 0, 0);
 	piirra_tilanne();
 
 	piirra_koneet();
@@ -221,8 +201,9 @@ void ohjelma::piirra_peli() {
 
 	piirra_lentokentta();
 	piirra_ohje(peli::ohje);
-	piirra_virhe(peli::virheteksti);
 	piirra_odottavat();
+
+	kirjoita_tekstia(peli::syote, 150, 10);
 
 	piirra_metar();
 
@@ -365,12 +346,16 @@ bool ohjelma::lue_hiiri() {
 }
 
 void ohjelma::piirra_lentokentta() {
+	SDL_Surface* nimi;
+
 	for (unsigned int i = 0; i < peli::kentta.kiitotiet.size(); ++i) {
 		lineColor(ruutu, peli::kentta.kiitotiet[i].alkupiste.x, peli::kentta.kiitotiet[i].alkupiste.y, peli::kentta.kiitotiet[i].loppupiste.x, peli::kentta.kiitotiet[i].loppupiste.y, 0x223344FF);
-		kirjoita_tekstia(kuvat::nimi, peli::kentta.kiitotiet[i].nimi, peli::kentta.kiitotiet[i].alkupiste.x, peli::kentta.kiitotiet[i].alkupiste.y);
+		kirjoita_tekstia(nimi, peli::kentta.kiitotiet[i].nimi, peli::kentta.kiitotiet[i].alkupiste.x, peli::kentta.kiitotiet[i].alkupiste.y);
 
 		circleColor(ruutu, peli::kentta.kiitotiet[i].lahestymispiste.x, peli::kentta.kiitotiet[i].lahestymispiste.y, apuvalineet::nm2px(0.5), 0xAAAAAAFF);
 	}
+
+	SDL_FreeSurface(nimi);
 }
 
 void ohjelma::kirjoita_tekstia(SDL_Surface* tekstipinta, std::string teksti, int x, int y) {
@@ -385,98 +370,104 @@ void ohjelma::kirjoita_tekstia(SDL_Surface* tekstipinta, std::string teksti, int
 }
 
 void ohjelma::kirjoita_tekstia(std::string teksti, int x, int y) {
-	if (teksti.length() > 0) {
-		kuvat::tekstipinta = TTF_RenderText_Solid(fontti, teksti.c_str(), vari);
+	SDL_Surface* tekstipinta = NULL;
 
-		if (!kuvat::tekstipinta) {
+	if (teksti.length() > 0) {
+		tekstipinta = TTF_RenderText_Solid(fontti, teksti.c_str(), vari);
+
+		if (!tekstipinta) {
 			throw std::runtime_error(SDL_GetError());
 		}
-		piirra_kuva(kuvat::tekstipinta, x, y, false);
-		SDL_Flip(ruutu);
+
+		piirra_kuva(tekstipinta, x, y, false);
 	}
+
+	SDL_FreeSurface(tekstipinta);
 }
 
 void ohjelma::piirra_tilanne() {
+	SDL_Surface* tilanne;
+
 	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli::kasitellyt) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("vaadittavat_kasitellyt"));
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 20);
+	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 20);
 
 	teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli::porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("maks_porrastusvirhe"));
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 40);
+	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 40);
 
 	teksti =  "muut virheet " + apuvalineet::tekstiksi(peli::muut_virheet);
-	kirjoita_tekstia(kuvat::tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 60);
+	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 60);
+
+	SDL_FreeSurface(tilanne);
 }
 
 void ohjelma::piirra_ohje(std::string ohje) {
-	kirjoita_tekstia(kuvat::ohje, ohje.c_str(), anna_asetus("ruutu_leveys") - (ohje.length() * (fontin_koko / 2)), 80);
+	kirjoita_tekstia(ohje.c_str(), anna_asetus("ruutu_leveys") - anna_asetus("info_leveys"), 80);
 }
 
 void ohjelma::piirra_tilasto() {
 	std::clog << "ohjelma::piirra_tilasto()" << std::endl;
-	piirra_kuva(kuvat::tausta_valikko, 0, 0);
+	SDL_Surface* tilasto;
+
+	piirra_kuva(image_cache::common().get("kuvat/tausta_tilasto.bmp"), 0, 0);
+
 	int y = 30;
 	int x = 200;
-	kirjoita_tekstia(kuvat::tilasto, "kutsutunnus", x, y-15);
-	kirjoita_tekstia(kuvat::tilasto, "alueelle", x+100, y-15);
-	kirjoita_tekstia(kuvat::tilasto, "pois", x+200, y-15);
-	kirjoita_tekstia(kuvat::tilasto, "alueella", x+300, y-15);
-	kirjoita_tekstia(kuvat::tilasto, "selvitykset", x+400, y-15);
+
+	kirjoita_tekstia(tilasto, "kutsutunnus", x, y-15);
+	kirjoita_tekstia(tilasto, "alueelle", x+100, y-15);
+	kirjoita_tekstia(tilasto, "pois", x+200, y-15);
+	kirjoita_tekstia(tilasto, "alueella", x+300, y-15);
+	kirjoita_tekstia(tilasto, "selvitykset", x+400, y-15);
 
 	for (unsigned int i = 0; i < peli::ajat.size(); ++i) {
-		kirjoita_tekstia(kuvat::tilasto, peli::ajat[i].tunnus, x, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].sisaan).c_str(), x+100, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].pois).c_str(), x+200, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].pois - peli::ajat[i].sisaan).c_str(), x+300, y);
-		kirjoita_tekstia(kuvat::tilasto, apuvalineet::tekstiksi(peli::ajat[i].selvitykset).c_str(), x+400, y);
+		kirjoita_tekstia(tilasto, peli::ajat[i].tunnus, x, y);
+		kirjoita_tekstia(tilasto, apuvalineet::tekstiksi(peli::ajat[i].sisaan).c_str(), x+100, y);
+		kirjoita_tekstia(tilasto, apuvalineet::tekstiksi(peli::ajat[i].pois).c_str(), x+200, y);
+		kirjoita_tekstia(tilasto, apuvalineet::tekstiksi(peli::ajat[i].pois - peli::ajat[i].sisaan).c_str(), x+300, y);
+		kirjoita_tekstia(tilasto, apuvalineet::tekstiksi(peli::ajat[i].selvitykset).c_str(), x+400, y);
 
 		y += 15;
 	}
 
 	SDL_Flip(ruutu);
-}
-
-void ohjelma::piirra_kirjoitus(std::string teksti) {
-	if (teksti.length() > 0) {
-		kirjoita_tekstia(kuvat::kirjoitus, teksti, 500, 20);
-	}
-
-	SDL_Flip(ruutu);
-}
-
-void ohjelma::piirra_virhe(std::string virhe) {
-	kirjoita_tekstia(kuvat::virhe, virhe, 550, 100);
+	SDL_FreeSurface(tilasto);
 }
 
 void ohjelma::piirra_atis(int toiminto) {
-	piirra_kuva(kuvat::tausta_valikko, 0, 0);
+	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.bmp"), 0, 0);
+	SDL_Surface* atis;
+
+	kirjoita_tekstia(peli::syote, 150, 10);
 
 	switch (toiminto) {
 		case peli::LAHTO:
-			kirjoita_tekstia(kuvat::atis, "Valitse lähtökiitotie", 400, 70);
+			kirjoita_tekstia(atis, "Valitse lähtökiitotie", 400, 70);
 			break;
 		case peli::LASKU:
-			kirjoita_tekstia(kuvat::atis, "Valitse laskukiitotie", 400, 70);
+			kirjoita_tekstia(atis, "Valitse laskukiitotie", 400, 70);
 			break;
 		case peli::SIIRTOPINTA:
-			kirjoita_tekstia(kuvat::atis, "Valitse siirtopinta", 400, 70);
+			kirjoita_tekstia(atis, "Valitse siirtopinta", 400, 70);
 			break;
 	}
 
 	int y = 30;
+
 	for (unsigned int i = 0; i < peli::kentta.kiitotiet.size(); ++i) {
-		kirjoita_tekstia(kuvat::atis, peli::kentta.kiitotiet[i].nimi, 400, y);
+		kirjoita_tekstia(atis, peli::kentta.kiitotiet[i].nimi, 400, y);
 		y += 20;
 	}
 
 	piirra_metar();
 	piirra_ohje(peli::ohje);
 
-	kirjoita_tekstia(kuvat::atis, "Anna lähtö- ja laskukiitotie, sekä siirtopinta", 30, 30);
-	kirjoita_tekstia(kuvat::atis, "Lähtökiitotie: " + apuvalineet::tekstiksi(peli::atis::lahto), 30, 50);
-	kirjoita_tekstia(kuvat::atis, "Laskukiitotie: " + apuvalineet::tekstiksi(peli::atis::lasku), 30, 70);
-	kirjoita_tekstia(kuvat::atis, "Siirtopinta: " + apuvalineet::tekstiksi(peli::atis::siirtopinta), 30, 90);
+	kirjoita_tekstia(atis, "Anna lähtö- ja laskukiitotie, sekä siirtopinta", 30, 30);
+	kirjoita_tekstia(atis, "Lähtökiitotie: " + apuvalineet::tekstiksi(peli::atis::lahto), 30, 50);
+	kirjoita_tekstia(atis, "Laskukiitotie: " + apuvalineet::tekstiksi(peli::atis::lasku), 30, 70);
+	kirjoita_tekstia(atis, "Siirtopinta: " + apuvalineet::tekstiksi(peli::atis::siirtopinta), 30, 90);
 
 	SDL_Flip(ruutu);
+	SDL_FreeSurface(atis);
 }
 
 void ohjelma::piirra_metar() {
@@ -493,15 +484,20 @@ void ohjelma::piirra_metar() {
 		voimakkuus = "0" + voimakkuus;
 	}
 
-	kirjoita_tekstia(kuvat::metar, tuuli + "/" + voimakkuus + " " + apuvalineet::tekstiksi(peli::metar::paine), 30, 10);
+	kirjoita_tekstia(tuuli + "/" + voimakkuus + " " + apuvalineet::tekstiksi(peli::metar::paine), 30, 10);
 }
 
 static void ohjelma::piirra_odottavat() {
+	SDL_Surface* odottavat;
+
 	int y = 100;
+
 	for (unsigned int i = 0; i < peli::odottavat.size(); ++i) {
-		kirjoita_tekstia(kuvat::odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 100, y);
+		kirjoita_tekstia(odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 100, y);
 
 		y += fontin_koko + 5;
 	}
+
+	SDL_FreeSurface(odottavat);
 }
 
