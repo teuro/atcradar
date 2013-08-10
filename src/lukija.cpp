@@ -1,11 +1,10 @@
 #include "lukija.hpp"
 
 #include <SDL/SDL.h>
-#include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_ttf.h>
 
 void syotteenluku::lue_syote() {
-    //If a key was pressed
+	peli::syote = this->str;
     SDL_Event event;
     SDL_PollEvent(&event);
     if( event.type == SDL_KEYDOWN )

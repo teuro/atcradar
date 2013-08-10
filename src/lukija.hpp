@@ -1,6 +1,7 @@
 #ifndef _LUKIJA_HPP
 #define _LUKIJA_HPP
 
+#include "peli.hpp"
 #include <string>
 
 class syotteenluku {
