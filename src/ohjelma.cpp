@@ -292,6 +292,12 @@ void ohjelma::piirra_navipisteet() {
 		kirjoita_tekstia(nimi, peli::navipisteet[i].nimi, tmp.x, tmp.y);
 		trigonColor(ruutu, tmp.x-3, tmp.y+3, tmp.x+3, tmp.y+3, tmp.x, tmp.y-3, 456);
 	}
+
+	for (unsigned int i = 0; i < peli::sisapisteet.size(); ++i) {
+		apuvalineet::piste tmp = peli::sisapisteet[i].paikka;
+		kirjoita_tekstia(nimi, peli::sisapisteet[i].nimi, tmp.x, tmp.y);
+		trigonColor(ruutu, tmp.x-3, tmp.y+3, tmp.x+3, tmp.y+3, tmp.x, tmp.y-3, 456);
+	}
 }
 
 void ohjelma::lataa_asetukset(std::string nimi) {

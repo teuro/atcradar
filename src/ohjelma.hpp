@@ -1,4 +1,4 @@
-<// ohjelma.hpp
+// ohjelma.hpp
 #ifndef _OHJELMA_HPP
 #define _OHJELMA_HPP
 
