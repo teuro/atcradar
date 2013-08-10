@@ -10,8 +10,8 @@
 
 namespace peli {
 	const float ajan_muutos = 0.02;
-	//std::vector <apuvalineet::piste> navigointi;
 	std::vector <std::string> tunnukset;
+	std::string syote;
 
 	static void lataa_kentta(std::string kentta);
 	static void lataa_tunnukset(std::string tunnukset);
@@ -189,10 +189,6 @@ int peli::aja() {
 			ohjelma::odota();
 		} else {
 			ohjelma::piirra_peli();
-
-			if (toiminto >= 0) {
-				ohjelma::piirra_kirjoitus(lukija.anna_viesti());
-			}
 
 			piirretty = true;
 		}
@@ -407,7 +403,6 @@ void peli::lataa_kentta(std::string kentta) {
 }
 
 std::string peli::generoi_tunnus() {
-
 	std::string tunniste = tunnukset[apuvalineet::arvo_luku(0, tunnukset.size())];
 	std::string luku = apuvalineet::tekstiksi(apuvalineet::arvo_luku(0, 999));
 
@@ -630,8 +625,6 @@ void peli::pyyda_atis() {
 		bool lasku_ok = false;
 
 		ohjelma::piirra_atis(toiminto);
-		ohjelma::kirjoita_tekstia(lukija.anna_viesti(), 300, 20);
-
 		if (atis::lahtokiitotie > -1 && atis::laskukiitotie > -1 && atis::siirtopinta > -1) {
 			peli::ohje = "Tiedot syötetty tarkistetaan onko oikein";
 

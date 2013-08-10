@@ -60,6 +60,7 @@ namespace peli {
 	int aja();
 	void aseta_virhe(int virhe);
 	extern std::vector <tilasto> ajat;
+	extern std::string syote;
 }
 
 #endif
