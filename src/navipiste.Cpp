@@ -8,4 +8,9 @@ navipiste::navipiste(std::string nimi, apuvalineet::piste paikka, double korkeus
 	this->lentosuunta = suunta;
 }
 
+navipiste::navipiste(std::string nimi, apuvalineet::piste paikka) {
+	this->nimi = nimi;
+	this->paikka = paikka;
+}
+
 navipiste::navipiste() {}
