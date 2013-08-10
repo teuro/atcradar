@@ -10,7 +10,7 @@
 
 namespace peli {
 	const float ajan_muutos = 0.02;
-	std::vector <apuvalineet::piste> navigointi;
+	//std::vector <apuvalineet::piste> navigointi;
 	std::vector <std::string> tunnukset;
 
 	static void lataa_kentta(std::string kentta);
@@ -24,12 +24,14 @@ namespace peli {
 	std::vector <lentokone> koneet;
 	std::vector <lentokone> odottavat;
 	std::vector <navipiste> navipisteet;
+	std::vector <navipiste> sisapisteet;
 	static std::string generoi_tunnus();
 	static void valitse_kone(const apuvalineet::piste& hiiri);
 	static void valitse_navipiste(const apuvalineet::piste& hiiri);
 	static void anna_selvitys(int toiminto, double luku, int kaarto);
 	static void tarkista_porrastus();
 	static void lataa_navipisteet(std::string nimi);
+	static void lataa_lahipisteet(std::string nimi);
 	static void hoida_koneet();
 	static void poista_kone(int kone);
 	static int etsi_valittu_kone();
@@ -139,7 +141,7 @@ int peli::aja() {
 
 		if (ohjelma::lue_nappi(ohjelma::NAPPI_F5)) {
 			toiminto = SUUNTA;
-		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F6)) {
+		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F7)) {
 			toiminto = NOPEUS;
 		} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
 			toiminto = KORKEUS;
@@ -343,15 +345,40 @@ void peli::lataa_navipisteet(std::string nimi) {
 	sisaan.close();
 }
 
+void peli::lataa_lahipisteet(std::string nimi) {
+	std::clog << "peli::lataa_sisapisteet(" << nimi << ")" << std::endl;
+	std::ifstream sisaan(nimi.c_str(), std::ios::in);
+
+	if (!sisaan) {
+		throw std::runtime_error("Tiedostoa " + nimi + " ei ole tai se ei aukea");
+	}
+
+	double suunta, etaisyys;
+	std::string _nimi;
+
+	while (sisaan >> _nimi >> suunta >> etaisyys) {
+		apuvalineet::piste paikka;
+
+		paikka = apuvalineet::uusi_paikka(kentta.paikka, suunta, etaisyys);
+
+		navipiste tmp(_nimi, paikka);
+
+		sisapisteet.push_back(tmp);
+	}
+
+	sisaan.close();
+}
+
 void peli::lataa_kentta(std::string kentta) {
 	std::string paate = ".txt";
-	std::string tmp = "kentat/";
-	std::clog << "peli::lataa_kiitotiet(" << tmp + kentta + paate << ")" << std::endl;
-	tmp += kentta + paate;
+	std::string kansio = "kentat/";
+	std::string tmp;
+	std::clog << "peli::lataa_kiitotiet(" << kansio + kentta + paate << ")" << std::endl;
+	tmp = kansio + kentta + paate;
 	std::ifstream sisaan(tmp.c_str(), std::ios::in);
 
 	if (!sisaan) {
-		throw std::runtime_error("Tiedostoa " + tmp + kentta + paate + " ei ole tai se ei aukea");
+		throw std::runtime_error("Tiedostoa " + tmp + " ei ole tai se ei aukea");
 	}
 
 	std::string nimi;
@@ -368,12 +395,13 @@ void peli::lataa_kentta(std::string kentta) {
 		peli::kentta.kiitotiet.push_back(tmpa);
 	}
 
-	kentta += "_pisteet";
-	tmp = "kentat/" + kentta + paate;
-
-	sisaan.close();
+	tmp = kansio + kentta + "_pisteet" + paate;
 
 	lataa_navipisteet(tmp);
+
+	tmp = kansio + kentta + "_lahipisteet" + paate;
+
+	lataa_lahipisteet(tmp);
 
 	sisaan.close();
 }

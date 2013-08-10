@@ -54,6 +54,7 @@ namespace peli {
 	}
 
 	extern std::vector <navipiste> navipisteet;
+	extern std::vector <navipiste> sisapisteet;
 	extern lentokentta kentta;
 
 	int aja();
