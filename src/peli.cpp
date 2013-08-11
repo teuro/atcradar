@@ -469,6 +469,7 @@ void peli::hoida_koneet() {
 		if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde)) {
 			if (koneet[i].reitti.size()) {
 				navipiste tmp = koneet[i].anna_piste();
+				koneet[i].reitti.pop();
 				koneet[i].kohde = tmp.paikka;
 			} else {
 				koneet[i].kohde.x = 0;
