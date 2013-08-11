@@ -211,8 +211,6 @@ int peli::aja() {
 		std::clog << ajat[i].tunnus << " " << ajat[i].sisaan << " " << ajat[i].pois << " " << (ajat[i].pois - ajat[i].sisaan) << " " << ajat[i].selvitykset << std::endl;
 	}
 
-	ohjelma::odota_nappi();
-
 	if (loppu) {
 		ohjelma::odota_nappi();
 	}
