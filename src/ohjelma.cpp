@@ -260,6 +260,13 @@ void ohjelma::piirra_koneet() {
 				if (peli::koneet[i].tyyppi == peli::LAHTEVA) {
 					kirjoita_tekstia(tiedot, peli::koneet[i].ulosmenopiste.nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
 				}
+
+				int y = 250;
+
+				for (int j = 0; j < peli::koneet[i].reitti.size(); ++j) {
+					kirjoita_tekstia(tiedot, peli::koneet[i].reitti[j].nimi, anna_asetus("ruutu_leveys") - 30, y);
+					y += 15;
+				}
 			}
 		}
 	}
