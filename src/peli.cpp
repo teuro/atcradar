@@ -43,6 +43,7 @@ namespace peli {
 	lentokentta kentta;
 
 	int alku;
+	int toiminto;
 	int koska_uusi_kone = 1;
 	int koska_metar;
 	int porrastusvirheet = 0;
@@ -92,8 +93,6 @@ int peli::aja() {
 
 	// Nollataan kello.
 	float pelin_kello = ohjelma::sekunnit(true);
-
-	int toiminto = 0;
 
 	ohjelma::tyhjenna_syote();
 
@@ -311,6 +310,7 @@ void peli::luo_kone() {
 
 	} else {
 		int i = apuvalineet::arvo_luku(0, navipisteet.size());
+
 		koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
