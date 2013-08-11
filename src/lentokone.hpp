@@ -4,6 +4,7 @@
 #include "apuvalineet.hpp"
 #include "navipiste.hpp"
 #include <vector>
+#include <queue>
 
 const int VASEN = -1;
 const int OIKEA = 1;
@@ -16,7 +17,7 @@ private:
 	void muuta_suuntaa(double aika);
 public:
 	navipiste anna_piste();
-	std::vector <navipiste> reitti;
+	std::queue <navipiste> reitti;
 	apuvalineet::piste paikka;
 	apuvalineet::piste kohde;
 	navipiste ulosmenopiste;
