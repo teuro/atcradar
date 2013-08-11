@@ -1,20 +1,5 @@
-Porrastusminimi alittui aikaan 934.779
-Annettu selvityskorkeus liian alhainen aikaan 920.757
-Annettu selvityskorkeus liian alhainen aikaan 1361.42
-Porrastusminimi alittui aikaan 66.849
-Annettu selvitysnopeus on suuri pieni aikaan 79.727
-Porrastusminimi alittui aikaan 148.863
-Porrastusminimi alittui aikaan 66.849
-Porrastusminimi alittui aikaan 145.864
-Porrastusminimi alittui aikaan 66.849
-Annettu selvitysnopeus on suuri pieni aikaan 79.833
-Annettu selvitysnopeus on liian pieni aikaan 81.928
-Annettu selvityskorkeus liian alhainen aikaan 11.658
-Porrastusminimi alittui aikaan 362.5
-Annettu selvitysnopeus on suuri pieni aikaan 873.619
-Koneen suunnan tulee olla +- 30
-Annettu selvitysnopeus on liian pieni aikaan 919.288
-Koneen suunnan tulee olla +- 30
-Annettu selvitysnopeus on liian pieni aikaan 1099.93
-Koneen suunnan tulee olla +- 30
-Annettu selvitysnopeus on liian pieni aikaan 1103.74
+Annettu selvityskorkeus liian suuri aikaan 469.202
+Porrastusminimi alittui aikaan 344.07
+Porrastusminimi alittui aikaan 573.758
+Porrastusminimi alittui aikaan 656.478
+Porrastusminimi alittui aikaan 484.976
