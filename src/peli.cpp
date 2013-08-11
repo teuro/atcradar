@@ -101,6 +101,10 @@ int peli::aja() {
 	syotteenluku lukija;
 	koska_metar = ohjelma::anna_asetus("koska_metar");
 
+	luo_kone();
+	luo_kone();
+	luo_kone();
+
 	while (!loppu) {
 		alku = ohjelma::sekunnit();
 		hiiri = ohjelma::anna_hiiri();
@@ -156,12 +160,6 @@ int peli::aja() {
 				toiminto = LAHESTYMIS;
 			} else if (tmp == "DCT" && koneet[etsi_valittu_kone()].tyyppi == LAHTEVA) {
 				toiminto = OIKOTIE;
-			}
-
-			std::vector <navipiste>::iterator kohde = std::find(sisapisteet.begin(), sisapisteet.end(), tmp);
-
-			if (kohde != sisapisteet.end()) {
-				koneet[etsi_valittu_kone()].aseta_navipiste(kohde->paikka);
 			}
 
 			if (toiminto != LAHESTYMIS && toiminto != OIKOTIE) {
@@ -470,9 +468,14 @@ void peli::tarkista_porrastus() {
 
 void peli::hoida_koneet() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde) && koneet[i].reitti.size()) {
-			navipiste tmp = koneet[i].anna_piste();
-			koneet[i].kohde = tmp.paikka;
+		if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde)) {
+			if (koneet[i].reitti.size()) {
+				navipiste tmp = koneet[i].anna_piste();
+				koneet[i].kohde = tmp.paikka;
+			} else {
+				koneet[i].kohde.x = 0;
+				koneet[i].kohde.y = 0;
+			}
 		}
 
 		if (koneet[i].odotus) {
@@ -503,8 +506,13 @@ void peli::hoida_koneet() {
 
 		if (koneet[i].tyyppi == peli::LAHTEVA) {
 			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde)) {
-				poista_kone(i);
-				++kasitellyt;
+				if (koneet[i].kohde == koneet[i].ulosmenopiste.paikka) {
+					poista_kone(i);
+					++kasitellyt;
+				} else {
+					koneet[i].kohde.x = 0;
+					koneet[i].kohde.y = 0;
+				}
 			}
 		}
 
@@ -601,6 +609,14 @@ void peli::pyyda_atis() {
 		if (lukija.anna_viesti().length() > 1 && ohjelma::lue_nappi(ohjelma::NAPPI_ENTER)) {
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;
+
+			if (ohjelma::lue_nappi(ohjelma::NAPPI_F5)) {
+				toiminto = LAHTO;
+			} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F7)) {
+				toiminto = LASKU;
+			} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
+				toiminto = SIIRTOPINTA;
+			}
 
 			switch (toiminto) {
 				case LAHTO:
