@@ -503,13 +503,12 @@ void peli::hoida_koneet() {
 		}
 
 		if (koneet[i].tyyppi == peli::LAHTEVA) {
-			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde)) {
-				if (koneet[i].kohde == koneet[i].ulosmenopiste.paikka) {
-					poista_kone(i);
-					++kasitellyt;
-				} else {
-					koneet[i].kohde.x = 0;
-					koneet[i].kohde.y = 0;
+			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].ulosmenopiste.paikka)) {
+				poista_kone(i);
+				++kasitellyt;
+			} else if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde)) {
+				if (koneet[i].reitti.size()) {
+					koneet[i].aseta_navipiste(koneet[i].anna_piste().paikka);
 				}
 			}
 		}
