@@ -261,11 +261,25 @@ void ohjelma::piirra_koneet() {
 					kirjoita_tekstia(tiedot, peli::koneet[i].ulosmenopiste.nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
 				}
 
-				int y = 250;
 
-				kirjoita_tekstia(tiedot, "Kohde", anna_asetus("ruutu_leveys") - 45, 235);
+				if (peli::koneet[i].reitti.size()) {
+					int y = 250;
 
-				kirjoita_tekstia(tiedot, peli::koneet[i].reitti.front().nimi, anna_asetus("ruutu_leveys") - 45, y);
+					kirjoita_tekstia(tiedot, "Kohde", anna_asetus("ruutu_leveys") - 45, 235);
+					kirjoita_tekstia(tiedot, peli::koneet[i].reitti.front().nimi, anna_asetus("ruutu_leveys") - 45, y);
+				}
+
+				switch (peli::toiminto) {
+					case peli::SUUNTA:
+						kirjoita_tekstia(tiedot, "Anna suunta 0-360 tai navipisteen nimi", 350, 10);
+						break;
+					case peli::NOPEUS:
+						kirjoita_tekstia(tiedot, "Anna nopeus lukuna", 350, 10);
+						break;
+					case peli::KORKEUS:
+						kirjoita_tekstia(tiedot, "Anna korkeus numeroina", 350, 10);
+						break;
+	}
 			}
 		}
 	}
@@ -506,4 +520,3 @@ static void ohjelma::piirra_odottavat() {
 
 	SDL_FreeSurface(odottavat);
 }
-
