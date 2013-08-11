@@ -263,10 +263,9 @@ void ohjelma::piirra_koneet() {
 
 				int y = 250;
 
-				for (int j = 0; j < peli::koneet[i].reitti.size(); ++j) {
-					kirjoita_tekstia(tiedot, peli::koneet[i].reitti[j].nimi, anna_asetus("ruutu_leveys") - 30, y);
-					y += 15;
-				}
+				kirjoita_tekstia(tiedot, "Kohde", anna_asetus("ruutu_leveys") - 45, 235);
+
+				kirjoita_tekstia(tiedot, peli::koneet[i].reitti.front().nimi, anna_asetus("ruutu_leveys") - 45, y);
 			}
 		}
 	}
@@ -396,13 +395,13 @@ void ohjelma::piirra_tilanne() {
 	SDL_Surface* tilanne;
 
 	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli::kasitellyt) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("vaadittavat_kasitellyt"));
-	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 20);
+	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - anna_asetus("info_leveys"), 20);
 
 	teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli::porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("maks_porrastusvirhe"));
-	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 40);
+	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - anna_asetus("info_leveys"), 40);
 
 	teksti =  "muut virheet " + apuvalineet::tekstiksi(peli::muut_virheet);
-	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - (teksti.length() * (fontin_koko / 2)), 60);
+	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - anna_asetus("info_leveys"), 60);
 
 	SDL_FreeSurface(tilanne);
 }
