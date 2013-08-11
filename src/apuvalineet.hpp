@@ -6,9 +6,14 @@
 namespace apuvalineet {
 	extern double zoom;
 
-	struct piste {
+	class piste {
+	public:
 		double x;
 		double y;
+
+		bool operator ==(const piste& b) {
+			return (x == b.x && y == b.y);
+		}
 	};
 
 	struct vektori {
