@@ -229,7 +229,7 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 		std::vector <navipiste>::iterator etsi = std::find(peli::sisapisteet.begin(), peli::sisapisteet.end(), tmp);
 
 		if (etsi != peli::sisapisteet.end()) {
-			this->reitti.push_back(*etsi);
+			this->reitti.push(*etsi);
 			tmp = "";
 		}
 
@@ -264,7 +264,5 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 }
 
 navipiste lentokone::anna_piste() {
-	navipiste tmp = this->reitti.back();
-	this->reitti.pop_back();
-	return tmp;
+	return this->reitti.front();
 }
