@@ -226,13 +226,14 @@ void lentokone::tarkista_suunta_kohteeseen() {
 
 void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 	if (toiminto == peli::SUUNTA) {
-		std::vector <navipiste>::iterator etsi = std::find(peli::navipisteet.begin(), peli::navipisteet.end(), tmp);
+		std::vector <navipiste>::iterator etsi = std::find(peli::sisapisteet.begin(), peli::sisapisteet.end(), tmp);
 
-		if (etsi != peli::navipisteet.end()) {
+		if (etsi != peli::sisapisteet.end()) {
 			this->reitti.push_back(*etsi);
+			tmp = "";
 		}
 
-		if (this->kohde.x == 0 && this->kohde.y == 0) {
+		if (this->kohde.x == 0 && this->kohde.y == 0 && this->reitti.size()) {
 			this->kohde = anna_piste().paikka;
 		}
 
