@@ -159,6 +159,10 @@ int peli::aja() {
 				toiminto = LAHESTYMIS;
 			} else if (tmp == "DCT" && koneet[etsi_valittu_kone()].tyyppi == LAHTEVA) {
 				toiminto = OIKOTIE;
+			} else if (tmp == "HOLD") {
+				koneet[etsi_valittu_kone()].odotuskuvio = ohjelma::sekunnit() + 60;
+			} else if (tmp == "OFF") {
+				koneet[etsi_valittu_kone()].odotuskuvio = -1;
 			}
 
 			if (toiminto != LAHESTYMIS && toiminto != OIKOTIE) {
@@ -483,6 +487,11 @@ void peli::hoida_koneet() {
 				koneet[i].odotus = false;
 				odottavat.erase(odottavat.begin()+0);
 			}
+		}
+
+		if (koneet[i].odotuskuvio > -1 && koneet[i].odotuskuvio < ohjelma::sekunnit()) {
+			koneet[i].odotuskuvio += 120;
+			koneet[i].muuta_selvityssuuntaa(koneet[i].suunta + 180, OIKEA);
 		}
 
 		if (koneet[i].paikka.x < 0 || koneet[i].paikka.x > ohjelma::anna_asetus("ruutu_leveys") || koneet[i].paikka.y < 0 || koneet[i].paikka.y > ohjelma::anna_asetus("ruutu_korkeus")) {

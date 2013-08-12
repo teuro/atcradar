@@ -46,6 +46,7 @@ public:
 	bool valittu;
 	int tyyppi;
 
+	double odotuskuvio;
 	bool lahestymisselvitys;
 	bool laskuselvitys;
 	bool ylosveto;

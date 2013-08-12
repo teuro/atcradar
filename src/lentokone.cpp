@@ -31,6 +31,8 @@ lentokone::lentokone(std::string kutsutunnus, double x, double y, double korkeus
 	this->laskuselvitys = false;
 	this->valittu = false;
 
+	this->odotuskuvio = -1;
+
 	this->odotus = odotus;
 
 	std::clog << this->kutsutunnus << " luotu paikkaan " << this->paikka.x << ", " << this->paikka.y << std::endl;
@@ -61,6 +63,7 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	this->valittu = false;
 
 	this->odotus = odotus;
+	this->odotuskuvio = -1;
 
 	std::clog << this->kutsutunnus << " luotu paikkaan " << this->paikka.x << ", " << this->paikka.y << std::endl;
 }
