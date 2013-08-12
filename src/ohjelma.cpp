@@ -1,7 +1,6 @@
 // ohjelma.cpp
 #include "ohjelma.hpp"
 #include "kuvavarasto.hpp"
-#include "lukija.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <SDL/SDL.h>
@@ -21,11 +20,6 @@ namespace ohjelma {
 	static void piirra_metar();
 	static void piirra_odottavat();
 	std::map <std::string, double> asetukset;
-
-	namespace kuvat {
-		// Funktio kuvan lataukseen ja virheen heittämiseen.
-		static SDL_Surface *lataa(const char *nimi, bool lapinakyva);
-	}
 
 	static void kirjoita_tekstia(SDL_Surface* tekstipinta, std::string teksti, int x, int y);
 	static TTF_Font* fontti;
@@ -128,27 +122,6 @@ bool ohjelma::lue_nappi(nappi n) {
 void ohjelma::tyhjenna_syote() {
 	SDL_Event e;
 	while (SDL_PollEvent(&e));
-}
-
-// Lataa kuvan ja optimoi sen piirtoa varten.
-static SDL_Surface *ohjelma::kuvat::lataa(const char *nimi, bool lapinakyva) {
-	// Jos lataus onnistuu...
-	if (SDL_Surface *tmp = SDL_LoadBMP(nimi)) {
-		// Asetetaan läpinäkyvä väri (magenta eli pinkki).
-		if (lapinakyva) {
-			SDL_SetColorKey(tmp, SDL_SRCCOLORKEY, SDL_MapRGB(tmp->format, 255, 0, 255));
-		}
-		// Yritetään optimoida.
-		if (SDL_Surface *opti = SDL_DisplayFormat(tmp)) {
-			// Tuhotaan alkuperäinen ja palautetaan optimoitu.
-			SDL_FreeSurface(tmp);
-			tmp = opti;
-		}
-		// Palautetaan kuva.
-		return tmp;
-	}
-	// Muuten heitetään virhe.
-	throw std::runtime_error(SDL_GetError());
 }
 
 // Piirtää yhden kuvan.
@@ -279,10 +252,12 @@ void ohjelma::piirra_koneet() {
 					case peli::KORKEUS:
 						kirjoita_tekstia(tiedot, "Anna korkeus numeroina", 350, 10);
 						break;
-	}
+				}
 			}
 		}
 	}
+
+	SDL_FreeSurface(tiedot);
 }
 
 void ohjelma::piirra_navipisteet() {
@@ -299,6 +274,8 @@ void ohjelma::piirra_navipisteet() {
 		kirjoita_tekstia(nimi, peli::sisapisteet[i].nimi, tmp.x, tmp.y);
 		trigonColor(ruutu, tmp.x-3, tmp.y+3, tmp.x+3, tmp.y+3, tmp.x, tmp.y-3, 456);
 	}
+
+	SDL_FreeSurface(nimi);
 }
 
 void ohjelma::lataa_asetukset(std::string nimi) {
@@ -314,10 +291,7 @@ void ohjelma::lataa_asetukset(std::string nimi) {
 
 	while (sisaan >> asetus_nimi >> asetus_arvo) {
 		ohjelma::asetukset[asetus_nimi] = asetus_arvo;
-		//std::clog << asetus_nimi << " => " << ohjelma::asetukset[asetus_nimi] << std::endl;
 	}
-
-	//std::clog << asetukset.size() << std::endl;
 
 	sisaan.close();
 }
@@ -325,13 +299,13 @@ void ohjelma::lataa_asetukset(std::string nimi) {
 double ohjelma::anna_asetus(std::string asetus) {
 	std::map <std::string, double>::iterator onko;
 
-	onko = ohjelma::asetukset.find(asetus);
+	onko = asetukset.find(asetus);
 
 	if (onko == ohjelma::asetukset.end()) {
-		throw std::logic_error("Asetusta " + asetus + " ei ole rivi");
+		throw std::logic_error("Asetusta " + asetus + " ei ole");
 	}
 
-	return ohjelma::asetukset[asetus];
+	return asetukset[asetus];
 }
 
 bool ohjelma::onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade) {
