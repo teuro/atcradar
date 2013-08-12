@@ -484,7 +484,9 @@ void ohjelma::piirra_metar() {
 static void ohjelma::piirra_odottavat() {
 	SDL_Surface* odottavat;
 
-	int y = 100;
+	int y = 120;
+
+	kirjoita_tekstia(odottavat, "Odottavat koneet", anna_asetus("ruutu_leveys") - 100, y - fontin_koko - 5);
 
 	for (unsigned int i = 0; i < peli::odottavat.size(); ++i) {
 		kirjoita_tekstia(odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 100, y);
