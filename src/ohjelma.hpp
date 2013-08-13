@@ -40,6 +40,10 @@ namespace ohjelma {
 	void piirra_tilasto();
 	void piirra_atis(int toiminto);
 	void kirjoita_tekstia(std::string teksti, int x, int y);
+
+	namespace versio {
+		std::string anna_versio();
+	}
 }
 
 #endif

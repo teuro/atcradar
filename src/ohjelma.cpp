@@ -24,6 +24,16 @@ namespace ohjelma {
 	static void kirjoita_tekstia(SDL_Surface* tekstipinta, std::string teksti, int x, int y);
 	static TTF_Font* fontti;
 	static SDL_Color vari = {50, 50, 50};
+
+	namespace versio {
+		int paa = 2;
+		int kehitys = 0;
+		int rakennus = 1;
+	}
+}
+
+std::string ohjelma::versio::anna_versio() {
+	return apuvalineet::tekstiksi(paa) + "." + apuvalineet::tekstiksi(kehitys) + "." + apuvalineet::tekstiksi(rakennus);
 }
 
 // Alustusfunktio.
@@ -197,6 +207,7 @@ void ohjelma::piirra_koneet() {
 	for (unsigned int i = 0; i < peli::koneet.size(); ++i) {
 		if (peli::koneet[i].odotus == false) {
 			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli::koneet[i].paikka, peli::koneet[i].suunta, peli::koneet[i].nopeus * (60.0 / 3600.0));
+			apuvalineet::piste hiiri = anna_hiiri();
 
 			if (peli::koneet[i].onko_porrastus) {
 				vari = ok;
@@ -221,13 +232,13 @@ void ohjelma::piirra_koneet() {
 				selvityskorkeus = std::floor(peli::koneet[i].selvityskorkeus / 100);
 			}
 
-			kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(lentokorkeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
+			kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(std::floor(lentokorkeus)) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + fontin_koko + 3);
 			kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(selvityskorkeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + fontin_koko + 3);
 
 			if (peli::koneet[i].valittu) {
-				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].nopeus) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
+				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(std::floor(peli::koneet[i].nopeus)) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
 				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].selvitysnopeus), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (2 * fontin_koko) + 3);
-				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].suunta) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
+				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(std::floor(peli::koneet[i].suunta)) + " / ", peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
 				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(peli::koneet[i].selvityssuunta), peli::koneet[i].paikka.x + 40, peli::koneet[i].paikka.y + (3 * fontin_koko) + 3);
 
 				if (peli::koneet[i].tyyppi == peli::LAHTEVA) {
@@ -253,6 +264,14 @@ void ohjelma::piirra_koneet() {
 						kirjoita_tekstia(tiedot, "Anna korkeus numeroina", 350, 10);
 						break;
 				}
+
+				lineColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, hiiri.x, hiiri.y, vari);
+				apuvalineet::vektori vek = apuvalineet::suunta_vektori(peli::koneet[i].paikka, hiiri);
+
+				int x = std::abs(peli::koneet[i].paikka.x + hiiri.x) / 2;
+				int y = std::abs(peli::koneet[i].paikka.y + hiiri.y) / 2;
+
+				kirjoita_tekstia(tiedot, apuvalineet::tekstiksi(std::floor(vek.pituus)) + " / " + apuvalineet::tekstiksi(std::floor(vek.suunta)), x, y);
 			}
 		}
 	}
