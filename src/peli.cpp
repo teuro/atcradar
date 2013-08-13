@@ -80,6 +80,31 @@ namespace peli {
 // Pelin p‰‰funktio.
 int peli::aja() {
 	std::clog << "peli::aja()" << std::endl;
+
+	/*std::string versio = ohjelma::versio::anna_versio();
+	std::string v;
+	std::string komento;
+
+	system("..\\paivitys\\wget http://teuro.kapsi.fi/radar/versio.txt -O versio.txt");
+
+	std::ifstream sis("versio.txt", std::ios::in);
+	sis >> v;
+
+	if (v > versio) {
+		std::clog << "Ladataan uusi versio " << v << " ohjelma sammuu lataamisen ja asentamisen valmistuttua" << std::endl;
+		komento = "..\\paivitys\\wget http://teuro.kapsi.fi/radar/radar" + v + ".tar.gz -O ..\\paivitys.tar.gz";
+		system(komento.c_str());
+
+		komento = "..\\paivitys\\bsdtar -xf ..\\paivitys.tar.gz";
+		system(komento.c_str());
+
+		komento = "del paivitys.tar.gz";
+		system(komento.c_str());
+
+		std::clog << "Paketti ladattu ja asennettu" << std::endl;
+	}
+	*/
+
 	ohjelma::lataa_asetukset("asetukset.ini");
 	lataa_tunnukset("tunnukset.txt");
 	lataa_kentta("EFRO");
