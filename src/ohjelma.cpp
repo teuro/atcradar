@@ -136,7 +136,7 @@ void ohjelma::tyhjenna_syote() {
 
 // Piirtää yhden kuvan.
 static void ohjelma::piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta) {
-	SDL_Rect r = {x, y};
+	SDL_Rect r = {(Sint16)x, (Sint16)y};
 
 	if (keskikohta) {
 		r.x -= kuva->w / 2;
@@ -196,7 +196,7 @@ void ohjelma::piirra_peli() {
 void ohjelma::piirra_koneet() {
 	Uint32 vari;
 
-	SDL_Surface* tiedot;
+	SDL_Surface* tiedot = NULL;
 
 	double lentokorkeus;
 	double selvityskorkeus;
@@ -280,7 +280,7 @@ void ohjelma::piirra_koneet() {
 }
 
 void ohjelma::piirra_navipisteet() {
-	SDL_Surface* nimi;
+	SDL_Surface* nimi = NULL;
 
 	for (unsigned int i = 0; i < peli::navipisteet.size(); ++i) {
 		apuvalineet::piste tmp = peli::navipisteet[i].paikka;
@@ -359,7 +359,7 @@ bool ohjelma::lue_hiiri() {
 }
 
 void ohjelma::piirra_lentokentta() {
-	SDL_Surface* nimi;
+	SDL_Surface* nimi = NULL;
 
 	for (unsigned int i = 0; i < peli::kentta.kiitotiet.size(); ++i) {
 		lineColor(ruutu, peli::kentta.kiitotiet[i].alkupiste.x, peli::kentta.kiitotiet[i].alkupiste.y, peli::kentta.kiitotiet[i].loppupiste.x, peli::kentta.kiitotiet[i].loppupiste.y, 0x223344FF);
@@ -399,7 +399,7 @@ void ohjelma::kirjoita_tekstia(std::string teksti, int x, int y) {
 }
 
 void ohjelma::piirra_tilanne() {
-	SDL_Surface* tilanne;
+	SDL_Surface* tilanne = NULL;
 
 	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli::kasitellyt) + std::string("/") + apuvalineet::tekstiksi(anna_asetus("vaadittavat_kasitellyt"));
 	kirjoita_tekstia(tilanne, teksti, ohjelma::anna_asetus("ruutu_leveys") - anna_asetus("info_leveys"), 20);
@@ -419,7 +419,7 @@ void ohjelma::piirra_ohje(std::string ohje) {
 
 void ohjelma::piirra_tilasto() {
 	std::clog << "ohjelma::piirra_tilasto()" << std::endl;
-	SDL_Surface* tilasto;
+	SDL_Surface* tilasto = NULL;
 
 	piirra_kuva(image_cache::common().get("kuvat/tausta_tilasto.bmp"), 0, 0);
 
@@ -448,7 +448,7 @@ void ohjelma::piirra_tilasto() {
 
 void ohjelma::piirra_atis(int toiminto) {
 	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.bmp"), 0, 0);
-	SDL_Surface* atis;
+	SDL_Surface* atis = NULL;
 
 	kirjoita_tekstia(peli::syote, 150, 10);
 
@@ -501,7 +501,7 @@ void ohjelma::piirra_metar() {
 }
 
 static void ohjelma::piirra_odottavat() {
-	SDL_Surface* odottavat;
+	SDL_Surface* odottavat = NULL;
 
 	int y = 120;
 
