@@ -15,31 +15,40 @@ namespace peli {
 
 	static void lataa_kentta(std::string kentta);
 	static void lataa_tunnukset(std::string tunnukset);
+
 	static void lisaa_selvityksia();
+
 	std::vector <tilasto> ajat;
+
 	std::string ohje = " ";
 	std::string virheteksti = " ";
 
 	int kasitellyt = 0;
+
 	std::vector <lentokone> koneet;
 	std::vector <lentokone> odottavat;
+
 	std::vector <navipiste> navipisteet;
 	std::vector <navipiste> sisapisteet;
+
 	static std::string generoi_tunnus();
+
 	static void valitse_kone(const apuvalineet::piste& hiiri);
-	static void valitse_navipiste(const apuvalineet::piste& hiiri);
-	static void anna_selvitys(int toiminto, double luku, int kaarto);
+
 	static void tarkista_porrastus();
 	static void lataa_navipisteet(std::string nimi);
 	static void lataa_lahipisteet(std::string nimi);
+
+	static bool onko_vapaata();
 	static void hoida_koneet();
 	static void poista_kone(int kone);
 	static int etsi_valittu_kone();
 	static void anna_lahestymisselvitys();
+
 	static void pyyda_atis();
 	static bool tarkista_atis();
 	static void generoi_metar();
-	static bool onko_vapaata();
+
 	lentokentta kentta;
 
 	int alku;
@@ -80,30 +89,6 @@ namespace peli {
 // Pelin p‰‰funktio.
 int peli::aja() {
 	std::clog << "peli::aja()" << std::endl;
-
-	/*std::string versio = ohjelma::versio::anna_versio();
-	std::string v;
-	std::string komento;
-
-	system("..\\paivitys\\wget http://teuro.kapsi.fi/radar/versio.txt -O versio.txt");
-
-	std::ifstream sis("versio.txt", std::ios::in);
-	sis >> v;
-
-	if (v > versio) {
-		std::clog << "Ladataan uusi versio " << v << " ohjelma sammuu lataamisen ja asentamisen valmistuttua" << std::endl;
-		komento = "..\\paivitys\\wget http://teuro.kapsi.fi/radar/radar" + v + ".tar.gz -O ..\\paivitys.tar.gz";
-		system(komento.c_str());
-
-		komento = "..\\paivitys\\bsdtar -xf ..\\paivitys.tar.gz";
-		system(komento.c_str());
-
-		komento = "del paivitys.tar.gz";
-		system(komento.c_str());
-
-		std::clog << "Paketti ladattu ja asennettu" << std::endl;
-	}
-	*/
 
 	ohjelma::lataa_asetukset("asetukset.ini");
 	lataa_tunnukset("tunnukset.txt");
@@ -415,7 +400,6 @@ void peli::lataa_kentta(std::string kentta) {
 	}
 
 	std::string nimi;
-	int x, y;
 	double pituus, suunta, nousukorkeus, noususuunta;
 	double alkupiste_suunta, alkupiste_etaisyys;
 
@@ -790,5 +774,6 @@ double peli::atis::etsi_siirtopinta(double paine) {
 			return peli::atis::paineet[i].siirtopinta;
 		}
 	}
-}
 
+	return 0.0;
+}
