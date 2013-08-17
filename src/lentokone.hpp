@@ -69,6 +69,8 @@ public:
 	bool operator ==(const lentokone& a) {
 		return a.kutsutunnus == kutsutunnus;
 	}
+
+	void poista_reitti();
 };
 
 #endif

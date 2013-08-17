@@ -110,10 +110,6 @@ int peli::aja() {
 	syotteenluku lukija;
 	koska_metar = ohjelma::anna_asetus("koska_metar");
 
-	luo_kone();
-	luo_kone();
-	luo_kone();
-
 	while (!loppu) {
 		alku = ohjelma::sekunnit();
 		hiiri = ohjelma::anna_hiiri();
@@ -177,6 +173,7 @@ int peli::aja() {
 
 			if (toiminto != LAHESTYMIS && toiminto != OIKOTIE) {
 				koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
+				koneet[etsi_valittu_kone()].poista_reitti();
 			} else {
 				anna_lahestymisselvitys();
 			}

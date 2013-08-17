@@ -266,6 +266,16 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 	}
 }
 
+void lentokone::poista_reitti() {
+	while (this->reitti.size()) {
+		this->anna_piste();
+	}
+}
+
 navipiste lentokone::anna_piste() {
-	return this->reitti.front();
+	navipiste tmp = this->reitti.front();
+
+	this->reitti.pop();
+
+	return tmp;
 }
