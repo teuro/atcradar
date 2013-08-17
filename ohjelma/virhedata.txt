@@ -1,1 +1,2 @@
 Annettu selvityskorkeus liian suuri aikaan 21.821
+Porrastusminimi alittui aikaan 1.016
