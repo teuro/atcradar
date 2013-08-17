@@ -735,10 +735,12 @@ static bool peli::onko_vapaata() {
 
 static bool peli::tarkista_atis() {
 	peli::atis::lue_paineet("painerajat.txt");
+
 	double vasta_lahto = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].suunta - peli::metar::tuuli));
 	double vasta_lasku = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta - peli::metar::tuuli));
+	double siirtopinta = peli::atis::etsi_siirtopinta(peli::metar::paine);
 
-	if (vasta_lahto < 0 && vasta_lasku < 0) {
+	if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis::siirtopinta) {
 		return false;
 	}
 
@@ -746,7 +748,7 @@ static bool peli::tarkista_atis() {
 }
 
 void peli::atis::lue_paineet(std::string nimi) {
-	std::clog << "peli::atis::paine::lue_paineet(" << nimi << ")" << std::endl;
+	std::clog << "peli::atis::lue_paineet(" << nimi << ")" << std::endl;
 	std::ifstream sisaan(nimi.c_str(), std::ios::in);
 
 	if (!sisaan) {
