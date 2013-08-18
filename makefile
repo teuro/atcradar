@@ -1,4 +1,4 @@
-FLAGS = -g -O1 -lSDL -lSDL_ttf -lSDL_gfx -lSDL_image -Wall -pedantic
+FLAGS = -s -O2 -lSDL -lSDL_ttf -lSDL_gfx -lSDL_image -Wall -pedantic
 
 all: radar
 
