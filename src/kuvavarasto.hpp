@@ -99,7 +99,7 @@ public:
 #include <SDL/SDL.h>
 #ifdef USE_SDL_IMAGE
     // Tuki muillekin kuin BMP-kuville saadaan SDL_image-kirjastosta:
-    #include <SDL_image.h>
+    #include <SDL/SDL_image.h>
 #endif
 
 // Toteutetaan SDL_Surface*-tyypille cache-mallin tarvitsema rakenne.
