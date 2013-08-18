@@ -93,8 +93,8 @@ namespace peli {
 int peli::aja() {
 	std::clog << "peli::aja()" << std::endl;
 
-	ohjelma::lataa_asetukset("asetukset.ini");
-	lataa_tunnukset("tunnukset.txt");
+	//ohjelma::lataa_asetukset("asetukset.ini");
+	lataa_tunnukset("data\\tunnukset.txt");
 	lataa_kentta("EFRO");
 
 	std::srand(std::time(NULL));
@@ -618,7 +618,7 @@ void peli::anna_lahestymisselvitys() {
 void peli::pyyda_atis() {
 	std::clog << "peli::pyyda_atis" << std::endl;
 	syotteenluku lukija;
-	peli::atis::lue_paineet("painerajat.txt");
+	peli::atis::lue_paineet("data/painerajat.txt");
 	int toiminto = LAHTO;
 
 	while (atis::ok == false) {

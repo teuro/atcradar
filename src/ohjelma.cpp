@@ -39,7 +39,7 @@ std::string ohjelma::versio::anna_versio() {
 // Alustusfunktio.
 void ohjelma::alku() {
 	std::clog << "ohjelma::alku()" << std::endl;
-	lataa_asetukset("asetukset.ini");
+	lataa_asetukset("data/asetukset.ini");
 
 	// Alustetaan SDL tai heitetään virhe.
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
