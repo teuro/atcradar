@@ -113,6 +113,9 @@ int peli::aja() {
 	syotteenluku lukija;
 	koska_metar = ohjelma::anna_asetus("koska_metar");
 
+	luo_kone();
+	luo_kone();
+
 	while (!loppu) {
 		alku = ohjelma::sekunnit();
 		hiiri = ohjelma::anna_hiiri();
