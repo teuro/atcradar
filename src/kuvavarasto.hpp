@@ -2,6 +2,7 @@
 // T‰m‰ varmistetaan esik‰‰nt‰j‰ll‰.
 #ifndef IMAGE_CACHE_HPP
 #define IMAGE_CACHE_HPP
+#define USE_SDL_IMAGE 1
 
 // K‰ytet‰‰n joitakin standardikirjaston luokkia.
 #include <string>

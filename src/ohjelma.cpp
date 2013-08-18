@@ -151,20 +151,20 @@ void ohjelma::piirra_valikko(int pelin_tulos, valikko::valinta valittu) {
 	std::clog << "ohjelma::piirra_valikko(tulos, valittu)" << std::endl;
 
 	// Valitaan oikeat kuvat.
-	SDL_Surface *kuva_peli 		= image_cache::common().get("kuvat/valikko_peli.bmp");
-	SDL_Surface *kuva_lopetus 	= image_cache::common().get("kuvat/valikko_lopetus.bmp");
+	SDL_Surface *kuva_peli 		= image_cache::common().get("kuvat/valikko_peli.png");
+	SDL_Surface *kuva_lopetus 	= image_cache::common().get("kuvat/valikko_lopetus.png");
 
 	switch (valittu) {
 		case valikko::PELI:
-			kuva_peli = image_cache::common().get("kuvat/valikko_peli_valittu.bmp");
+			kuva_peli = image_cache::common().get("kuvat/valikko_peli_valittu.png");
 			break;
 		case valikko::LOPETUS:
-			kuva_lopetus = image_cache::common().get("kuvat/valikko_lopetus_valittu.bmp");
+			kuva_lopetus = image_cache::common().get("kuvat/valikko_lopetus_valittu.png");
 			break;
 	}
 
 	int x = 20, y = 16;
-	piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.bmp"), 0, 0);
+	piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.png"), 0, 0);
 
 	piirra_kuva(kuva_peli, x, y);
 	piirra_kuva(kuva_lopetus, x, y + kuva_peli->h + 5);
@@ -175,7 +175,7 @@ void ohjelma::piirra_valikko(int pelin_tulos, valikko::valinta valittu) {
 
 // Piirt‰‰ pelin.
 void ohjelma::piirra_peli() {
-	piirra_kuva(image_cache::common().get("kuvat/tausta_peli.bmp"), 0, 0);
+	piirra_kuva(image_cache::common().get("kuvat/tausta_peli.png"), 0, 0);
 	piirra_tilanne();
 
 	piirra_koneet();
@@ -435,7 +435,7 @@ void ohjelma::piirra_tilasto() {
 	std::clog << "ohjelma::piirra_tilasto()" << std::endl;
 	SDL_Surface* tilasto = NULL;
 
-	piirra_kuva(image_cache::common().get("kuvat/tausta_tilasto.bmp"), 0, 0);
+	piirra_kuva(image_cache::common().get("kuvat/tausta_tilasto.png"), 0, 0);
 
 	int y = 30;
 	int x = 200;
@@ -461,7 +461,7 @@ void ohjelma::piirra_tilasto() {
 }
 
 void ohjelma::piirra_atis(int toiminto) {
-	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.bmp"), 0, 0);
+	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.png"), 0, 0);
 	SDL_Surface* atis = NULL;
 
 	kirjoita_tekstia(peli::syote, 550, 10);
