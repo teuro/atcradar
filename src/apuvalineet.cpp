@@ -87,3 +87,16 @@ double apuvalineet::mi2ft(double mi) {
 double apuvalineet::ft2mi(double ft) {
 	return ft / 5280;
 }
+
+std::string apuvalineet::muuta_pituus(std::string alkuperainen, int haluttu_pituus) {
+	int nollia = haluttu_pituus - alkuperainen.length();
+	std::string tmp;
+
+	for (int i = 0; i < nollia; ++i) {
+		tmp += "0";
+	}
+
+	tmp += alkuperainen;
+
+	return tmp;
+}

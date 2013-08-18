@@ -186,7 +186,7 @@ void ohjelma::piirra_peli() {
 	piirra_ohje(peli::ohje);
 	piirra_odottavat();
 
-	kirjoita_tekstia(peli::syote, 150, 10);
+	kirjoita_tekstia(peli::syote, 550, 10);
 
 	piirra_metar();
 
@@ -464,7 +464,7 @@ void ohjelma::piirra_atis(int toiminto) {
 	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.bmp"), 0, 0);
 	SDL_Surface* atis = NULL;
 
-	kirjoita_tekstia(peli::syote, 150, 10);
+	kirjoita_tekstia(peli::syote, 550, 10);
 
 	switch (toiminto) {
 		case peli::LAHTO:
@@ -498,20 +498,17 @@ void ohjelma::piirra_atis(int toiminto) {
 }
 
 void ohjelma::piirra_metar() {
-	std::string tuuli = apuvalineet::tekstiksi(peli::metar::tuuli);
-	std::string voimakkuus = apuvalineet::tekstiksi(peli::metar::voimakkuus);
+	std::string tuuli 		= apuvalineet::tekstiksi(peli::metar::tuuli);
+	std::string voimakkuus 	= apuvalineet::tekstiksi(peli::metar::voimakkuus);
+	std::string paine 		= apuvalineet::tekstiksi(peli::metar::paine);
+	std::string nakyvyys 	= apuvalineet::tekstiksi(peli::metar::nakyvyys);
+	std::string lampotila 	= apuvalineet::tekstiksi(peli::metar::lampotila);
+	std::string kastepiste 	= apuvalineet::tekstiksi(peli::metar::kastepiste);
 
-	if (tuuli.length() == 1) {
-		tuuli = "00" + tuuli;
-	} else if (tuuli.length() == 2) {
-		tuuli = "0" + tuuli;
-	}
+	tuuli 		= apuvalineet::muuta_pituus(tuuli, 3);
+	voimakkuus 	= apuvalineet::muuta_pituus(voimakkuus, 2);
 
-	if (voimakkuus.length() == 1) {
-		voimakkuus = "0" + voimakkuus;
-	}
-
-	kirjoita_tekstia(tuuli + "/" + voimakkuus + " " + apuvalineet::tekstiksi(peli::metar::paine), 30, 10);
+	kirjoita_tekstia(tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + paine , 30, 10);
 }
 
 static void ohjelma::piirra_odottavat() {

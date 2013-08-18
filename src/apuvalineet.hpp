@@ -53,5 +53,6 @@ namespace apuvalineet {
 	piste uusi_paikka(const piste& a, double suunta, double pituus);
 	vektori suunta_vektori(const piste& a, const piste& b);
 	double laske_kulma(const piste& a, const piste& b);
+	std::string muuta_pituus(std::string alkuperainen, int haluttupituus);
 }
 #endif

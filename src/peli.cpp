@@ -83,6 +83,9 @@ namespace peli {
 		int voimakkuus;
 		int puuskat;
 		double paine;
+		int nakyvyys;
+		int lampotila;
+		int kastepiste;
 	}
 }
 
@@ -715,9 +718,12 @@ void peli::pyyda_atis() {
 }
 
 static void peli::generoi_metar() {
-	metar::tuuli = apuvalineet::arvo_luku(0, 360);
-	metar::voimakkuus = apuvalineet::arvo_luku(2, 22);
-	metar::paine = apuvalineet::arvo_luku(950, 1060);
+	metar::tuuli 		= apuvalineet::arvo_luku(0, 360);
+	metar::voimakkuus 	= apuvalineet::arvo_luku(2, 22);
+	metar::paine 		= apuvalineet::arvo_luku(950, 1060);
+	metar::nakyvyys		= apuvalineet::arvo_luku(1200, 9999);
+	metar::lampotila	= apuvalineet::arvo_luku(-18, 27);
+	metar::kastepiste	= apuvalineet::arvo_luku(-18, 27);
 }
 
 static bool peli::onko_vapaata() {
