@@ -100,3 +100,7 @@ std::string apuvalineet::muuta_pituus(std::string alkuperainen, int haluttu_pitu
 
 	return tmp;
 }
+
+int apuvalineet::pyorista(double luku, int jaollisuus) {
+	return std::floor(luku/jaollisuus) * jaollisuus;
+}
