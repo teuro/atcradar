@@ -746,7 +746,7 @@ static bool peli::onko_vapaata() {
 }
 
 static bool peli::tarkista_atis() {
-	peli::atis::lue_paineet("painerajat.txt");
+	peli::atis::lue_paineet("data/painerajat.txt");
 
 	double vasta_lahto = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].suunta - peli::metar::tuuli));
 	double vasta_lasku = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta - peli::metar::tuuli));
