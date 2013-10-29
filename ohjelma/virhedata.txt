@@ -1,0 +1,2 @@
+Koneen suunnan tulee olla +- 30
+Annettu selvitysnopeus on liian pieni aikaan 1787.65
