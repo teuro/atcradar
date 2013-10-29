@@ -2,6 +2,7 @@
 #include "peli.hpp"
 #include "ohjelma.hpp"
 #include "lukija.hpp"
+#include "ajastin.hpp"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -113,6 +114,10 @@ int peli::aja() {
 	syotteenluku lukija;
 	koska_metar = ohjelma::anna_asetus("koska_metar");
 
+	std::vector <ajastin> ajastimet;
+
+	ajastimet.push_back(ajastin("metar", ohjelma::anna_asetus("koska_metar"), 0));
+
 	luo_kone();
 	luo_kone();
 
@@ -165,6 +170,7 @@ int peli::aja() {
 		lukija.lue_syote();
 
 		if (ohjelma::lue_nappi(ohjelma::NAPPI_ENTER) && etsi_valittu_kone() >= 0) {
+			koneet[etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
 			std::string tmp = lukija.anna_viesti();
 
 			if (tmp == "ILS" && koneet[etsi_valittu_kone()].tyyppi == SAAPUVA) {

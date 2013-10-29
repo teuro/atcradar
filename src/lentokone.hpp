@@ -21,6 +21,7 @@ public:
 	apuvalineet::piste paikka;
 	apuvalineet::piste kohde;
 	navipiste ulosmenopiste;
+	double reaktioaika;
 
 	bool odotus;
 	lentokone(std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
