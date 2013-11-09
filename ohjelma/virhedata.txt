@@ -1,2 +1,6 @@
 Koneen suunnan tulee olla +- 30
 Annettu selvitysnopeus on liian pieni aikaan 1787.65
+Annettu selvityskorkeus liian suuri aikaan 233.097
+Annettu selvitysnopeus on liian pieni aikaan 829.959
+Annettu selvitysnopeus on liian pieni aikaan 932.055
+Annettu selvitysnopeus on suuri pieni aikaan 1154.69
