@@ -178,9 +178,9 @@ int peli::aja() {
 			} else if (tmp == "DCT" && koneet[etsi_valittu_kone()].tyyppi == LAHTEVA) {
 				toiminto = OIKOTIE;
 			} else if (tmp == "HOLD") {
-				koneet[etsi_valittu_kone()].odotuskuvio = ohjelma::sekunnit() + 60;
-			} else if (tmp == "OFF") {
-				koneet[etsi_valittu_kone()].odotuskuvio = -1;
+				toiminto = ODOTUS;
+            } else if (tmp == "OFF") {
+                toiminto = POIS;
 			}
 
 			if (toiminto != LAHESTYMIS && toiminto != OIKOTIE) {

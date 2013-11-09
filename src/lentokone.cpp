@@ -263,6 +263,12 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 		case peli::NOPEUS:
 			this->muuta_selvitysnopeutta(luku);
 			break;
+        case peli::ODOTUS:
+            this->odotuskuvio = ohjelma::sekunnit() + 60;
+            break;
+        case peli::POIS:
+            this->odotuskuvio = -1;
+            break;
 	}
 }
 
