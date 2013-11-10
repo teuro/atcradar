@@ -44,7 +44,6 @@ namespace peli {
 	static void hoida_koneet();
 	static void poista_kone(int kone);
 	static int etsi_valittu_kone();
-	static void anna_lahestymisselvitys();
 
 	static void pyyda_atis();
 	static bool tarkista_atis();
@@ -183,12 +182,7 @@ int peli::aja() {
                 toiminto = POIS;
 			}
 
-			if (toiminto != LAHESTYMIS && toiminto != OIKOTIE) {
-				koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
-				koneet[etsi_valittu_kone()].poista_reitti();
-			} else {
-				anna_lahestymisselvitys();
-			}
+			koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
 
 			peli::lisaa_selvityksia();
 			ohjelma::odota(150);
@@ -583,42 +577,6 @@ int peli::etsi_valittu_kone() {
 	}
 
 	return -1;
-}
-
-void peli::anna_lahestymisselvitys() {
-	int valittu = etsi_valittu_kone();
-
-	if (valittu < 0) {
-		peli::aseta_virhe(VIRHE_EI_VALITTUA_KONETTA);
-	}
-
-	if (koneet[valittu].tyyppi == SAAPUVA) {
-		double koneen_suunta = koneet[valittu].suunta;
-
-		double min_suunta = kentta.kiitotiet[atis::laskukiitotie].suunta - ohjelma::anna_asetus("lahestymiskulma");
-		double max_suunta = kentta.kiitotiet[atis::laskukiitotie].suunta + ohjelma::anna_asetus("lahestymiskulma");
-
-		//std::clog << "kone = " << koneen_suunta << " min = " << min_suunta << " max = " << max_suunta << std::endl;
-
-		if (koneet[valittu].korkeus > ohjelma::anna_asetus("maks_lahestymiskorkeus")) {
-			aseta_virhe(VIRHE_LAHESTYMISKORKEUS);
-		} else if (koneet[valittu].nopeus > ohjelma::anna_asetus("maks_lahestymisnopeus")) {
-			aseta_virhe(VIRHE_LAHESTYMISNOPEUS);
-		} else if (koneen_suunta < min_suunta || koneen_suunta > max_suunta) {
-			aseta_virhe(VIRHE_LAHESTYMISSUUNTA);
-		} else {
-			koneet[valittu].aseta_navipiste(peli::kentta.kiitotiet[atis::laskukiitotie].lahestymispiste);
-			koneet[valittu].laskubaana = atis::laskukiitotie;
-		}
-	} else if (koneet[valittu].tyyppi == LAHTEVA) {
-		if (koneet[valittu].korkeus < ohjelma::anna_asetus("oikotie")) {
-			aseta_virhe(VIRHE_OIKOTIE);
-		} else {
-			koneet[valittu].aseta_navipiste(koneet[valittu].ulosmenopiste.paikka);
-		}
-	}
-
-	ohjelma::odota(200);
 }
 
 void peli::pyyda_atis() {

@@ -269,6 +269,29 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
         case peli::POIS:
             this->odotuskuvio = -1;
             break;
+		case peli::OIKOTIE:
+			if (this->korkeus < ohjelma::anna_asetus("oikotie")) {
+				peli::aseta_virhe(peli::VIRHE_OIKOTIE);
+			} else {
+				this->aseta_navipiste(this->ulosmenopiste.paikka);
+			}
+			break;
+		case peli::LAHESTYMIS:
+			double koneen_suunta = this->suunta;
+
+			double min_suunta = peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta - ohjelma::anna_asetus("lahestymiskulma");
+			double max_suunta = peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta + ohjelma::anna_asetus("lahestymiskulma");
+
+			if (this->korkeus > ohjelma::anna_asetus("maks_lahestymiskorkeus")) {
+				aseta_virhe(peli::VIRHE_LAHESTYMISKORKEUS);
+			} else if (this->nopeus > ohjelma::anna_asetus("maks_lahestymisnopeus")) {
+				aseta_virhe(peli::VIRHE_LAHESTYMISNOPEUS);
+			} else if (koneen_suunta < min_suunta || koneen_suunta > max_suunta) {
+				aseta_virhe(peli::VIRHE_LAHESTYMISSUUNTA);
+			} else {
+				this->aseta_navipiste(peli::kentta.kiitotiet[peli::atis::laskukiitotie].lahestymispiste);
+				this->laskubaana = peli::atis::laskukiitotie;
+			}
 	}
 }
 

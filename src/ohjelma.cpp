@@ -261,10 +261,8 @@ void ohjelma::piirra_koneet() {
 				}
 
 				if (peli::koneet[i].reitti.size()) {
-					int y = 250;
-
-					kirjoita_tekstia(tiedot, "Kohde", anna_asetus("ruutu_leveys") - 45, 235);
-					kirjoita_tekstia(tiedot, peli::koneet[i].reitti.front().nimi, anna_asetus("ruutu_leveys") - 45, y);
+					kirjoita_tekstia(tiedot, "Kohde", 600, 235);
+					kirjoita_tekstia(tiedot, peli::koneet[i].reitti.front().nimi, 600, 250);
 				}
 
 				switch (peli::toiminto) {
