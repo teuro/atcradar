@@ -186,7 +186,7 @@ void ohjelma::piirra_peli() {
 	piirra_ohje(peli::ohje);
 	piirra_odottavat();
 
-	kirjoita_tekstia(peli::syote, 550, 10);
+	kirjoita_tekstia(peli::syote, 50, 30);
 
 	piirra_metar();
 

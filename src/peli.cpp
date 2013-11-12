@@ -86,6 +86,7 @@ namespace peli {
 		int nakyvyys;
 		int lampotila;
 		int kastepiste;
+		int ilmankosteus;
 	}
 }
 
@@ -690,7 +691,8 @@ static void peli::generoi_metar() {
 	metar::paine 		= apuvalineet::arvo_luku(950, 1060);
 	metar::nakyvyys		= apuvalineet::arvo_luku(1200, 9999);
 	metar::lampotila	= apuvalineet::arvo_luku(-18, 27);
-	metar::kastepiste	= apuvalineet::arvo_luku(-18, 27);
+	metar::ilmankosteus	= apuvalineet::arvo_luku(50, 100);
+	metar::kastepiste	= metar::lampotila - ((100 - metar::ilmankosteus) / 5);
 }
 
 static bool peli::onko_vapaata() {

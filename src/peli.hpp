@@ -55,6 +55,7 @@ namespace peli {
 		extern int nakyvyys;
 		extern int lampotila;
 		extern int kastepiste;
+		extern int ilmankosteus;
 	}
 
 	extern std::vector <navipiste> navipisteet;

@@ -1,0 +1,3 @@
+Annettu selvityskorkeus liian alhainen aikaan 10.701
+Annettu selvitysnopeus on liian pieni aikaan 672.655
+Annettu selvitysnopeus on suuri pieni aikaan 690.18
