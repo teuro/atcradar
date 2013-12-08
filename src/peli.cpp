@@ -96,6 +96,7 @@ int peli::aja() {
 
 	//ohjelma::lataa_asetukset("asetukset.ini");
 	lataa_tunnukset("data\\tunnukset.txt");
+
 	lataa_kentta("EFRO");
 
 	std::srand(std::time(NULL));
@@ -172,6 +173,13 @@ int peli::aja() {
 		if (ohjelma::lue_nappi(ohjelma::NAPPI_ENTER) && etsi_valittu_kone() >= 0) {
 			koneet[etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
 			std::string tmp = lukija.anna_viesti();
+
+			if (toiminto == KORKEUS) {
+                if (tmp.length() == 2 || tmp.length() == 3) {
+                    double luku = apuvalineet::luvuksi<double>(tmp) * 100;
+                    tmp = apuvalineet::tekstiksi(luku);
+                }
+			}
 
 			if (tmp == "ILS" && koneet[etsi_valittu_kone()].tyyppi == SAAPUVA) {
 				toiminto = LAHESTYMIS;
@@ -329,7 +337,7 @@ void peli::luo_kone() {
 	} else {
 		int i = apuvalineet::arvo_luku(0, navipisteet.size());
 
-		koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
+        koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
 

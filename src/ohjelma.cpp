@@ -186,7 +186,7 @@ void ohjelma::piirra_peli() {
 	piirra_ohje(peli::ohje);
 	piirra_odottavat();
 
-	kirjoita_tekstia(peli::syote, 50, 30);
+	kirjoita_tekstia(peli::syote, 50, 70);
 
 	piirra_metar();
 
@@ -267,13 +267,13 @@ void ohjelma::piirra_koneet() {
 
 				switch (peli::toiminto) {
 					case peli::SUUNTA:
-						kirjoita_tekstia(tiedot, "Anna suunta 0-360 tai navipisteen nimi", 350, 10);
+						kirjoita_tekstia(tiedot, "Anna suunta 0-360 tai navipisteen nimi", 50, 50);
 						break;
 					case peli::NOPEUS:
-						kirjoita_tekstia(tiedot, "Anna nopeus lukuna", 350, 10);
+						kirjoita_tekstia(tiedot, "Anna nopeus lukuna", 50, 50);
 						break;
 					case peli::KORKEUS:
-						kirjoita_tekstia(tiedot, "Anna korkeus numeroina", 350, 10);
+						kirjoita_tekstia(tiedot, "Anna korkeus numeroina", 50, 50);
 						break;
 				}
 
@@ -426,7 +426,7 @@ void ohjelma::piirra_tilanne() {
 }
 
 void ohjelma::piirra_ohje(std::string ohje) {
-	kirjoita_tekstia(ohje.c_str(), anna_asetus("ruutu_leveys") - anna_asetus("info_leveys"), 80);
+	kirjoita_tekstia(ohje.c_str(), 50, 30);
 }
 
 void ohjelma::piirra_tilasto() {
@@ -462,21 +462,21 @@ void ohjelma::piirra_atis(int toiminto) {
 	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.png"), 0, 0);
 	SDL_Surface* atis = NULL;
 
-	kirjoita_tekstia(peli::syote, 550, 10);
+	kirjoita_tekstia(peli::syote, 50, 50);
 
 	switch (toiminto) {
 		case peli::LAHTO:
-			kirjoita_tekstia(atis, "Valitse lähtökiitotie", 400, 70);
+			kirjoita_tekstia(atis, "Valitse lähtökiitotie", 400, 30);
 			break;
 		case peli::LASKU:
-			kirjoita_tekstia(atis, "Valitse laskukiitotie", 400, 70);
+			kirjoita_tekstia(atis, "Valitse laskukiitotie", 400, 30);
 			break;
 		case peli::SIIRTOPINTA:
-			kirjoita_tekstia(atis, "Valitse siirtopinta", 400, 70);
+			kirjoita_tekstia(atis, "Valitse siirtopinta", 400, 30);
 			break;
 	}
 
-	int y = 30;
+	int y = 70;
 
 	for (unsigned int i = 0; i < peli::kentta.kiitotiet.size(); ++i) {
 		kirjoita_tekstia(atis, peli::kentta.kiitotiet[i].nimi, 400, y);
@@ -486,10 +486,10 @@ void ohjelma::piirra_atis(int toiminto) {
 	piirra_metar();
 	piirra_ohje(peli::ohje);
 
-	kirjoita_tekstia(atis, "Anna lähtö- ja laskukiitotie, sekä siirtopinta", 30, 30);
-	kirjoita_tekstia(atis, "Lähtökiitotie: " + apuvalineet::tekstiksi(peli::atis::lahto), 30, 50);
-	kirjoita_tekstia(atis, "Laskukiitotie: " + apuvalineet::tekstiksi(peli::atis::lasku), 30, 70);
-	kirjoita_tekstia(atis, "Siirtopinta: " + apuvalineet::tekstiksi(peli::atis::siirtopinta), 30, 90);
+	kirjoita_tekstia(atis, "Anna lähtö- ja laskukiitotie, sekä siirtopinta", 50, 70);
+	kirjoita_tekstia(atis, "Lähtökiitotie: " + apuvalineet::tekstiksi(peli::atis::lahto), 50, 90);
+	kirjoita_tekstia(atis, "Laskukiitotie: " + apuvalineet::tekstiksi(peli::atis::lasku), 50, 110);
+	kirjoita_tekstia(atis, "Siirtopinta: " + apuvalineet::tekstiksi(peli::atis::siirtopinta), 50, 130);
 
 	SDL_Flip(ruutu);
 	SDL_FreeSurface(atis);
@@ -506,7 +506,7 @@ void ohjelma::piirra_metar() {
 	tuuli 		= apuvalineet::muuta_pituus(tuuli, 3);
 	voimakkuus 	= apuvalineet::muuta_pituus(voimakkuus, 2);
 
-	kirjoita_tekstia(tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + paine , 30, 10);
+	kirjoita_tekstia(peli::kentta.nimi + " " + tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + paine , 50, 10);
 }
 
 static void ohjelma::piirra_odottavat() {
@@ -514,10 +514,10 @@ static void ohjelma::piirra_odottavat() {
 
 	int y = 120;
 
-	kirjoita_tekstia(odottavat, "Odottavat koneet", anna_asetus("ruutu_leveys") - 100, y - fontin_koko - 5);
+	kirjoita_tekstia(odottavat, "Odottavat koneet", anna_asetus("ruutu_leveys") - anna_asetus("info_leveys"), y - fontin_koko - 5);
 
 	for (unsigned int i = 0; i < peli::odottavat.size(); ++i) {
-		kirjoita_tekstia(odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 100, y);
+		kirjoita_tekstia(odottavat, peli::odottavat[i].kutsutunnus, anna_asetus("ruutu_leveys") - 200, y);
 
 		y += fontin_koko + 5;
 	}
