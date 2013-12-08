@@ -1,10 +1,7 @@
 atcradar
 ========
 
-Toimit lähestymislennonjohtajana. Tehtäväsi on saattaa saapuvat koneet laskuun ja nousevat koneet oikealle uloslentopisteelle.
+Toimit lähestymislennonjohtajana. Tehtäväsi on saattaa saapuvat koneet laskuun ja nousevat koneet oikealle uloslentopisteelle. Pelissä yritetään simuloida oikeaa tutkaa mahdollisimman realistisesti. Eroja toki löytyy myös paljon. Näistä saa lähettää mielellään palautetta, saadaan pelistä vielä enemmän oikeanlainen.
 
-Asennus
-lataa asennusohjelma http://teuro.kapsi.fi/radar/lataaja.zip
+Pelin mukana saat lähdekoodit, joten pelin edelleen kehittäminen on mahdollista. Peli tarvitsee SDL, SDL_ttf ja SDL_gfx kirjastot mukaan. Näiden kehitysversiot lisään jossakin vaiheessa mukaan, jotta kehitys olisi helppo aloitella.
 
-Jos asennus on ensimmäinen muista ladata myös http://teuro.kapsi.fi/radar/bin.zip ja pura se C:\Windows hakemistoon.
-Tämä tulee tehdä vain kerran.
