@@ -11,6 +11,7 @@ Pelin kulku:
 2. Täytä ATIS tiedote valitsemalla kiitotiet nousuun ja laskuun, sekä siirtopinta. Taulukon sopivasta siirtopinnasta löydät vaikkapa wikipediasta
 3. Kun ATIS on täytetty oikein peli alkaa. Aluksi peliin luodaan 3 kpl koneita. Osa on luultavasti lähteviä ja osa saapuvia. 
 4. Tästä eteenpäin klikkaat vektoroitavaa konetta ja valitse funktionäppäimistä sopivan
+
   4.1 F5 anna suunta tai navigointipisteen nimi
   4.2 F7 anna koneelle nopeus solmuina
   4.3 F8 anna konelle korkeus 
