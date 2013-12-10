@@ -95,7 +95,7 @@ int peli::aja() {
 	std::clog << "peli::aja()" << std::endl;
 
 	//ohjelma::lataa_asetukset("asetukset.ini");
-	lataa_tunnukset("data\\tunnukset.txt");
+	lataa_tunnukset("data/tunnukset.txt");
 
 	lataa_kentta("EFRO");
 
@@ -596,9 +596,13 @@ void peli::pyyda_atis() {
 
 	while (atis::ok == false) {
 		lukija.lue_syote();
+	std::clog << "syöte luettu" << std::endl;
 		ohjelma::odota(20);
+	std::clog << "odota ok" << std::endl;
 
 		if (lukija.anna_viesti().length() > 1 && ohjelma::lue_nappi(ohjelma::NAPPI_ENTER)) {
+		  std::clog << "viesti" << std::endl;
+
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;
 
@@ -609,6 +613,8 @@ void peli::pyyda_atis() {
 			} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
 				toiminto = SIIRTOPINTA;
 			}
+	std::clog << "nappi" << std::endl;
+
 
 			switch (toiminto) {
 				case LAHTO:
@@ -643,8 +649,11 @@ void peli::pyyda_atis() {
 		bool siirto_ok = false;
 		bool lahto_ok = false;
 		bool lasku_ok = false;
+	std::clog << "piirrellään" << std::endl;
 
 		ohjelma::piirra_atis(toiminto);
+	std::clog << "piirretty" << std::endl;
+
 		if (atis::lahtokiitotie > -1 && atis::laskukiitotie > -1 && atis::siirtopinta > -1) {
 			peli::ohje = "Tiedot syötetty tarkistetaan onko oikein";
 
@@ -723,7 +732,7 @@ static bool peli::tarkista_atis() {
 	if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis::siirtopinta) {
 		return false;
 	}
-
+	std::clog << "tarkista_atis true" << std::endl;
 	return true;
 }
 
@@ -742,9 +751,11 @@ void peli::atis::lue_paineet(std::string nimi) {
 		tmp.alaraja = ala;
 		tmp.ylaraja = yla;
 		tmp.siirtopinta = pinta;
+		std::clog << "pushing" << ala << " " << yla << " " << pinta << std::endl;
 
 		peli::atis::paineet.push_back(tmp);
 	}
+	std::clog << "closing" << std::endl;
 
 	sisaan.close();
 }

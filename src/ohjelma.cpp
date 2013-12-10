@@ -62,7 +62,10 @@ void ohjelma::alku() {
 		throw std::runtime_error(TTF_GetError());
 	}
 
-	fontti = TTF_OpenFont("fontit/Arial.ttf", fontin_koko);
+	fontti = TTF_OpenFont("fontit/arial.ttf", fontin_koko);
+	if(fontti == NULL) {
+		throw std::runtime_error("Cannot open font");
+	}
 	SDL_EnableUNICODE(SDL_ENABLE);
 }
 
@@ -109,11 +112,20 @@ ohjelma::nappi ohjelma::odota_nappi() {
 
 // Kertoo napin nykytilan.
 bool ohjelma::lue_nappi(nappi n) {
+	std::clog << "lue nappi" << std::endl;
 	// Käsketään SDL:n hoitaa viestit, jolloin sen tieto napeista päivittyy.
 	SDL_PumpEvents();
 
+	std::clog << "pumped" << std::endl;
 	// Tarkistetaan pyydetty nappi.
 	Uint8 *napit = SDL_GetKeyState(0);
+	std::clog << "getkeystate" << std::endl;
+
+	if(napit == NULL)
+	{
+		return false;
+	}
+	std::clog << "not null" << std::endl;
 
 	switch (n) {
 		case NAPPI_VASEN: return napit[SDLK_LEFT];
@@ -384,14 +396,18 @@ void ohjelma::piirra_lentokentta() {
 }
 
 void ohjelma::kirjoita_tekstia(SDL_Surface* tekstipinta, std::string teksti, int x, int y) {
+	std::clog << "kirjoita_tekstia" << std::endl;
 	tekstipinta = TTF_RenderText_Solid(fontti, teksti.c_str(), vari);
+	std::clog << "tekstipinta ok" << std::endl;
 
 	if (!tekstipinta) {
+		std::clog << "null" << std::endl;
 		throw std::runtime_error(SDL_GetError());
 	}
 
 	piirra_kuva(tekstipinta, x, y, false);
 	SDL_FreeSurface(tekstipinta);
+	std::clog << "done" << std::endl;
 }
 
 void ohjelma::kirjoita_tekstia(std::string teksti, int x, int y) {
@@ -459,10 +475,14 @@ void ohjelma::piirra_tilasto() {
 }
 
 void ohjelma::piirra_atis(int toiminto) {
+	std::clog << "piirra_atis" << std::endl;
+
 	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.png"), 0, 0);
+	std::clog << "kuva piirretty" << std::endl;
 	SDL_Surface* atis = NULL;
 
 	kirjoita_tekstia(peli::syote, 50, 50);
+	std::clog << "syöte piirretty" << std::endl;
 
 	switch (toiminto) {
 		case peli::LAHTO:
@@ -482,6 +502,7 @@ void ohjelma::piirra_atis(int toiminto) {
 		kirjoita_tekstia(atis, peli::kentta.kiitotiet[i].nimi, 400, y);
 		y += 20;
 	}
+	std::clog << "kiitot piir" << std::endl;
 
 	piirra_metar();
 	piirra_ohje(peli::ohje);
@@ -492,7 +513,8 @@ void ohjelma::piirra_atis(int toiminto) {
 	kirjoita_tekstia(atis, "Siirtopinta: " + apuvalineet::tekstiksi(peli::atis::siirtopinta), 50, 130);
 
 	SDL_Flip(ruutu);
-	SDL_FreeSurface(atis);
+//	SDL_FreeSurface(atis);
+	std::clog << "done" << std::endl;
 }
 
 void ohjelma::piirra_metar() {
