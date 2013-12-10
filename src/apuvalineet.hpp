@@ -1,8 +1,10 @@
-#ifndef _APUVALINEET_HPP#define _APUVALINEET_HPP
+#ifndef _APUVALINEET_HPP
+#define _APUVALINEET_HPP
 
 #include <cmath>
 #include <iostream>
-#include <sstream>
+#include <sstream>
+
 namespace apuvalineet {
 	extern double zoom;
 
@@ -56,4 +58,5 @@ namespace apuvalineet {
 	std::string muuta_pituus(std::string alkuperainen, int haluttupituus);
 	int pyorista(double luku, int jaollisuus);
 }
-#endif
+
+#endif

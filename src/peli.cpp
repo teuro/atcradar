@@ -589,19 +589,15 @@ int peli::etsi_valittu_kone() {
 }
 
 void peli::pyyda_atis() {
-	std::clog << "peli::pyyda_atis" << std::endl;
 	syotteenluku lukija;
 	peli::atis::lue_paineet("data/painerajat.txt");
 	int toiminto = LAHTO;
 
 	while (atis::ok == false) {
 		lukija.lue_syote();
-	std::clog << "syöte luettu" << std::endl;
 		ohjelma::odota(20);
-	std::clog << "odota ok" << std::endl;
 
 		if (lukija.anna_viesti().length() > 1 && ohjelma::lue_nappi(ohjelma::NAPPI_ENTER)) {
-		  std::clog << "viesti" << std::endl;
 
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;
@@ -613,10 +609,8 @@ void peli::pyyda_atis() {
 			} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
 				toiminto = SIIRTOPINTA;
 			}
-	std::clog << "nappi" << std::endl;
 
-
-			switch (toiminto) {
+            switch (toiminto) {
 				case LAHTO:
 					tmp = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), lukija.anna_viesti());
 					index = std::distance(kentta.kiitotiet.begin(), tmp);
@@ -649,10 +643,8 @@ void peli::pyyda_atis() {
 		bool siirto_ok = false;
 		bool lahto_ok = false;
 		bool lasku_ok = false;
-	std::clog << "piirrellään" << std::endl;
 
 		ohjelma::piirra_atis(toiminto);
-	std::clog << "piirretty" << std::endl;
 
 		if (atis::lahtokiitotie > -1 && atis::laskukiitotie > -1 && atis::siirtopinta > -1) {
 			peli::ohje = "Tiedot syötetty tarkistetaan onko oikein";
@@ -751,11 +743,8 @@ void peli::atis::lue_paineet(std::string nimi) {
 		tmp.alaraja = ala;
 		tmp.ylaraja = yla;
 		tmp.siirtopinta = pinta;
-		std::clog << "pushing" << ala << " " << yla << " " << pinta << std::endl;
-
 		peli::atis::paineet.push_back(tmp);
 	}
-	std::clog << "closing" << std::endl;
 
 	sisaan.close();
 }
