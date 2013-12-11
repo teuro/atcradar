@@ -1,7 +1,10 @@
+ohjelma/radar
+
 #################
 ## Eclipse
 #################
 
+*.exe
 *.pydevproject
 .project
 .metadata
