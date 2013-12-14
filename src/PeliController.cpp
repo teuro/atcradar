@@ -138,6 +138,7 @@ int PeliController::aja() {
 			peli.koska_uusi_kone = -1;
 			if (peli.koneet.size() == 0) {
 				/* Peli loppui */
+				loppu = true;
 			}
 		}
 
