@@ -75,7 +75,6 @@ public:
 
     lentokentta kentta;
 
-    int alku;
     int toiminto;
     int koska_uusi_kone = 1;
     int koska_metar;

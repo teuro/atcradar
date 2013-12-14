@@ -1,7 +1,10 @@
 #include "asetukset.h"
+#include "apuvalineet.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
+
+std::map <std::string, double> Asetukset::asetukset;
 
 void Asetukset::lataa_asetukset(std::string nimi) {
 	std::clog << "ohjelma::lataa_asetukset(" << nimi << ")" << std::endl;

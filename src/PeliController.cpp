@@ -32,7 +32,6 @@ int PeliController::aja() {
 
 	ohjelma.tyhjenna_syote();
 
-	apuvalineet::piste hiiri;
 	syotteenluku lukija;
 	peli.koska_metar = Asetukset::anna_asetus("koska_metar");
 
@@ -44,8 +43,8 @@ int PeliController::aja() {
 	peli.luo_kone(ohjelma);
 
 	while (!loppu) {
-		peli.alku = ohjelma.sekunnit();
-		hiiri = ohjelma.anna_hiiri();
+		int alku = ohjelma.sekunnit();
+		apuvalineet::piste hiiri = ohjelma.anna_hiiri();
 
 		peli.valitse_kone(hiiri);
 
@@ -54,7 +53,7 @@ int PeliController::aja() {
 			loppu = true;
 		}
 
-		if (peli.alku == peli.koska_uusi_kone) {
+		if (alku == peli.koska_uusi_kone) {
 			if (peli.koneet.size() < Asetukset::anna_asetus("maks_konemaara")) {
 				peli.luo_kone(ohjelma);
 				peli.koska_uusi_kone += apuvalineet::arvo_luku(Asetukset::anna_asetus("koska_uusi_ala"), Asetukset::anna_asetus("koska_uusi_yla"));
@@ -62,10 +61,10 @@ int PeliController::aja() {
 
 			peli.koska_uusi_kone += 15;
 
-			std::clog << "Seuraava kone luodaan " << (peli.koska_uusi_kone - peli.alku) << " sekunnin kuluttua" << std::endl;
+			std::clog << "Seuraava kone luodaan " << (peli.koska_uusi_kone - alku) << " sekunnin kuluttua" << std::endl;
 		}
 
-		if (peli.alku == peli.koska_metar) {
+		if (alku == peli.koska_metar) {
 			peli.generoi_metar();
 
 			if (!peli.tarkista_atis()) {
