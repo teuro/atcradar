@@ -285,7 +285,7 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 			if (korkeus < Asetukset::anna_asetus("oikotie")) {
 				peli.aseta_virhe(Peli::VIRHE_OIKOTIE);
 			} else {
-				aseta_navipiste(ulosmenopiste.paikka);
+				aseta_navipiste(ulosmenopiste);
 			}
 			break;
 		case Peli::LAHESTYMIS:
