@@ -61,8 +61,6 @@ int PeliController::aja() {
 				peli.koska_uusi_kone += apuvalineet::arvo_luku(Asetukset::anna_asetus("koska_uusi_ala"), Asetukset::anna_asetus("koska_uusi_yla"));
 			}
 
-			peli.koska_uusi_kone += 15;
-
 			std::clog << "Seuraava kone luodaan " << (peli.koska_uusi_kone - alku) << " sekunnin kuluttua" << std::endl;
 		}
 
@@ -138,6 +136,9 @@ int PeliController::aja() {
 
 		if (peli.kasitellyt == Asetukset::anna_asetus("vaadittavat_kasitellyt")) {
 			peli.koska_uusi_kone = -1;
+			if (peli.koneet.size() == 0) {
+				/* Peli loppui */
+			}
 		}
 
 		if (peli.etsi_valittu_kone() < 0) {
