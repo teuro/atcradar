@@ -19,34 +19,6 @@ void Ohjelma::alku() {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw std::runtime_error(SDL_GetError());
 	}
-}
-
-// Alustusfunktio.
-void PeliView::alku() {
-	std::clog << "ohjelma::alku()" << std::endl;
-	Asetukset::lataa_asetukset("data/asetukset.ini");
-
-	// Avataan ikkuna tai heitetään virhe.
-	ruutu = SDL_SetVideoMode(Asetukset::anna_asetus("ruutu_leveys"), Asetukset::anna_asetus("ruutu_korkeus"), 32, SDL_DOUBLEBUF);
-
-	if (!ruutu) {
-		throw std::runtime_error(SDL_GetError());
-	}
-
-	// Asetetaan otsikko.
-	SDL_WM_SetCaption("ATC-radar", "ATC-radar");
-
-	// Nollataan sekuntilaskuri.
-	ohjelma.sekunnit(true); 
-
-	if (TTF_Init() != 0) {
-		throw std::runtime_error(TTF_GetError());
-	}
-
-	fontti = TTF_OpenFont("fontit/arial.ttf", fontin_koko);
-	if(fontti == NULL) {
-		throw std::runtime_error("Cannot open font");
-	}
 	SDL_EnableUNICODE(SDL_ENABLE);
 }
 
@@ -123,6 +95,7 @@ void Ohjelma::tyhjenna_syote() {
 	while (SDL_PollEvent(&e));
 }
 
+<<<<<<< HEAD
 // Piirtää yhden kuvan.
 void PeliView::piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta) {
 	SDL_Rect r = {(Sint16)x, (Sint16)y};
@@ -297,6 +270,8 @@ void PeliView::piirra_navipisteet() {
 	}
 }
 
+=======
+>>>>>>> Refactored classes to own files, cleaned up interfaces.
 void Asetukset::lataa_asetukset(std::string nimi) {
 	std::clog << "ohjelma::lataa_asetukset(" << nimi << ")" << std::endl;
 	std::ifstream sisaan(nimi.c_str(), std::ios::in);
@@ -359,129 +334,4 @@ bool Ohjelma::lue_hiiri() {
 	}
 
 	return false;
-}
-
-void PeliView::piirra_lentokentta() {
-	for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-		lineColor(ruutu, peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y, peli.kentta.kiitotiet[i].loppupiste.x, peli.kentta.kiitotiet[i].loppupiste.y, 0x223344FF);
-		kirjoita_tekstia(peli.kentta.kiitotiet[i].nimi, peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y);
-
-		circleColor(ruutu, peli.kentta.kiitotiet[i].lahestymispiste.x, peli.kentta.kiitotiet[i].lahestymispiste.y, apuvalineet::nm2px(0.5), 0xAAAAAAFF);
-	}
-}
-
-void PeliView::kirjoita_tekstia(std::string teksti, int x, int y) {
-	if (teksti.length() > 0) {
-    	SDL_Surface* tekstipinta = TTF_RenderText_Solid(fontti, teksti.c_str(), vari);
-
-		if (!tekstipinta) {
-			throw std::runtime_error(SDL_GetError());
-		}
-
-		piirra_kuva(tekstipinta, x, y, false);
-    	SDL_FreeSurface(tekstipinta);
-	}
-}
-
-void PeliView::piirra_tilanne() {
-	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(Asetukset::anna_asetus("vaadittavat_kasitellyt"));
-    kirjoita_tekstia(teksti, Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), 20);
-
-    teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(Asetukset::anna_asetus("maks_porrastusvirhe"));
-    kirjoita_tekstia(teksti, Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), 40);
-
-	teksti =  "muut virheet " + apuvalineet::tekstiksi(peli.muut_virheet);
-    kirjoita_tekstia(teksti, Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), 60);
-}
-
-void PeliView::piirra_ohje(std::string ohje) {
-	kirjoita_tekstia(ohje.c_str(), 50, 30);
-}
-
-void PeliView::piirra_tilasto() {
-	std::clog << "ohjelma::piirra_tilasto()" << std::endl;
-
-	piirra_kuva(image_cache::common().get("kuvat/tausta_tilasto.png"), 0, 0);
-
-	int y = 30;
-	int x = 200;
-
-	kirjoita_tekstia("kutsutunnus", x, y-15);
-	kirjoita_tekstia("alueelle", x+100, y-15);
-	kirjoita_tekstia("pois", x+200, y-15);
-	kirjoita_tekstia("alueella", x+300, y-15);
-	kirjoita_tekstia("selvitykset", x+400, y-15);
-
-	for (unsigned int i = 0; i < peli.ajat.size(); ++i) {
-		kirjoita_tekstia(peli.ajat[i].tunnus, x, y);
-		kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].sisaan).c_str(), x+100, y);
-		kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].pois).c_str(), x+200, y);
-		kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].pois - peli.ajat[i].sisaan).c_str(), x+300, y);
-		kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].selvitykset).c_str(), x+400, y);
-
-		y += 15;
-	}
-
-	SDL_Flip(ruutu);
-}
-
-void PeliView::piirra_atis(int toiminto) {
-	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.png"), 0, 0);
-
-	kirjoita_tekstia(peli.syote, 50, 50);
-
-	switch (toiminto) {
-		case Peli::LAHTO:
-			kirjoita_tekstia("Valitse lähtökiitotie", 400, 30);
-			break;
-		case Peli::LASKU:
-			kirjoita_tekstia("Valitse laskukiitotie", 400, 30);
-			break;
-		case Peli::SIIRTOPINTA:
-			kirjoita_tekstia("Valitse siirtopinta", 400, 30);
-			break;
-	}
-
-	int y = 70;
-
-	for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-		kirjoita_tekstia(peli.kentta.kiitotiet[i].nimi, 400, y);
-		y += 20;
-	}
-
-	piirra_metar();
-	piirra_ohje(peli.ohje);
-
-	kirjoita_tekstia("Anna lähtö- ja laskukiitotie, sekä siirtopinta", 50, 70);
-	kirjoita_tekstia("Lähtökiitotie: " + apuvalineet::tekstiksi(peli.atis.lahto), 50, 90);
-	kirjoita_tekstia("Laskukiitotie: " + apuvalineet::tekstiksi(peli.atis.lasku), 50, 110);
-	kirjoita_tekstia("Siirtopinta: " + apuvalineet::tekstiksi(peli.atis.siirtopinta), 50, 130);
-
-	SDL_Flip(ruutu);
-}
-
-void PeliView::piirra_metar() {
-	std::string tuuli 		= apuvalineet::tekstiksi(peli.metar.tuuli);
-	std::string voimakkuus 	= apuvalineet::tekstiksi(peli.metar.voimakkuus);
-	std::string paine 		= apuvalineet::tekstiksi(peli.metar.paine);
-	std::string nakyvyys 	= apuvalineet::tekstiksi(peli.metar.nakyvyys);
-	std::string lampotila 	= apuvalineet::tekstiksi(peli.metar.lampotila);
-	std::string kastepiste 	= apuvalineet::tekstiksi(peli.metar.kastepiste);
-
-	tuuli 		= apuvalineet::muuta_pituus(tuuli, 3);
-	voimakkuus 	= apuvalineet::muuta_pituus(voimakkuus, 2);
-
-	kirjoita_tekstia(peli.kentta.nimi + " " + tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + paine , 50, 10);
-}
-
-void PeliView::piirra_odottavat() {
-	int y = 120;
-
-    kirjoita_tekstia("Odottavat koneet", Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), y - fontin_koko - 5);
-
-	for (unsigned int i = 0; i < peli.odottavat.size(); ++i) {
-        kirjoita_tekstia(peli.odottavat[i].kutsutunnus, Asetukset::anna_asetus("ruutu_leveys") - 200, y);
-
-		y += fontin_koko + 5;
-	}
 }

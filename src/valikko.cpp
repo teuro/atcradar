@@ -1,6 +1,7 @@
 // valikko.cpp
 #include "valikko.hpp"
 #include "ohjelma.hpp"
+#include "peliview.hpp"
 #include <iostream>
 
 valikko::valinta valikko::aja(int pelin_tulos) {
