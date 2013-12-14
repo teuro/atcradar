@@ -25,6 +25,8 @@ public:
 	{
 		SDL_Color tmp = { 50, 50, 50 };
 		vari = tmp;
+		fontin_koko = 12;
+
 		alku();
 	}
 
@@ -52,7 +54,7 @@ private:
 	void piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta = false);
 	void kirjoita_tekstia(std::string teksti, int x, int y);
 
-	int fontin_koko = 12;
+	int fontin_koko;
 	TTF_Font* fontti;
 	SDL_Color vari;
 	SDL_Surface *ruutu;
