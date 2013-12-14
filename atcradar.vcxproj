@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="src\ajastin.cpp" />
     <ClCompile Include="src\apuvalineet.cpp" />
+    <ClCompile Include="src\asetukset.cpp" />
     <ClCompile Include="src\lentokentta.cpp" />
     <ClCompile Include="src\lentokone.cpp" />
     <ClCompile Include="src\lukija.cpp" />
@@ -91,11 +92,14 @@
     <ClCompile Include="src\navipiste.cpp" />
     <ClCompile Include="src\ohjelma.cpp" />
     <ClCompile Include="src\peli.cpp" />
+    <ClCompile Include="src\PeliController.cpp" />
+    <ClCompile Include="src\peliview.cpp" />
     <ClCompile Include="src\valikko.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ajastin.hpp" />
     <ClInclude Include="src\apuvalineet.hpp" />
+    <ClInclude Include="src\asetukset.h" />
     <ClInclude Include="src\kuvavarasto.hpp" />
     <ClInclude Include="src\lentokentta.hpp" />
     <ClInclude Include="src\lentokone.hpp" />
@@ -103,6 +107,8 @@
     <ClInclude Include="src\navipiste.hpp" />
     <ClInclude Include="src\ohjelma.hpp" />
     <ClInclude Include="src\peli.hpp" />
+    <ClInclude Include="src\pelicontroller.hpp" />
+    <ClInclude Include="src\peliview.hpp" />
     <ClInclude Include="src\valikko.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

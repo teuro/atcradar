@@ -10,10 +10,21 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <SDL/SDL.h>
+#include <SDL/SDL_gfxPrimitives.h>
+#include <SDL/SDL_ttf.h>
 
-namespace ohjelma {
-	void alku();
-	void loppu();
+class Ohjelma {
+public:
+	Ohjelma()
+	{
+		alku();
+	}
+
+	~Ohjelma()
+	{
+		loppu();
+	}
 
 	float sekunnit(bool nollaa = false);
 	void odota(double ms = 1);
@@ -22,28 +33,25 @@ namespace ohjelma {
 		NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F7, NAPPI_F8, NAPPI_I
 	};
 
-	extern std::map <std::string, double> asetukset;
-	double anna_asetus(std::string asetus);
-	void lataa_asetukset(std::string nimi);
-
 	nappi odota_nappi();
 	bool lue_nappi(nappi n);
 	void tyhjenna_syote();
 
-	void piirra_valikko(int pelin_tulos, valikko::valinta valittu);
-
-	void piirra_peli();
-
 	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2);
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
-	void piirra_tilasto();
-	void piirra_atis(int toiminto);
-	void kirjoita_tekstia(std::string teksti, int x, int y);
+private:
+	void alku();
+	void loppu();
+};
 
-	namespace versio {
-		std::string anna_versio();
-	}
-}
+class Versio 
+{
+    const int paa = 2;
+    const int kehitys = 0;
+    const int rakennus = 1;
+public:
+    std::string anna_versio();
+};
 
 #endif

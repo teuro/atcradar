@@ -1,6 +1,7 @@
 // valikko.cpp
 #include "valikko.hpp"
 #include "ohjelma.hpp"
+#include "peliview.hpp"
 #include <iostream>
 
 valikko::valinta valikko::aja(int pelin_tulos) {
@@ -12,13 +13,13 @@ valikko::valinta valikko::aja(int pelin_tulos) {
 	// Valikon silmukka.
 	while (true) {
 		// Piirretään valikon tilanne, odotetaan valintaa.
-		ohjelma::piirra_valikko(pelin_tulos, valittu);
-		ohjelma::nappi n = ohjelma::odota_nappi();
+		view.piirra_valikko(pelin_tulos, valittu);
+		Ohjelma::nappi n = ohjelma.odota_nappi();
 
-		if (n == ohjelma::NAPPI_ENTER) {
+		if (n == Ohjelma::NAPPI_ENTER) {
 			// Enter => lopetetaan valikko, palautetaan valittu.
 			return valittu;
-		} else if (n == ohjelma::NAPPI_ESCAPE) {
+		} else if (n == Ohjelma::NAPPI_ESCAPE) {
 			// Escape => lopetetaan valikko, palautetaan LOPETUS.
 			return LOPETUS;
 		} else {

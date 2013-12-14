@@ -3,8 +3,8 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
-void syotteenluku::lue_syote() {
-	peli::syote = this->str;
+std::string syotteenluku::lue_syote() {
+	//peli::syote = this->str;
     SDL_Event event;
     SDL_PollEvent(&event);
     if( event.type == SDL_KEYDOWN )
@@ -47,6 +47,7 @@ void syotteenluku::lue_syote() {
             str.erase( str.length() - 1 );
         }
     }
+    return str;
 }
 
 syotteenluku::syotteenluku() {

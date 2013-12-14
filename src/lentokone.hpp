@@ -9,12 +9,17 @@
 const int VASEN = -1;
 const int OIKEA = 1;
 
+class Peli;
+class Ohjelma;
+
 class lentokone {
 private:
 	int kaarron_suunta(double suunta);
 	void muuta_korkeutta(double aika);
 	void muuta_nopeutta(double aika);
 	void muuta_suuntaa(double aika);
+    Peli& peli;
+    Ohjelma& ohjelma;
 public:
 	navipiste anna_piste();
 	std::queue <navipiste> reitti;
@@ -23,10 +28,10 @@ public:
 	navipiste ulosmenopiste;
 
 	bool odotus;
-	lentokone(std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
-	lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
+	lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
+    lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
 
-	lentokone();
+//    lentokone(const lentokone& lk);
 
 	void ota_selvitys(std::string tmp, int toiminto);
 
@@ -70,6 +75,8 @@ public:
 	bool operator ==(const lentokone& a) {
 		return a.kutsutunnus == kutsutunnus;
 	}
+
+    lentokone& operator =(const lentokone&) { return *this; }
 
 	void poista_reitti();
 };

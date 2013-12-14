@@ -1,4 +1,4 @@
-// peli.cpp
+#include "asetukset.h"
 #include "peli.hpp"
 #include "ohjelma.hpp"
 #include "lukija.hpp"
@@ -9,6 +9,7 @@
 #include <ctime>
 #include <algorithm>
 
+<<<<<<< HEAD
 struct selvitys {
 	int kone_id;
 	std::string selvitys;
@@ -264,6 +265,9 @@ int peli::aja() {
 }
 
 void peli::lataa_tunnukset(std::string tunnukset) {
+=======
+void Peli::lataa_tunnukset(std::string tunnukset) {
+>>>>>>> 666aafec758181748575d76a3a5154ba0e3f75b9
 	std::clog << "peli::lataa_tunnukset(" << tunnukset << ")" << std::endl;
 	std::string tmp;
 
@@ -274,79 +278,79 @@ void peli::lataa_tunnukset(std::string tunnukset) {
 	}
 
 	while (sisaan >> tmp) {
-		peli::tunnukset.push_back(tmp);
+		this->tunnukset.push_back(tmp);
 	}
 }
 
-void peli::aseta_virhe(int virhe) {
+void Peli::aseta_virhe(int virhe) {
 	std::clog << "peli::aseta_virhe(" << virhe << ")" << std::endl;
-	peli::virheteksti = " ";
-	++peli::muut_virheet;
+	virheteksti = " ";
+	++muut_virheet;
 	std::ofstream ulos("virhedata.txt", std::ios::app);
 
 	switch (virhe) {
 		case VIRHE_KORKEUS_ALA:
-			peli::virheteksti = "Korkeuden alaraja on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("selvityskorkeus_ala")) + " jalkaa";
-			ulos << "Annettu selvityskorkeus liian alhainen aikaan " << ohjelma::sekunnit() << std::endl;
+            virheteksti = "Korkeuden alaraja on " + apuvalineet::tekstiksi(Asetukset::anna_asetus("selvityskorkeus_ala")) + " jalkaa";
+			ulos << "Annettu selvityskorkeus liian alhainen aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 		case VIRHE_KORKEUS_YLA:
-			peli::virheteksti = "Korkeuden yläraja on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("selvityskorkeus_yla")) + " jalkaa";
-			ulos << "Annettu selvityskorkeus liian suuri aikaan " << ohjelma::sekunnit() << std::endl;
+            virheteksti = "Korkeuden yläraja on " + apuvalineet::tekstiksi(Asetukset::anna_asetus("selvityskorkeus_yla")) + " jalkaa";
+			ulos << "Annettu selvityskorkeus liian suuri aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 		case VIRHE_LAHESTYMISKORKEUS:
-			peli::virheteksti = "Lähestymisen yläraja on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("maks_lahestymiskorkeus")) + " jalkaa";
-			ulos << "Koneella liian suuri korkeus lähestymiseen aikaan " << ohjelma::sekunnit() << " " << ohjelma::anna_asetus("maks_lahestymiskorkeus") << std::endl;
+			virheteksti = "Lähestymisen yläraja on " + apuvalineet::tekstiksi(Asetukset::anna_asetus("maks_lahestymiskorkeus")) + " jalkaa";
+			ulos << "Koneella liian suuri korkeus lähestymiseen aikaan " << ohjelma.sekunnit() << " " << Asetukset::anna_asetus("maks_lahestymiskorkeus") << std::endl;
 			break;
 		case VIRHE_LAHESTYMISNOPEUS:
-			peli::virheteksti = "Lähestymisen maksiminopeus on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("maks_lahestymisnopeus")) + " solmua";
-			ulos << "Koneella liian suuri nopeus lähestymiseen aikaan " << ohjelma::sekunnit() << std::endl;
+			virheteksti = "Lähestymisen maksiminopeus on " + apuvalineet::tekstiksi(Asetukset::anna_asetus("maks_lahestymisnopeus")) + " solmua";
+			ulos << "Koneella liian suuri nopeus lähestymiseen aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 		case VIRHE_LAHESTYMISSUUNTA:
-			peli::virheteksti ="Koneen suunnan tulee olla kiitotien suunnasta +- " + apuvalineet::tekstiksi(ohjelma::anna_asetus("lahestymiskulma"));
-			ulos << "Koneen suunnan tulee olla +- " << ohjelma::anna_asetus("lahestymiskulma") << std::endl;
+			virheteksti ="Koneen suunnan tulee olla kiitotien suunnasta +- " + apuvalineet::tekstiksi(Asetukset::anna_asetus("lahestymiskulma"));
+			ulos << "Koneen suunnan tulee olla +- " << Asetukset::anna_asetus("lahestymiskulma") << std::endl;
 		case VIRHE_NOPEUS_ALA:
-			peli::virheteksti = "Nopeuden alaraja on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("selvitysnopeus_ala")) + " solmua";
-			ulos << "Annettu selvitysnopeus on liian pieni aikaan " << ohjelma::sekunnit() << std::endl;
+			virheteksti = "Nopeuden alaraja on " + apuvalineet::tekstiksi(Asetukset::anna_asetus("selvitysnopeus_ala")) + " solmua";
+			ulos << "Annettu selvitysnopeus on liian pieni aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 		case VIRHE_NOPEUS_YLA:
-			peli::virheteksti = "Nopeuden yläraja on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("selvitysnopeus_yla")) + " solmua";
-			ulos << "Annettu selvitysnopeus on suuri pieni aikaan " << ohjelma::sekunnit() << std::endl;
+			virheteksti = "Nopeuden yläraja on " + apuvalineet::tekstiksi(Asetukset::anna_asetus("selvitysnopeus_yla")) + " solmua";
+			ulos << "Annettu selvitysnopeus on suuri pieni aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 		case VIRHE_PORRASTUS:
-			peli::virheteksti = "Porrastuksen tulee olla pystysuuntaan " + apuvalineet::tekstiksi(ohjelma::anna_asetus("porrastus_pysty")) + " jalkaa ja vaakasuuntaan " + apuvalineet::tekstiksi(ohjelma::anna_asetus("porrastus_vaaka")) + " mailia";
-			ulos << "Porrastusminimi alittui aikaan " << ohjelma::sekunnit() << std::endl;
+			virheteksti = "Porrastuksen tulee olla pystysuuntaan " + apuvalineet::tekstiksi(Asetukset::anna_asetus("porrastus_pysty")) + " jalkaa ja vaakasuuntaan " + apuvalineet::tekstiksi(Asetukset::anna_asetus("porrastus_vaaka")) + " mailia";
+			ulos << "Porrastusminimi alittui aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 		case VIRHE_OIKOTIE:
-			peli::virheteksti = "Oikotien saa antaa vasta " + apuvalineet::tekstiksi(ohjelma::anna_asetus("oikotie")) + " jalassa";
-			ulos << "Annettu oikotie liian aikaisin aikaan " << ohjelma::sekunnit() << std::endl;
+			virheteksti = "Oikotien saa antaa vasta " + apuvalineet::tekstiksi(Asetukset::anna_asetus("oikotie")) + " jalassa";
+			ulos << "Annettu oikotie liian aikaisin aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 		case VIRHE_ALUEELTA:
-			peli::virheteksti = "Kone poistui alueeltasi";
-			ulos << "Kone poistui alueeltasi aikaan " << ohjelma::sekunnit() << std::endl;
+			virheteksti = "Kone poistui alueeltasi";
+			ulos << "Kone poistui alueeltasi aikaan " << ohjelma.sekunnit() << std::endl;
 			break;
 	}
 
 	ulos.close();
 }
 
-void peli::luo_kone() {
+void Peli::luo_kone(Ohjelma& ohjelma) {
 	int j = apuvalineet::arvo_luku(10, 100) % 2;
 	apuvalineet::piste paikka;
 	bool odotus;
 	std::string tunnus = generoi_tunnus();
 
 	if (j == LAHTEVA) {
-		double suunta = kentta.kiitotiet[atis::lahtokiitotie].suunta;
+		double suunta = kentta.kiitotiet[atis.lahtokiitotie].suunta;
 
 		if (!onko_vapaata()) {
-			paikka = kentta.kiitotiet[atis::lahtokiitotie].odotuspiste;
+			paikka = kentta.kiitotiet[atis.lahtokiitotie].odotuspiste;
 			odotus = true;
 		} else {
-			paikka = kentta.kiitotiet[atis::lahtokiitotie].alkupiste;
+			paikka = kentta.kiitotiet[atis.lahtokiitotie].alkupiste;
 			odotus = false;
 		}
 
-		koneet.push_back(lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
+		koneet.push_back(lentokone(*this, ohjelma, tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
 		koneet.back().ulosmenopiste = navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())];
 		koneet.back().polttoaine = apuvalineet::arvo_luku(8000, 25000);
 
@@ -357,21 +361,21 @@ void peli::luo_kone() {
 	} else {
 		int i = apuvalineet::arvo_luku(0, navipisteet.size());
 
-        koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
+        koneet.push_back(lentokone(*this, ohjelma, tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
 
 	tilasto tmp;
 
 	tmp.tunnus = tunnus;
-	tmp.sisaan = ohjelma::sekunnit();
+	tmp.sisaan = ohjelma.sekunnit();
 	tmp.pois = 0.0;
 	tmp.selvitykset = 0;
 
 	ajat.push_back(tmp);
 }
 
-void peli::lataa_navipisteet(std::string nimi) {
+void Peli::lataa_navipisteet(std::string nimi) {
 	std::clog << "peli::lataa_navipisteet(" << nimi << ")" << std::endl;
 	std::ifstream sisaan(nimi.c_str(), std::ios::in);
 
@@ -385,7 +389,7 @@ void peli::lataa_navipisteet(std::string nimi) {
 	while (sisaan >> _nimi >> _suunta >> etaisyys >> korkeus >> nopeus >> suunta) {
 		apuvalineet::piste paikka;
 
-		paikka = apuvalineet::uusi_paikka(peli::kentta.paikka, _suunta, etaisyys);
+		paikka = apuvalineet::uusi_paikka(kentta.paikka, _suunta, etaisyys);
 
 		navipiste tmp(_nimi, paikka, korkeus, nopeus, suunta);
 
@@ -395,7 +399,7 @@ void peli::lataa_navipisteet(std::string nimi) {
 	sisaan.close();
 }
 
-void peli::lataa_lahipisteet(std::string nimi) {
+void Peli::lataa_lahipisteet(std::string nimi) {
 	std::clog << "peli::lataa_sisapisteet(" << nimi << ")" << std::endl;
 	std::ifstream sisaan(nimi.c_str(), std::ios::in);
 
@@ -419,12 +423,12 @@ void peli::lataa_lahipisteet(std::string nimi) {
 	sisaan.close();
 }
 
-void peli::lataa_kentta(std::string kentta) {
+void Peli::lataa_kentta(std::string kenttaNimi) {
 	std::string paate = ".txt";
 	std::string kansio = "kentat/";
 	std::string tmp;
-	std::clog << "peli::lataa_kiitotiet(" << kansio + kentta + paate << ")" << std::endl;
-	tmp = kansio + kentta + paate;
+    std::clog << "peli::lataa_kiitotiet(" << kansio + kenttaNimi + paate << ")" << std::endl;
+    tmp = kansio + kenttaNimi + paate;
 	std::ifstream sisaan(tmp.c_str(), std::ios::in);
 
 	if (!sisaan) {
@@ -435,46 +439,46 @@ void peli::lataa_kentta(std::string kentta) {
 	double pituus, suunta, nousukorkeus, noususuunta;
 	double alkupiste_suunta, alkupiste_etaisyys;
 
-	sisaan >> peli::kentta.nimi >> peli::kentta.korkeus >> peli::kentta.paikka.x >> peli::kentta.paikka.y;
+	sisaan >> kentta.nimi >> kentta.korkeus >> kentta.paikka.x >> kentta.paikka.y;
 
 	while (sisaan >> nimi >> alkupiste_suunta >> alkupiste_etaisyys >> suunta >> pituus >> nousukorkeus >> noususuunta) {
-		apuvalineet::piste alku = apuvalineet::uusi_paikka(peli::kentta.paikka, alkupiste_suunta, alkupiste_etaisyys);
+		apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, alkupiste_suunta, alkupiste_etaisyys);
 		kiitotie tmpa(nimi, alku, pituus, suunta, nousukorkeus, noususuunta);
 
-		peli::kentta.kiitotiet.push_back(tmpa);
+		kentta.kiitotiet.push_back(tmpa);
 	}
 
-	tmp = kansio + kentta + "_pisteet" + paate;
+    tmp = kansio + kenttaNimi + "_pisteet" + paate;
 
 	lataa_navipisteet(tmp);
 
-	tmp = kansio + kentta + "_lahipisteet" + paate;
+    tmp = kansio + kenttaNimi + "_lahipisteet" + paate;
 
 	lataa_lahipisteet(tmp);
 
 	sisaan.close();
 }
 
-std::string peli::generoi_tunnus() {
+std::string Peli::generoi_tunnus() {
 	std::string tunniste = tunnukset[apuvalineet::arvo_luku(0, tunnukset.size())];
 	std::string luku = apuvalineet::tekstiksi(apuvalineet::arvo_luku(0, 999));
 
 	return tunniste+luku;
 }
 
-void peli::valitse_kone(const apuvalineet::piste& hiiri) {
-	if (ohjelma::lue_hiiri()) {
+void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
+	if (ohjelma.lue_hiiri()) {
 		for (unsigned int i = 0; i < koneet.size(); ++i) {
 			koneet[i].valittu = false;
 
-			if (ohjelma::onko_alueella(hiiri, koneet[i].paikka)) {
+			if (ohjelma.onko_alueella(hiiri, koneet[i].paikka)) {
 				koneet[i].valittu = true;
 			}
 		}
 	}
 }
 
-void peli::tarkista_porrastus() {
+void Peli::tarkista_porrastus() {
 	bool virheita = false;
 	std::vector <int> alittuu;
 
@@ -484,7 +488,7 @@ void peli::tarkista_porrastus() {
 				continue;
 			}
 
-			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].korkeus - koneet[j].korkeus) < 1000 && (koneet[i].korkeus > 1000 && koneet[j].korkeus > 1000)) {
+			if (ohjelma.onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].korkeus - koneet[j].korkeus) < 1000 && (koneet[i].korkeus > 1000 && koneet[j].korkeus > 1000)) {
 				alittuu.push_back(i);
 				alittuu.push_back(j);
 
@@ -496,7 +500,7 @@ void peli::tarkista_porrastus() {
 	}
 
 	if (virheita) {
-		++peli::porrastusvirheet;
+		++porrastusvirheet;
 		aseta_virhe(VIRHE_PORRASTUS);
 	}
 
@@ -509,9 +513,9 @@ void peli::tarkista_porrastus() {
 	}
 }
 
-void peli::hoida_koneet() {
+void Peli::hoida_koneet() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
+		if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 			if (koneet[i].reitti.size()) {
 				navipiste tmp = koneet[i].anna_piste();
 				koneet[i].reitti.pop();
@@ -524,18 +528,18 @@ void peli::hoida_koneet() {
 
 		if (koneet[i].odotus) {
 			if (onko_vapaata()) {
-				koneet[i].paikka = kentta.kiitotiet[atis::lahtokiitotie].alkupiste;
+				koneet[i].paikka = kentta.kiitotiet[atis.lahtokiitotie].alkupiste;
 				koneet[i].odotus = false;
 				odottavat.erase(odottavat.begin()+0);
 			}
 		}
 
-		if (koneet[i].odotuskuvio > -1 && koneet[i].odotuskuvio < ohjelma::sekunnit()) {
+		if (koneet[i].odotuskuvio > -1 && koneet[i].odotuskuvio < ohjelma.sekunnit()) {
 			koneet[i].odotuskuvio += 120;
 			koneet[i].muuta_selvityssuuntaa(koneet[i].suunta + 180, OIKEA);
 		}
 
-		if (koneet[i].paikka.x < 0 || koneet[i].paikka.x > ohjelma::anna_asetus("ruutu_leveys") || koneet[i].paikka.y < 0 || koneet[i].paikka.y > ohjelma::anna_asetus("ruutu_korkeus")) {
+		if (koneet[i].paikka.x < 0 || koneet[i].paikka.x > Asetukset::anna_asetus("ruutu_leveys") || koneet[i].paikka.y < 0 || koneet[i].paikka.y > Asetukset::anna_asetus("ruutu_korkeus")) {
 			aseta_virhe(VIRHE_ALUEELTA);
 			poista_kone(i);
 		}
@@ -553,52 +557,52 @@ void peli::hoida_koneet() {
 			}
 		}
 
-		if (koneet[i].tyyppi == peli::LAHTEVA) {
-			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].ulosmenopiste.paikka)) {
+		if (koneet[i].tyyppi == Peli::LAHTEVA) {
+			if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].ulosmenopiste.paikka)) {
 				poista_kone(i);
 				++kasitellyt;
-			} else if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
+			} else if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 				if (koneet[i].reitti.size()) {
 					koneet[i].aseta_navipiste(koneet[i].anna_piste());
 				}
 			}
 		}
 
-		if (koneet[i].tyyppi == peli::LAHTEVA && koneet[i].korkeus < 1200 && koneet[i].odotus == false) {
+		if (koneet[i].tyyppi == Peli::LAHTEVA && koneet[i].korkeus < 1200 && koneet[i].odotus == false) {
 			if (koneet[i].nopeus == 0) {
-				koneet[i].muuta_selvitysnopeutta(ohjelma::anna_asetus("alkunopeus"));
+				koneet[i].muuta_selvitysnopeutta(Asetukset::anna_asetus("alkunopeus"));
 			}
 
 			if (koneet[i].nopeus > 150) {
-				koneet[i].muuta_selvityskorkeutta(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].alkunousukorkeus);
-				koneet[i].muuta_selvitysnopeutta(ohjelma::anna_asetus("alkunousunopeus"));
-				koneet[i].muuta_selvityssuuntaa(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].alkunoususuunta);
+				koneet[i].muuta_selvityskorkeutta(kentta.kiitotiet[atis.lahtokiitotie].alkunousukorkeus);
+				koneet[i].muuta_selvitysnopeutta(Asetukset::anna_asetus("alkunousunopeus"));
+				koneet[i].muuta_selvityssuuntaa(kentta.kiitotiet[atis.lahtokiitotie].alkunoususuunta);
 			}
 		}
 
 		koneet[i].muuta_tilaa(ajan_muutos);
 		koneet[i].liiku(ajan_muutos);
 
-		if (koneet[i].polttoaine < ohjelma::anna_asetus("minimi_polttoaine")) {
+		if (koneet[i].polttoaine < Asetukset::anna_asetus("minimi_polttoaine")) {
 			ohje = "Koneella " + koneet[i].kutsutunnus + " on polttoaine lopussa";
 		}
 	}
 }
 
-void peli::poista_kone(int kone) {
+void Peli::poista_kone(int kone) {
 	std::vector <tilasto>::iterator lisattava = std::find(ajat.begin(), ajat.end(), koneet[kone].kutsutunnus);
-	lisattava->pois = ohjelma::sekunnit();
+	lisattava->pois = ohjelma.sekunnit();
 
 	koneet.erase(koneet.begin()+kone);
 }
 
-void peli::lisaa_selvityksia() {
+void Peli::lisaa_selvityksia() {
 	int valittu = etsi_valittu_kone();
 	std::vector <tilasto>::iterator lisattava = std::find(ajat.begin(), ajat.end(), koneet[valittu].kutsutunnus);
 	++lisattava->selvitykset;
 }
 
-int peli::etsi_valittu_kone() {
+int Peli::etsi_valittu_kone() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
 		if (koneet[i].valittu) {
 			return i;
@@ -608,125 +612,19 @@ int peli::etsi_valittu_kone() {
 	return -1;
 }
 
-void peli::pyyda_atis() {
-	syotteenluku lukija;
-	peli::atis::lue_paineet("data/painerajat.txt");
-	int toiminto = LAHTO;
-
-	while (atis::ok == false) {
-		lukija.lue_syote();
-		ohjelma::odota(20);
-
-		if (lukija.anna_viesti().length() > 1 && ohjelma::lue_nappi(ohjelma::NAPPI_ENTER)) {
-
-			std::vector <kiitotie>::iterator tmp;
-			size_t index;
-
-			if (ohjelma::lue_nappi(ohjelma::NAPPI_F5)) {
-				toiminto = LAHTO;
-			} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F7)) {
-				toiminto = LASKU;
-			} else if (ohjelma::lue_nappi(ohjelma::NAPPI_F8)) {
-				toiminto = SIIRTOPINTA;
-			}
-
-            switch (toiminto) {
-				case LAHTO:
-					tmp = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), lukija.anna_viesti());
-					index = std::distance(kentta.kiitotiet.begin(), tmp);
-
-					if (tmp != kentta.kiitotiet.end()) {
-						atis::lahtokiitotie = index;
-						atis::lahto = lukija.anna_viesti();
-						lukija.tyhjenna();
-					}
-					toiminto = LASKU;
-					break;
-				case LASKU:
-					tmp = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), lukija.anna_viesti());
-					index = std::distance(kentta.kiitotiet.begin(), tmp);
-
-					if (tmp != kentta.kiitotiet.end()) {
-						atis::laskukiitotie = index;
-						atis::lasku = lukija.anna_viesti();
-						lukija.tyhjenna();
-					}
-					toiminto = SIIRTOPINTA;
-					break;
-				case SIIRTOPINTA:
-					atis::siirtopinta = apuvalineet::luvuksi<int>(lukija.anna_viesti());
-					lukija.tyhjenna();
-					break;
-			}
-		}
-
-		bool siirto_ok = false;
-		bool lahto_ok = false;
-		bool lasku_ok = false;
-
-		ohjelma::piirra_atis(toiminto);
-
-		if (atis::lahtokiitotie > -1 && atis::laskukiitotie > -1 && atis::siirtopinta > -1) {
-			peli::ohje = "Tiedot syötetty tarkistetaan onko oikein";
-
-			double vastakomponentti_lahto = std::cos(apuvalineet::deg2rad(metar::tuuli) - apuvalineet::deg2rad(kentta.kiitotiet[atis::lahtokiitotie].suunta)) * metar::voimakkuus;
-			double vastakomponentti_lasku = std::cos(apuvalineet::deg2rad(metar::tuuli) - apuvalineet::deg2rad(kentta.kiitotiet[atis::laskukiitotie].suunta)) * metar::voimakkuus;
-
-			double siirtopinta = peli::atis::etsi_siirtopinta(peli::metar::paine);
-
-			double max_vasta = 0;
-			double vasta;
-
-			for (unsigned int i = 0; i < kentta.kiitotiet.size(); ++i) {
-				vasta = std::cos(apuvalineet::deg2rad(metar::tuuli) - apuvalineet::deg2rad(kentta.kiitotiet[i].suunta)) * metar::voimakkuus;
-
-				if (vasta > max_vasta) {
-					max_vasta = vasta;
-				}
-			}
-
-			if (siirtopinta == atis::siirtopinta) {
-				siirto_ok = true;
-			} else {
-				ohje = "Siirtopinta väärin tulisi olla " + apuvalineet::tekstiksi(siirtopinta);
-				toiminto = SIIRTOPINTA;
-			}
-
-			if (vastakomponentti_lahto > 0) {
-				lahto_ok = true;
-			} else {
-				ohje = "Lähtökiitotie valittu väärin";
-				toiminto = LAHTO;
-			}
-
-			if (vastakomponentti_lasku > 0) {
-				lasku_ok = true;
-			} else {
-				ohje = "Laskukiitotie valittu väärin";
-				toiminto = LASKU;
-			}
-		}
-
-		if (siirto_ok && lahto_ok && lasku_ok) {
-			atis::ok = true;
-			atis::siirtokorkeus = 5000;
-		}
-	}
+void Peli::generoi_metar() {
+	metar.tuuli 		= apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5);
+	metar.voimakkuus 	= apuvalineet::arvo_luku(2, 22);
+	metar.paine 		= apuvalineet::arvo_luku(950, 1060);
+	metar.nakyvyys		= apuvalineet::arvo_luku(1200, 9999);
+	metar.lampotila	= apuvalineet::arvo_luku(-18, 27);
+	metar.ilmankosteus	= apuvalineet::arvo_luku(50, 100);
+	metar.kastepiste	= metar.lampotila - ((100 - metar.ilmankosteus) / 5);
 }
 
-static void peli::generoi_metar() {
-	metar::tuuli 		= apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5);
-	metar::voimakkuus 	= apuvalineet::arvo_luku(2, 22);
-	metar::paine 		= apuvalineet::arvo_luku(950, 1060);
-	metar::nakyvyys		= apuvalineet::arvo_luku(1200, 9999);
-	metar::lampotila	= apuvalineet::arvo_luku(-18, 27);
-	metar::ilmankosteus	= apuvalineet::arvo_luku(50, 100);
-	metar::kastepiste	= metar::lampotila - ((100 - metar::ilmankosteus) / 5);
-}
-
-static bool peli::onko_vapaata() {
+bool Peli::onko_vapaata() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (koneet[i].korkeus < (kentta.korkeus + ohjelma::anna_asetus("porrastus_pysty")) && koneet[i].odotus == false) {
+		if (koneet[i].korkeus < (kentta.korkeus + Asetukset::anna_asetus("porrastus_pysty")) && koneet[i].odotus == false) {
 			return false;
 		}
 	}
@@ -734,22 +632,22 @@ static bool peli::onko_vapaata() {
 	return true;
 }
 
-static bool peli::tarkista_atis() {
-	peli::atis::lue_paineet("data/painerajat.txt");
+bool Peli::tarkista_atis() {
+	atis.lue_paineet("data/painerajat.txt");
 
-	double vasta_lahto = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::lahtokiitotie].suunta - peli::metar::tuuli));
-	double vasta_lasku = std::cos(std::abs(peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta - peli::metar::tuuli));
-	double siirtopinta = peli::atis::etsi_siirtopinta(peli::metar::paine);
+	double vasta_lahto = std::cos(std::abs(kentta.kiitotiet[atis.lahtokiitotie].suunta - metar.tuuli));
+	double vasta_lasku = std::cos(std::abs(kentta.kiitotiet[atis.laskukiitotie].suunta - metar.tuuli));
+	double siirtopinta = atis.etsi_siirtopinta(metar.paine);
 
-	if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis::siirtopinta) {
+	if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis.siirtopinta) {
 		return false;
 	}
 	std::clog << "tarkista_atis true" << std::endl;
 	return true;
 }
 
-void peli::atis::lue_paineet(std::string nimi) {
-	std::clog << "peli::atis::lue_paineet(" << nimi << ")" << std::endl;
+void Peli::Atis::lue_paineet(std::string nimi) {
+	std::clog << "peli::atis.lue_paineet(" << nimi << ")" << std::endl;
 	std::ifstream sisaan(nimi.c_str(), std::ios::in);
 
 	if (!sisaan) {
@@ -759,21 +657,21 @@ void peli::atis::lue_paineet(std::string nimi) {
 	double ala, yla, pinta;
 
 	while (sisaan >> ala >> yla >> pinta) {
-		peli::atis::paine tmp;
+		Peli::Atis::Paine tmp;
 		tmp.alaraja = ala;
 		tmp.ylaraja = yla;
 		tmp.siirtopinta = pinta;
-		peli::atis::paineet.push_back(tmp);
+		paineet.push_back(tmp);
 	}
 
 	sisaan.close();
 }
 
-double peli::atis::etsi_siirtopinta(double paine) {
-	for (unsigned int i = 0; i < peli::atis::paineet.size(); ++i) {
+double Peli::Atis::etsi_siirtopinta(double paine) {
+	for (unsigned int i = 0; i < paineet.size(); ++i) {
 
-		if (paine >= peli::atis::paineet[i].alaraja && paine < peli::atis::paineet[i].ylaraja) {
-			return peli::atis::paineet[i].siirtopinta;
+		if (paine >= paineet[i].alaraja && paine < paineet[i].ylaraja) {
+			return paineet[i].siirtopinta;
 		}
 	}
 
