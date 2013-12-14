@@ -41,6 +41,7 @@ public:
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
 private:
+	Uint32 alku_aika;
 	void alku();
 	void loppu();
 };

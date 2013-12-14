@@ -34,12 +34,11 @@ void Ohjelma::loppu() {
 
 // Kertoo nollauksesta kuluneiden sekuntien m‰‰r‰n.
 float Ohjelma::sekunnit(bool nollaa) {
-	static Uint32 alku;
 	Uint32 nyt = SDL_GetTicks();
 	if (nollaa) {
-		alku = nyt;
+		alku_aika = nyt;
 	}
-	return (nyt - alku) / 1000.0f;
+	return (nyt - alku_aika) / 1000.0f;
 }
 
 // Odottaa lyhyen ajan.
