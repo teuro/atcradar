@@ -23,7 +23,8 @@ class PeliView
 public:
 	PeliView(Peli &p, Ohjelma& o) : peli(p), ohjelma(o)
 	{
-		vari = { 50, 50, 50 };
+		SDL_Color tmp = { 50, 50, 50 };
+		vari = tmp;
 		alku();
 	}
 
