@@ -19,7 +19,7 @@ public:
 	navipiste anna_piste();
 	std::queue <navipiste> reitti;
 	apuvalineet::piste paikka;
-	apuvalineet::piste kohde;
+	navipiste kohde;
 	navipiste ulosmenopiste;
 	double reaktioaika;
 
@@ -58,6 +58,7 @@ public:
 
 	void tarkista_suunta_kohteeseen();
 
+	void aseta_navipiste(navipiste paikka);
 	void aseta_navipiste(apuvalineet::piste paikka);
 
 	int laskubaana;

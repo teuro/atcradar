@@ -12,8 +12,8 @@ lentokone::lentokone(std::string kutsutunnus, double x, double y, double korkeus
 	this->paikka.x = x;
 	this->paikka.y = y;
 
-	this->kohde.x = 0;
-	this->kohde.y = 0;
+	this->kohde.paikka.x = 0;
+	this->kohde.paikka.y = 0;
 
 	this->laskubaana = -1;
 	this->onko_porrastus = true;
@@ -43,8 +43,8 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	this->kutsutunnus = kutsutunnus;
 	this->paikka = paikka;
 
-	this->kohde.x = 0;
-	this->kohde.y = 0;
+	this->kohde.paikka.x = 0;
+	this->kohde.paikka.y = 0;
 
 	this->laskubaana = -1;
 	this->onko_porrastus = true;
@@ -179,8 +179,12 @@ void lentokone::liiku(double aika) {
 	this->polttoaine -= ohjelma::anna_asetus("polttoaineen_kulutus") * (aika / 3600.0);
 }
 
-void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
+void lentokone::aseta_navipiste(navipiste paikka) {
 	this->kohde = paikka;
+}
+
+void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
+	this->kohde.paikka = paikka;
 }
 
 int lentokone::kaarron_suunta(double suunta) {
@@ -219,8 +223,8 @@ void lentokone::lahesty() {
 }
 
 void lentokone::tarkista_suunta_kohteeseen() {
-	if (this->kohde.x > 0 && this->kohde.y > 0) {
-		apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde);
+	if (this->kohde.paikka.x > 0 && this->kohde.paikka.y > 0) {
+		apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde.paikka);
 
 		this->kaarto = this->kaarron_suunta(vektori_kohteeseen.suunta);
 		this->muuta_selvityssuuntaa(vektori_kohteeseen.suunta, this->kaarto);
@@ -236,8 +240,8 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 			tmp = "";
 		}
 
-		if (this->kohde.x == 0 && this->kohde.y == 0 && this->reitti.size()) {
-			this->kohde = anna_piste().paikka;
+		if (this->kohde.paikka.x == 0 && this->kohde.paikka.y == 0 && this->reitti.size()) {
+			this->kohde = anna_piste();
 		}
 
 		if (tmp.substr(0, 1) == "V" || tmp.substr(0, 1) == "v") {
@@ -277,6 +281,7 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 			}
 			break;
 		case peli::LAHESTYMIS:
+			this->poista_reitti();
 			double koneen_suunta = this->suunta;
 
 			double min_suunta = peli::kentta.kiitotiet[peli::atis::laskukiitotie].suunta - ohjelma::anna_asetus("lahestymiskulma");
@@ -297,14 +302,12 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 
 void lentokone::poista_reitti() {
 	while (this->reitti.size()) {
-		this->anna_piste();
+		this->reitti.pop();
 	}
 }
 
 navipiste lentokone::anna_piste() {
 	navipiste tmp = this->reitti.front();
-
-	this->reitti.pop();
 
 	return tmp;
 }

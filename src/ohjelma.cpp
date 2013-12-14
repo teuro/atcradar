@@ -208,7 +208,7 @@ void ohjelma::piirra_koneet() {
 
 	Uint32 ok = 0x000000FF;
 	Uint32 ng = 0xFF0000FF;
-
+	int t_y = 90;
 	for (unsigned int i = 0; i < peli::koneet.size(); ++i) {
 		if (peli::koneet[i].odotus == false) {
 			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli::koneet[i].paikka, peli::koneet[i].suunta, peli::koneet[i].nopeus * (60.0 / 3600.0));
@@ -225,6 +225,18 @@ void ohjelma::piirra_koneet() {
 			circleColor(ruutu, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
 
 			kirjoita_tekstia(peli::koneet[i].kutsutunnus, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y);
+			
+			kirjoita_tekstia(peli::koneet[i].kutsutunnus, 30, t_y); 
+			
+			if (peli::koneet[i].reitti.size() == 0) {
+				kirjoita_tekstia(apuvalineet::tekstiksi(peli::koneet[i].selvityssuunta), 100, t_y);
+			} else {
+				kirjoita_tekstia(peli::koneet[i].kohde.nimi, 100, t_y);
+			}
+			
+			kirjoita_tekstia(apuvalineet::tekstiksi(peli::koneet[i].selvityskorkeus), 160, t_y);
+			kirjoita_tekstia(apuvalineet::tekstiksi(peli::koneet[i].selvitysnopeus), 210, t_y);
+			t_y += 20;
 
 			if (peli::koneet[i].tyyppi == peli::SAAPUVA) {
 				//std::clog << "Tulee" << std::endl;
@@ -263,11 +275,6 @@ void ohjelma::piirra_koneet() {
 
 				if (peli::koneet[i].tyyppi == peli::LAHTEVA) {
 					kirjoita_tekstia(peli::koneet[i].ulosmenopiste.nimi, peli::koneet[i].paikka.x, peli::koneet[i].paikka.y + (4 * fontin_koko) + 3);
-				}
-
-				if (peli::koneet[i].reitti.size()) {
-					kirjoita_tekstia("Kohde", 600, 235);
-					kirjoita_tekstia(peli::koneet[i].reitti.front().nimi, 600, 250);
 				}
 
 				switch (peli::toiminto) {

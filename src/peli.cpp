@@ -491,14 +491,14 @@ void peli::tarkista_porrastus() {
 
 void peli::hoida_koneet() {
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde)) {
+		if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 			if (koneet[i].reitti.size()) {
 				navipiste tmp = koneet[i].anna_piste();
 				koneet[i].reitti.pop();
-				koneet[i].kohde = tmp.paikka;
+				koneet[i].kohde = tmp;
 			} else {
-				koneet[i].kohde.x = 0;
-				koneet[i].kohde.y = 0;
+				koneet[i].kohde.paikka.x = 0;
+				koneet[i].kohde.paikka.y = 0;
 			}
 		}
 
@@ -520,7 +520,7 @@ void peli::hoida_koneet() {
 			poista_kone(i);
 		}
 
-		if (koneet[i].kohde.x > 0 && koneet[i].kohde.y > 0) {
+		if (koneet[i].kohde.paikka.x > 0 && koneet[i].kohde.paikka.y > 0) {
 			koneet[i].tarkista_suunta_kohteeseen();
 		}
 
@@ -537,9 +537,9 @@ void peli::hoida_koneet() {
 			if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].ulosmenopiste.paikka)) {
 				poista_kone(i);
 				++kasitellyt;
-			} else if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde)) {
+			} else if (ohjelma::onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 				if (koneet[i].reitti.size()) {
-					koneet[i].aseta_navipiste(koneet[i].anna_piste().paikka);
+					koneet[i].aseta_navipiste(koneet[i].anna_piste());
 				}
 			}
 		}
