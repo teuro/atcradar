@@ -7,11 +7,11 @@ namespace apuvalineet {
 }
 
 double apuvalineet::px2nm(double px) {
-	return px / (ohjelma::anna_asetus("ruutu_leveys") / ohjelma::anna_asetus("matka_vaaka"));
+    return px / (Asetukset::anna_asetus("ruutu_leveys") / Asetukset::anna_asetus("matka_vaaka"));
 }
 
 double apuvalineet::nm2px(double nm) {
-	return nm * (ohjelma::anna_asetus("ruutu_leveys") / ohjelma::anna_asetus("matka_vaaka"));
+    return nm * (Asetukset::anna_asetus("ruutu_leveys") / Asetukset::anna_asetus("matka_vaaka"));
 }
 
 double apuvalineet::deg2rad(double deg) {
