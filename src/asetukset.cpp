@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdexcept>
 
 std::map <std::string, double> Asetukset::asetukset;
 

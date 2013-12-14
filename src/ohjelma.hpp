@@ -47,9 +47,6 @@ private:
 
 class Versio 
 {
-    const int paa = 2;
-    const int kehitys = 0;
-    const int rakennus = 1;
 public:
     std::string anna_versio();
 };

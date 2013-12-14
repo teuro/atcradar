@@ -1,6 +1,7 @@
 #include <map>
+#include <string>
 
-static class Asetukset
+class Asetukset
 {
 public:
 	static std::map <std::string, double> asetukset;
