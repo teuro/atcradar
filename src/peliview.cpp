@@ -1,3 +1,4 @@
+#include "asetukset.h"
 #include "peliview.hpp"
 #include "ohjelma.hpp"
 #include "kuvavarasto.hpp"

@@ -1,3 +1,4 @@
+#include "asetukset.h"
 #include "peli.hpp"
 #include "pelicontroller.hpp"
 #include "peliview.hpp"
