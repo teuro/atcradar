@@ -24,7 +24,6 @@ void Asetukset::lataa_asetukset(std::string nimi) {
 	// TODO: fix this without dependency on peli
 	//Asetukset::asetukset["maks_lahestymiskorkeus"] = apuvalineet::mi2ft(peli.kentta.korkeus + std::tan(apuvalineet::deg2rad(Asetukset::asetukset["liukupolku"])) * Asetukset::asetukset["lahestymispiste"]);
 	//std::clog << "Lahestymisen korkeus lahestymispisteella on " << Asetukset::asetukset["maks_lahestymiskorkeus"] << std::endl;
-
 	sisaan.close();
 }
 
