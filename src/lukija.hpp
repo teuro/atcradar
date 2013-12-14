@@ -14,7 +14,7 @@ class syotteenluku {
 		syotteenluku();
 		std::string anna_viesti() { return this->str; }
 		void aseta_viesti(std::string viesti) { this->str = viesti; }
-		void lue_syote();
+		std::string lue_syote();
 		void tyhjenna() { this->str = ""; }
 	};
 
