@@ -103,7 +103,9 @@ void PeliView::piirra_koneet() {
 
 	Uint32 ok = 0x000000FF;
 	Uint32 ng = 0xFF0000FF;
-
+	
+	int listauskorkeus = 90;
+	
 	for (unsigned int i = 0; i < peli.koneet.size(); ++i) {
 		if (peli.koneet[i].odotus == false) {
 			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli.koneet[i].paikka, peli.koneet[i].suunta, peli.koneet[i].nopeus * (60.0 / 3600.0));
@@ -121,6 +123,19 @@ void PeliView::piirra_koneet() {
 			circleColor(ruutu, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
 
 			kirjoita_tekstia(peli.koneet[i].kutsutunnus, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y);
+			
+			kirjoita_tekstia(peli.koneet[i].kutsutunnus, 30, listauskorkeus); 
+			
+			if (peli.koneet[i].reitti.size() == 0) {
+				kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityssuunta), 100, listauskorkeus);
+			} else {
+				kirjoita_tekstia(peli.koneet[i].kohde.nimi, 100, listauskorkeus);
+			}
+			
+			kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityskorkeus), 160, listauskorkeus);
+			kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvitysnopeus), 210, listauskorkeus);
+			listauskorkeus += 20;
+
 
 			if (peli.koneet[i].tyyppi == Peli::SAAPUVA) {
 				//std::clog << "Tulee" << std::endl;
