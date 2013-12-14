@@ -17,14 +17,17 @@ See PeliController and PeliView for more functionality.
 
 class Peli {
 public:
-    Peli(Ohjelma &o) : ohjelma(o) 
+	Peli(Ohjelma &o) : ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1)
     {
-
+		atis.lahtokiitotie = -1;
+		atis.laskukiitotie = -1;
+		atis.siirtopinta = -1;
+		atis.ok = false;
     }
 
     Ohjelma& ohjelma;
 
-    const float ajan_muutos = 0.02f;
+    float ajan_muutos;
     std::vector <std::string> tunnukset;
     std::string syote;
 
@@ -76,19 +79,19 @@ public:
     lentokentta kentta;
 
     int toiminto;
-    int koska_uusi_kone = 1;
+    int koska_uusi_kone;
     int koska_metar;
-    int porrastusvirheet = 0;
-    int muut_virheet = 0;
+    int porrastusvirheet;
+    int muut_virheet;
 
     struct Atis {
-        int lahtokiitotie = -1;
-        int laskukiitotie = -1;
-        std::string lahto;
+		int lahtokiitotie;// = -1;
+		int laskukiitotie;// = -1;
+		double siirtopinta;// = -1;
+		std::string lahto;
         std::string lasku;
-        double siirtopinta = -1;
         int siirtokorkeus;
-        bool ok = false;
+        bool ok;
 
         struct Paine {
             double alaraja;
