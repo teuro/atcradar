@@ -275,7 +275,7 @@ void peli::aseta_virhe(int virhe) {
 			break;
 		case VIRHE_LAHESTYMISKORKEUS:
 			peli::virheteksti = "Lähestymisen yläraja on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("maks_lahestymiskorkeus")) + " jalkaa";
-			ulos << "Koneella liian suuri korkeus lähestymiseen aikaan " << ohjelma::sekunnit() << std::endl;
+			ulos << "Koneella liian suuri korkeus lähestymiseen aikaan " << ohjelma::sekunnit() << " " << ohjelma::anna_asetus("maks_lahestymiskorkeus") << std::endl;
 			break;
 		case VIRHE_LAHESTYMISNOPEUS:
 			peli::virheteksti = "Lähestymisen maksiminopeus on " + apuvalineet::tekstiksi(ohjelma::anna_asetus("maks_lahestymisnopeus")) + " solmua";
