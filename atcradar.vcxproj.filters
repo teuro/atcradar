@@ -45,6 +45,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\PeliController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,6 +55,8 @@
     <ClCompile Include="src\asetukset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+>>>>>>> Upgrade to VS2013, refactored global, static stuff to proper classes.
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ajastin.hpp">

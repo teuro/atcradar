@@ -39,7 +39,7 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, dou
 
 	this->odotus = odotus;
 
-	std::clog << kutsutunnus << " luotu paikkaan " << paikka.x << ", " << paikka.y << std::endl;
+	//std::clog << kutsutunnus << " luotu paikkaan " << paikka.x << ", " << paikka.y << std::endl;
 }
 
 lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) : peli(p), ohjelma(o) {
