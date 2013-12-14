@@ -11,6 +11,7 @@
 #include <stdexcept>
 
 int main(int argc, char** argv)
+{
 	try {
 		Ohjelma ohjelma;
 		Peli peli(ohjelma);
@@ -26,15 +27,16 @@ int main(int argc, char** argv)
 				pelin_tulos = controller.aja();
 				continue;
 			case valikko::LOPETUS:
-				break;
+				return 0;
+			default:
+				throw std::logic_error("Virheellinen tilanne valikossa!");
 			}
-			throw std::logic_error("Virheellinen tilanne valikossa!");
 		}
 		return 0;
-
 	}
 	catch (std::exception& e) {
 		std::cout << "Pieleen meni!" << std::endl;
 		std::cout << e.what() << std::endl;
 		return 1;
 	}
+}
