@@ -1,4 +1,3 @@
-// peli.hpp
 #ifndef _PELI_HPP
 #define _PELI_HPP
 
@@ -9,19 +8,12 @@
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
 
-class PeliView;
-class Peli;
-class Ohjelma;
+/*
+MVC Model
 
-class PeliController {
-    Peli& peli;
-    PeliView& view;
-    Ohjelma& ohjelma;
-public:
-    PeliController(Peli& p, PeliView& v, Ohjelma& o) : peli(p), view(v), ohjelma(o) { }
-    int aja();
-    void pyyda_atis();
-};
+Peli class maintains the game's runtime state and provides helper methods to update the state. Nothing else.
+See PeliController and PeliView for more functionality.
+*/
 
 class Peli {
 public:
@@ -32,7 +24,7 @@ public:
 
     Ohjelma& ohjelma;
 
-    const float ajan_muutos = 0.02;
+    const float ajan_muutos = 0.02f;
     std::vector <std::string> tunnukset;
     std::string syote;
 
@@ -117,16 +109,6 @@ public:
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
 	void luo_kone(Ohjelma& ohjelma);
 	void tuhoa_kone(int kone);
-
-	/*struct Atis {
-		int lahtokiitotie;
-		int laskukiitotie;
-		std::string lahto;
-		std::string lasku;
-		double siirtopinta;
-		int siirtokorkeus;
-		bool ok;
-    } atis;*/
 
 	struct Metar {
 		int tuuli;

@@ -91,7 +91,8 @@
     <ClCompile Include="src\navipiste.cpp" />
     <ClCompile Include="src\ohjelma.cpp" />
     <ClCompile Include="src\peli.cpp" />
-    <ClCompile Include="src\test.cpp" />
+    <ClCompile Include="src\PeliController.cpp" />
+    <ClCompile Include="src\peliview.cpp" />
     <ClCompile Include="src\valikko.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +105,8 @@
     <ClInclude Include="src\navipiste.hpp" />
     <ClInclude Include="src\ohjelma.hpp" />
     <ClInclude Include="src\peli.hpp" />
+    <ClInclude Include="src\pelicontroller.hpp" />
+    <ClInclude Include="src\peliview.hpp" />
     <ClInclude Include="src\valikko.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

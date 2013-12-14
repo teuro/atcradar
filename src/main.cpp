@@ -3,10 +3,11 @@
 #pragma comment(lib, "SDLmain.lib") 
 #endif 
 
-// main.cpp
 #include "ohjelma.hpp"
 #include "valikko.hpp"
 #include "peli.hpp"
+#include "peliview.hpp"
+#include "pelicontroller.hpp"
 #include <stdexcept>
 
 int main(int argc, char** argv)
@@ -16,9 +17,6 @@ int main(int argc, char** argv)
 		PeliView view(peli, ohjelma);
 		PeliController controller(peli, view, ohjelma);
 		valikko valikko(ohjelma, view);
-
-		ohjelma.alku();
-		view.alku();
 
 		while (true)
 		{
@@ -32,7 +30,6 @@ int main(int argc, char** argv)
 			}
 			throw std::logic_error("Virheellinen tilanne valikossa!");
 		}
-		ohjelma.loppu();
 		return 0;
 
 	}
