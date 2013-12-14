@@ -122,5 +122,9 @@ bool Ohjelma::lue_hiiri() {
 }
 
 std::string Versio::anna_versio() {
+	const int paa = 2;
+	const int kehitys = 0;
+	const int rakennus = 1;
+
 	return apuvalineet::tekstiksi(paa) + "." + apuvalineet::tekstiksi(kehitys) + "." + apuvalineet::tekstiksi(rakennus);
 }
