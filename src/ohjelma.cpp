@@ -9,12 +9,19 @@
 #include <SDL/SDL_ttf.h>
 
 void Ohjelma::alku() {
-    // Remove?
+	std::clog << "ohjelma::alku()" << std::endl;
+
 	// Alustetaan SDL tai heitetään virhe.
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw std::runtime_error(SDL_GetError());
 	}
+
+	Asetukset::lataa_asetukset("data/asetukset.ini");
+
 	SDL_EnableUNICODE(SDL_ENABLE);
+
+	// Nollataan sekuntilaskuri.
+	sekunnit(true);
 }
 
 // Lopetusfunktio.

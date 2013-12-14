@@ -10,21 +10,14 @@
 
 // Alustusfunktio.
 void PeliView::alku() {
-	std::clog << "ohjelma::alku()" << std::endl;
-	Asetukset::lataa_asetukset("data/asetukset.ini");
-
 	// Avataan ikkuna tai heitetään virhe.
 	ruutu = SDL_SetVideoMode(Asetukset::anna_asetus("ruutu_leveys"), Asetukset::anna_asetus("ruutu_korkeus"), 32, SDL_DOUBLEBUF);
-
 	if (!ruutu) {
 		throw std::runtime_error(SDL_GetError());
 	}
 
 	// Asetetaan otsikko.
 	SDL_WM_SetCaption("ATC-radar", "ATC-radar");
-
-	// Nollataan sekuntilaskuri.
-	ohjelma.sekunnit(true);
 
 	if (TTF_Init() != 0) {
 		throw std::runtime_error(TTF_GetError());

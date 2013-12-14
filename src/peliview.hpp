@@ -40,7 +40,6 @@ public:
 	void piirra_tilasto();
 	void piirra_atis(int toiminto);
 
-	std::map <std::string, double> asetukset;
 private:
 	void alku();
 
@@ -60,7 +59,6 @@ private:
 	SDL_Surface *ruutu;
 	Peli& peli;
 	Ohjelma& ohjelma;
-
 };
 
 #endif
