@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="src\ajastin.cpp" />
     <ClCompile Include="src\apuvalineet.cpp" />
+    <ClCompile Include="src\asetukset.cpp" />
     <ClCompile Include="src\lentokentta.cpp" />
     <ClCompile Include="src\lentokone.cpp" />
     <ClCompile Include="src\lukija.cpp" />
@@ -98,6 +99,7 @@
   <ItemGroup>
     <ClInclude Include="src\ajastin.hpp" />
     <ClInclude Include="src\apuvalineet.hpp" />
+    <ClInclude Include="src\asetukset.h" />
     <ClInclude Include="src\kuvavarasto.hpp" />
     <ClInclude Include="src\lentokentta.hpp" />
     <ClInclude Include="src\lentokone.hpp" />

@@ -1,4 +1,5 @@
 // ohjelma.cpp
+#include "asetukset.h"
 #include "ohjelma.hpp"
 #include "kuvavarasto.hpp"
 #include <iostream>
@@ -93,36 +94,6 @@ bool Ohjelma::lue_nappi(nappi n) {
 void Ohjelma::tyhjenna_syote() {
 	SDL_Event e;
 	while (SDL_PollEvent(&e));
-}
-
-void Asetukset::lataa_asetukset(std::string nimi) {
-	std::clog << "ohjelma::lataa_asetukset(" << nimi << ")" << std::endl;
-	std::ifstream sisaan(nimi.c_str(), std::ios::in);
-
-	if (!sisaan) {
-		throw std::runtime_error("Tiedosto " + nimi + " ei aukea tai puuttuu");
-	}
-
-	std::string asetus_nimi;
-	double asetus_arvo;
-
-	while (sisaan >> asetus_nimi >> asetus_arvo) {
-		Asetukset::asetukset[asetus_nimi] = asetus_arvo;
-	}
-
-	sisaan.close();
-}
-
-double Asetukset::anna_asetus(std::string asetus) {
-	std::map <std::string, double>::iterator onko;
-
-	onko = asetukset.find(asetus);
-
-	if (onko == Asetukset::asetukset.end()) {
-		throw std::logic_error("Asetusta " + asetus + " ei ole");
-	}
-
-	return asetukset[asetus];
 }
 
 bool Ohjelma::onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade) {

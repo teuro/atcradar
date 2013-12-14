@@ -1,3 +1,4 @@
+#include "asetukset.h"
 #include "lentokone.hpp"
 #include "peli.hpp"
 #include "ohjelma.hpp"

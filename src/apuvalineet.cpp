@@ -1,3 +1,4 @@
+#include "asetukset.h"
 #include "apuvalineet.hpp"
 #include "ohjelma.hpp"
 #include <cstdlib>

@@ -1,4 +1,4 @@
-// peli.cpp
+#include "asetukset.h"
 #include "peli.hpp"
 #include "ohjelma.hpp"
 #include "lukija.hpp"

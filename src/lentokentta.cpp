@@ -1,3 +1,4 @@
+#include "asetukset.h"
 #include "lentokentta.hpp"
 #include "ohjelma.hpp"
 
