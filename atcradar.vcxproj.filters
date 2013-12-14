@@ -45,39 +45,21 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Refactored classes to own files, cleaned up interfaces.
-=======
->>>>>>> e18e88d330f434014b136e5273d0c0732b3f0524
     <ClCompile Include="src\PeliController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\peliview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ClCompile Include="src\asetukset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-=======
->>>>>>> Upgrade to VS2013, refactored global, static stuff to proper classes.
-=======
->>>>>>> Refactored classes to own files, cleaned up interfaces.
-=======
     <ClCompile Include="src\asetukset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
->>>>>>> Asetukset to own file.
-=======
     <ClCompile Include="src\asetukset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
->>>>>>> e18e88d330f434014b136e5273d0c0732b3f0524
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ajastin.hpp">
@@ -116,23 +98,14 @@
     <ClInclude Include="src\peliview.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ClInclude Include="src\asetukset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-=======
->>>>>>> Refactored classes to own files, cleaned up interfaces.
-=======
     <ClInclude Include="src\asetukset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
->>>>>>> Asetukset to own file.
-=======
     <ClInclude Include="src\asetukset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
->>>>>>> e18e88d330f434014b136e5273d0c0732b3f0524
   </ItemGroup>
 </Project>

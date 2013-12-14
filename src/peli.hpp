@@ -56,6 +56,15 @@ public:
     std::vector <lentokone> koneet;
     std::vector <lentokone> odottavat;
 
+	struct selvitys {
+		int kone_id;
+		std::string nimi;
+		int toiminto;
+		float aika;
+	};
+
+	std::vector <selvitys> selvitykset;
+
     std::vector <navipiste> navipisteet;
     std::vector <navipiste> sisapisteet;
 

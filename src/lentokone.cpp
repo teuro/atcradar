@@ -18,6 +18,7 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, dou
 
 	this->kohde.paikka.x = 0;
 	this->kohde.paikka.y = 0;
+	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
 	laskubaana = -1;
 	onko_porrastus = true;
@@ -46,6 +47,7 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::
     //std::clog << "Kone luotu " << kutsutunnus << " " << " " << paikka.x << " " << paikka.y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
 	this->kutsutunnus = kutsutunnus;
 	this->paikka = paikka;
+	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
 	this->kohde.paikka.x = 0;
 	this->kohde.paikka.y = 0;
@@ -283,11 +285,7 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 			if (korkeus < Asetukset::anna_asetus("oikotie")) {
 				peli.aseta_virhe(Peli::VIRHE_OIKOTIE);
 			} else {
-<<<<<<< HEAD
-				this->aseta_navipiste(this->ulosmenopiste);
-=======
 				aseta_navipiste(ulosmenopiste.paikka);
->>>>>>> 666aafec758181748575d76a3a5154ba0e3f75b9
 			}
 			break;
 		case Peli::LAHESTYMIS:

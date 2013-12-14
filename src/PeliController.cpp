@@ -116,8 +116,16 @@ int PeliController::aja() {
 				peli.toiminto = Peli::POIS;
 			}
 
-			peli.koneet[peli.etsi_valittu_kone()].ota_selvitys(tmp, peli.toiminto);
+			//peli.koneet[peli.etsi_valittu_kone()].ota_selvitys(tmp, peli.toiminto);
 
+			Peli::selvitys tmp_selvitys;
+			tmp_selvitys.kone_id = peli.etsi_valittu_kone();
+			tmp_selvitys.nimi = tmp;
+			tmp_selvitys.toiminto = peli.toiminto;
+			tmp_selvitys.aika = ohjelma.sekunnit() + 3;
+			
+				      //koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
+			peli.selvitykset.push_back(tmp_selvitys);
 			peli.lisaa_selvityksia();
 			ohjelma.odota(150);
 
@@ -135,6 +143,14 @@ int PeliController::aja() {
 		}
 		else {
 			peli.ohje = "Paina toimintonappulaa F5 F6 tai F8 ja anna komento";
+		}
+
+
+		for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
+			if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
+				peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nimi, peli.selvitykset[k].toiminto);
+				peli.selvitykset.erase(peli.selvitykset.begin() + k);
+			}
 		}
 
 		peli.tarkista_porrastus();
