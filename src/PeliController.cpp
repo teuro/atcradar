@@ -13,6 +13,7 @@
 
 // Pelin p‰‰funktio.
 int PeliController::aja() {
+	peli.porrastusvirheet = 0;
 	std::clog << "pelicontroller::aja()" << std::endl;
 
 	//ohjelma::lataa_asetukset("asetukset.ini");
