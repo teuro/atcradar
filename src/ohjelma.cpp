@@ -8,12 +8,6 @@
 #include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_ttf.h>
 
-std::string Versio::anna_versio() {
-	return apuvalineet::tekstiksi(paa) + "." + apuvalineet::tekstiksi(kehitys) + "." + apuvalineet::tekstiksi(rakennus);
-}
-
-std::map <std::string, double> Asetukset::asetukset;
-
 void Ohjelma::alku() {
     // Remove?
 	// Alustetaan SDL tai heitetään virhe.
@@ -125,4 +119,8 @@ bool Ohjelma::lue_hiiri() {
 	}
 
 	return false;
+}
+
+std::string Versio::anna_versio() {
+	return apuvalineet::tekstiksi(paa) + "." + apuvalineet::tekstiksi(kehitys) + "." + apuvalineet::tekstiksi(rakennus);
 }
