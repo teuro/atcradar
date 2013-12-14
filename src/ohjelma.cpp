@@ -330,8 +330,6 @@ void ohjelma::lataa_asetukset(std::string nimi) {
 		ohjelma::asetukset[asetus_nimi] = asetus_arvo;
 	}
 
-	ohjelma::asetukset["maks_lahestymiskorkeus"] = apuvalineet::mi2ft(peli::kentta.korkeus + std::tan(apuvalineet::deg2rad(ohjelma::asetukset["liukupolku"])) * ohjelma::asetukset["lahestymispiste"]);
-	std::clog << "Lahestymisen korkeus lahestymispisteella on " << ohjelma::asetukset["maks_lahestymiskorkeus"] << std::endl;
 	sisaan.close();
 }
 

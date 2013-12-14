@@ -9,6 +9,13 @@
 #include <ctime>
 #include <algorithm>
 
+struct selvitys {
+	int kone_id;
+	std::string selvitys;
+	int toiminto;
+	float aika;
+};
+
 namespace peli {
 	const float ajan_muutos = 0.02;
 	std::vector <std::string> tunnukset;
@@ -28,7 +35,8 @@ namespace peli {
 
 	std::vector <lentokone> koneet;
 	std::vector <lentokone> odottavat;
-
+	std::vector <selvitys> selvitykset;
+	
 	std::vector <navipiste> navipisteet;
 	std::vector <navipiste> sisapisteet;
 
@@ -190,8 +198,15 @@ int peli::aja() {
             } else if (tmp == "OFF") {
                 toiminto = POIS;
 			}
-
-			koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
+			
+			selvitys tmp_selvitys;
+			tmp_selvitys.kone_id = etsi_valittu_kone();
+			tmp_selvitys.selvitys = tmp;
+			tmp_selvitys.toiminto = toiminto;
+			tmp_selvitys.aika = ohjelma::sekunnit() + 3;
+			
+			//koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
+			selvitykset.push_back(tmp_selvitys);
 
 			peli::lisaa_selvityksia();
 			ohjelma::odota(150);
@@ -209,6 +224,13 @@ int peli::aja() {
 			ohje = "Valitse kone klikkaamalla";
 		} else {
 			ohje = "Paina toimintonappulaa F5 F6 tai F8 ja anna komento";
+		}
+		
+		for (unsigned int k = 0; k < selvitykset.size(); ++k) {
+			if ((int)selvitykset[k].aika == (int)ohjelma::sekunnit()) {
+				koneet[selvitykset[k].kone_id].ota_selvitys(selvitykset[k].selvitys, selvitykset[k].toiminto);
+				selvitykset.erase(selvitykset.begin()+k);
+			}
 		}
 
 		tarkista_porrastus();

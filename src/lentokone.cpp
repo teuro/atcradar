@@ -8,6 +8,7 @@ lentokone::lentokone() {}
 lentokone::lentokone(std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) {
 	//std::clog << "Kone luotu " << kutsutunnus << " " << x << " " << y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
 	this->kutsutunnus = kutsutunnus;
+	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
 	this->paikka.x = x;
 	this->paikka.y = y;
@@ -42,6 +43,7 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	//std::clog << "Kone luotu " << kutsutunnus << " " << " " << paikka.x << " " << paikka.y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
 	this->kutsutunnus = kutsutunnus;
 	this->paikka = paikka;
+	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
 	this->kohde.paikka.x = 0;
 	this->kohde.paikka.y = 0;
