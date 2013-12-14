@@ -179,7 +179,6 @@ int peli::aja() {
 		lukija.lue_syote();
 
 		if (ohjelma::lue_nappi(ohjelma::NAPPI_ENTER) && etsi_valittu_kone() >= 0) {
-			koneet[etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
 			std::string tmp = lukija.anna_viesti();
 
 			if (toiminto == KORKEUS) {
@@ -203,9 +202,8 @@ int peli::aja() {
 			tmp_selvitys.kone_id = etsi_valittu_kone();
 			tmp_selvitys.selvitys = tmp;
 			tmp_selvitys.toiminto = toiminto;
-			tmp_selvitys.aika = ohjelma::sekunnit() + 3;
-			
-			//koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
+			tmp_selvitys.aika = ohjelma::sekunnit() + apuvalineet::arvo_luku(3, 8);
+		
 			selvitykset.push_back(tmp_selvitys);
 
 			peli::lisaa_selvityksia();
