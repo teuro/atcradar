@@ -1,8 +1,3 @@
-#ifdef WIN32 
-#pragma comment(lib, "SDL.lib") 
-#pragma comment(lib, "SDLmain.lib") 
-#endif 
-
 #include "ohjelma.hpp"
 #include "valikko.hpp"
 #include "peli.hpp"
