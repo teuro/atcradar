@@ -4,11 +4,6 @@
 #include "ohjelma.hpp"
 #include <algorithm>
 
-/*lentokone::lentokone(const lentokone& lk) : ohjelma(lk.ohjelma), peli(lk.peli)
-{
-
-}*/
-
 lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) : peli(p), ohjelma(o) {
 	this->kutsutunnus = kutsutunnus;
 
