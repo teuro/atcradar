@@ -10,7 +10,6 @@
 }*/
 
 lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) : peli(p), ohjelma(o) {
-	//std::clog << "Kone luotu " << kutsutunnus << " " << x << " " << y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
 	this->kutsutunnus = kutsutunnus;
 
 	paikka.x = x;
@@ -37,16 +36,15 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, dou
 	valittu = false;
 
 	odotuskuvio = -1;
+	
 
 	this->odotus = odotus;
-
-	//std::clog << kutsutunnus << " luotu paikkaan " << paikka.x << ", " << paikka.y << std::endl;
+	this->oikotie = false;
 }
 
 // TODO: Toteuta tämä niin, että se kutsuu edellistä konstruktoria (melkein samat parametrit ja copy-pastettua koodia)
 lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) : peli(p), ohjelma(o) {
-    //std::clog << "Kone luotu " << kutsutunnus << " " << " " << paikka.x << " " << paikka.y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
-	this->kutsutunnus = kutsutunnus;
+    this->kutsutunnus = kutsutunnus;
 	this->paikka = paikka;
 	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
@@ -70,6 +68,7 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::
 	valittu = false;
 
 	this->odotus = odotus;
+	this->oikotie = false;
 	odotuskuvio = -1;
 
 	std::clog << kutsutunnus << " luotu paikkaan " << paikka.x << ", " << paikka.y << std::endl;
@@ -197,7 +196,7 @@ void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
 
 int lentokone::kaarron_suunta(double suunta) {
 	double rad_suunta = apuvalineet::deg2rad(suunta);
-	double rad_kone = apuvalineet::deg2rad(suunta);
+	double rad_kone = apuvalineet::deg2rad(this->suunta);
 	double k = rad_kone - rad_suunta;
 	double PII = 3.14;
 	//std::clog << rad_kone << " / " << rad_suunta << std::endl;
@@ -288,6 +287,7 @@ void lentokone::ota_selvitys(std::string tmp, int toiminto) {
 			} else {
 				aseta_navipiste(ulosmenopiste);
 			}
+			this->oikotie = true;
 			break;
 		case Peli::LAHESTYMIS:
 			this->poista_reitti();

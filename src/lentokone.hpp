@@ -28,6 +28,7 @@ public:
 	navipiste ulosmenopiste;
 
 	bool odotus;
+	bool oikotie;
 	lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
     lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
 

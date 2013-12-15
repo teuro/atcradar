@@ -120,9 +120,17 @@ void PeliView::piirra_koneet() {
 			kirjoita_tekstia(peli.koneet[i].kutsutunnus, 30, listauskorkeus); 
 			
 			if (peli.koneet[i].reitti.size() == 0) {
-				kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityssuunta), 100, listauskorkeus);
+				if (peli.koneet[i].lahestymisselvitys) {
+					kirjoita_tekstia("ILS", 100, listauskorkeus);
+				} else if (peli.koneet[i].oikotie) {
+					kirjoita_tekstia(peli.koneet[i].ulosmenopiste.nimi, 100, listauskorkeus);
+				}
+					
+				if (!peli.koneet[i].lahestymisselvitys && !peli.koneet[i].oikotie) {
+					kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityssuunta), 100, listauskorkeus);
+				}
 			} else {
-				kirjoita_tekstia(peli.koneet[i].kohde.nimi, 100, listauskorkeus);
+				kirjoita_tekstia(peli.koneet[i].kohde.nimi, 100, listauskorkeus); 
 			}
 			
 			kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityskorkeus), 160, listauskorkeus);
@@ -172,11 +180,6 @@ void PeliView::piirra_koneet() {
 
 				if (peli.koneet[i].tyyppi == Peli::LAHTEVA) {
 					kirjoita_tekstia(peli.koneet[i].ulosmenopiste.nimi, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (4 * fontin_koko) + 3);
-				}
-
-				if (peli.koneet[i].reitti.size()) {
-					kirjoita_tekstia("Kohde", 600, 235);
-					kirjoita_tekstia(peli.koneet[i].reitti.front().nimi, 600, 250);
 				}
 
 				switch (peli.toiminto) {
