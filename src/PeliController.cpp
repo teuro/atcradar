@@ -17,7 +17,6 @@ int PeliController::aja() {
 	peli.muut_virheet = 0;
 	std::clog << "pelicontroller::aja()" << std::endl;
 
-	//ohjelma::lataa_asetukset("asetukset.ini");
 	peli.lataa_tunnukset("data/tunnukset.txt");
 
 	peli.lataa_kentta("EFRO");
