@@ -43,6 +43,7 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, dou
 	//std::clog << kutsutunnus << " luotu paikkaan " << paikka.x << ", " << paikka.y << std::endl;
 }
 
+// TODO: Toteuta tämä niin, että se kutsuu edellistä konstruktoria (melkein samat parametrit ja copy-pastettua koodia)
 lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) : peli(p), ohjelma(o) {
     //std::clog << "Kone luotu " << kutsutunnus << " " << " " << paikka.x << " " << paikka.y << " " << korkeus << " " << nopeus << " " << suunta << std::endl;
 	this->kutsutunnus = kutsutunnus;
