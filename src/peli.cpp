@@ -256,6 +256,11 @@ void Peli::tarkista_porrastus() {
 }
 
 void Peli::hoida_koneet() {
+	while (poistettavat.size()) {
+		poista_kone(poistettavat.back());
+		poistettavat.pop_back();
+	}
+	
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
 		if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 			if (koneet[i].reitti.size()) {

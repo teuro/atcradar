@@ -55,6 +55,7 @@ public:
 
     std::vector <lentokone> koneet;
     std::vector <lentokone> odottavat;
+	std::vector <int> poistettavat;
 
 	struct selvitys {
 		int kone_id;
