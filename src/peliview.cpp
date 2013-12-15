@@ -174,11 +174,6 @@ void PeliView::piirra_koneet() {
 					kirjoita_tekstia(peli.koneet[i].ulosmenopiste.nimi, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (4 * fontin_koko) + 3);
 				}
 
-				if (peli.koneet[i].reitti.size()) {
-					kirjoita_tekstia("Kohde", 600, 235);
-					kirjoita_tekstia(peli.koneet[i].reitti.front().nimi, 600, 250);
-				}
-
 				switch (peli.toiminto) {
 				case Peli::SUUNTA:
 					kirjoita_tekstia("Anna suunta 0-360 tai navipisteen nimi", 50, 50);
