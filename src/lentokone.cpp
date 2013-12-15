@@ -36,42 +36,14 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, dou
 	valittu = false;
 
 	odotuskuvio = -1;
-	
 
 	this->odotus = odotus;
 	this->oikotie = false;
 }
 
-// TODO: Toteuta tämä niin, että se kutsuu edellistä konstruktoria (melkein samat parametrit ja copy-pastettua koodia)
-lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) : peli(p), ohjelma(o) {
-    this->kutsutunnus = kutsutunnus;
-	this->paikka = paikka;
-	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
-
-	this->kohde.paikka.x = 0;
-	this->kohde.paikka.y = 0;
-
-	laskubaana = -1;
-	onko_porrastus = true;
-	this->tyyppi = tyyppi;
-
-	this->korkeus = korkeus;
-	this->nopeus = nopeus;
-	this->suunta = suunta;
-
-	selvityskorkeus = korkeus;
-	selvitysnopeus = nopeus;
-	selvityssuunta = suunta;
-
-	lahestymisselvitys = false;
-	laskuselvitys = false;
-	valittu = false;
-
-	this->odotus = odotus;
-	this->oikotie = false;
-	odotuskuvio = -1;
-
-	std::clog << kutsutunnus << " luotu paikkaan " << paikka.x << ", " << paikka.y << std::endl;
+lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) 
+	: lentokone(p, o, kutsutunnus, paikka.x, paikka.y, korkeus, nopeus, suunta, tyyppi, odotus)
+{
 }
 
 void lentokone::muuta_selvityskorkeutta(double korkeus) {
