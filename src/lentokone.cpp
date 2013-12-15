@@ -196,7 +196,7 @@ void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
 
 int lentokone::kaarron_suunta(double suunta) {
 	double rad_suunta = apuvalineet::deg2rad(suunta);
-	double rad_kone = apuvalineet::deg2rad(suunta);
+	double rad_kone = apuvalineet::deg2rad(this->suunta);
 	double k = rad_kone - rad_suunta;
 	double PII = 3.14;
 	//std::clog << rad_kone << " / " << rad_suunta << std::endl;
