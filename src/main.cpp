@@ -5,6 +5,12 @@
 #include "pelicontroller.hpp"
 #include <stdexcept>
 
+
+// The following undef required due to some conflict with VS+SDL. To be removed later...
+#ifdef _MSC_VER
+#undef main
+#endif
+
 int main(int argc, char** argv)
 {
 	try {
