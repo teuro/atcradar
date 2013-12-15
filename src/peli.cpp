@@ -288,7 +288,7 @@ void Peli::hoida_koneet() {
 
 		if (koneet[i].paikka.x < 0 || koneet[i].paikka.x > Asetukset::anna_asetus("ruutu_leveys") || koneet[i].paikka.y < 0 || koneet[i].paikka.y > Asetukset::anna_asetus("ruutu_korkeus")) {
 			aseta_virhe(VIRHE_ALUEELTA);
-			poista_kone(i);
+			poistettavat.push_back(i);
 		}
 
 		if (koneet[i].kohde.paikka.x > 0 && koneet[i].kohde.paikka.y > 0) {
@@ -299,14 +299,14 @@ void Peli::hoida_koneet() {
 			koneet[i].lahesty();
 
 			if (koneet[i].nopeus < 4.0) {
-				poista_kone(i);
+				poistettavat.push_back(i);
 				++kasitellyt;
 			}
 		}
 
 		if (koneet[i].tyyppi == Peli::LAHTEVA) {
 			if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].ulosmenopiste.paikka)) {
-				poista_kone(i);
+				poistettavat.push_back(i);
 				++kasitellyt;
 			} else if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 				if (koneet[i].reitti.size()) {
