@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+bool poistetaanko(const lentokone& kone);
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
 	std::clog << "peli::lataa_tunnukset(" << tunnukset << ")" << std::endl;
@@ -255,13 +256,16 @@ void Peli::tarkista_porrastus() {
 	}
 }
 
+bool poistetaanko(const lentokone& kone) {
+    if (kone.paikka.x < 0 || kone.paikka.x > Asetukset::anna_asetus("ruutu_leveys") || kone.paikka.y < 0 || kone.paikka.y > Asetukset::anna_asetus("ruutu_korkeus")) {
+        return true;
+     }
+
+    return false;
+}
+
 void Peli::hoida_koneet() {
-	while (poistettavat.size()) {
-		poista_kone(poistettavat.back());
-		poistettavat.pop_back();
-	}
-	
-	for (unsigned int i = 0; i < koneet.size(); ++i) {
+    for (unsigned int i = 0; i < koneet.size(); ++i) {
 		if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 			if (koneet[i].reitti.size()) {
 				navipiste tmp = koneet[i].anna_piste();
@@ -284,11 +288,6 @@ void Peli::hoida_koneet() {
 		if (koneet[i].odotuskuvio > -1 && koneet[i].odotuskuvio < ohjelma.sekunnit()) {
 			koneet[i].odotuskuvio += 120;
 			koneet[i].muuta_selvityssuuntaa(koneet[i].suunta + 180, OIKEA);
-		}
-
-		if (koneet[i].paikka.x < 0 || koneet[i].paikka.x > Asetukset::anna_asetus("ruutu_leveys") || koneet[i].paikka.y < 0 || koneet[i].paikka.y > Asetukset::anna_asetus("ruutu_korkeus")) {
-			aseta_virhe(VIRHE_ALUEELTA);
-			poistettavat.push_back(i);
 		}
 
 		if (koneet[i].kohde.paikka.x > 0 && koneet[i].kohde.paikka.y > 0) {
@@ -334,6 +333,8 @@ void Peli::hoida_koneet() {
 			ohje = "Koneella " + koneet[i].kutsutunnus + " on polttoaine lopussa";
 		}
 	}
+
+	koneet.erase(std::remove_if(koneet.begin(), koneet.end(), poistetaanko), koneet.end());
 }
 
 void Peli::poista_kone(int kone) {
