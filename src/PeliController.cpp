@@ -15,6 +15,8 @@
 int PeliController::aja() {
 	peli.porrastusvirheet = 0;
 	peli.muut_virheet = 0;
+	peli.kasitellyt = 0;
+
 	std::clog << "pelicontroller::aja()" << std::endl;
 
 	peli.lataa_tunnukset("data/tunnukset.txt");
@@ -122,7 +124,7 @@ int PeliController::aja() {
 			tmp_selvitys.nimi = tmp;
 			tmp_selvitys.toiminto = peli.toiminto;
 			tmp_selvitys.aika = ohjelma.sekunnit() + 3;
-			
+
 				      //koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
 			peli.selvitykset.push_back(tmp_selvitys);
 			peli.lisaa_selvityksia();
@@ -133,7 +135,7 @@ int PeliController::aja() {
 			peli.virheteksti = " ";
 		}
 
-		if (peli.kasitellyt == Asetukset::anna_asetus("vaadittavat_kasitellyt")) {
+		if (peli.kasitellyt >= Asetukset::anna_asetus("vaadittavat_kasitellyt")) {
 			peli.koska_uusi_kone = -1;
 			if (peli.koneet.size() == 0) {
 				/* Peli loppui */

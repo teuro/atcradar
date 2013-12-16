@@ -79,7 +79,6 @@ public:
 
     bool onko_vapaata();
     void hoida_koneet();
-    void poista_kone(int kone);
     int etsi_valittu_kone();
 
     //void pyyda_atis();

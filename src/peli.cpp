@@ -26,7 +26,7 @@ void Peli::lataa_tunnukset(std::string tunnukset) {
 }
 
 void Peli::aseta_virhe(int virhe) {
-	std::clog << "peli::aseta_virhe(" << virhe << ")" << std::endl;
+	std::clog << "peli::aseta_virhe(" << virhe << ") " << std::endl;
 	virheteksti = " ";
 	++muut_virheet;
 	std::ofstream ulos("virhedata.txt", std::ios::app);
@@ -256,16 +256,36 @@ void Peli::tarkista_porrastus() {
 	}
 }
 
-bool poistetaanko(const lentokone& kone) {
-    if (kone.paikka.x < 0 || kone.paikka.x > Asetukset::anna_asetus("ruutu_leveys") || kone.paikka.y < 0 || kone.paikka.y > Asetukset::anna_asetus("ruutu_korkeus")) {
-        return true;
-     }
-
-    return false;
-}
-
 void Peli::hoida_koneet() {
+    for (unsigned int i = 0; i < poistettavat.size(); ++i) {
+        koneet.erase(koneet.begin()+poistettavat[i]);
+    }
+
+    while (poistettavat.size()) {
+        poistettavat.pop_back();
+    }
+
     for (unsigned int i = 0; i < koneet.size(); ++i) {
+        if (koneet[i].tyyppi == Peli::LAHTEVA) {
+            if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].ulosmenopiste.paikka)) {
+                poistettavat.push_back(i);
+                ++kasitellyt;
+                break;
+            }
+        } else if (koneet[i].tyyppi == Peli::SAAPUVA) {
+            if (koneet[i].nopeus < 4.0) {
+                poistettavat.push_back(i);
+                ++kasitellyt;
+                break;
+			}
+        }
+
+        if (koneet[i].paikka.x < 0 || koneet[i].paikka.x > Asetukset::anna_asetus("ruutu_leveys") || koneet[i].paikka.y < 0 || koneet[i].paikka.y > Asetukset::anna_asetus("ruutu_korkeus")) {
+            aseta_virhe(VIRHE_ALUEELTA);
+            poistettavat.push_back(i);
+            break;
+        }
+
 		if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 			if (koneet[i].reitti.size()) {
 				navipiste tmp = koneet[i].anna_piste();
@@ -296,18 +316,10 @@ void Peli::hoida_koneet() {
 
 		if (koneet[i].laskubaana >= 0) {
 			koneet[i].lahesty();
-
-			if (koneet[i].nopeus < 4.0) {
-				poistettavat.push_back(i);
-				++kasitellyt;
-			}
 		}
 
 		if (koneet[i].tyyppi == Peli::LAHTEVA) {
-			if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].ulosmenopiste.paikka)) {
-				poistettavat.push_back(i);
-				++kasitellyt;
-			} else if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
+			if (ohjelma.onko_alueella(koneet[i].paikka, koneet[i].kohde.paikka)) {
 				if (koneet[i].reitti.size()) {
 					koneet[i].aseta_navipiste(koneet[i].anna_piste());
 				}
@@ -333,15 +345,6 @@ void Peli::hoida_koneet() {
 			ohje = "Koneella " + koneet[i].kutsutunnus + " on polttoaine lopussa";
 		}
 	}
-
-	koneet.erase(std::remove_if(koneet.begin(), koneet.end(), poistetaanko), koneet.end());
-}
-
-void Peli::poista_kone(int kone) {
-	std::vector <tilasto>::iterator lisattava = std::find(ajat.begin(), ajat.end(), koneet[kone].kutsutunnus);
-	lisattava->pois = ohjelma.sekunnit();
-
-	koneet.erase(koneet.begin()+kone);
 }
 
 void Peli::lisaa_selvityksia() {
