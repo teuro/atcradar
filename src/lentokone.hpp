@@ -51,6 +51,7 @@ public:
 	double nopeus;
 	bool valittu;
 	int tyyppi;
+	bool poistetaan;
 
 	double odotuskuvio;
 	bool lahestymisselvitys;

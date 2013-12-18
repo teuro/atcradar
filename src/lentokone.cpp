@@ -31,6 +31,7 @@ lentokone::lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, dou
 	valittu = false;
 
 	odotuskuvio = -1;
+	this->poistetaan = false;
 
 	this->odotus = odotus;
 	this->oikotie = false;
