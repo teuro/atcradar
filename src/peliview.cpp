@@ -335,13 +335,16 @@ void PeliView::piirra_metar() {
 
 void PeliView::piirra_odottavat() {
 	int y = 120;
+	
+	if (peli.odottavat.size()) {
+		kirjoita_tekstia("Odottavat koneet", Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), y - fontin_koko - 5);
 
-	kirjoita_tekstia("Odottavat koneet", Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), y - fontin_koko - 5);
+		for (unsigned int i = 0; i < peli.odottavat.size(); ++i) {
+			kirjoita_tekstia(peli.odottavat[i].kutsutunnus, Asetukset::anna_asetus("ruutu_leveys") - 200, y);
 
-	for (unsigned int i = 0; i < peli.odottavat.size(); ++i) {
-		kirjoita_tekstia(peli.odottavat[i].kutsutunnus, Asetukset::anna_asetus("ruutu_leveys") - 200, y);
+			y += fontin_koko + 5;
+		}
 
-		y += fontin_koko + 5;
 	}
 }
 
