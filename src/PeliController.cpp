@@ -13,10 +13,56 @@
 
 // Pelin pääfunktio.
 int PeliController::aja() {
+	int taso = -1;
 	peli.porrastusvirheet = 0;
 	peli.muut_virheet = 0;
 	peli.kasitellyt = 0;
-
+	syotteenluku lukija;
+	peli.ohje = "Valitse taso 0 - 3";
+	
+	while (taso < 0) {
+		lukija.lue_syote();
+		peli.syote = lukija.anna_viesti();
+		
+		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
+			if (lukija.anna_viesti().length()) {
+				taso = apuvalineet::luvuksi<int>(lukija.anna_viesti());
+			}
+		}
+		
+		view.piirra_valinta();
+	}
+	
+	lukija.tyhjenna();
+	peli.ohje = " ";
+	
+	switch (taso) {
+		case 3:
+			Asetukset::asetukset["koska_uusi_ala"] = 30;
+			Asetukset::asetukset["koska_uusi_yla"] = 80;
+			Asetukset::asetukset["maks_konemaara"] = 30;
+			Asetukset::asetukset["vaadittavat_kasitellyt"] = 30;
+			break;
+		case 2:
+			Asetukset::asetukset["koska_uusi_ala"] = 60;
+			Asetukset::asetukset["koska_uusi_yla"] = 120;
+			Asetukset::asetukset["maks_konemaara"] = 15;
+			Asetukset::asetukset["vaadittavat_kasitellyt"] = 20;
+			break;
+		case 1:
+			Asetukset::asetukset["koska_uusi_ala"] = 120;
+			Asetukset::asetukset["koska_uusi_yla"] = 240;
+			Asetukset::asetukset["maks_konemaara"] = 10;
+			Asetukset::asetukset["vaadittavat_kasitellyt"] = 15;
+			break;
+		case 0:
+			Asetukset::asetukset["koska_uusi_ala"] = 150;
+			Asetukset::asetukset["koska_uusi_yla"] = 300;
+			Asetukset::asetukset["maks_konemaara"] = 8;
+			Asetukset::asetukset["vaadittavat_kasitellyt"] = 10;
+			break;
+	}
+	
 	std::clog << "pelicontroller::aja()" << std::endl;
 
 	peli.lataa_tunnukset("data/tunnukset.txt");
@@ -35,7 +81,6 @@ int PeliController::aja() {
 
 	ohjelma.tyhjenna_syote();
 
-	syotteenluku lukija;
 	peli.koska_metar = Asetukset::anna_asetus("koska_metar");
 
 	std::vector <ajastin> ajastimet;

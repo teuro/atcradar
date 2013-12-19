@@ -6,13 +6,12 @@
 #include <stdexcept>
 
 
-// The following undef required due to some conflict with VS+SDL. To be removed later...
+// The following undef required due to some conflict with VS+SDL.' To be removed later...
 #ifdef _MSC_VER
 #undef main
 #endif
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
 	try {
 		Ohjelma ohjelma;
 		Peli peli(ohjelma);
@@ -20,12 +19,10 @@ int main(int argc, char** argv)
 		PeliController controller(peli, view, ohjelma);
 		valikko valikko(ohjelma, view);
 
-		while (true)
-		{
-			static int pelin_tulos;
-			switch (valikko.aja(pelin_tulos)) {
+		while (true) {
+			switch (valikko.aja()) {
 			case valikko::PELI:
-				pelin_tulos = controller.aja();
+				controller.aja();
 				continue;
 			case valikko::LOPETUS:
 				return 0;
