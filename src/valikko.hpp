@@ -11,12 +11,13 @@ class valikko {
 
 public:
     valikko(Ohjelma& o, PeliView& v) : ohjelma(o), view(v) { }
-
+	
 	enum valinta {
 		LOPETUS, PELI
 	};
+	
 	// Valikon p‰‰funktio; tarvitsee pelin tuloksen, palauttaa valinnan.
-	valinta aja(int pelin_tulos);
+	valinta aja();
 };
 
 #endif

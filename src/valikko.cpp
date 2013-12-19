@@ -4,8 +4,8 @@
 #include "peliview.hpp"
 #include <iostream>
 
-valikko::valinta valikko::aja(int pelin_tulos) {
-	std::clog << "valikko::aja(" << pelin_tulos << ")" << std::endl;
+valikko::valinta valikko::aja() {
+	std::clog << "valikko::aja( )" << std::endl;
 
 	// Valikon alkutilanne.
 	valinta valittu = PELI;
@@ -13,7 +13,7 @@ valikko::valinta valikko::aja(int pelin_tulos) {
 	// Valikon silmukka.
 	while (true) {
 		// Piirretään valikon tilanne, odotetaan valintaa.
-		view.piirra_valikko(pelin_tulos, valittu);
+		view.piirra_valikko(valittu);
 		Ohjelma::nappi n = ohjelma.odota_nappi();
 
 		if (n == Ohjelma::NAPPI_ENTER) {
