@@ -345,6 +345,8 @@ void Peli::hoida_koneet() {
 			lyhyt.push_back(koneet[i]);
 		} else {
 			std::clog << "Kone " << koneet[i].kutsutunnus << " poistuu..." << std::endl;
+			std::vector <tilasto>::iterator ulos = std::find(ajat.begin(), ajat.end(), koneet[i].kutsutunnus);
+			ulos->pois = ohjelma.sekunnit();
 		}
 	}
 	
