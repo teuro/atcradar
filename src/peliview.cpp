@@ -42,7 +42,7 @@ void PeliView::piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta) {
 }
 
 // Piirt‰‰ valikon.
-void PeliView::piirra_valikko(int pelin_tulos, valikko::valinta valittu) {
+void PeliView::piirra_valikko(valikko::valinta valittu) {
 	std::clog << "ohjelma::piirra_valikko(tulos, valittu)" << std::endl;
 
 	// Valitaan oikeat kuvat.
@@ -343,4 +343,13 @@ void PeliView::piirra_odottavat() {
 
 		y += fontin_koko + 5;
 	}
+}
+
+void PeliView::piirra_valinta() {
+	piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.png"), 0, 0);
+	
+	kirjoita_tekstia(peli.ohje, 50, 30);
+	kirjoita_tekstia(peli.syote, 50, 50);
+	
+	SDL_Flip(ruutu);
 }

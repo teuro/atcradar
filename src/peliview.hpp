@@ -35,10 +35,11 @@ public:
 		// TODO: Cleanup any SDL resources in destructor
 	}
 
-	void piirra_valikko(int pelin_tulos, valikko::valinta valittu);
+	void piirra_valikko(valikko::valinta valittu);
 	void piirra_peli();
 	void piirra_tilasto();
 	void piirra_atis(int toiminto);
+	void piirra_valinta();
 
 private:
 	void alku();
