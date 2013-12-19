@@ -2,6 +2,7 @@
 #define _PELI_HPP
 
 #include <vector>
+#include <queue>
 #include <stdexcept>
 #include "apuvalineet.hpp"
 #include "lentokone.hpp"
@@ -54,7 +55,7 @@ public:
     int kasitellyt;
 
     std::vector <lentokone> koneet;
-    std::vector <lentokone> odottavat;
+    std::queue <lentokone> odottavat;
 
 	struct selvitys {
 		int kone_id;

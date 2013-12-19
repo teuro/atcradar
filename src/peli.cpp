@@ -98,7 +98,7 @@ void Peli::luo_kone(Ohjelma& ohjelma) {
 		koneet.back().polttoaine = apuvalineet::arvo_luku(8000, 25000);
 
 		if (koneet.back().odotus) {
-			odottavat.push_back(koneet.back());
+			odottavat.push(koneet.back());
 		}
 
 	} else {
@@ -293,7 +293,7 @@ void Peli::hoida_koneet() {
 			if (onko_vapaata()) {
 				it->paikka = kentta.kiitotiet[atis.lahtokiitotie].alkupiste;
 				it->odotus = false;
-				odottavat.erase(odottavat.begin()+0);
+				odottavat.pop();
 			}
 		}
 
