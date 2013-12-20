@@ -243,21 +243,21 @@ void PeliController::pyyda_atis() {
 	while (atis.ok == false) {
 		peli.syote = lukija.lue_syote();
 		ohjelma.odota(20);
+		
+		if (ohjelma.lue_nappi(Ohjelma::NAPPI_F5)) {
+			toiminto = Peli::LAHTO;
+		}
+		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F7)) {
+			toiminto = Peli::LASKU;
+		}
+		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F8)) {
+			toiminto = Peli::SIIRTOPINTA;
+		}
 
 		if (lukija.anna_viesti().length() > 1 && ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
 
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;
-
-			if (ohjelma.lue_nappi(Ohjelma::NAPPI_F5)) {
-				toiminto = Peli::LAHTO;
-			}
-			else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F7)) {
-				toiminto = Peli::LASKU;
-			}
-			else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F8)) {
-				toiminto = Peli::SIIRTOPINTA;
-			}
 
 			switch (toiminto) {
 			case Peli::LAHTO:
