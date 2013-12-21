@@ -222,10 +222,23 @@ int PeliController::aja() {
 
 	ohjelma.tyhjenna_syote();
 	view.piirra_tilasto();
-
+	
+	double ka_alueella = 0;
+	double ka_selvitykset = 0;
+	double ka_alueelle = 0;
+	
 	for (unsigned int i = 0; i < peli.ajat.size(); ++i) {
-		std::clog << peli.ajat[i].tunnus << " " << peli.ajat[i].sisaan << " " << peli.ajat[i].pois << " " << (peli.ajat[i].pois - peli.ajat[i].sisaan) << " " << peli.ajat[i].selvitykset << std::endl;
+		double alueella = peli.ajat[i].pois - peli.ajat[i].sisaan;
+		ka_alueella += alueella;
+		ka_selvitykset += peli.ajat[i].selvitykset;
+		if (i > 0) {
+			ka_alueelle += peli.ajat[i-1].sisaan;
+		}
+		
+		std::clog << peli.ajat[i].tunnus << " " << peli.ajat[i].sisaan << " " << peli.ajat[i].pois << " " << alueella << " " << peli.ajat[i].selvitykset << std::endl;
 	}
+	
+	std::clog << peli.ajat.size() << " " << (ka_alueelle / peli.ajat.size()) << " " << ka_alueella << " " << ka_selvitykset << std::endl;
 
 	if (loppu) {
 		ohjelma.odota_nappi();

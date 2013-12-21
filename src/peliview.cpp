@@ -270,8 +270,21 @@ void PeliView::piirra_tilasto() {
 	kirjoita_tekstia("pois", x + 200, y - 15);
 	kirjoita_tekstia("alueella", x + 300, y - 15);
 	kirjoita_tekstia("selvitykset", x + 400, y - 15);
-
+	
+	double ka_alueella = 0;
+	double ka_alueelta = 0;
+	double ka_selvitykset = 0;
+	double ka_alueelle = 0;
+	
 	for (unsigned int i = 0; i < peli.ajat.size(); ++i) {
+		double alueella = peli.ajat[i].pois - peli.ajat[i].sisaan;
+		ka_alueella += alueella;
+		ka_selvitykset += peli.ajat[i].selvitykset;
+		if (i > 0) {
+			ka_alueelle += peli.ajat[i-1].sisaan;
+			ka_alueelta += peli.ajat[i-1].pois;
+		}
+		
 		kirjoita_tekstia(peli.ajat[i].tunnus, x, y);
 		kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].sisaan).c_str(), x + 100, y);
 		kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].pois).c_str(), x + 200, y);
@@ -280,6 +293,12 @@ void PeliView::piirra_tilasto() {
 
 		y += 15;
 	}
+	
+	kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat.size()), x, y);
+	kirjoita_tekstia(apuvalineet::tekstiksi(ka_alueelle / peli.ajat.size()), x + 100, y);
+	kirjoita_tekstia(apuvalineet::tekstiksi(ka_alueelta / peli.ajat.size()), x + 200, y);
+	kirjoita_tekstia(apuvalineet::tekstiksi(ka_alueella), x + 300, y);
+	kirjoita_tekstia(apuvalineet::tekstiksi(ka_selvitykset / peli.ajat.size()), x + 400, y);
 
 	SDL_Flip(ruutu);
 }
