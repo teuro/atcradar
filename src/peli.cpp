@@ -118,86 +118,66 @@ void Peli::luo_kone(Ohjelma& ohjelma) {
 	ajat.push_back(tmp);
 }
 
-void Peli::lataa_navipisteet(std::string nimi) {
-	std::clog << "peli::lataa_navipisteet(" << nimi << ")" << std::endl;
-	std::ifstream sisaan(nimi.c_str(), std::ios::in);
-
-	if (!sisaan) {
-		throw std::runtime_error("Tiedostoa " + nimi + " ei ole tai se ei aukea");
-	}
-
-	double _suunta, etaisyys, korkeus, nopeus, suunta;
-	std::string _nimi;
-
-	while (sisaan >> _nimi >> _suunta >> etaisyys >> korkeus >> nopeus >> suunta) {
-		apuvalineet::piste paikka;
-
-		paikka = apuvalineet::uusi_paikka(kentta.paikka, _suunta, etaisyys);
-
-		navipiste tmp(_nimi, paikka, korkeus, nopeus, suunta);
-
-		navipisteet.push_back(tmp);
-	}
-
-	sisaan.close();
-}
-
-void Peli::lataa_lahipisteet(std::string nimi) {
-	std::clog << "peli::lataa_sisapisteet(" << nimi << ")" << std::endl;
-	std::ifstream sisaan(nimi.c_str(), std::ios::in);
-
-	if (!sisaan) {
-		throw std::runtime_error("Tiedostoa " + nimi + " ei ole tai se ei aukea");
-	}
-
-	double suunta, etaisyys;
-	std::string _nimi;
-
-	while (sisaan >> _nimi >> suunta >> etaisyys) {
-		apuvalineet::piste paikka;
-
-		paikka = apuvalineet::uusi_paikka(kentta.paikka, suunta, etaisyys);
-
-		navipiste tmp(_nimi, paikka);
-
-		sisapisteet.push_back(tmp);
-	}
-
-	sisaan.close();
-}
-
 void Peli::lataa_kentta(std::string kenttaNimi) {
+	std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
 	std::string paate = ".txt";
 	std::string kansio = "kentat/";
 	std::string tmp;
-    std::clog << "peli::lataa_kiitotiet(" << kansio + kenttaNimi + paate << ")" << std::endl;
     tmp = kansio + kenttaNimi + paate;
+	
+	std::clog << tmp << std::endl;
+	
 	std::ifstream sisaan(tmp.c_str(), std::ios::in);
+	std::vector <std::string> asiat;
 
 	if (!sisaan) {
 		throw std::runtime_error("Tiedostoa " + tmp + " ei ole tai se ei aukea");
 	}
 
-	std::string nimi;
-	double pituus, suunta, nousukorkeus, noususuunta;
-	double alkupiste_suunta, alkupiste_etaisyys;
+	std::string nimi, tunnus;
+	
+	size_t pos = 0;
+	std::string sana;
+	std::string erotin = " ";
+	std::string rivi;
+	
+	while (std::getline(sisaan, rivi)) {
+		while ((pos = rivi.find(erotin)) != std::string::npos) {
+			sana = rivi.substr(0, pos);
+			asiat.push_back(sana);
+			rivi.erase(0, pos + erotin.length());
+		}
+		
+		if (asiat[0] == "N") {
+			kentta.nimi = asiat[1];
+		} else if (asiat[0] == "H") {
+			kentta.korkeus = apuvalineet::luvuksi<double>(asiat[1]);
+		} else if (asiat[0] == "P") {
+			kentta.paikka.x = apuvalineet::luvuksi<double>(asiat[1]);
+			kentta.paikka.y = apuvalineet::luvuksi<double>(asiat[2]);
+		} else if (asiat[0] == "K") {
+			apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
+			kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]));
 
-	sisaan >> kentta.nimi >> kentta.korkeus >> kentta.paikka.x >> kentta.paikka.y;
+			kentta.kiitotiet.push_back(tmpa);
+		} else if (asiat[0] == "L") {
+			apuvalineet::piste paikka;
+			paikka = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
 
-	while (sisaan >> nimi >> alkupiste_suunta >> alkupiste_etaisyys >> suunta >> pituus >> nousukorkeus >> noususuunta) {
-		apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, alkupiste_suunta, alkupiste_etaisyys);
-		kiitotie tmpa(nimi, alku, pituus, suunta, nousukorkeus, noususuunta);
+			navipiste tmp(apuvalineet::tekstiksi(asiat[1]), paikka);
 
-		kentta.kiitotiet.push_back(tmpa);
+			sisapisteet.push_back(tmp);
+		} else if (asiat[0] == "U") {
+			apuvalineet::piste paikka;
+
+			paikka = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
+
+			navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]));
+
+			navipisteet.push_back(tmp);
+		}
+		asiat.clear();
 	}
-
-    tmp = kansio + kenttaNimi + "_pisteet" + paate;
-
-	lataa_navipisteet(tmp);
-
-    tmp = kansio + kenttaNimi + "_lahipisteet" + paate;
-
-	lataa_lahipisteet(tmp);
 
 	sisaan.close();
 }

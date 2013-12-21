@@ -74,8 +74,6 @@ public:
     void valitse_kone(const apuvalineet::piste& hiiri);
 
     void tarkista_porrastus();
-    void lataa_navipisteet(std::string nimi);
-    void lataa_lahipisteet(std::string nimi);
 
     bool onko_vapaata();
     void hoida_koneet();
