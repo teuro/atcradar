@@ -17,10 +17,17 @@ Peli class maintains the game's runtime state and provides helper methods to upd
 See PeliController and PeliView for more functionality.
 */
 
+/*
+	* Peli ottaa vastuun pelin eri osa-alueista. Toimii yhteistyössä näkymän ja kontrollerin kanssa.
+*/
+
 class Peli {
 public:
-	Peli(Ohjelma &o) : ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1)
-    {
+	/*
+		* Konstruktori asettaa oletusarvot keskeisille komponenteille
+		* @param viitteen ohjelma-olioon
+	*/
+	Peli(Ohjelma &o) : ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
 		atis.lahtokiitotie = -1;
 		atis.laskukiitotie = -1;
 		atis.siirtopinta = -1;
@@ -28,7 +35,7 @@ public:
     }
 
     Ohjelma& ohjelma;
-
+	
     float ajan_muutos;
     std::vector <std::string> tunnukset;
     std::string syote;
@@ -81,7 +88,6 @@ public:
     void hoida_koneet();
     int etsi_valittu_kone();
 
-    //void pyyda_atis();
     bool tarkista_atis();
     void generoi_metar();
 

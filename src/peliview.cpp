@@ -27,6 +27,9 @@ void PeliView::alku() {
 	if (fontti == NULL) {
 		throw std::runtime_error("Cannot open font");
 	}
+	
+	freopen("CON", "w", stdout); // redirects stdout
+	freopen("CON", "w", stderr); // redirects stderr
 }
 
 // Piirt‰‰ yhden kuvan.
