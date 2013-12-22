@@ -412,6 +412,7 @@ bool Peli::tarkista_atis() {
 	if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis.siirtopinta) {
 		return false;
 	}
+	
 	std::clog << "tarkista_atis true" << std::endl;
 	return true;
 }

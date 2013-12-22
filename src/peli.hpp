@@ -63,6 +63,7 @@ public:
 		std::string nimi;
 		int toiminto;
 		float aika;
+		int kaarto;
 	};
 
 	std::vector <selvitys> selvitykset;

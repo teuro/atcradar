@@ -140,37 +140,48 @@ int PeliController::aja() {
 
 		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER) && peli.etsi_valittu_kone() >= 0) {
 			peli.koneet[peli.etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
-			std::string tmp = lukija.anna_viesti();
+			std::string komento = lukija.anna_viesti();
 
 			if (peli.toiminto == Peli::KORKEUS) {
-				if (tmp.length() == 2 || tmp.length() == 3) {
-					double luku = apuvalineet::luvuksi<double>(tmp) * 100;
-					tmp = apuvalineet::tekstiksi(luku);
+				if (komento.length() == 2 || komento.length() == 3) {
+					double luku = apuvalineet::luvuksi<double>(komento) * 100;
+					komento = apuvalineet::tekstiksi(luku);
 				}
 			}
 
-			if (tmp == "ILS" && peli.koneet[peli.etsi_valittu_kone()].tyyppi == Peli::SAAPUVA) {
+			if ((komento == "ILS" || komento == "ils") && peli.koneet[peli.etsi_valittu_kone()].tyyppi == Peli::SAAPUVA) {
 				peli.toiminto = Peli::LAHESTYMIS;
 			}
-			else if (tmp == "DCT" && peli.koneet[peli.etsi_valittu_kone()].tyyppi == Peli::LAHTEVA) {
+			else if ((komento == "DCT" || komento == "dct") && peli.koneet[peli.etsi_valittu_kone()].tyyppi == Peli::LAHTEVA) {
 				peli.toiminto = Peli::OIKOTIE;
 			}
-			else if (tmp == "HOLD") {
+			else if (komento == "HOLD" || komento == "hold") {
 				peli.toiminto = Peli::ODOTUS;
 			}
-			else if (tmp == "OFF") {
+			else if (komento == "OFF" || komento == "off") {
 				peli.toiminto = Peli::POIS;
 			}
-
-			//peli.koneet[peli.etsi_valittu_kone()].ota_selvitys(tmp, peli.toiminto);
+			
+			int kaarto = 0;
+			
+			if (komento.substr(0, 1) == "V" || komento.substr(0, 1) == "v") {
+				kaarto = VASEN;
+				komento = komento.substr(1, std::string::npos);
+			} else if (komento.substr(0, 1) == "O" || komento.substr(0, 1) == "o") {
+				kaarto = OIKEA;
+				komento = komento.substr(1, std::string::npos);
+			} else {
+				kaarto = VASEN;
+			}
 
 			Peli::selvitys tmp_selvitys;
+			
 			tmp_selvitys.kone_id = peli.etsi_valittu_kone();
-			tmp_selvitys.nimi = tmp;
+			tmp_selvitys.nimi = komento;
 			tmp_selvitys.toiminto = peli.toiminto;
-			tmp_selvitys.aika = ohjelma.sekunnit() + 3;
+			tmp_selvitys.aika = ohjelma.sekunnit() + apuvalineet::arvo_luku(3, 10);
+			tmp_selvitys.kaarto = kaarto;
 
-				      //koneet[etsi_valittu_kone()].ota_selvitys(tmp, toiminto);
 			peli.selvitykset.push_back(tmp_selvitys);
 			peli.lisaa_selvityksia();
 			ohjelma.odota(150);
@@ -198,7 +209,7 @@ int PeliController::aja() {
 
 		for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
 			if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
-				peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nimi, peli.selvitykset[k].toiminto);
+				peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nimi, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
 				peli.selvitykset.erase(peli.selvitykset.begin() + k);
 			}
 		}
@@ -326,7 +337,7 @@ void PeliController::pyyda_atis() {
 					max_vasta = vasta;
 				}
 			}
-
+	
 			if (siirtopinta == atis.siirtopinta) {
 				siirto_ok = true;
 			}
@@ -335,7 +346,7 @@ void PeliController::pyyda_atis() {
 				toiminto = Peli::SIIRTOPINTA;
 			}
 
-			if (vastakomponentti_lahto > 0) {
+			if (vastakomponentti_lahto > -0.1) {
 				lahto_ok = true;
 			}
 			else {
@@ -343,7 +354,7 @@ void PeliController::pyyda_atis() {
 				toiminto = Peli::LAHTO;
 			}
 
-			if (vastakomponentti_lasku > 0) {
+			if (vastakomponentti_lasku > -0.1) {
 				lasku_ok = true;
 			}
 			else {

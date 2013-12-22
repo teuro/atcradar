@@ -206,32 +206,21 @@ void lentokone::tarkista_suunta_kohteeseen() {
 	}
 }
 
-void lentokone::ota_selvitys(std::string tmp, int toiminto) {
-	// TODO: Input parsing (tmp) should not be in this class. Move it to Pelicontroller
+void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
 	if (toiminto == Peli::SUUNTA) {
-        std::vector <navipiste>::iterator etsi = std::find(peli.sisapisteet.begin(), peli.sisapisteet.end(), tmp);
+        std::vector <navipiste>::iterator etsi = std::find(peli.sisapisteet.begin(), peli.sisapisteet.end(), komento);
 
         if (etsi != peli.sisapisteet.end()) {
 			reitti.push(*etsi);
-			tmp = "";
+			komento = "";
 		}
 
 		if (this->kohde.paikka.x == 0 && this->kohde.paikka.y == 0 && this->reitti.size()) {
 			this->kohde = anna_piste();
 		}
-
-		if (tmp.substr(0, 1) == "V" || tmp.substr(0, 1) == "v") {
-			kaarto = VASEN;
-			tmp = tmp.substr(1, std::string::npos);
-		} else if (tmp.substr(0, 1) == "O" || tmp.substr(0, 1) == "o") {
-			kaarto = OIKEA;
-			tmp = tmp.substr(1, std::string::npos);
-		} else {
-			kaarto = VASEN;
-		}
 	}
 
-	double luku = apuvalineet::luvuksi<double>(tmp);
+	double luku = apuvalineet::luvuksi<double>(komento);
 
 	switch (toiminto) {
 		case Peli::SUUNTA:

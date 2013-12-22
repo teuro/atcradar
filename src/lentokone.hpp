@@ -34,7 +34,7 @@ public:
 
 //    lentokone(const lentokone& lk);
 
-	void ota_selvitys(std::string tmp, int toiminto);
+	void ota_selvitys(std::string tmp, int toiminto, int kaarto = 0);
 
 	void muuta_selvityksia(double korkeus, double nopeus, double suunta, int kaarto = VASEN);
 	void muuta_tilaa(double aika);
