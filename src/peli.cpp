@@ -388,7 +388,7 @@ void Peli::generoi_metar() {
 	
 	for (int i = 0; i < pilvia; ++i) {
 		tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
-		metar.pilvet[tyyppi] = apuvalineet::arvo_luku(700, 6500);
+		metar.pilvet[tyyppi] = ((apuvalineet::arvo_luku(700, 6500) * 11 + 500) / 1000) * 100;
 	}
 }
 
