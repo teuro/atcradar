@@ -339,17 +339,22 @@ void PeliView::piirra_atis(int toiminto) {
 }
 
 void PeliView::piirra_metar() {
-	std::string tuuli = apuvalineet::tekstiksi(peli.metar.tuuli);
-	std::string voimakkuus = apuvalineet::tekstiksi(peli.metar.voimakkuus);
-	std::string paine = apuvalineet::tekstiksi(peli.metar.paine);
-	std::string nakyvyys = apuvalineet::tekstiksi(peli.metar.nakyvyys);
-	std::string lampotila = apuvalineet::tekstiksi(peli.metar.lampotila);
-	std::string kastepiste = apuvalineet::tekstiksi(peli.metar.kastepiste);
+	std::string tuuli 		= apuvalineet::tekstiksi(peli.metar.tuuli);
+	std::string voimakkuus 	= apuvalineet::tekstiksi(peli.metar.voimakkuus);
+	std::string paine 		= apuvalineet::tekstiksi(peli.metar.paine);
+	std::string nakyvyys 	= apuvalineet::tekstiksi(peli.metar.nakyvyys);
+	std::string lampotila 	= apuvalineet::tekstiksi(peli.metar.lampotila);
+	std::string kastepiste 	= apuvalineet::tekstiksi(peli.metar.kastepiste);
+	std::string pilvet;
+	
+	for (std::map<std::string, int>::iterator it=peli.metar.pilvet.begin(); it!=peli.metar.pilvet.end(); ++it) {
+		pilvet += it->first + apuvalineet::tekstiksi(it->second) + " ";
+	}
 
 	tuuli = apuvalineet::muuta_pituus(tuuli, 3);
 	voimakkuus = apuvalineet::muuta_pituus(voimakkuus, 2);
 
-	kirjoita_tekstia(peli.kentta.nimi + " " + tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + paine, 50, 10);
+	kirjoita_tekstia(peli.kentta.nimi + " " + tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + pilvet + " " + paine, 50, 10);
 }
 
 void PeliView::piirra_odottavat() {

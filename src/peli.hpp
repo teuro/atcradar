@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <queue>
+#include <map>
 #include <stdexcept>
 #include "apuvalineet.hpp"
 #include "lentokone.hpp"
@@ -118,7 +119,7 @@ public:
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
 	void luo_kone(Ohjelma& ohjelma);
 	void tuhoa_kone(int kone);
-
+	
 	struct Metar {
 		int tuuli;
 		int voimakkuus;
@@ -128,9 +129,11 @@ public:
 		int lampotila;
 		int kastepiste;
 		int ilmankosteus;
+		std::map <std::string, int> pilvet;
     } metar;
 
 	void aseta_virhe(int virhe);
+	std::vector <std::string> lataa_pilvet(std::string pilvet);
 };
 
 #endif

@@ -355,14 +355,41 @@ int Peli::etsi_valittu_kone() {
 	return -1;
 }
 
+std::vector <std::string> Peli::lataa_pilvet(std::string pilvet) {
+	std::ifstream sisaan(pilvet.c_str(), std::ios::in);
+	std::vector <std::string> tyypit;
+	std::string pilvi;
+	
+	if (!sisaan) {
+		throw std::runtime_error("Tiedosto " + pilvet + " ei aukea");
+	}
+	
+	while (sisaan >> pilvi) {
+		tyypit.push_back(pilvi);
+	}
+	
+	sisaan.close();
+	
+	return tyypit;
+}
+
 void Peli::generoi_metar() {
 	metar.tuuli 		= apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5);
 	metar.voimakkuus 	= apuvalineet::arvo_luku(2, 22);
 	metar.paine 		= apuvalineet::arvo_luku(950, 1060);
 	metar.nakyvyys		= apuvalineet::arvo_luku(1200, 9999);
-	metar.lampotila	= apuvalineet::arvo_luku(-18, 27);
+	metar.lampotila		= apuvalineet::arvo_luku(-18, 27);
 	metar.ilmankosteus	= apuvalineet::arvo_luku(50, 100);
 	metar.kastepiste	= metar.lampotila - ((100 - metar.ilmankosteus) / 5);
+	
+	int pilvia = apuvalineet::arvo_luku(0, 6);
+	std::vector <std::string> tyypit = lataa_pilvet("data/pilvet.txt");
+	std::string tyyppi;
+	
+	for (int i = 0; i < pilvia; ++i) {
+		tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
+		metar.pilvet[tyyppi] = apuvalineet::arvo_luku(700, 6500);
+	}
 }
 
 bool Peli::onko_vapaata() {
