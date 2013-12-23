@@ -164,10 +164,10 @@ int PeliController::aja() {
 			
 			int kaarto = 0;
 			
-			if (komento.substr(0, 1) == "V" || komento.substr(0, 1) == "v") {
+			if ((komento.substr(0, 1) == "V" || komento.substr(0, 1) == "v") && komento.length() < 5) {
 				kaarto = VASEN;
 				komento = komento.substr(1, std::string::npos);
-			} else if (komento.substr(0, 1) == "O" || komento.substr(0, 1) == "o") {
+			} else if ((komento.substr(0, 1) == "O" || komento.substr(0, 1) == "o") && komento.length() < 5) {
 				kaarto = OIKEA;
 				komento = komento.substr(1, std::string::npos);
 			} else {
