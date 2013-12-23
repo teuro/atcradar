@@ -378,20 +378,20 @@ std::vector <std::string> Peli::lataa_pilvet(std::string pilvet) {
 
 void Peli::generoi_metar() {
 	metar.tuuli 		= apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5);
-	metar.voimakkuus 	= apuvalineet::arvo_luku(2, 22);
-	metar.paine 		= apuvalineet::arvo_luku(950, 1060);
-	metar.nakyvyys		= apuvalineet::arvo_luku(1200, 9999);
-	metar.lampotila		= apuvalineet::arvo_luku(-18, 27);
-	metar.ilmankosteus	= apuvalineet::arvo_luku(50, 100);
+	metar.voimakkuus 	= apuvalineet::arvo_luku(Asetukset::anna_asetus("tuuli_voimakkuus_ala"), Asetukset::anna_asetus("tuuli_voimakkuus_yla"));
+	metar.paine 		= apuvalineet::arvo_luku(Asetukset::anna_asetus("ilmanpaine_ala"), Asetukset::anna_asetus("ilmanpaine_yla"));
+	metar.nakyvyys		= apuvalineet::arvo_luku(Asetukset::anna_asetus("nakyvyys_ala"), Asetukset::anna_asetus("nakyvyys_yla"));
+	metar.lampotila		= apuvalineet::arvo_luku(Asetukset::anna_asetus("lampotila_ala"), Asetukset::anna_asetus("lampotila_yla"));
+	metar.ilmankosteus	= apuvalineet::arvo_luku(Asetukset::anna_asetus("ilmankosteus_ala"), Asetukset::anna_asetus("ilmankosteus_yla"));
 	metar.kastepiste	= metar.lampotila - ((100 - metar.ilmankosteus) / 5);
 	
-	int pilvia = apuvalineet::arvo_luku(0, 6);
+	int pilvia = apuvalineet::arvo_luku(Asetukset::anna_asetus("pilvet_ala"), Asetukset::anna_asetus("pilvet_yla"));
 	std::vector <std::string> tyypit = lataa_pilvet("data/pilvet.txt");
 	std::string tyyppi;
 	
 	for (int i = 0; i < pilvia; ++i) {
 		tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
-		metar.pilvet[tyyppi] = ((apuvalineet::arvo_luku(700, 6500) * 11 + 500) / 1000) * 100;
+		metar.pilvet[tyyppi] = ((apuvalineet::arvo_luku(Asetukset::anna_asetus("pilvenkorkeus_ala"), Asetukset::anna_asetus("pilvenkorkeus_yla")) * 11 + 500) / 1000) * 100;
 	}
 }
 

@@ -10,8 +10,10 @@
 
 // Alustusfunktio.
 void PeliView::alku() {
+	std::clog << "PeliView::alku()" << std::endl;
 	// Avataan ikkuna tai heitetään virhe.
 	ruutu = SDL_SetVideoMode(Asetukset::anna_asetus("ruutu_leveys"), Asetukset::anna_asetus("ruutu_korkeus"), 32, SDL_DOUBLEBUF);
+	
 	if (!ruutu) {
 		throw std::runtime_error(SDL_GetError());
 	}
