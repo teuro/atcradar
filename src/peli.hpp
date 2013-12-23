@@ -84,7 +84,7 @@ public:
 
     void tarkista_porrastus();
 
-    bool onko_vapaata();
+    bool onko_vapaata(int tyyppi = LAHTEVA, int piste = -1);
     void hoida_koneet();
     int etsi_valittu_kone();
 

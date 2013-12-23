@@ -102,8 +102,11 @@ void Peli::luo_kone(Ohjelma& ohjelma) {
 		}
 
 	} else {
-		int i = apuvalineet::arvo_luku(0, navipisteet.size());
-
+		int i = -1;
+		do {
+			i = apuvalineet::arvo_luku(0, navipisteet.size());
+		} while (!onko_vapaata(SAAPUVA, i));
+		
         koneet.push_back(lentokone(*this, ohjelma, tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
@@ -392,11 +395,21 @@ void Peli::generoi_metar() {
 	}
 }
 
-bool Peli::onko_vapaata() {
-	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (koneet[i].korkeus < (kentta.korkeus + Asetukset::anna_asetus("porrastus_pysty")) && koneet[i].odotus == false) {
-			return false;
+bool Peli::onko_vapaata(int tyyppi, int piste) {
+	if (tyyppi == LAHTEVA) {
+		for (unsigned int i = 0; i < koneet.size(); ++i) {
+			if (koneet[i].korkeus < (kentta.korkeus + Asetukset::anna_asetus("porrastus_pysty")) && koneet[i].odotus == false) {
+				return false;
+			}
 		}
+	} else {
+		for (unsigned int i = 0; i < koneet.size(); ++i) {
+			if (apuvalineet::etaisyys(koneet[i].paikka, navipisteet[piste].paikka) < Asetukset::anna_asetus("porrastus_vaaka")) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	return true;
