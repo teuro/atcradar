@@ -3,6 +3,7 @@
 class PeliView;
 class Peli;
 class Ohjelma;
+class IAsetukset;
 
 /*
 MVC Controller
@@ -13,8 +14,9 @@ class PeliController {
 	Peli& peli;
 	PeliView& view;
 	Ohjelma& ohjelma;
+	IAsetukset& asetukset;
 public:
-	PeliController(Peli& p, PeliView& v, Ohjelma& o) : peli(p), view(v), ohjelma(o) { }
+	PeliController(Peli& p, PeliView& v, Ohjelma& o, IAsetukset& a) : peli(p), view(v), ohjelma(o), asetukset(a) { }
 	int aja();
 	void pyyda_atis();
 };

@@ -16,7 +16,7 @@ void Ohjelma::alku() {
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	Asetukset::lataa_asetukset("data/asetukset.ini");
+	asetukset.lataa_asetukset("data/asetukset.ini");
 
 	SDL_EnableUNICODE(SDL_ENABLE);
 

@@ -1,18 +1,20 @@
-#include "asetukset.h"
 #include "apuvalineet.hpp"
-#include "ohjelma.hpp"
 #include <cstdlib>
 
-namespace apuvalineet {
-	static double PII = 3.1415927;
-}
+static double PII = 3.1415927;
+
+// Seuraavat kaksi olivat asetuksissa. Siirsin ne t‰h‰n, koska static metodit px2nm ja nm2px
+// k‰yttiv‰t niit‰. N‰iden rutiinien t‰ytyisi olla l‰hemp‰n‰ tietoa siit‰ mik‰ visualisointi on,
+// ts. PeliView:ss‰. Toisaalta staattista Asetukset-luokkaa ei en‰‰ ole. 
+const int ruutu_leveys = 900;
+const int matka_vaaka = 100;
 
 double apuvalineet::px2nm(double px) {
-    return px / (Asetukset::anna_asetus("ruutu_leveys") / Asetukset::anna_asetus("matka_vaaka"));
+	return px / (ruutu_leveys / matka_vaaka);
 }
 
 double apuvalineet::nm2px(double nm) {
-    return nm * (Asetukset::anna_asetus("ruutu_leveys") / Asetukset::anna_asetus("matka_vaaka"));
+	return nm * (ruutu_leveys / matka_vaaka);
 }
 
 double apuvalineet::deg2rad(double deg) {

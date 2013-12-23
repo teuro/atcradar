@@ -3,6 +3,7 @@
 
 #include "apuvalineet.hpp"
 #include "navipiste.hpp"
+#include "asetukset.h"
 #include <vector>
 #include <queue>
 
@@ -10,7 +11,7 @@ const int VASEN = -1;
 const int OIKEA = 1;
 
 class Peli;
-class Ohjelma;
+class IOhjelma;
 
 class lentokone {
 private:
@@ -18,8 +19,12 @@ private:
 	void muuta_korkeutta(double aika);
 	void muuta_nopeutta(double aika);
 	void muuta_suuntaa(double aika);
-    Peli& peli;
-    Ohjelma& ohjelma;
+
+	// TODO: N‰ist‰ riippuvuuksista olisi hyv‰ p‰‰st‰ eroon.
+	Peli& peli;
+    IOhjelma& ohjelma;
+	IAsetukset& asetukset;
+
 public:
 	navipiste anna_piste();
 	std::queue <navipiste> reitti;
@@ -29,8 +34,8 @@ public:
 
 	bool odotus;
 	bool oikotie;
-	lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
-    lentokone(Peli& p, Ohjelma& o, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
+	lentokone(Peli& p, IOhjelma& o, IAsetukset& a, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
+	lentokone(Peli& p, IOhjelma& o, IAsetukset& a, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
 
 //    lentokone(const lentokone& lk);
 
@@ -82,6 +87,8 @@ public:
     lentokone& operator =(const lentokone&) { return *this; }
 
 	void poista_reitti();
+private:
+
 };
 
 #endif

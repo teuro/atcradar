@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "atcradar", "atcradar.vcxproj", "{932A48C4-B5F7-47B4-A102-03FEBDEB3418}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "atcradar_test", "test\atcradar_test\atcradar_test.vcxproj", "{929C17B7-A398-4F1E-8B02-4FFDF43C4ECF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,10 @@ Global
 		{932A48C4-B5F7-47B4-A102-03FEBDEB3418}.Release|Win32.ActiveCfg = Release|Win32
 		{932A48C4-B5F7-47B4-A102-03FEBDEB3418}.Release|Win32.Build.0 = Release|Win32
 		{932A48C4-B5F7-47B4-A102-03FEBDEB3418}.Release|Win32.Deploy.0 = Release|Win32
+		{929C17B7-A398-4F1E-8B02-4FFDF43C4ECF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{929C17B7-A398-4F1E-8B02-4FFDF43C4ECF}.Debug|Win32.Build.0 = Debug|Win32
+		{929C17B7-A398-4F1E-8B02-4FFDF43C4ECF}.Release|Win32.ActiveCfg = Release|Win32
+		{929C17B7-A398-4F1E-8B02-4FFDF43C4ECF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

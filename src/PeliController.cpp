@@ -38,28 +38,29 @@ int PeliController::aja() {
 	
 	switch (taso) {
 		case 3:
-			Asetukset::asetukset["koska_uusi_ala"] = 30;
-			Asetukset::asetukset["koska_uusi_yla"] = 80;
-			Asetukset::asetukset["maks_konemaara"] = 30;
-			Asetukset::asetukset["vaadittavat_kasitellyt"] = 30;
+			asetukset.muuta_asetusta("koska_uusi_ala", 30);
+			asetukset.muuta_asetusta("koska_uusi_ala", 30);
+			asetukset.muuta_asetusta("koska_uusi_yla", 80);
+			asetukset.muuta_asetusta("maks_konemaara", 30);
+			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 30);
 			break;
 		case 2:
-			Asetukset::asetukset["koska_uusi_ala"] = 60;
-			Asetukset::asetukset["koska_uusi_yla"] = 120;
-			Asetukset::asetukset["maks_konemaara"] = 15;
-			Asetukset::asetukset["vaadittavat_kasitellyt"] = 20;
+			asetukset.muuta_asetusta("koska_uusi_ala", 60);
+			asetukset.muuta_asetusta("koska_uusi_yla", 120);
+			asetukset.muuta_asetusta("maks_konemaara", 15);
+			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 20);
 			break;
 		case 1:
-			Asetukset::asetukset["koska_uusi_ala"] = 120;
-			Asetukset::asetukset["koska_uusi_yla"] = 240;
-			Asetukset::asetukset["maks_konemaara"] = 10;
-			Asetukset::asetukset["vaadittavat_kasitellyt"] = 15;
+			asetukset.muuta_asetusta("koska_uusi_ala", 120);
+			asetukset.muuta_asetusta("koska_uusi_yla", 240);
+			asetukset.muuta_asetusta("maks_konemaara", 10);
+			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 15);
 			break;
 		case 0:
-			Asetukset::asetukset["koska_uusi_ala"] = 150;
-			Asetukset::asetukset["koska_uusi_yla"] = 300;
-			Asetukset::asetukset["maks_konemaara"] = 8;
-			Asetukset::asetukset["vaadittavat_kasitellyt"] = 10;
+			asetukset.muuta_asetusta("koska_uusi_ala", 150);
+			asetukset.muuta_asetusta("koska_uusi_yla", 300);
+			asetukset.muuta_asetusta("maks_konemaara", 8);
+			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 10);
 			break;
 	}
 	
@@ -81,11 +82,11 @@ int PeliController::aja() {
 
 	ohjelma.tyhjenna_syote();
 
-	peli.koska_metar = Asetukset::anna_asetus("koska_metar");
+	peli.koska_metar = asetukset.anna_asetus("koska_metar");
 
 	std::vector <ajastin> ajastimet;
 
-	ajastimet.push_back(ajastin("metar", Asetukset::anna_asetus("koska_metar"), 0));
+	ajastimet.push_back(ajastin("metar", asetukset.anna_asetus("koska_metar"), 0));
 
 	peli.luo_kone(ohjelma);
 	peli.luo_kone(ohjelma);
@@ -96,15 +97,15 @@ int PeliController::aja() {
 
 		peli.valitse_kone(hiiri);
 
-		if (peli.porrastusvirheet >= Asetukset::anna_asetus("maks_porrastusvirhe")) {
+		if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
 			std::clog << "Porrastusvirheet täynnä" << std::endl;
 			loppu = true;
 		}
 
 		if (alku == peli.koska_uusi_kone) {
-			if (peli.koneet.size() < Asetukset::anna_asetus("maks_konemaara")) {
+			if (peli.koneet.size() < asetukset.anna_asetus("maks_konemaara")) {
 				peli.luo_kone(ohjelma);
-				peli.koska_uusi_kone += apuvalineet::arvo_luku(Asetukset::anna_asetus("koska_uusi_ala"), Asetukset::anna_asetus("koska_uusi_yla"));
+				peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
 			}
 
 			std::clog << "Seuraava kone luodaan " << (peli.koska_uusi_kone - alku) << " sekunnin kuluttua" << std::endl;
@@ -118,7 +119,7 @@ int PeliController::aja() {
 				pyyda_atis();
 			}
 
-			peli.koska_metar += Asetukset::anna_asetus("koska_metar");
+			peli.koska_metar += asetukset.anna_asetus("koska_metar");
 		}
 
 		// Esc-nappi lopettaa pelin.
@@ -191,7 +192,7 @@ int PeliController::aja() {
 			peli.virheteksti = " ";
 		}
 
-		if (peli.kasitellyt >= Asetukset::anna_asetus("vaadittavat_kasitellyt")) {
+		if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
 			peli.koska_uusi_kone = -1;
 			if (peli.koneet.size() == 0) {
 				/* Peli loppui */

@@ -13,10 +13,11 @@
 
 int main(int argc, char** argv) {
 	try {
-		Ohjelma ohjelma;
-		Peli peli(ohjelma);
-		PeliView view(peli, ohjelma);
-		PeliController controller(peli, view, ohjelma);
+		Asetukset asetukset;
+		Ohjelma ohjelma(asetukset);
+		Peli peli(ohjelma, asetukset);
+		PeliView view(peli, ohjelma, asetukset);
+		PeliController controller(peli, view, ohjelma, asetukset);
 		valikko valikko(ohjelma, view);
 
 		while (true) {

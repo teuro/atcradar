@@ -5,8 +5,6 @@
 #include <string>
 #include <stdexcept>
 
-std::map <std::string, double> Asetukset::asetukset;
-
 void Asetukset::lataa_asetukset(std::string nimi) {
 	std::clog << "asetukset::lataa_asetukset(" << nimi << ")" << std::endl;
 	std::ifstream sisaan(nimi.c_str(), std::ios::in);

@@ -12,7 +12,7 @@
 void PeliView::alku() {
 	std::clog << "PeliView::alku()" << std::endl;
 	// Avataan ikkuna tai heitetään virhe.
-	ruutu = SDL_SetVideoMode(Asetukset::anna_asetus("ruutu_leveys"), Asetukset::anna_asetus("ruutu_korkeus"), 32, SDL_DOUBLEBUF);
+	ruutu = SDL_SetVideoMode(asetukset.anna_asetus("ruutu_leveys"), asetukset.anna_asetus("ruutu_korkeus"), 32, SDL_DOUBLEBUF);
 	
 	if (!ruutu) {
 		throw std::runtime_error(SDL_GetError());
@@ -246,14 +246,14 @@ void PeliView::kirjoita_tekstia(std::string teksti, int x, int y) {
 }
 
 void PeliView::piirra_tilanne() {
-	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(Asetukset::anna_asetus("vaadittavat_kasitellyt"));
-	kirjoita_tekstia(teksti, Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), 20);
+	std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
+	kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 20);
 
-	teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(Asetukset::anna_asetus("maks_porrastusvirhe"));
-	kirjoita_tekstia(teksti, Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), 40);
+	teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_porrastusvirhe"));
+	kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 40);
 
 	teksti = "muut virheet " + apuvalineet::tekstiksi(peli.muut_virheet);
-	kirjoita_tekstia(teksti, Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), 60);
+	kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 60);
 }
 
 void PeliView::piirra_ohje(std::string ohje) {
@@ -364,7 +364,7 @@ void PeliView::piirra_odottavat() {
 	int y = 120;
 	
 	if (peli.odottavat.size()) {
-		kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", Asetukset::anna_asetus("ruutu_leveys") - Asetukset::anna_asetus("info_leveys"), y - fontin_koko - 5);
+		kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), y - fontin_koko - 5);
 	}
 }
 

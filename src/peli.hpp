@@ -9,6 +9,7 @@
 #include "lentokone.hpp"
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
+#include "asetukset.h"
 
 /*
 MVC Model
@@ -22,19 +23,22 @@ See PeliController and PeliView for more functionality.
 */
 
 class Peli {
+private:
+	IAsetukset& asetukset;
+
 public:
 	/*
 		* Konstruktori asettaa oletusarvot keskeisille komponenteille
 		* @param viitteen ohjelma-olioon
 	*/
-	Peli(Ohjelma &o) : ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
+	Peli(IOhjelma &o, IAsetukset& a) : ohjelma(o), asetukset(a), ajan_muutos(0.02f), koska_uusi_kone(1) {
 		atis.lahtokiitotie = -1;
 		atis.laskukiitotie = -1;
 		atis.siirtopinta = -1;
 		atis.ok = false;
     }
 
-    Ohjelma& ohjelma;
+    IOhjelma& ohjelma;
 	
     float ajan_muutos;
     std::vector <std::string> tunnukset;
@@ -124,7 +128,7 @@ public:
 	enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
 	enum tyyppi {SAAPUVA = 0, LAHTEVA = 1};
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
-	void luo_kone(Ohjelma& ohjelma);
+	void luo_kone(IOhjelma& ohjelma);
 	void tuhoa_kone(int kone);
 	
 	struct Metar {
