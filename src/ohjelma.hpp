@@ -10,7 +10,6 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
-//#include <SDL/SDL.h>
 
 class IOhjelma
 {
