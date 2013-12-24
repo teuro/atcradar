@@ -31,7 +31,7 @@ public:
 		* Konstruktori asettaa oletusarvot keskeisille komponenteille
 		* @param viitteen ohjelma-olioon
 	*/
-	Peli(IOhjelma &o, IAsetukset& a) : ohjelma(o), asetukset(a), ajan_muutos(0.02f), koska_uusi_kone(1) {
+	Peli(IAsetukset& a, IOhjelma &o) : asetukset(a), ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
 		atis.lahtokiitotie = -1;
 		atis.laskukiitotie = -1;
 		atis.siirtopinta = -1;

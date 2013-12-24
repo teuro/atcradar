@@ -15,8 +15,8 @@ int main(int argc, char** argv) {
 	try {
 		Asetukset asetukset;
 		Ohjelma ohjelma(asetukset);
-		Peli peli(ohjelma, asetukset);
-		PeliView view(peli, ohjelma, asetukset);
+		Peli peli(asetukset, ohjelma);
+		PeliView view(asetukset, peli, ohjelma);
 		PeliController controller(peli, view, ohjelma, asetukset);
 		valikko valikko(ohjelma, view);
 

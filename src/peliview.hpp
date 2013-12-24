@@ -21,7 +21,7 @@ PeliView is responsible of DISPLAYING the game state. Nothing else.
 class PeliView
 {
 public:
-	PeliView(Peli &p, IOhjelma& o, IAsetukset& a) : peli(p), ohjelma(o), asetukset(a)
+	PeliView( IAsetukset& a, Peli &p, IOhjelma& o) : asetukset(a), peli(p), ohjelma(o)
 	{
 		SDL_Color tmp = { 50, 50, 50 };
 		vari = tmp;
