@@ -10,6 +10,7 @@
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
 #include "asetukset.h"
+#include "kieli.hpp"
 
 /*
 MVC Model
@@ -31,7 +32,7 @@ public:
 		* Konstruktori asettaa oletusarvot keskeisille komponenteille
 		* @param viitteen ohjelma-olioon
 	*/
-	Peli(IAsetukset& a, IOhjelma &o) : asetukset(a), ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
+	Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli) : asetukset(a), ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
 		atis.lahtokiitotie = -1;
 		atis.laskukiitotie = -1;
 		atis.siirtopinta = -1;

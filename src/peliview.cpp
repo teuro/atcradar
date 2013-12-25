@@ -306,22 +306,11 @@ void PeliView::piirra_tilasto() {
 	SDL_Flip(ruutu);
 }
 
-void PeliView::piirra_atis(int toiminto) {
+void PeliView::piirra_atis() {
 	piirra_kuva(image_cache::common().get("kuvat/tausta_atis.png"), 0, 0);
 
+	kirjoita_tekstia(peli.ohje, 50, 30);
 	kirjoita_tekstia(peli.syote, 50, 50);
-
-	switch (toiminto) {
-	case Peli::LAHTO:
-		kirjoita_tekstia("Valitse lähtökiitotie", 400, 30);
-		break;
-	case Peli::LASKU:
-		kirjoita_tekstia("Valitse laskukiitotie", 400, 30);
-		break;
-	case Peli::SIIRTOPINTA:
-		kirjoita_tekstia("Valitse siirtopinta", 400, 30);
-		break;
-	}
 
 	int y = 70;
 
@@ -333,10 +322,9 @@ void PeliView::piirra_atis(int toiminto) {
 	piirra_metar();
 	piirra_ohje(peli.ohje);
 
-	kirjoita_tekstia("Anna lähtö- ja laskukiitotie, sekä siirtopinta", 50, 70);
-	kirjoita_tekstia("Lähtökiitotie: " + apuvalineet::tekstiksi(peli.atis.lahto), 50, 90);
-	kirjoita_tekstia("Laskukiitotie: " + apuvalineet::tekstiksi(peli.atis.lasku), 50, 110);
-	kirjoita_tekstia("Siirtopinta: " + apuvalineet::tekstiksi(peli.atis.siirtopinta), 50, 130);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LAHTOKIITOTIE) + apuvalineet::tekstiksi(peli.atis.lahto), 50, 90);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LASKUKIITOTIE) + apuvalineet::tekstiksi(peli.atis.lasku), 50, 110);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SIIRTOPINTA) + apuvalineet::tekstiksi(peli.atis.siirtopinta), 50, 130);
 
 	SDL_Flip(ruutu);
 }

@@ -1,5 +1,8 @@
 #ifndef _PELI_CONTROLLER_HPP
 #define _PELI_CONTROLLER_HPP
+
+#include "kieli.hpp"
+
 class PeliView;
 class Peli;
 class Ohjelma;
@@ -15,8 +18,9 @@ class PeliController {
 	PeliView& view;
 	Ohjelma& ohjelma;
 	IAsetukset& asetukset;
+	Kieli kieli;
 public:
-	PeliController(Peli& p, PeliView& v, Ohjelma& o, IAsetukset& a) : peli(p), view(v), ohjelma(o), asetukset(a) { }
+	PeliController(Peli& p, PeliView& v, Ohjelma& o, IAsetukset& a, Kieli& kieli) : peli(p), view(v), ohjelma(o), asetukset(a) {this->kieli = kieli; }
 	int aja();
 	void pyyda_atis();
 };

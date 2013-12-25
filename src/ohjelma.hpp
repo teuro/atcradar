@@ -32,8 +32,7 @@ public:
 
 class Ohjelma : public IOhjelma {
 public:
-	Ohjelma(IAsetukset &a) : asetukset(a)
-	{
+	Ohjelma(IAsetukset &a) : asetukset(a) {
 		alku();
 	}
 
@@ -52,6 +51,25 @@ public:
 	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2);
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
+	
+	enum tekstit {
+		TEKSTI_VALITSE_TASO = 1, 
+		TEKSTI_PORRASTUSVIRHEET, 
+		TEKSTI_UUSI_KONE_TULEE, 
+		TEKSTI_SEKUNNIT,
+		TEKSTI_OHJE_VALITSE_KONE, 
+		TEKSTI_OHJE_PAINA_TOIMINTONAPPAINTA,
+		TEKSTI_ONKO_ATIS_OK,
+		TEKSTI_OHJE_SIIRTOPINTA_VAARIN,
+		TEKSTI_OHJE_LAHTOBAANA_VAARIN,
+		TEKSTI_OHJE_LASKUBAANA_VAARIN,
+		TEKSTI_OHJE_ANNA_LAHTOKIITOTIE,
+		TEKSTI_OHJE_ANNA_LASKUKIITOTIE,
+		TEKSTI_OHJE_ANNA_SIIRTOPINTA,
+		TEKSTI_OHJE_LAHTOKIITOTIE,
+		TEKSTI_OHJE_LASKUKIITOTIE,
+		TEKSTI_OHJE_SIIRTOPINTA
+	};
 private:
 	IAsetukset& asetukset;
 	unsigned int alku_aika;

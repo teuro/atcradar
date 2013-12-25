@@ -3,6 +3,7 @@
 #include "peli.hpp"
 #include "peliview.hpp"
 #include "pelicontroller.hpp"
+#include "kieli.hpp"
 #include <stdexcept>
 
 
@@ -13,11 +14,12 @@
 
 int main(int argc, char** argv) {
 	try {
+		Kieli kieli("en_EN");
 		Asetukset asetukset;
 		Ohjelma ohjelma(asetukset);
-		Peli peli(asetukset, ohjelma);
-		PeliView view(asetukset, peli, ohjelma);
-		PeliController controller(peli, view, ohjelma, asetukset);
+		Peli peli(asetukset, ohjelma, kieli);
+		PeliView view(asetukset, peli, ohjelma, kieli);
+		PeliController controller(peli, view, ohjelma, asetukset, kieli);
 		valikko valikko(ohjelma, view);
 
 		while (true) {

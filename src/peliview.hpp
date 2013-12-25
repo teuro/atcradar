@@ -4,6 +4,7 @@
 #include "valikko.hpp"
 #include "peli.hpp"
 #include "apuvalineet.hpp"
+#include "kieli.hpp"
 
 #include <map>
 #include <fstream>
@@ -18,16 +19,17 @@ MVC View
 PeliView is responsible of DISPLAYING the game state. Nothing else.
 */
 
-class PeliView
-{
+class PeliView {
+private:
+	Kieli kieli;
 public:
-	PeliView( IAsetukset& a, Peli &p, IOhjelma& o) : asetukset(a), peli(p), ohjelma(o)
-	{
+	PeliView(IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : asetukset(a), peli(p), ohjelma(o) {
 		SDL_Color tmp = { 50, 50, 50 };
 		vari = tmp;
 		fontin_koko = 12;
 
 		alku();
+		this->kieli = kieli;
 	}
 
 	~PeliView()
@@ -38,7 +40,7 @@ public:
 	void piirra_valikko(valikko::valinta valittu);
 	void piirra_peli();
 	void piirra_tilasto();
-	void piirra_atis(int toiminto);
+	void piirra_atis();
 	void piirra_valinta();
 
 private:

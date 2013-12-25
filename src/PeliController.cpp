@@ -5,6 +5,8 @@
 #include "ohjelma.hpp"
 #include "lukija.hpp"
 #include "ajastin.hpp"
+#include "kieli.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -13,12 +15,13 @@
 
 // Pelin pääfunktio.
 int PeliController::aja() {
+
 	int taso = -1;
 	peli.porrastusvirheet = 0;
 	peli.muut_virheet = 0;
 	peli.kasitellyt = 0;
 	syotteenluku lukija;
-	peli.ohje = "Valitse taso 0 - 3";
+	peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_VALITSE_TASO);
 	
 	while (taso < 0) {
 		lukija.lue_syote();
@@ -98,7 +101,7 @@ int PeliController::aja() {
 		peli.valitse_kone(hiiri);
 
 		if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
-			std::clog << "Porrastusvirheet täynnä" << std::endl;
+			std::clog << kieli.anna_teksti(Ohjelma::TEKSTI_PORRASTUSVIRHEET) << std::endl;
 			loppu = true;
 		}
 
@@ -108,7 +111,7 @@ int PeliController::aja() {
 				peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
 			}
 
-			std::clog << "Seuraava kone luodaan " << (peli.koska_uusi_kone - alku) << " sekunnin kuluttua" << std::endl;
+			std::clog << kieli.anna_teksti(Ohjelma::TEKSTI_UUSI_KONE_TULEE) << (peli.koska_uusi_kone - alku) << kieli.anna_teksti(Ohjelma::TEKSTI_SEKUNNIT) << std::endl;
 		}
 
 		if (alku == peli.koska_metar) {
@@ -201,10 +204,10 @@ int PeliController::aja() {
 		}
 
 		if (peli.etsi_valittu_kone() < 0) {
-			peli.ohje = "Valitse kone klikkaamalla";
+			peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_VALITSE_KONE);
 		}
 		else {
-			peli.ohje = "Paina toimintonappulaa F5 F6 tai F8 ja anna komento";
+			peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_PAINA_TOIMINTONAPPAINTA);
 		}
 
 
@@ -264,6 +267,7 @@ void PeliController::pyyda_atis() {
 	syotteenluku lukija;
 	atis.lue_paineet("data/painerajat.txt");
 	int toiminto = Peli::LAHTO;
+	peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_ANNA_LAHTOKIITOTIE);
 
 	while (atis.ok == false) {
 		peli.syote = lukija.lue_syote();
@@ -278,12 +282,12 @@ void PeliController::pyyda_atis() {
 		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F8)) {
 			toiminto = Peli::SIIRTOPINTA;
 		}
-
+		
 		if (lukija.anna_viesti().length() > 1 && ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
 
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;
-
+			
 			switch (toiminto) {
 			case Peli::LAHTO:
 				tmp = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), lukija.anna_viesti());
@@ -294,7 +298,9 @@ void PeliController::pyyda_atis() {
 					atis.lahto = lukija.anna_viesti();
 					lukija.tyhjenna();
 				}
+				
 				toiminto = Peli::LASKU;
+				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_ANNA_LASKUKIITOTIE);
 				break;
 			case Peli::LASKU:
 				tmp = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), lukija.anna_viesti());
@@ -305,11 +311,15 @@ void PeliController::pyyda_atis() {
 					atis.lasku = lukija.anna_viesti();
 					lukija.tyhjenna();
 				}
+
 				toiminto = Peli::SIIRTOPINTA;
+				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_ANNA_SIIRTOPINTA);
+				
 				break;
 			case Peli::SIIRTOPINTA:
 				atis.siirtopinta = apuvalineet::luvuksi<int>(lukija.anna_viesti());
 				lukija.tyhjenna();
+				
 				break;
 			}
 		}
@@ -318,10 +328,10 @@ void PeliController::pyyda_atis() {
 		bool lahto_ok = false;
 		bool lasku_ok = false;
 
-		view.piirra_atis(toiminto);
+		view.piirra_atis();
 
 		if (atis.lahtokiitotie > -1 && atis.laskukiitotie > -1 && atis.siirtopinta > -1) {
-			peli.ohje = "Tiedot syötetty tarkistetaan onko oikein";
+			peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_ONKO_ATIS_OK);
 
 			double vastakomponentti_lahto = std::cos(apuvalineet::deg2rad(peli.metar.tuuli) - apuvalineet::deg2rad(peli.kentta.kiitotiet[atis.lahtokiitotie].suunta)) * peli.metar.voimakkuus;
 			double vastakomponentti_lasku = std::cos(apuvalineet::deg2rad(peli.metar.tuuli) - apuvalineet::deg2rad(peli.kentta.kiitotiet[atis.laskukiitotie].suunta)) * peli.metar.voimakkuus;
@@ -343,7 +353,7 @@ void PeliController::pyyda_atis() {
 				siirto_ok = true;
 			}
 			else {
-				peli.ohje = "Siirtopinta väärin tulisi olla " + apuvalineet::tekstiksi(siirtopinta);
+				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SIIRTOPINTA_VAARIN) + apuvalineet::tekstiksi(siirtopinta);
 				toiminto = Peli::SIIRTOPINTA;
 			}
 
@@ -351,7 +361,7 @@ void PeliController::pyyda_atis() {
 				lahto_ok = true;
 			}
 			else {
-				peli.ohje = "Lähtökiitotie valittu väärin";
+				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LAHTOBAANA_VAARIN);
 				toiminto = Peli::LAHTO;
 			}
 
@@ -359,7 +369,7 @@ void PeliController::pyyda_atis() {
 				lasku_ok = true;
 			}
 			else {
-				peli.ohje = "Laskukiitotie valittu väärin";
+				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LASKUBAANA_VAARIN);
 				toiminto = Peli::LASKU;
 			}
 		}
