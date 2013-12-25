@@ -14,7 +14,7 @@
 
 int main(int argc, char** argv) {
 	try {
-		Kieli kieli("en_EN");
+		Kieli kieli("fi_FI");
 		Asetukset asetukset;
 		Ohjelma ohjelma(asetukset);
 		Peli peli(asetukset, ohjelma, kieli);
