@@ -138,18 +138,10 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 	}
 
 	std::string nimi, tunnus;
-	
-	size_t pos = 0;
-	std::string sana;
-	std::string erotin = " ";
 	std::string rivi;
 	
 	while (std::getline(sisaan, rivi)) {
-		while ((pos = rivi.find(erotin)) != std::string::npos) {
-			sana = rivi.substr(0, pos);
-			asiat.push_back(sana);
-			rivi.erase(0, pos + erotin.length());
-		}
+		asiat = apuvalineet::pilko_rivi(rivi, " ");
 		
 		if (asiat[0] == "N") {
 			kentta.nimi = asiat[1];

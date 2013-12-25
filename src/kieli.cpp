@@ -12,19 +12,12 @@ Kieli::Kieli(std::string kieli) {
 	}
 	
 	std::ifstream sisaan("data/tekstit.txt", std::ios::in);
-	size_t pos = 0;
 	
-	std::string sana;
-	std::string erotin = "|";
 	std::string rivi;
 	std::vector <std::string> asiat;
 	
 	while (std::getline(sisaan, rivi)) {
-		while ((pos = rivi.find(erotin)) != std::string::npos) {
-			sana = rivi.substr(0, pos);
-			asiat.push_back(sana);
-			rivi.erase(0, pos + erotin.length());
-		}
+		asiat = apuvalineet::pilko_rivi(rivi, "|");
 		
 		this->lisaa_teksti(apuvalineet::luvuksi<int>(asiat[0]), asiat[kohta]);
 		asiat.clear();
@@ -32,12 +25,10 @@ Kieli::Kieli(std::string kieli) {
 }
 
 void Kieli::lisaa_teksti(int id, std::string teksti) {
-	//std::clog << "Kieli::lisaa_teksti(" << id << ", " << teksti << ")" << std::endl;
 	this->tekstit[id] = teksti;
 }
 
 std::string Kieli::anna_teksti(int id) {
-	std::clog << "Kieli::anna_teksti(" << id << ") = " << this->tekstit[id] <<  std::endl;
 	
 	return this->tekstit[id];
 }
