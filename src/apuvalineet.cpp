@@ -107,3 +107,17 @@ std::string apuvalineet::muuta_pituus(std::string alkuperainen, int haluttu_pitu
 int apuvalineet::pyorista(double luku, int jaollisuus) {
 	return std::floor(luku/jaollisuus) * jaollisuus;
 }
+
+std::vector <std::string> apuvalineet::pilko_rivi(std::string rivi, std::string erotin) {
+	size_t pos = 0;
+	std::vector <std::string> asiat;
+	std::string sana;
+	
+	while ((pos = rivi.find(erotin)) != std::string::npos) {
+		sana = rivi.substr(0, pos);
+		asiat.push_back(sana);
+		rivi.erase(0, pos + erotin.length());
+	}
+	
+	return asiat;
+}

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 namespace apuvalineet {
 	extern double zoom;
@@ -57,6 +58,7 @@ namespace apuvalineet {
 	double laske_kulma(const piste& a, const piste& b);
 	std::string muuta_pituus(std::string alkuperainen, int haluttupituus);
 	int pyorista(double luku, int jaollisuus);
+	std::vector <std::string> pilko_rivi(std::string rivi, std::string erotin);
 }
 
 #endif
