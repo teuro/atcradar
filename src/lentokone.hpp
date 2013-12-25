@@ -6,6 +6,7 @@
 #include "asetukset.h"
 #include <vector>
 #include <queue>
+#include <fstream>
 
 const int VASEN = -1;
 const int OIKEA = 1;

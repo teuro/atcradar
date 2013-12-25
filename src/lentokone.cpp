@@ -207,6 +207,8 @@ void lentokone::tarkista_suunta_kohteeseen() {
 }
 
 void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
+	std::ofstream ulos("selvitykset.txt", std::ios::app);
+	
 	if (toiminto == Peli::SUUNTA) {
         std::vector <navipiste>::iterator etsi = std::find(peli.sisapisteet.begin(), peli.sisapisteet.end(), komento);
 
@@ -225,18 +227,27 @@ void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
 	switch (toiminto) {
 		case Peli::SUUNTA:
 			muuta_selvityssuuntaa(luku, kaarto);
+			if (reitti.size() == 0) {
+				ulos << this->kutsutunnus << " kaarra " << (kaarto == VASEN ? "vasemmalle" : "oikealle") << " suuntaan " << luku << std::endl;
+			} else {
+				ulos << this->kutsutunnus << " selvä suoraan kohti " << kohde.nimi << std::endl;
+			}
 			break;
 		case Peli::KORKEUS:
 			muuta_selvityskorkeutta(luku);
+			ulos << this->kutsutunnus << (selvityskorkeus > korkeus ? " nouse" : " laskeudu ") << luku << " jalkaan " << std::endl;
 			break;
 		case Peli::NOPEUS:
 			muuta_selvitysnopeutta(luku);
+			ulos << this->kutsutunnus << (selvitysnopeus > nopeus ? " kiihdytä" : " hidasta ") << luku << " solmuun " << std::endl;
 			break;
         case Peli::ODOTUS:
             odotuskuvio = ohjelma.sekunnit() + 60;
+			ulos << this->kutsutunnus << " liity odotuskuvioon " << std::endl;
             break;
         case Peli::POIS:
             odotuskuvio = -1;
+			ulos << this->kutsutunnus << " jätä odotuskuvio " << std::endl;
             break;
 		case Peli::OIKOTIE:
 			if (korkeus < asetukset.anna_asetus("oikotie")) {
@@ -245,6 +256,7 @@ void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
 				aseta_navipiste(ulosmenopiste);
 			}
 			this->oikotie = true;
+			ulos << this->kutsutunnus << " selvä suoraan kohti " << ulosmenopiste.nimi << std::endl;
 			break;
 		case Peli::LAHESTYMIS:
 			this->poista_reitti();
@@ -262,6 +274,7 @@ void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
 			} else {
 				aseta_navipiste(peli.kentta.kiitotiet[peli.atis.laskukiitotie].lahestymispiste);
 				laskubaana = peli.atis.laskukiitotie;
+				ulos << this->kutsutunnus << " selvä lähestymään kiitotietä " << peli.kentta.kiitotiet[peli.atis.laskukiitotie].nimi <<  std::endl;
 			}
 	}
 }
