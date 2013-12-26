@@ -14,7 +14,14 @@
 
 int main(int argc, char** argv) {
 	try {
-		Kieli kieli("fi_FI");
+		std::string kieli_tunnus = "fi_FI";
+		
+		if (argc > 1) {
+			kieli_tunnus = std::string(argv[1]);
+		} 
+		
+		Kieli kieli(kieli_tunnus);
+		
 		Asetukset asetukset;
 		Ohjelma ohjelma(asetukset);
 		Peli peli(asetukset, ohjelma, kieli);
