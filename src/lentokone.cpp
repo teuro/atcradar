@@ -235,11 +235,11 @@ void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
 			break;
 		case Peli::KORKEUS:
 			muuta_selvityskorkeutta(luku);
-			ulos << this->kutsutunnus << (selvityskorkeus > korkeus ? " nouse" : " laskeudu ") << luku << " jalkaan " << std::endl;
+			ulos << this->kutsutunnus << (selvityskorkeus > korkeus ? " nouse " : " laskeudu ") << luku << " jalkaan" << std::endl;
 			break;
 		case Peli::NOPEUS:
 			muuta_selvitysnopeutta(luku);
-			ulos << this->kutsutunnus << (selvitysnopeus > nopeus ? " kiihdytä" : " hidasta ") << luku << " solmuun " << std::endl;
+			ulos << this->kutsutunnus << (selvitysnopeus > nopeus ? " kiihdytä" : " hidasta ") << luku << " solmuun" << std::endl;
 			break;
         case Peli::ODOTUS:
             odotuskuvio = ohjelma.sekunnit() + 60;
