@@ -9,6 +9,8 @@ Kieli::Kieli(std::string kieli) {
 		kohta = 1;
 	} else if (kieli == "en_EN") {
 		kohta = 2;
+	} else {
+		throw std::logic_error("Pyydettyä kieltä " + kieli + "ei ole vielä tehty");
 	}
 	
 	std::ifstream sisaan("data/tekstit.txt", std::ios::in);
