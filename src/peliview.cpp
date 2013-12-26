@@ -187,13 +187,13 @@ void PeliView::piirra_koneet() {
 
 				switch (peli.toiminto) {
 				case Peli::SUUNTA:
-					kirjoita_tekstia("Anna suunta 0-360 tai navipisteen nimi", 50, 50);
+					kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SUUNTA), 50, 50);
 					break;
 				case Peli::NOPEUS:
-					kirjoita_tekstia("Anna nopeus lukuna", 50, 50);
+					kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_NOPEUS), 50, 50);
 					break;
 				case Peli::KORKEUS:
-					kirjoita_tekstia("Anna korkeus numeroina", 50, 50);
+					kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_KORKEUS), 50, 50);
 					break;
 				}
 
@@ -268,11 +268,11 @@ void PeliView::piirra_tilasto() {
 	int y = 30;
 	int x = 200;
 
-	kirjoita_tekstia("kutsutunnus", x, y - 15);
-	kirjoita_tekstia("alueelle", x + 100, y - 15);
-	kirjoita_tekstia("pois", x + 200, y - 15);
-	kirjoita_tekstia("alueella", x + 300, y - 15);
-	kirjoita_tekstia("selvitykset", x + 400, y - 15);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_KUTSUTUNNUS), x, y - 15);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_ALUEELLE), x + 100, y - 15);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_POIS), x + 200, y - 15);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_ALUEELLA), x + 300, y - 15);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_SELVITYKSET), x + 400, y - 15);
 	
 	double ka_alueella = 0;
 	double ka_alueelta = 0;
@@ -322,9 +322,12 @@ void PeliView::piirra_atis() {
 	piirra_metar();
 	piirra_ohje(peli.ohje);
 
-	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LAHTOKIITOTIE) + apuvalineet::tekstiksi(peli.atis.lahto), 50, 90);
-	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LASKUKIITOTIE) + apuvalineet::tekstiksi(peli.atis.lasku), 50, 110);
-	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SIIRTOPINTA) + apuvalineet::tekstiksi(peli.atis.siirtopinta), 50, 130);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LAHTOKIITOTIE), 50, 90);
+	kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.lahto), 150, 90);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LASKUKIITOTIE), 50, 110);
+	kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.lasku), 150, 110);
+	kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SIIRTOPINTA), 50, 130);
+	kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.siirtopinta), 150, 130);
 
 	SDL_Flip(ruutu);
 }
