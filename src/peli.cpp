@@ -123,10 +123,9 @@ void Peli::luo_kone(IOhjelma& ohjelma) {
 
 void Peli::lataa_kentta(std::string kenttaNimi) {
 	std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
-	std::string paate = ".txt";
 	std::string kansio = "kentat/";
 	std::string tmp;
-    tmp = kansio + kenttaNimi + paate;
+    tmp = kansio + kenttaNimi;
 	
 	std::clog << tmp << std::endl;
 	
@@ -170,7 +169,10 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 			navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]));
 
 			navipisteet.push_back(tmp);
+		} else {
+			throw std::runtime_error("Tiedosto " + kenttaNimi + " on v‰‰r‰ss‰ formaatissa");
 		}
+		
 		asiat.clear();
 	}
 

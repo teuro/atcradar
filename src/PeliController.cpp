@@ -12,6 +12,26 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <dirent.h>
+
+std::vector <std::string> lataa_kentan_nimet() {
+	DIR *dir;
+	struct dirent *ent;
+	std::vector <std::string> tmp;
+	
+	if ((dir = opendir ("kentat/")) != NULL) {
+		while ((ent = readdir (dir)) != NULL) {
+			std::string name = std::string(ent->d_name);
+			
+			if (name.length() > 2) {
+				tmp.push_back(name);
+			}
+		}
+		closedir (dir);
+	}
+	
+	return tmp;
+}
 
 // Pelin p‰‰funktio.
 int PeliController::aja() {
@@ -34,6 +54,21 @@ int PeliController::aja() {
 		}
 		
 		view.piirra_valinta();
+	}
+	
+	valikko kentat(ohjelma, view);
+	
+	std::vector <std::string> nimet = lataa_kentan_nimet();
+	
+	for (unsigned int i = 0; i < nimet.size(); ++i) {
+		kentat.lisaa_kohta(i, nimet[i]);
+	}
+	
+	int kentta_id = -1;
+	
+	while (kentta_id < 0) {
+		kentta_id = kentat.aja();
+		std::clog << "Ladataan kentta " << kentat.kohdat[kentta_id] << std::endl;
 	}
 	
 	lukija.tyhjenna();
@@ -71,7 +106,7 @@ int PeliController::aja() {
 
 	peli.lataa_tunnukset("data/tunnukset.txt");
 
-	peli.lataa_kentta("EFRO");
+	peli.lataa_kentta(kentat.kohdat[kentta_id]);
 
 	std::srand(std::time(NULL));
 
