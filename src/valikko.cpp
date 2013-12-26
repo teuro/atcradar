@@ -4,31 +4,28 @@
 #include "peliview.hpp"
 #include <iostream>
 
-valikko::valinta valikko::aja() {
+int valikko::aja() {
 	std::clog << "valikko::aja( )" << std::endl;
 
 	// Valikon alkutilanne.
-	valinta valittu = PELI;
-
+	std::map <int, std::string> :: iterator valinta = kohdat.begin();
 	// Valikon silmukka.
 	while (true) {
 		// Piirretään valikon tilanne, odotetaan valintaa.
-		view.piirra_valikko(valittu);
+		view.piirra_valikko(valinta->first, this->kohdat);
 		Ohjelma::nappi n = ohjelma.odota_nappi();
 
 		if (n == Ohjelma::NAPPI_ENTER) {
-			// Enter => lopetetaan valikko, palautetaan valittu.
-			return valittu;
-		} else if (n == Ohjelma::NAPPI_ESCAPE) {
-			// Escape => lopetetaan valikko, palautetaan LOPETUS.
-			return LOPETUS;
-		} else {
-			// Muu nappi => vaihdetaan valintaa.
-			if (valittu == PELI) {
-				valittu = LOPETUS;
-			} else {
-				valittu = PELI;
-			}
+			// Enter => lopetetaan valikko, palautetaan valinta.
+			return valinta->first;
+		} else if (n == Ohjelma::NAPPI_YLOS) {
+			--valinta;
+		} else if (n == Ohjelma::NAPPI_ALAS) {
+			++valinta;
 		}
 	}
+}
+
+void valikko::lisaa_kohta(int id, std::string kohta) {
+	kohdat[id] = kohta;
 }

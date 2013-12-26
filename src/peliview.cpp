@@ -45,27 +45,20 @@ void PeliView::piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta) {
 }
 
 // Piirt‰‰ valikon.
-void PeliView::piirra_valikko(valikko::valinta valittu) {
-	std::clog << "ohjelma::piirra_valikko(tulos, valittu)" << std::endl;
+void PeliView::piirra_valikko(int valittu, std::map <int, std::string> kohdat) {
+	std::clog << "ohjelma::piirra_valikko(" << valittu << ")" << std::endl;
 
-	// Valitaan oikeat kuvat.
-	SDL_Surface *kuva_peli = image_cache::common().get("kuvat/valikko_peli.png");
-	SDL_Surface *kuva_lopetus = image_cache::common().get("kuvat/valikko_lopetus.png");
-
-	switch (valittu) {
-	case valikko::PELI:
-		kuva_peli = image_cache::common().get("kuvat/valikko_peli_valittu.png");
-		break;
-	case valikko::LOPETUS:
-		kuva_lopetus = image_cache::common().get("kuvat/valikko_lopetus_valittu.png");
-		break;
-	}
-
-	int x = 20, y = 16;
 	piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.png"), 0, 0);
-
-	piirra_kuva(kuva_peli, x, y);
-	piirra_kuva(kuva_lopetus, x, y + kuva_peli->h + 5);
+	int y = 20;
+	
+	for (std::map <int, std::string> :: iterator it = kohdat.begin(); it != kohdat.end(); ++it) {
+		if (it->first == valittu) {
+			kirjoita_tekstia(it->second, 50, y, true);
+		} else {
+			kirjoita_tekstia(it->second, 50, y);
+		}
+		y += 20;
+	}
 
 	// Laitetaan piirustukset esille.
 	SDL_Flip(ruutu);
@@ -232,7 +225,13 @@ void PeliView::piirra_lentokentta() {
 	}
 }
 
-void PeliView::kirjoita_tekstia(std::string teksti, int x, int y) {
+void PeliView::kirjoita_tekstia(std::string teksti, int x, int y, bool aktiivinen) {
+	if (aktiivinen) {
+		vari = {0, 128, 0};
+	} else {
+		vari = {128, 0, 0};
+	}
+	
 	if (teksti.length() > 0) {
 		SDL_Surface* tekstipinta = TTF_RenderText_Solid(fontti, teksti.c_str(), vari);
 

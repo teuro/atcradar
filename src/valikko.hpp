@@ -2,6 +2,8 @@
 #ifndef _VALIKKO_HPP
 #define _VALIKKO_HPP
 
+#include <map>
+
 class Ohjelma;
 class PeliView;
 
@@ -12,12 +14,10 @@ class valikko {
 public:
     valikko(Ohjelma& o, PeliView& v) : ohjelma(o), view(v) { }
 	
-	enum valinta {
-		LOPETUS, PELI
-	};
+	std::map <int, std::string> kohdat;
+	void lisaa_kohta(int id, std::string kohta);
 	
-	// Valikon p‰‰funktio; tarvitsee pelin tuloksen, palauttaa valinnan.
-	valinta aja();
+	int aja();
 };
 
 #endif

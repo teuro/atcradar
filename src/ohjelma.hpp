@@ -18,7 +18,7 @@ public:
 	virtual void odota(double ms = 1) = 0;
 
 	enum nappi {
-		NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F7, NAPPI_F8, NAPPI_I
+		NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F7, NAPPI_F8, NAPPI_YLOS, NAPPI_ALAS, NAPPI_I
 	};
 
 	virtual nappi odota_nappi() = 0;

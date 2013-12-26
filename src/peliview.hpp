@@ -37,7 +37,7 @@ public:
 		// TODO: Cleanup any SDL resources in destructor
 	}
 
-	void piirra_valikko(valikko::valinta valittu);
+	void piirra_valikko(int valittu, std::map<int, std::string>kohdat);
 	void piirra_peli();
 	void piirra_tilasto();
 	void piirra_atis();
@@ -56,7 +56,7 @@ private:
 	void piirra_odottavat();
 	void piirra_ohje(std::string ohje);
 	void piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta = false);
-	void kirjoita_tekstia(std::string teksti, int x, int y);
+	void kirjoita_tekstia(std::string teksti, int x, int y, bool aktiivinen = false);
 
 	int fontin_koko;
 	TTF_Font* fontti;

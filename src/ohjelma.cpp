@@ -61,6 +61,8 @@ Ohjelma::nappi Ohjelma::odota_nappi() {
 			case SDLK_RETURN: return NAPPI_ENTER;
 			case SDLK_LEFT: return NAPPI_VASEN;
 			case SDLK_RIGHT: return NAPPI_OIKEA;
+			case SDLK_DOWN: return NAPPI_ALAS;
+			case SDLK_UP: return NAPPI_YLOS;
 			default: return NAPPI_MUU;
 		}
 	}

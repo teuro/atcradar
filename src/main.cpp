@@ -27,14 +27,18 @@ int main(int argc, char** argv) {
 		Peli peli(asetukset, ohjelma, kieli);
 		PeliView view(asetukset, peli, ohjelma, kieli);
 		PeliController controller(peli, view, ohjelma, asetukset, kieli);
+		
 		valikko valikko(ohjelma, view);
 
+		valikko.lisaa_kohta(1, "Peli");
+		valikko.lisaa_kohta(0, "Lopeta");
+		
 		while (true) {
 			switch (valikko.aja()) {
-			case valikko::PELI:
+			case 1:
 				controller.aja();
 				continue;
-			case valikko::LOPETUS:
+			case 0:
 				return 0;
 			default:
 				throw std::logic_error("Virheellinen tilanne valikossa!");
