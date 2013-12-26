@@ -14,3 +14,11 @@
 14|Lähtökiitotie|Depart runway|
 15|Laskukiitotie|Landing runway|
 16|Siirtopinta|Transition level|
+17|Anna suunta 0  360 tai anna navipisteen nimi|Give heading 0 - 360 or type nav point name|
+18|Anna nopeus solmuina|Give speed in knots|
+19|Anna korkeus jalkoina|Give altitude in feets|
+20|Kutsutunnus|Callsign|
+21|Alueelle|Inbound|
+22|Alueelta|Outbound|
+23|Aika|Time|
+24|Selvitykset|Clearances|
