@@ -3,6 +3,7 @@
 #include "ohjelma.hpp"
 #include "kuvavarasto.hpp"
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
@@ -22,6 +23,9 @@ void Ohjelma::alku() {
 
 	// Nollataan sekuntilaskuri.
 	sekunnit(true);
+	std::ofstream ulos("selvitykset.txt", std::ios::out);
+	ulos << "";
+	ulos.close();
 }
 
 // Lopetusfunktio.
