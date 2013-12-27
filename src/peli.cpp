@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+
 bool poistetaanko(const lentokone& kone);
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
@@ -107,7 +108,7 @@ void Peli::luo_kone(IOhjelma& ohjelma) {
 		do {
 			i = apuvalineet::arvo_luku(0, navipisteet.size());
 		} while (!onko_vapaata(SAAPUVA, i));
-		
+
         koneet.push_back(lentokone(*this, ohjelma, asetukset, tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
@@ -127,9 +128,9 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 	std::string kansio = "kentat/";
 	std::string tmp;
     tmp = kansio + kenttaNimi;
-	
+
 	std::clog << tmp << std::endl;
-	
+
 	std::ifstream sisaan(tmp.c_str(), std::ios::in);
 	std::vector <std::string> asiat;
 
@@ -139,10 +140,10 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 
 	std::string nimi, tunnus;
 	std::string rivi;
-	
+
 	while (std::getline(sisaan, rivi)) {
 		asiat = apuvalineet::pilko_rivi(rivi, " ");
-		
+
 		if (asiat[0] == "N") {
 			kentta.nimi = asiat[1];
 		} else if (asiat[0] == "H") {
@@ -173,7 +174,7 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 		} else {
 			throw std::runtime_error("Tiedosto " + kenttaNimi + " on v‰‰r‰ss‰ formaatissa");
 		}
-		
+
 		asiat.clear();
 	}
 
@@ -236,25 +237,25 @@ void Peli::tarkista_porrastus() {
 
 void Peli::hoida_koneet() {
 	std::vector <lentokone> :: iterator it;
-	
+
     for (it = koneet.begin() ; it != koneet.end(); ++it) {
 		it->poistetaan = false;
         if (it->tyyppi == Peli::LAHTEVA) {
             if (ohjelma.onko_alueella(it->paikka, it->ulosmenopiste.paikka)) {
 				it->poistetaan = true;
                 ++kasitellyt;
-            } 
+            }
         } else if (it->tyyppi == Peli::SAAPUVA) {
             if (it->nopeus < 4.0) {
 				it->poistetaan = true;
                 ++kasitellyt;
-			} 
+			}
         }
 
         if (it->paikka.x < 0 || it->paikka.x > asetukset.anna_asetus("ruutu_leveys") || it->paikka.y < 0 || it->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             aseta_virhe(VIRHE_ALUEELTA);
             it->poistetaan = true;
-        } 
+        }
 
 		if (ohjelma.onko_alueella(it->paikka, it->kohde.paikka)) {
 			if (it->reitti.size()) {
@@ -315,9 +316,9 @@ void Peli::hoida_koneet() {
 			ohje = "Koneella " + it->kutsutunnus + " on polttoaine lopussa";
 		}
 	}
-	
+
 	std::vector <lentokone> lyhyt;
-	
+
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
 		if (koneet[i].poistetaan == false) {
 			lyhyt.push_back(koneet[i]);
@@ -327,13 +328,13 @@ void Peli::hoida_koneet() {
 			ulos->pois = ohjelma.sekunnit();
 		}
 	}
-	
+
 	koneet.clear();
-	
+
 	for (unsigned int i = 0; i < lyhyt.size(); ++i) {
 		koneet.push_back(lyhyt[i]);
 	}
-	
+
 	lyhyt.clear();
 }
 
@@ -357,17 +358,17 @@ std::vector <std::string> Peli::lataa_pilvet(std::string pilvet) {
 	std::ifstream sisaan(pilvet.c_str(), std::ios::in);
 	std::vector <std::string> tyypit;
 	std::string pilvi;
-	
+
 	if (!sisaan) {
 		throw std::runtime_error("Tiedosto " + pilvet + " ei aukea");
 	}
-	
+
 	while (sisaan >> pilvi) {
 		tyypit.push_back(pilvi);
 	}
-	
+
 	sisaan.close();
-	
+
 	return tyypit;
 }
 
@@ -379,11 +380,11 @@ void Peli::generoi_metar() {
 	metar.lampotila		= apuvalineet::arvo_luku(asetukset.anna_asetus("lampotila_ala"), asetukset.anna_asetus("lampotila_yla"));
 	metar.ilmankosteus	= apuvalineet::arvo_luku(asetukset.anna_asetus("ilmankosteus_ala"), asetukset.anna_asetus("ilmankosteus_yla"));
 	metar.kastepiste	= metar.lampotila - ((100 - metar.ilmankosteus) / 5);
-	
+
 	int pilvia = apuvalineet::arvo_luku(asetukset.anna_asetus("pilvet_ala"), asetukset.anna_asetus("pilvet_yla"));
 	std::vector <std::string> tyypit = lataa_pilvet("data/pilvet.txt");
 	std::string tyyppi;
-	
+
 	for (int i = 0; i < pilvia; ++i) {
 		tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
 		metar.pilvet[tyyppi] = ((apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")) * 11 + 500) / 1000) * 100;
@@ -403,7 +404,7 @@ bool Peli::onko_vapaata(int tyyppi, int piste) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -420,7 +421,7 @@ bool Peli::tarkista_atis() {
 	if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis.siirtopinta) {
 		return false;
 	}
-	
+
 	std::clog << "tarkista_atis true" << std::endl;
 	return true;
 }

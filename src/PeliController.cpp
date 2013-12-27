@@ -18,18 +18,18 @@ std::vector <std::string> lataa_kentan_nimet() {
 	DIR *dir;
 	struct dirent *ent;
 	std::vector <std::string> tmp;
-	
+
 	if ((dir = opendir ("kentat/")) != NULL) {
 		while ((ent = readdir (dir)) != NULL) {
 			std::string name = std::string(ent->d_name);
-			
+
 			if (name.length() > 2) {
 				tmp.push_back(name);
 			}
 		}
 		closedir (dir);
 	}
-	
+
 	return tmp;
 }
 
@@ -41,39 +41,39 @@ int PeliController::aja() {
 	peli.muut_virheet = 0;
 	peli.kasitellyt = 0;
 	syotteenluku lukija;
-	peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_VALITSE_TASO);
-	
+	peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_VALITSE_TASO);
+
 	while (taso < 0) {
 		lukija.lue_syote();
 		peli.syote = lukija.anna_viesti();
-		
+
 		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
 			if (lukija.anna_viesti().length()) {
 				taso = apuvalineet::luvuksi<int>(lukija.anna_viesti());
 			}
 		}
-		
+
 		view.piirra_valinta();
 	}
-	
+
 	valikko kentat(ohjelma, view);
-	
+
 	std::vector <std::string> nimet = lataa_kentan_nimet();
-	
+
 	for (unsigned int i = 0; i < nimet.size(); ++i) {
 		kentat.lisaa_kohta(i, nimet[i]);
 	}
-	
+
 	int kentta_id = -1;
-	
+
 	while (kentta_id < 0) {
 		kentta_id = kentat.aja();
 		std::clog << "Ladataan kentta " << kentat.kohdat[kentta_id] << std::endl;
 	}
-	
+
 	lukija.tyhjenna();
 	peli.ohje = " ";
-	
+
 	switch (taso) {
 		case 3:
 			asetukset.muuta_asetusta("koska_uusi_ala", 30);
@@ -101,7 +101,7 @@ int PeliController::aja() {
 			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 10);
 			break;
 	}
-	
+
 	std::clog << "pelicontroller::aja()" << std::endl;
 
 	peli.lataa_tunnukset("data/tunnukset.txt");
@@ -136,7 +136,7 @@ int PeliController::aja() {
 		peli.valitse_kone(hiiri);
 
 		if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
-			std::clog << kieli.anna_teksti(Ohjelma::TEKSTI_PORRASTUSVIRHEET) << std::endl;
+			std::clog << kieli.anna_teksti(Kieli::TEKSTI_PORRASTUSVIRHEET) << std::endl;
 			loppu = true;
 		}
 
@@ -146,7 +146,7 @@ int PeliController::aja() {
 				peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
 			}
 
-			std::clog << kieli.anna_teksti(Ohjelma::TEKSTI_UUSI_KONE_TULEE) << (peli.koska_uusi_kone - alku) << kieli.anna_teksti(Ohjelma::TEKSTI_SEKUNNIT) << std::endl;
+			std::clog << kieli.anna_teksti(Kieli::TEKSTI_UUSI_KONE_TULEE) << (peli.koska_uusi_kone - alku) << kieli.anna_teksti(Kieli::TEKSTI_SEKUNNIT) << std::endl;
 		}
 
 		if (alku == peli.koska_metar) {
@@ -200,9 +200,9 @@ int PeliController::aja() {
 			else if (komento == "OFF" || komento == "off") {
 				peli.toiminto = Peli::POIS;
 			}
-			
+
 			int kaarto = 0;
-			
+
 			if ((komento.substr(0, 1) == "V" || komento.substr(0, 1) == "v") && komento.length() < 5) {
 				kaarto = VASEN;
 				komento = komento.substr(1, std::string::npos);
@@ -214,7 +214,7 @@ int PeliController::aja() {
 			}
 
 			Peli::selvitys tmp_selvitys;
-			
+
 			tmp_selvitys.kone_id = peli.etsi_valittu_kone();
 			tmp_selvitys.nimi = komento;
 			tmp_selvitys.toiminto = peli.toiminto;
@@ -239,10 +239,10 @@ int PeliController::aja() {
 		}
 
 		if (peli.etsi_valittu_kone() < 0) {
-			peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_VALITSE_KONE);
+			peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_VALITSE_KONE);
 		}
 		else {
-			peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_PAINA_TOIMINTONAPPAINTA);
+			peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_PAINA_TOIMINTONAPPAINTA);
 		}
 
 
@@ -272,11 +272,11 @@ int PeliController::aja() {
 
 	ohjelma.tyhjenna_syote();
 	view.piirra_tilasto();
-	
+
 	double ka_alueella = 0;
 	double ka_selvitykset = 0;
 	double ka_alueelle = 0;
-	
+
 	for (unsigned int i = 0; i < peli.ajat.size(); ++i) {
 		double alueella = peli.ajat[i].pois - peli.ajat[i].sisaan;
 		ka_alueella += alueella;
@@ -284,10 +284,10 @@ int PeliController::aja() {
 		if (i > 0) {
 			ka_alueelle += peli.ajat[i-1].sisaan;
 		}
-		
+
 		std::clog << peli.ajat[i].tunnus << " " << peli.ajat[i].sisaan << " " << peli.ajat[i].pois << " " << alueella << " " << peli.ajat[i].selvitykset << std::endl;
 	}
-	
+
 	std::clog << peli.ajat.size() << " " << (ka_alueelle / peli.ajat.size()) << " " << ka_alueella << " " << ka_selvitykset << std::endl;
 
 	if (loppu) {
@@ -302,12 +302,12 @@ void PeliController::pyyda_atis() {
 	syotteenluku lukija;
 	atis.lue_paineet("data/painerajat.txt");
 	int toiminto = Peli::LAHTO;
-	peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_ANNA_LAHTOKIITOTIE);
+	peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_ANNA_LAHTOKIITOTIE);
 
 	while (atis.ok == false) {
 		peli.syote = lukija.lue_syote();
 		ohjelma.odota(20);
-		
+
 		if (ohjelma.lue_nappi(Ohjelma::NAPPI_F5)) {
 			toiminto = Peli::LAHTO;
 		}
@@ -317,12 +317,12 @@ void PeliController::pyyda_atis() {
 		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F8)) {
 			toiminto = Peli::SIIRTOPINTA;
 		}
-		
+
 		if (lukija.anna_viesti().length() > 1 && ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
 
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;
-			
+
 			switch (toiminto) {
 			case Peli::LAHTO:
 				tmp = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), lukija.anna_viesti());
@@ -333,9 +333,9 @@ void PeliController::pyyda_atis() {
 					atis.lahto = lukija.anna_viesti();
 					lukija.tyhjenna();
 				}
-				
+
 				toiminto = Peli::LASKU;
-				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_ANNA_LASKUKIITOTIE);
+				peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_ANNA_LASKUKIITOTIE);
 				break;
 			case Peli::LASKU:
 				tmp = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), lukija.anna_viesti());
@@ -348,13 +348,13 @@ void PeliController::pyyda_atis() {
 				}
 
 				toiminto = Peli::SIIRTOPINTA;
-				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_ANNA_SIIRTOPINTA);
-				
+				peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_ANNA_SIIRTOPINTA);
+
 				break;
 			case Peli::SIIRTOPINTA:
 				atis.siirtopinta = apuvalineet::luvuksi<int>(lukija.anna_viesti());
 				lukija.tyhjenna();
-				
+
 				break;
 			}
 		}
@@ -366,7 +366,7 @@ void PeliController::pyyda_atis() {
 		view.piirra_atis();
 
 		if (atis.lahtokiitotie > -1 && atis.laskukiitotie > -1 && atis.siirtopinta > -1) {
-			peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_ONKO_ATIS_OK);
+			peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_ONKO_ATIS_OK);
 
 			double vastakomponentti_lahto = std::cos(apuvalineet::deg2rad(peli.metar.tuuli) - apuvalineet::deg2rad(peli.kentta.kiitotiet[atis.lahtokiitotie].suunta)) * peli.metar.voimakkuus;
 			double vastakomponentti_lasku = std::cos(apuvalineet::deg2rad(peli.metar.tuuli) - apuvalineet::deg2rad(peli.kentta.kiitotiet[atis.laskukiitotie].suunta)) * peli.metar.voimakkuus;
@@ -383,12 +383,12 @@ void PeliController::pyyda_atis() {
 					max_vasta = vasta;
 				}
 			}
-	
+
 			if (siirtopinta == atis.siirtopinta) {
 				siirto_ok = true;
 			}
 			else {
-				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SIIRTOPINTA_VAARIN) + apuvalineet::tekstiksi(siirtopinta);
+				peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_SIIRTOPINTA_VAARIN) + apuvalineet::tekstiksi(siirtopinta);
 				toiminto = Peli::SIIRTOPINTA;
 			}
 
@@ -396,7 +396,7 @@ void PeliController::pyyda_atis() {
 				lahto_ok = true;
 			}
 			else {
-				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LAHTOBAANA_VAARIN);
+				peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_LAHTOBAANA_VAARIN);
 				toiminto = Peli::LAHTO;
 			}
 
@@ -404,7 +404,7 @@ void PeliController::pyyda_atis() {
 				lasku_ok = true;
 			}
 			else {
-				peli.ohje = kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LASKUBAANA_VAARIN);
+				peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_LASKUBAANA_VAARIN);
 				toiminto = Peli::LASKU;
 			}
 		}

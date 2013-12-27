@@ -11,7 +11,7 @@ void PeliView::piirra_valikko(int valittu, std::map <int, std::string> kohdat) {
 
 	piirtopinta.piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.png"), 0, 0);
 	int y = 20;
-	
+
 	for (std::map <int, std::string> :: iterator it = kohdat.begin(); it != kohdat.end(); ++it) {
 		if (it->first == valittu) {
 			piirtopinta.kirjoita_tekstia(it->second, 50, y, true);
@@ -54,9 +54,9 @@ void PeliView::piirra_koneet() {
 
 	Uint32 ok = 0x000000FF;
 	Uint32 ng = 0xFF0000FF;
-	
+
 	int listauskorkeus = 90;
-	
+
 	for (unsigned int i = 0; i < peli.koneet.size(); ++i) {
 		if (peli.koneet[i].odotus == false) {
 			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli.koneet[i].paikka, peli.koneet[i].suunta, peli.koneet[i].nopeus * (60.0 / 3600.0));
@@ -74,23 +74,23 @@ void PeliView::piirra_koneet() {
 			piirtopinta.circleColor(peli.koneet[i].paikka.x, peli.koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
 
 			piirtopinta.kirjoita_tekstia(peli.koneet[i].kutsutunnus, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y);
-			
+
 			piirtopinta.kirjoita_tekstia(peli.koneet[i].kutsutunnus, 30, listauskorkeus);
-			
+
 			if (peli.koneet[i].reitti.size() == 0) {
 				if (peli.koneet[i].lahestymisselvitys) {
 					piirtopinta.kirjoita_tekstia("ILS", 100, listauskorkeus);
 				} else if (peli.koneet[i].oikotie) {
 					piirtopinta.kirjoita_tekstia(peli.koneet[i].ulosmenopiste.nimi, 100, listauskorkeus);
 				}
-					
+
 				if (!peli.koneet[i].lahestymisselvitys && !peli.koneet[i].oikotie) {
 					piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityssuunta), 100, listauskorkeus);
 				}
 			} else {
 				piirtopinta.kirjoita_tekstia(peli.koneet[i].kohde.nimi, 100, listauskorkeus);
 			}
-			
+
 			piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityskorkeus), 160, listauskorkeus);
 			piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvitysnopeus), 210, listauskorkeus);
 			listauskorkeus += 20;
@@ -142,13 +142,13 @@ void PeliView::piirra_koneet() {
 
 				switch (peli.toiminto) {
 				case Peli::SUUNTA:
-					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SUUNTA), 50, 50);
+					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_SUUNTA), 50, 50);
 					break;
 				case Peli::NOPEUS:
-					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_NOPEUS), 50, 50);
+					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_NOPEUS), 50, 50);
 					break;
 				case Peli::KORKEUS:
-					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_KORKEUS), 50, 50);
+					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_KORKEUS), 50, 50);
 					break;
 				}
 
@@ -210,17 +210,17 @@ void PeliView::piirra_tilasto() {
 	int y = 30;
 	int x = 200;
 
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_KUTSUTUNNUS), x, y - 15);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_ALUEELLE), x + 100, y - 15);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_POIS), x + 200, y - 15);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_ALUEELLA), x + 300, y - 15);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_SELVITYKSET), x + 400, y - 15);
-	
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_KUTSUTUNNUS), x, y - 15);
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_ALUEELLE), x + 100, y - 15);
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_POIS), x + 200, y - 15);
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_ALUEELLA), x + 300, y - 15);
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_SELVITYKSET), x + 400, y - 15);
+
 	double ka_alueella = 0;
 	double ka_alueelta = 0;
 	double ka_selvitykset = 0;
 	double ka_alueelle = 0;
-	
+
 	for (unsigned int i = 0; i < peli.ajat.size(); ++i) {
 		double alueella = peli.ajat[i].pois - peli.ajat[i].sisaan;
 		ka_alueella += alueella;
@@ -229,7 +229,7 @@ void PeliView::piirra_tilasto() {
 			ka_alueelle += peli.ajat[i-1].sisaan;
 			ka_alueelta += peli.ajat[i-1].pois;
 		}
-		
+
 		piirtopinta.kirjoita_tekstia(peli.ajat[i].tunnus, x, y);
 		piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].sisaan).c_str(), x + 100, y);
 		piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat[i].pois).c_str(), x + 200, y);
@@ -238,7 +238,7 @@ void PeliView::piirra_tilasto() {
 
 		y += 15;
 	}
-	
+
 	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.ajat.size()), x, y);
 	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(ka_alueelle / peli.ajat.size()), x + 100, y);
 	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(ka_alueelta / peli.ajat.size()), x + 200, y);
@@ -265,11 +265,11 @@ void PeliView::piirra_atis() {
 	piirra_metar();
 	piirra_ohje(peli.ohje);
 
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LAHTOKIITOTIE), 50, 90);
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_LAHTOKIITOTIE), 50, 90);
 	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.lahto), 150, 90);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_LASKUKIITOTIE), 50, 110);
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_LASKUKIITOTIE), 50, 110);
 	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.lasku), 150, 110);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Ohjelma::TEKSTI_OHJE_SIIRTOPINTA), 50, 130);
+	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_SIIRTOPINTA), 50, 130);
 	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.siirtopinta), 150, 130);
 	piirtopinta.flip();
 //	SDL_Flip(ruutu);
@@ -283,7 +283,7 @@ void PeliView::piirra_metar() {
 	std::string lampotila 	= apuvalineet::tekstiksi(peli.metar.lampotila);
 	std::string kastepiste 	= apuvalineet::tekstiksi(peli.metar.kastepiste);
 	std::string pilvet;
-	
+
 	for (std::map<std::string, int>::iterator it=peli.metar.pilvet.begin(); it!=peli.metar.pilvet.end(); ++it) {
 		pilvet += it->first + apuvalineet::tekstiksi(it->second) + " ";
 	}
@@ -296,7 +296,7 @@ void PeliView::piirra_metar() {
 
 void PeliView::piirra_odottavat() {
 	int y = 120;
-	
+
 	if (peli.odottavat.size()) {
 		piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), y - piirtopinta.get_fontinkoko() - 5);
 	}
@@ -304,10 +304,10 @@ void PeliView::piirra_odottavat() {
 
 void PeliView::piirra_valinta() {
 	piirtopinta.piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.png"), 0, 0);
-	
+
 	piirtopinta.kirjoita_tekstia(peli.ohje, 50, 30);
 	piirtopinta.kirjoita_tekstia(peli.syote, 50, 50);
-	
+
 	piirtopinta.flip();
 //	SDL_Flip(ruutu);
 }
