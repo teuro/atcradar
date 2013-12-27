@@ -208,7 +208,7 @@ void lentokone::tarkista_suunta_kohteeseen() {
 
 void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
 	std::ofstream ulos("selvitykset.txt", std::ios::app);
-	
+
 	if (toiminto == Peli::SUUNTA) {
         std::vector <navipiste>::iterator etsi = std::find(peli.sisapisteet.begin(), peli.sisapisteet.end(), komento);
 

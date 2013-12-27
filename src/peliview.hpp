@@ -21,7 +21,7 @@ class PeliView : public View {
 private:
 	Kieli kieli;
 public:
-	PeliView(IPiirtoPinta& pinta, IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : asetukset(a), peli(p), ohjelma(o), View(pinta) {
+	PeliView(IPiirtoPinta& pinta, IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : View(pinta), asetukset(a), peli(p), ohjelma(o) {
 		this->kieli = kieli;
 	}
 
