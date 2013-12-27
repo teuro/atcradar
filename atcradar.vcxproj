@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Projects\atcradar\kääntäjä;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Projects\atcradar\src\msvcinclude;C:\Projects\atcradar\kääntäjä;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Projects\atcradar\kääntäjä\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)ohjelma\</OutDir>
   </PropertyGroup>
@@ -85,6 +85,7 @@
     <ClCompile Include="src\ajastin.cpp" />
     <ClCompile Include="src\apuvalineet.cpp" />
     <ClCompile Include="src\asetukset.cpp" />
+    <ClCompile Include="src\kieli.cpp" />
     <ClCompile Include="src\lentokentta.cpp" />
     <ClCompile Include="src\lentokone.cpp" />
     <ClCompile Include="src\lukija.cpp" />

@@ -21,7 +21,8 @@ class OhjelmaMock : public IOhjelma
 TEST(LentokoneConstructor, LentokoneConstructor) {
 	Asetukset asetukset;
 	OhjelmaMock ohjelmaMock;
-	Peli peli(ohjelmaMock, asetukset);
+    Kieli kieli;
+    Peli peli(asetukset, ohjelmaMock, kieli);
 	apuvalineet::piste paikka;
 	paikka.x = 0;
 	paikka.y = 0;
