@@ -2,6 +2,7 @@
 #include "valikko.hpp"
 #include "peli.hpp"
 #include "peliview.hpp"
+#include "tilastoview.hpp"
 #include "pelicontroller.hpp"
 #include "sdlpiirtopinta.hpp"
 #include "kieli.hpp"
@@ -27,7 +28,8 @@ int main(int argc, char** argv) {
 		Peli peli(asetukset, ohjelma, kieli);
 		SDLPiirtoPinta pinta(asetukset);
 		PeliView view(pinta, asetukset, peli, ohjelma, kieli);
-		PeliController controller(peli, view, ohjelma, asetukset, kieli);
+		TilastoView tilastoView(kieli, pinta, peli);
+		PeliController controller(peli, view, tilastoView, ohjelma, asetukset, kieli);
 		
 		valikko valikko(ohjelma, view);
 

@@ -96,12 +96,14 @@
     <ClCompile Include="src\PeliController.cpp" />
     <ClCompile Include="src\peliview.cpp" />
     <ClCompile Include="src\sdlpiirtopinta.cpp" />
+    <ClCompile Include="src\tilastoview.cpp" />
     <ClCompile Include="src\valikko.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ajastin.hpp" />
     <ClInclude Include="src\apuvalineet.hpp" />
     <ClInclude Include="src\asetukset.h" />
+    <ClInclude Include="src\kieli.hpp" />
     <ClInclude Include="src\kuvavarasto.hpp" />
     <ClInclude Include="src\lentokentta.hpp" />
     <ClInclude Include="src\lentokone.hpp" />
@@ -113,6 +115,7 @@
     <ClInclude Include="src\peliview.hpp" />
     <ClInclude Include="src\piirtopinta.hpp" />
     <ClInclude Include="src\sdlpiirtopinta.hpp" />
+    <ClInclude Include="src\tilastoview.hpp" />
     <ClInclude Include="src\valikko.hpp" />
     <ClInclude Include="src\view.hpp" />
   </ItemGroup>

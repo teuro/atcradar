@@ -4,8 +4,9 @@
 #include "kieli.hpp"
 
 class PeliView;
+class TilastoView;
 class Peli;
-class Ohjelma;
+class IOhjelma;
 class IAsetukset;
 
 /*
@@ -16,11 +17,12 @@ PeliController handles and parses game input (from Ohjelma-class), game logic, u
 class PeliController {
 	Peli& peli;
 	PeliView& view;
-	Ohjelma& ohjelma;
+	TilastoView& tilastoview;
+	IOhjelma& ohjelma;
 	IAsetukset& asetukset;
-	Kieli kieli;
+	Kieli& kieli;
 public:
-	PeliController(Peli& p, PeliView& v, Ohjelma& o, IAsetukset& a, Kieli& kieli) : peli(p), view(v), ohjelma(o), asetukset(a) {this->kieli = kieli; }
+	PeliController(Peli& p, PeliView& v, TilastoView& tv, IOhjelma& o, IAsetukset& a, Kieli& k) : peli(p), view(v), tilastoview(tv), ohjelma(o), asetukset(a), kieli(k) { }
 	int aja();
 	void pyyda_atis();
 };

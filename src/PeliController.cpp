@@ -2,6 +2,7 @@
 #include "peli.hpp"
 #include "pelicontroller.hpp"
 #include "peliview.hpp"
+#include "tilastoview.hpp"
 #include "ohjelma.hpp"
 #include "lukija.hpp"
 #include "ajastin.hpp"
@@ -265,13 +266,13 @@ int PeliController::aja() {
 		if (piirretty) {
 			ohjelma.odota();
 		} else {
-			view.piirra_peli();
+			view.piirra();
 			piirretty = true;
 		}
 	}
 
 	ohjelma.tyhjenna_syote();
-	view.piirra_tilasto();
+	tilastoview.piirra();
 
 	double ka_alueella = 0;
 	double ka_selvitykset = 0;

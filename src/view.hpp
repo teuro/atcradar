@@ -14,6 +14,8 @@ protected:
 
 public:
 	View(IPiirtoPinta& pinta) : piirtopinta(pinta) { }
+
+	virtual void piirra() = 0;
 };
 
 

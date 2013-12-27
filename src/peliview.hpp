@@ -29,9 +29,11 @@ public:
 	{
 	}
 
+	void piirra();
+
 	void piirra_valikko(int valittu, std::map<int, std::string>kohdat);
-	void piirra_peli();
-	void piirra_tilasto();
+	//void piirra_peli();
+//	void piirra_tilasto();
 	void piirra_atis();
 	void piirra_valinta();
 

@@ -4,15 +4,15 @@
 
 #include <map>
 
-class Ohjelma;
+class IOhjelma;
 class PeliView;
 
 class valikko {
-    Ohjelma& ohjelma;
+    IOhjelma& ohjelma;
     PeliView& view;
 
 public:
-    valikko(Ohjelma& o, PeliView& v) : ohjelma(o), view(v) { }
+    valikko(IOhjelma& o, PeliView& v) : ohjelma(o), view(v) { }
 	
 	std::map <int, std::string> kohdat;
 	void lisaa_kohta(int id, std::string kohta);
