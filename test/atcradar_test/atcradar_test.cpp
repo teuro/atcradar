@@ -61,12 +61,12 @@ TEST(ValikkoTests, ValikkoBounds) {
 	valikko v(ohjelmaMock, peliview);
 
 	IOhjelma::nappi nappisequence[] = {
-		IOhjelma::nappi::NAPPI_ALAS,
-		IOhjelma::nappi::NAPPI_ALAS,
-		IOhjelma::nappi::NAPPI_ALAS,
 		IOhjelma::nappi::NAPPI_YLOS,
 		IOhjelma::nappi::NAPPI_YLOS,
 		IOhjelma::nappi::NAPPI_YLOS,
+		IOhjelma::nappi::NAPPI_ALAS,
+		IOhjelma::nappi::NAPPI_ALAS,
+		IOhjelma::nappi::NAPPI_ALAS,
 		IOhjelma::nappi::NAPPI_ENTER,
 	};
 
@@ -76,10 +76,12 @@ TEST(ValikkoTests, ValikkoBounds) {
 		EXPECT_CALL(ohjelmaMock, odota_nappi()).InSequence(seq).WillOnce(Return(nappisequence[i]));
 	}
 
+	int expected = 1;
 	v.lisaa_kohta(0, "dummy1");
-	v.lisaa_kohta(1, "dummy1");
+	v.lisaa_kohta(expected, "dummy1");
 
-	v.aja();
+	int actual = v.aja();
+	EXPECT_EQ(1, actual);
 }
 
 int main(int argc, char* argv[])
