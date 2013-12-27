@@ -3,9 +3,9 @@
 #include "peli.hpp"
 #include "peliview.hpp"
 #include "pelicontroller.hpp"
+#include "sdlpiirtopinta.hpp"
 #include "kieli.hpp"
 #include <stdexcept>
-
 
 // The following undef required due to some conflict with VS+SDL.' To be removed later...
 #ifdef _MSC_VER
@@ -25,7 +25,8 @@ int main(int argc, char** argv) {
 		Asetukset asetukset;
 		Ohjelma ohjelma(asetukset);
 		Peli peli(asetukset, ohjelma, kieli);
-		PeliView view(asetukset, peli, ohjelma, kieli);
+		SDLPiirtoPinta pinta(asetukset);
+		PeliView view(pinta, asetukset, peli, ohjelma, kieli);
 		PeliController controller(peli, view, ohjelma, asetukset, kieli);
 		
 		valikko valikko(ohjelma, view);

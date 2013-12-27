@@ -95,6 +95,7 @@
     <ClCompile Include="src\peli.cpp" />
     <ClCompile Include="src\PeliController.cpp" />
     <ClCompile Include="src\peliview.cpp" />
+    <ClCompile Include="src\sdlpiirtopinta.cpp" />
     <ClCompile Include="src\valikko.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +111,10 @@
     <ClInclude Include="src\peli.hpp" />
     <ClInclude Include="src\pelicontroller.hpp" />
     <ClInclude Include="src\peliview.hpp" />
+    <ClInclude Include="src\piirtopinta.hpp" />
+    <ClInclude Include="src\sdlpiirtopinta.hpp" />
     <ClInclude Include="src\valikko.hpp" />
+    <ClInclude Include="src\view.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

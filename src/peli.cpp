@@ -31,6 +31,7 @@ void Peli::aseta_virhe(int virhe) {
 	++muut_virheet;
 	std::ofstream ulos("virhedata.txt", std::ios::app);
 
+	// TODO: Koska tässä on näytettäviä asioita (tekstiä), nämä voisi harkita siirrettävän PeliView-luokkaan.
 	switch (virhe) {
 		case VIRHE_KORKEUS_ALA:
             virheteksti = "Korkeuden alaraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvityskorkeus_ala")) + " jalkaa";

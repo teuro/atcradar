@@ -5,6 +5,7 @@
 #include "peli.hpp"
 #include "apuvalineet.hpp"
 #include "kieli.hpp"
+#include "view.hpp"
 
 #include <map>
 #include <fstream>
@@ -19,22 +20,16 @@ MVC View
 PeliView is responsible of DISPLAYING the game state. Nothing else.
 */
 
-class PeliView {
+class PeliView : public View {
 private:
 	Kieli kieli;
 public:
-	PeliView(IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : asetukset(a), peli(p), ohjelma(o) {
-		SDL_Color tmp = { 50, 50, 50 };
-		vari = tmp;
-		fontin_koko = 12;
-
-		alku();
+	PeliView(IPiirtoPinta& pinta, IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : asetukset(a), peli(p), ohjelma(o), View(pinta) {
 		this->kieli = kieli;
 	}
 
 	~PeliView()
 	{
-		// TODO: Cleanup any SDL resources in destructor
 	}
 
 	void piirra_valikko(int valittu, std::map<int, std::string>kohdat);
@@ -46,8 +41,6 @@ public:
 private:
 	IAsetukset& asetukset;
 
-	void alku();
-
 	void piirra_koneet();
 	void piirra_navipisteet();
 	void piirra_lentokentta();
@@ -55,13 +48,6 @@ private:
 	void piirra_metar();
 	void piirra_odottavat();
 	void piirra_ohje(std::string ohje);
-	void piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta = false);
-	void kirjoita_tekstia(std::string teksti, int x, int y, bool aktiivinen = false);
-
-	int fontin_koko;
-	TTF_Font* fontti;
-	SDL_Color vari;
-	SDL_Surface *ruutu;
 	Peli& peli;
 	IOhjelma& ohjelma;
 };
