@@ -11,9 +11,6 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
-#include <SDL/SDL.h>
-#include <SDL/SDL_gfxPrimitives.h>
-#include <SDL/SDL_ttf.h>
 
 /*
 MVC View
