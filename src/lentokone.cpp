@@ -53,12 +53,6 @@ void lentokone::muuta_selvityssuuntaa(double _suunta, int kaarto) {
 	this->kaarto = kaarto;
 }
 
-void lentokone::muuta_selvityksia(double korkeus, double nopeus, double suunta, int kaarto) {
-	muuta_selvityskorkeutta(korkeus);
-	muuta_selvitysnopeutta(nopeus);
-	muuta_selvityssuuntaa(suunta, kaarto);
-}
-
 void lentokone::muuta_tilaa(double aika) {
 	if (korkeus != selvityskorkeus) {
 		muuta_korkeutta(aika);
@@ -112,6 +106,7 @@ void lentokone::muuta_suuntaa(double aika) {
 }
 
 void lentokone::liiku(double aika) {
+    this->muuta_tilaa(aika);
 	paikka = apuvalineet::uusi_paikka(paikka, suunta, nopeus * (aika / 3600.0));
 }
 
@@ -141,7 +136,7 @@ int lentokone::kaarron_suunta(double suunta) {
 	return (k > 0) ? VASEN : OIKEA;
 }
 
-void lentokone::lahesty(lentokentta& kentta) {
+void lentokone::lahesty(kiitotie& baana) {
 	lahestymisselvitys = true;
 
 	if (apuvalineet::onko_alueella(paikka, this->baana.lahestymispiste, 0.01)) {
