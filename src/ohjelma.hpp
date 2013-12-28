@@ -25,7 +25,6 @@ public:
 	virtual bool lue_nappi(nappi n) = 0;
 	virtual void tyhjenna_syote() = 0;
 
-	virtual bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2) = 0;
 	virtual apuvalineet::piste anna_hiiri() = 0;
 	virtual bool lue_hiiri() = 0;
 };
@@ -50,8 +49,6 @@ public:
 
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
-	// TODO: fix or remove
-	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2) { return false; }
 
 private:
 	IAsetukset& asetukset;

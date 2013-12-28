@@ -96,13 +96,17 @@
     <ClCompile Include="src\PeliController.cpp" />
     <ClCompile Include="src\peliview.cpp" />
     <ClCompile Include="src\sdlpiirtopinta.cpp" />
+    <ClCompile Include="src\tasonvalintacontroller.cpp" />
+    <ClCompile Include="src\tasonvalintaview.cpp" />
     <ClCompile Include="src\tilastoview.cpp" />
     <ClCompile Include="src\valikko.cpp" />
+    <ClCompile Include="src\valikkoview.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ajastin.hpp" />
     <ClInclude Include="src\apuvalineet.hpp" />
     <ClInclude Include="src\asetukset.h" />
+    <ClInclude Include="src\controller.hpp" />
     <ClInclude Include="src\kieli.hpp" />
     <ClInclude Include="src\kuvavarasto.hpp" />
     <ClInclude Include="src\lentokentta.hpp" />
@@ -115,8 +119,11 @@
     <ClInclude Include="src\peliview.hpp" />
     <ClInclude Include="src\piirtopinta.hpp" />
     <ClInclude Include="src\sdlpiirtopinta.hpp" />
+    <ClInclude Include="src\tasonvalintacontroller.hpp" />
+    <ClInclude Include="src\tasonvalintaview.hpp" />
     <ClInclude Include="src\tilastoview.hpp" />
     <ClInclude Include="src\valikko.hpp" />
+    <ClInclude Include="src\valikkoview.hpp" />
     <ClInclude Include="src\view.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

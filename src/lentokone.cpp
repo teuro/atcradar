@@ -200,7 +200,6 @@ void lentokone::ota_selvitys(int toiminto) {
     }
 }
 
-
 void lentokone::poista_reitti() {
 	while (this->reitti.size()) {
 		this->reitti.pop();

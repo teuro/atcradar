@@ -19,6 +19,7 @@
 #include <queue>
 #include <map>
 #include <stdexcept>
+#include <string>
 
 /*
 MVC Model
@@ -40,11 +41,13 @@ public:
 		* Konstruktori asettaa oletusarvot keskeisille komponenteille
 		* @param viitteen ohjelma-olioon
 	*/
-	Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli) : asetukset(a), ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
+	Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta) : asetukset(a), ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
 		atis.lahtokiitotie = -1;
 		atis.laskukiitotie = -1;
 		atis.siirtopinta = -1;
 		atis.ok = false;
+		lataa_kentta(kentta);
+		ohje = " ";
     }
 
     IOhjelma& ohjelma;
@@ -53,7 +56,6 @@ public:
     std::vector <std::string> tunnukset;
     std::string syote;
 
-    void lataa_kentta(std::string kentta);
     void lataa_tunnukset(std::string tunnukset);
 
     void lisaa_selvityksia();
@@ -154,6 +156,8 @@ public:
 	std::vector <std::string> lataa_pilvet(std::string pilvet);
 	enum lukeminen { SUUNTA = 1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0 };
 	enum virheet { VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA };
+private:
+		void lataa_kentta(std::string kentta);
 };
 
 #endif

@@ -4,26 +4,6 @@
 #include <iostream>
 #include <stdexcept>
 
-// Piirt‰‰ valikon.
-void PeliView::piirra_valikko(int valittu, std::map <int, std::string> kohdat) {
-	std::clog << "ohjelma::piirra_valikko(" << valittu << ")" << std::endl;
-
-	piirtopinta.piirra_kuva("kuvat/tausta_valikko.png", 0, 0);
-	int y = 20;
-
-	for (std::map <int, std::string> :: iterator it = kohdat.begin(); it != kohdat.end(); ++it) {
-		if (it->first == valittu) {
-			piirtopinta.kirjoita_tekstia(it->second, 50, y, true);
-		} else {
-			piirtopinta.kirjoita_tekstia(it->second, 50, y);
-		}
-		y += 20;
-	}
-
-	// Laitetaan piirustukset esille.
-	piirtopinta.flip();
-}
-
 // Piirt‰‰ pelin.
 void PeliView::piirra() {
 	piirtopinta.piirra_kuva("kuvat/tausta_peli.png", 0, 0);
@@ -42,7 +22,6 @@ void PeliView::piirra() {
 	piirra_metar();
 
 	piirtopinta.flip();
-	//SDL_Flip(ruutu);
 }
 
 void PeliView::piirra_koneet() {
@@ -252,14 +231,4 @@ void PeliView::piirra_odottavat() {
 	if (peli.odottavat.size()) {
 		piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), y - piirtopinta.get_fontinkoko() - 5);
 	}
-}
-
-void PeliView::piirra_valinta() {
-	piirtopinta.piirra_kuva("kuvat/tausta_valikko.png", 0, 0);
-
-	piirtopinta.kirjoita_tekstia(peli.ohje, 50, 30);
-	piirtopinta.kirjoita_tekstia(peli.syote, 50, 50);
-
-	piirtopinta.flip();
-//	SDL_Flip(ruutu);
 }

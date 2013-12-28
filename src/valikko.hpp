@@ -3,21 +3,20 @@
 #define _VALIKKO_HPP
 
 #include <map>
+#include "valikkoview.hpp"
 
 class IOhjelma;
 class PeliView;
 
 class valikko {
-    IOhjelma& ohjelma;
-    PeliView& view;
-
 public:
-    valikko(IOhjelma& o, PeliView& v) : ohjelma(o), view(v) { }
-	
-	std::map <int, std::string> kohdat;
-	void lisaa_kohta(int id, std::string kohta);
+	valikko(IOhjelma& o, View& v, ValikkoData& d) : ohjelma(o), view(v), data(d) {}
 	
 	int aja();
+private:
+	IOhjelma& ohjelma;
+	View& view;
+	ValikkoData& data;
 };
 
 #endif

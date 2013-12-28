@@ -184,7 +184,7 @@ void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
 		for (unsigned int i = 0; i < koneet.size(); ++i) {
 			koneet[i].valittu = false;
 
-			if (ohjelma.onko_alueella(hiiri, koneet[i].paikka)) {
+			if (apuvalineet::onko_alueella(hiiri, koneet[i].paikka)) {
 				koneet[i].valittu = true;
 			}
 		}
@@ -201,7 +201,7 @@ void Peli::tarkista_porrastus() {
 				continue;
 			}
 
-			if (ohjelma.onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].korkeus - koneet[j].korkeus) < 1000 && (koneet[i].korkeus > 1000 && koneet[j].korkeus > 1000)) {
+			if (apuvalineet::onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].korkeus - koneet[j].korkeus) < 1000 && (koneet[i].korkeus > 1000 && koneet[j].korkeus > 1000)) {
 				alittuu.push_back(i);
 				alittuu.push_back(j);
 
@@ -232,7 +232,7 @@ void Peli::hoida_koneet() {
     for (it = koneet.begin() ; it != koneet.end(); ++it) {
 		it->poistetaan = false;
         if (it->tyyppi == Peli::LAHTEVA) {
-            if (ohjelma.onko_alueella(it->paikka, it->ulosmenopiste.paikka)) {
+            if (apuvalineet::onko_alueella(it->paikka, it->ulosmenopiste.paikka)) {
 				it->poistetaan = true;
                 ++kasitellyt;
             }

@@ -1,17 +1,49 @@
+#include <stdexcept>
+#include <dirent.h>
 #include "ohjelma.hpp"
 #include "valikko.hpp"
+#include "valikkoview.hpp"
 #include "peli.hpp"
 #include "peliview.hpp"
 #include "tilastoview.hpp"
 #include "pelicontroller.hpp"
 #include "sdlpiirtopinta.hpp"
+#include "tasonvalintacontroller.hpp"
+#include "tasonvalintaview.hpp"
 #include "kieli.hpp"
-#include <stdexcept>
 
 // The following undef required due to some conflict with VS+SDL.' To be removed later...
 #ifdef _MSC_VER
 #undef main
 #endif
+
+std::vector <std::string> lataa_tiedostojen_nimet(std::string kansio) {
+	DIR *dir;
+	struct dirent *ent;
+	std::vector <std::string> tmp;
+
+	if ((dir = opendir(kansio.c_str())) != NULL) {
+		while ((ent = readdir(dir)) != NULL) {
+			std::string name = std::string(ent->d_name);
+
+			if (name.length() > 2) {
+				tmp.push_back(name);
+			}
+		}
+		closedir(dir);
+	}
+
+	return tmp;
+}
+
+void LataaKentat(ValikkoData& kentatData)
+{
+	std::vector <std::string> nimet = lataa_tiedostojen_nimet("kentat/");
+
+	for (unsigned int i = 0; i < nimet.size(); ++i) {
+		kentatData.lisaa_kohta(i, nimet[i]);
+	}
+}
 
 int main(int argc, char** argv) {
 	try {
@@ -25,28 +57,53 @@ int main(int argc, char** argv) {
 		
 		Asetukset asetukset;
 		Ohjelma ohjelma(asetukset);
-		Peli peli(asetukset, ohjelma, kieli);
 		SDLPiirtoPinta pinta(asetukset);
-		PeliView view(pinta, asetukset, peli, ohjelma, kieli);
-		TilastoView tilastoView(kieli, pinta, peli);
-		PeliController controller(peli, view, tilastoView, ohjelma, asetukset, kieli);
 		
-		valikko valikko(ohjelma, view);
+		ValikkoData valikkoData;
+		valikkoData.lisaa_kohta(1, "Peli");
+		valikkoData.lisaa_kohta(0, "Lopeta");
 
-		valikko.lisaa_kohta(1, "Peli");
-		valikko.lisaa_kohta(0, "Lopeta");
+		ValikkoView valikkoView(pinta, valikkoData);
+		valikko paaValikko(ohjelma, valikkoView, valikkoData);
 		
 		while (true) {
-			switch (valikko.aja()) {
-			case 1:
-				controller.aja();
-				continue;
-			case 0:
-				return 0;
-			default:
-				throw std::logic_error("Virheellinen tilanne valikossa!");
+			// Päävalikko
+			int valittu = paaValikko.aja();
+			if (valittu == 0)
+			{
+				break;
 			}
+
+			// Tason valinta
+			std::string tasoData;
+			TasonValintaView tasonvalintaView(pinta, kieli, tasoData);
+			TasonValintaController tasonvalinta(asetukset, kieli, ohjelma, tasonvalintaView, tasoData);
+			tasonvalinta.aja();
+
+			// Kentän valinta
+			ValikkoData kentatData;
+			ValikkoView kentatView(pinta, kentatData);
+			valikko kentatValikko(ohjelma, kentatView, kentatData);
+			LataaKentat(kentatData);
+
+			int kentta_id = -1;
+			while (kentta_id < 0) {
+				kentta_id = kentatValikko.aja();
+				std::clog << "Ladataan kentta " << kentatData.kohdat[kentta_id] << std::endl;
+			}
+
+			// Peli
+			Peli peli(asetukset, ohjelma, kieli, kentatData.kohdat[kentta_id]);
+			PeliView peliView(pinta, asetukset, peli, ohjelma, kieli);
+			PeliController pelicontroller(peli, peliView, ohjelma, asetukset, kieli);
+			pelicontroller.aja();
+
+			// Näytä tilastot
+			TilastoView tilastoView(kieli, pinta, peli);
+			tilastoView.piirra();
+			ohjelma.odota_nappi();
 		}
+
 		return 0;
 	}
 	catch (std::exception& e) {

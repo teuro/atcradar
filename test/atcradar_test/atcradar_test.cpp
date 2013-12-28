@@ -39,7 +39,7 @@ TEST(LentokoneConstructor, LentokoneConstructor) {
 	Asetukset asetukset;
 	MockOhjelma ohjelmaMock;
     Kieli kieli;
-    Peli peli(asetukset, ohjelmaMock, kieli);
+    Peli peli(asetukset, ohjelmaMock, kieli, "");
 	apuvalineet::piste paikka;
 	paikka.x = 0;
 	paikka.y = 0;
@@ -51,9 +51,11 @@ TEST(ValikkoTests, ValikkoBounds) {
 	MockOhjelma ohjelmaMock;
 	MockPinta pinta;
 	Kieli kieli;
-	Peli peli(asetukset, ohjelmaMock, kieli);
+	Peli peli(asetukset, ohjelmaMock, kieli, "");
 	PeliView peliview(pinta, asetukset, peli, ohjelmaMock, kieli);
-	valikko v(ohjelmaMock, peliview);
+	ValikkoData valikkoData;
+	ValikkoView valikkoView(pinta, valikkoData);
+	valikko v(ohjelmaMock, peliview, valikkoData);
 
 	IOhjelma::nappi nappisequence[] = {
 		IOhjelma::nappi::NAPPI_YLOS,
@@ -72,8 +74,8 @@ TEST(ValikkoTests, ValikkoBounds) {
 	}
 
 	int expected = 1;
-	v.lisaa_kohta(0, "dummy1");
-	v.lisaa_kohta(expected, "dummy1");
+	valikkoData.lisaa_kohta(0, "dummy1");
+	valikkoData.lisaa_kohta(expected, "dummy1");
 
 	int actual = v.aja();
 	EXPECT_EQ(1, actual);

@@ -20,25 +20,23 @@ int valikko::aja() {
 	std::clog << "valikko::aja( )" << std::endl;
 
 	// Valikon alkutilanne.
-	std::map <int, std::string> :: iterator valinta = kohdat.begin();
+	std::map <int, std::string> :: iterator valinta = data.kohdat.begin();
 	// Valikon silmukka.
 	while (true) {
+		data.valittuRivi = valinta->first;
 		// Piirretään valikon tilanne, odotetaan valintaa.
-		view.piirra_valikko(valinta->first, this->kohdat);
+		view.piirra();
+		//view.piirra_valikko(valinta->first, this->kohdat);
 		Ohjelma::nappi n = ohjelma.odota_nappi();
 
 		if (n == Ohjelma::NAPPI_ENTER) {
 			// Enter => lopetetaan valikko, palautetaan valinta.
 			return valinta->first;
-		} else if (n == Ohjelma::NAPPI_YLOS && valinta != kohdat.begin()) {
+		} else if (n == Ohjelma::NAPPI_YLOS && valinta != data.kohdat.begin()) {
 			--valinta;
 		}
-		else if (n == Ohjelma::NAPPI_ALAS && !is_last(valinta, kohdat)) {
+		else if (n == Ohjelma::NAPPI_ALAS && !is_last(valinta, data.kohdat)) {
 			valinta++;
 		}
 	}
-}
-
-void valikko::lisaa_kohta(int id, std::string kohta) {
-	kohdat[id] = kohta;
 }

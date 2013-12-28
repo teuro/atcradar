@@ -13,106 +13,25 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
-#include <dirent.h>
-
-std::vector <std::string> lataa_tiedostojen_nimet(std::string kansio) {
-	DIR *dir;
-	struct dirent *ent;
-	std::vector <std::string> tmp;
-
-	if ((dir = opendir (kansio.c_str())) != NULL) {
-		while ((ent = readdir (dir)) != NULL) {
-			std::string name = std::string(ent->d_name);
-
-			if (name.length() > 2) {
-				tmp.push_back(name);
-			}
-		}
-		closedir (dir);
-	}
-
-	return tmp;
-}
 
 // Pelin p‰‰funktio.
 int PeliController::aja() {
+	std::clog << "pelicontroller::aja()" << std::endl;
 
-	int taso = -1;
 	peli.porrastusvirheet = 0;
 	peli.muut_virheet = 0;
 	peli.kasitellyt = 0;
 	syotteenluku lukija;
-	peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_VALITSE_TASO);
-
-	while (taso < 0) {
-		lukija.lue_syote();
-		peli.syote = lukija.anna_viesti();
-
-		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
-			if (lukija.anna_viesti().length()) {
-				taso = apuvalineet::luvuksi<int>(lukija.anna_viesti());
-			}
-		}
-
-		view.piirra_valinta();
-	}
-
-	valikko kentat(ohjelma, view);
-
-	std::vector <std::string> nimet = lataa_tiedostojen_nimet("kentat/");
-
-	for (unsigned int i = 0; i < nimet.size(); ++i) {
-		kentat.lisaa_kohta(i, nimet[i]);
-	}
-
-	int kentta_id = -1;
-
-	while (kentta_id < 0) {
-		kentta_id = kentat.aja();
-		std::clog << "Ladataan kentta " << kentat.kohdat[kentta_id] << std::endl;
-	}
 
 	lukija.tyhjenna();
-	peli.ohje = " ";
-
-	switch (taso) {
-		case 3:
-			asetukset.muuta_asetusta("koska_uusi_ala", 30);
-			asetukset.muuta_asetusta("koska_uusi_ala", 30);
-			asetukset.muuta_asetusta("koska_uusi_yla", 80);
-			asetukset.muuta_asetusta("maks_konemaara", 30);
-			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 30);
-			break;
-		case 2:
-			asetukset.muuta_asetusta("koska_uusi_ala", 60);
-			asetukset.muuta_asetusta("koska_uusi_yla", 120);
-			asetukset.muuta_asetusta("maks_konemaara", 15);
-			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 20);
-			break;
-		case 1:
-			asetukset.muuta_asetusta("koska_uusi_ala", 120);
-			asetukset.muuta_asetusta("koska_uusi_yla", 240);
-			asetukset.muuta_asetusta("maks_konemaara", 10);
-			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 15);
-			break;
-		case 0:
-			asetukset.muuta_asetusta("koska_uusi_ala", 150);
-			asetukset.muuta_asetusta("koska_uusi_yla", 300);
-			asetukset.muuta_asetusta("maks_konemaara", 8);
-			asetukset.muuta_asetusta("vaadittavat_kasitellyt", 10);
-			break;
-	}
-
-	std::clog << "pelicontroller::aja()" << std::endl;
 
 	peli.lataa_tunnukset("data/tunnukset.txt");
-
-	peli.lataa_kentta(kentat.kohdat[kentta_id]);
 
 	std::srand(std::time(NULL));
 
 	peli.generoi_metar();
-	bool loppu = false, piirretty = false;
+	bool loppu = false;
+	bool piirretty = false;
 
 	pyyda_atis();
 
@@ -178,7 +97,8 @@ int PeliController::aja() {
 
 		peli.syote = lukija.lue_syote();
 
-		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER) && peli.etsi_valittu_kone() >= 0) {
+		int valittu_kone = peli.etsi_valittu_kone();
+		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER) && valittu_kone >= 0) {
 			// TODO: Fix reaktioaika
 //			peli.koneet[peli.etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
 			std::string komento = lukija.anna_viesti();
@@ -190,10 +110,10 @@ int PeliController::aja() {
 				}
 			}
 
-			if ((komento == "ILS" || komento == "ils") && peli.koneet[peli.etsi_valittu_kone()].tyyppi == Peli::SAAPUVA) {
+			if ((komento == "ILS" || komento == "ils") && peli.koneet[valittu_kone].tyyppi == Peli::SAAPUVA) {
 				peli.toiminto = Peli::LAHESTYMIS;
 			}
-			else if ((komento == "DCT" || komento == "dct") && peli.koneet[peli.etsi_valittu_kone()].tyyppi == Peli::LAHTEVA) {
+			else if ((komento == "DCT" || komento == "dct") && peli.koneet[valittu_kone].tyyppi == Peli::LAHTEVA) {
 				peli.toiminto = Peli::OIKOTIE;
 			}
 			else if (komento == "HOLD" || komento == "hold") {
@@ -217,7 +137,7 @@ int PeliController::aja() {
 
 			Peli::selvitys tmp_selvitys;
 
-			tmp_selvitys.kone_id = peli.etsi_valittu_kone();
+			tmp_selvitys.kone_id = valittu_kone;
 			tmp_selvitys.nimi = komento;
 			tmp_selvitys.toiminto = peli.toiminto;
 			tmp_selvitys.aika = ohjelma.sekunnit() + apuvalineet::arvo_luku(3, 10);
@@ -283,8 +203,8 @@ int PeliController::aja() {
 		}
 	}
 
+	// TODO: Tarvitaanko t‰t‰?
 	ohjelma.tyhjenna_syote();
-	tilastoview.piirra();
 
 	double ka_alueella = 0;
 	double ka_selvitykset = 0;
@@ -302,10 +222,6 @@ int PeliController::aja() {
 	}
 
 	std::clog << peli.ajat.size() << " " << (ka_alueelle / peli.ajat.size()) << " " << ka_alueella << " " << ka_selvitykset << std::endl;
-
-	if (loppu) {
-		ohjelma.odota_nappi();
-	}
 
 	return 0;
 }
