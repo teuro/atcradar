@@ -15,7 +15,7 @@ class MockOhjelma : public IOhjelma
 {
 public:
 	MOCK_METHOD1(sekunnit, float(bool nollaa));
-	MOCK_METHOD1(odota, void(double ms));
+	MOCK_METHOD1(odota, void(unsigned int ms));
 	MOCK_METHOD0(odota_nappi, nappi());
 	MOCK_METHOD1(lue_nappi, bool(nappi n));
 	MOCK_METHOD0(tyhjenna_syote, void());

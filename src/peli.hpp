@@ -37,24 +37,7 @@ private:
 	IAsetukset& asetukset;
 
 public:
-	/*
-		* Konstruktori asettaa oletusarvot keskeisille komponenteille
-		* @param viitteen ohjelma-olioon
-	*/
-	Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta) : asetukset(a), ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
-		atis.lahtokiitotie = -1;
-		atis.laskukiitotie = -1;
-		atis.siirtopinta = -1;
-		atis.ok = false;
-		lataa_kentta(kentta);
-		ohje = " ";
-		porrastusvirheet = 0;
-		muut_virheet = 0;
-		kasitellyt = 0;
-		koska_metar = asetukset.anna_asetus("koska_metar");
-		lataa_tunnukset("data/tunnukset.txt");
-		generoi_metar();
-	}
+	Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta);
 
     IOhjelma& ohjelma;
 

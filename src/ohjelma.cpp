@@ -46,7 +46,7 @@ float Ohjelma::sekunnit(bool nollaa) {
 }
 
 // Odottaa lyhyen ajan.
-void Ohjelma::odota(double ms) {
+void Ohjelma::odota(unsigned int ms) {
 	SDL_Delay(ms);
 }
 
