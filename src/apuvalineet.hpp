@@ -59,6 +59,7 @@ namespace apuvalineet {
 	std::string muuta_pituus(std::string alkuperainen, int haluttupituus);
 	int pyorista(double luku, int jaollisuus);
 	std::vector <std::string> pilko_rivi(std::string rivi, std::string erotin);
+	bool onko_alueella(const piste& a, const piste& b, double sade = 0.2);
 }
 
 #endif

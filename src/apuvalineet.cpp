@@ -5,7 +5,7 @@ static double PII = 3.1415927;
 
 // Seuraavat kaksi olivat asetuksissa. Siirsin ne t‰h‰n, koska static metodit px2nm ja nm2px
 // k‰yttiv‰t niit‰. N‰iden rutiinien t‰ytyisi olla l‰hemp‰n‰ tietoa siit‰ mik‰ visualisointi on,
-// ts. PeliView:ss‰. Toisaalta staattista Asetukset-luokkaa ei en‰‰ ole. 
+// ts. PeliView:ss‰. Toisaalta staattista Asetukset-luokkaa ei en‰‰ ole.
 const int ruutu_leveys = 900;
 const int matka_vaaka = 100;
 
@@ -112,12 +112,18 @@ std::vector <std::string> apuvalineet::pilko_rivi(std::string rivi, std::string 
 	size_t pos = 0;
 	std::vector <std::string> asiat;
 	std::string sana;
-	
+
 	while ((pos = rivi.find(erotin)) != std::string::npos) {
 		sana = rivi.substr(0, pos);
 		asiat.push_back(sana);
 		rivi.erase(0, pos + erotin.length());
 	}
-	
+
 	return asiat;
+}
+
+bool apuvalineet::onko_alueella(const piste& a, const piste& b, double sade) {
+    double valimatka = etaisyys(a, b);
+
+	return valimatka < (2 * sade);
 }

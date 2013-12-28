@@ -1,20 +1,14 @@
-#include "asetukset.h"
 #include "lentokone.hpp"
-#include "peli.hpp"
-#include "ohjelma.hpp"
-#include <algorithm>
 
-lentokone::lentokone(Peli& p, IOhjelma& o, IAsetukset& a, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) : peli(p), ohjelma(o), asetukset(a) {
+lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) {
 	this->kutsutunnus = kutsutunnus;
 
-	paikka.x = x;
-	paikka.y = y;
+	this->paikka = paikka;
 
 	this->kohde.paikka.x = 0;
 	this->kohde.paikka.y = 0;
 	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
-	laskubaana = -1;
 	onko_porrastus = true;
 	this->tyyppi = tyyppi;
 
@@ -35,41 +29,17 @@ lentokone::lentokone(Peli& p, IOhjelma& o, IAsetukset& a, std::string kutsutunnu
 
 	this->odotus = odotus;
 	this->oikotie = false;
-}
 
-lentokone::lentokone(Peli& p, IOhjelma& o, IAsetukset& a, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus)
-	: lentokone(p, o, a, kutsutunnus, paikka.x, paikka.y, korkeus, nopeus, suunta, tyyppi, odotus)
-{
+	this->nopeus_muutos = 4.0;
+	this->korkeus_muutos = 35.0;
+	this->suunta_muutos = 3.0;
 }
 
 void lentokone::muuta_selvityskorkeutta(double korkeus) {
-	if (!lahestymisselvitys) {
-		if (korkeus > asetukset.anna_asetus("selvityskorkeus_yla")) {
-			peli.aseta_virhe(Peli::VIRHE_KORKEUS_YLA);
-			return;
-        }
-        else if (korkeus < asetukset.anna_asetus("selvityskorkeus_ala")) {
-			peli.aseta_virhe(Peli::VIRHE_KORKEUS_ALA);
-			return;
-		}
-	}
-
 	selvityskorkeus = korkeus;
 }
 
 void lentokone::muuta_selvitysnopeutta(double nopeus) {
-	if (!lahestymisselvitys) {
-		if (korkeus < asetukset.anna_asetus("nopeusrajoituskorkeus")) {
-			if (nopeus > asetukset.anna_asetus("selvitysnopeus_yla")) {
-				peli.aseta_virhe(Peli::VIRHE_NOPEUS_YLA);
-				return;
-			} else if (nopeus < asetukset.anna_asetus("selvitysnopeus_ala")) {
-				peli.aseta_virhe(Peli::VIRHE_NOPEUS_ALA);
-				return;
-			}
-		}
-	}
-
 	selvitysnopeus = nopeus;
 }
 
@@ -83,14 +53,7 @@ void lentokone::muuta_selvityssuuntaa(double _suunta, int kaarto) {
 	this->kaarto = kaarto;
 }
 
-void lentokone::muuta_selvityksia(double korkeus, double nopeus, double suunta, int kaarto) {
-	muuta_selvityskorkeutta(korkeus);
-	muuta_selvitysnopeutta(nopeus);
-	muuta_selvityssuuntaa(suunta, kaarto);
-}
-
 void lentokone::muuta_tilaa(double aika) {
-	//std::clog << "lentokone::muuta_tilaa(" << aika << ")" << std::endl;
 	if (korkeus != selvityskorkeus) {
 		muuta_korkeutta(aika);
 	}
@@ -101,31 +64,29 @@ void lentokone::muuta_tilaa(double aika) {
 	if (suunta != selvityssuunta) {
 		muuta_suuntaa(aika);
 	}
-
-	//std::clog << korkeus << " " << nopeus << " " << suunta << std::endl;
 }
 
 void lentokone::muuta_korkeutta(double aika) {
 	if (lahestymisselvitys == false) {
 		if (std::abs(korkeus - selvityskorkeus) > 5) {
-			korkeus += ((selvityskorkeus > korkeus) ? 1 : -1) * aika * asetukset.anna_asetus("korkeus_muutos");
+			korkeus += ((selvityskorkeus > korkeus) ? 1 : -1) * aika * this->korkeus_muutos;
 		} else {
 			korkeus = selvityskorkeus;
 		}
 	} else {
-		double etaisyys = apuvalineet::etaisyys(paikka, peli.kentta.kiitotiet[laskubaana].alkupiste);
+		double etaisyys = apuvalineet::etaisyys(paikka, baana.alkupiste);
 
-		double koneen_korkeus = peli.kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(asetukset.anna_asetus("liukupolku"))));
+		double koneen_korkeus = peli.kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(this->baana.liukupolku)));
 
-		if (korkeus > koneen_korkeus) {
-			korkeus = koneen_korkeus;
+		if (this->korkeus > koneen_korkeus) {
+			this->korkeus = koneen_korkeus;
 		}
 	}
 }
 
 void lentokone::muuta_nopeutta(double aika) {
 	if (std::abs(nopeus - selvitysnopeus) > 3) {
-		nopeus += ((selvitysnopeus > nopeus) ? 1 : -1) * aika * asetukset.anna_asetus("nopeus_muutos");
+		nopeus += ((selvitysnopeus > nopeus) ? 1 : -1) * aika * this->nopeus_muutos;
 	} else {
 		nopeus = selvitysnopeus;
 	}
@@ -138,20 +99,15 @@ void lentokone::muuta_suuntaa(double aika) {
 		suunta -= 360.0;
 	}
 	if (std::abs(suunta - selvityssuunta) > 0.5) {
-		if (lahestymisselvitys) {
-			suunta += kaarto * aika * asetukset.anna_asetus("lahestymissuunta_muutos");
-		} else {
-			suunta += kaarto * aika * asetukset.anna_asetus("suunta_muutos");
-		}
-		//std::clog << kaarto << " * " << aika << " * " << asetukset.anna_asetus("suunta_muutos") << " = " << suunta << std::endl;
-	} else {
+        suunta += kaarto * aika * this->suunta_muutos;
+    } else {
 		suunta = selvityssuunta;
 	}
 }
 
 void lentokone::liiku(double aika) {
+    this->muuta_tilaa(aika);
 	paikka = apuvalineet::uusi_paikka(paikka, suunta, nopeus * (aika / 3600.0));
-	polttoaine -= asetukset.anna_asetus("polttoaineen_kulutus") * (aika / 3600.0);
 }
 
 void lentokone::aseta_navipiste(navipiste paikka) {
@@ -180,25 +136,25 @@ int lentokone::kaarron_suunta(double suunta) {
 	return (k > 0) ? VASEN : OIKEA;
 }
 
-void lentokone::lahesty() {
+void lentokone::lahesty(kiitotie& baana) {
 	lahestymisselvitys = true;
 
-	if (ohjelma.onko_alueella(paikka, peli.kentta.kiitotiet[laskubaana].lahestymispiste, 0.01)) {
-		muuta_selvitysnopeutta(asetukset.anna_asetus("alkulahestymisnopeus"));
-		aseta_navipiste(peli.kentta.kiitotiet[laskubaana].hidastuspiste);
-		muuta_selvityskorkeutta(peli.kentta.korkeus);
-	} else if (ohjelma.onko_alueella(paikka, peli.kentta.kiitotiet[laskubaana].hidastuspiste, 0.01)) {
-		muuta_selvitysnopeutta(asetukset.anna_asetus("loppulahestymisnopeus"));
-		aseta_navipiste(peli.kentta.kiitotiet[laskubaana].alkupiste);
-	} else if (ohjelma.onko_alueella(paikka, peli.kentta.kiitotiet[laskubaana].alkupiste, 0.01)) {
-		korkeus = peli.kentta.korkeus;
+	if (apuvalineet::onko_alueella(paikka, this->baana.lahestymispiste, 0.01)) {
+		muuta_selvitysnopeutta(160.0);
+		aseta_navipiste(this->baana.hidastuspiste);
+		muuta_selvityskorkeutta(kentta.korkeus);
+	} else if (apuvalineet::onko_alueella(paikka, this->baana.hidastuspiste, 0.01)) {
+		muuta_selvitysnopeutta(135.0);
+		aseta_navipiste(this->baana.alkupiste);
+	} else if (apuvalineet::onko_alueella(paikka, this->baana.alkupiste, 0.01)) {
+		korkeus = kentta.korkeus;
 		muuta_selvitysnopeutta(0.0);
-		aseta_navipiste(peli.kentta.kiitotiet[laskubaana].loppupiste);
+		aseta_navipiste(this->baana.loppupiste);
 	}
 }
 
 void lentokone::tarkista_suunta_kohteeseen() {
-	if (this->kohde.paikka.x > 0 && this->kohde.paikka.y > 0) {
+	if (this->reitti.size()) {
 		apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde.paikka);
 
 		kaarto = kaarron_suunta(vektori_kohteeseen.suunta);
@@ -206,78 +162,39 @@ void lentokone::tarkista_suunta_kohteeseen() {
 	}
 }
 
-void lentokone::ota_selvitys(std::string komento, int toiminto, int kaarto) {
+void lentokone::ota_selvitys(double komento, int toiminto) {
 	std::ofstream ulos("selvitykset.txt", std::ios::app);
 
-	if (toiminto == Peli::SUUNTA) {
-        std::vector <navipiste>::iterator etsi = std::find(peli.sisapisteet.begin(), peli.sisapisteet.end(), komento);
-
-        if (etsi != peli.sisapisteet.end()) {
-			reitti.push(*etsi);
-			komento = "";
-		}
-
-		if (this->kohde.paikka.x == 0 && this->kohde.paikka.y == 0 && this->reitti.size()) {
-			this->kohde = anna_piste();
-		}
-	}
-
-	double luku = apuvalineet::luvuksi<double>(komento);
-
 	switch (toiminto) {
-		case Peli::SUUNTA:
-			muuta_selvityssuuntaa(luku, kaarto);
-			if (reitti.size() == 0) {
-				ulos << this->kutsutunnus << " kaarra " << (kaarto == VASEN ? "vasemmalle" : "oikealle") << " suuntaan " << luku << std::endl;
-			} else {
-				ulos << this->kutsutunnus << " selvä suoraan kohti " << kohde.nimi << std::endl;
-			}
-			break;
-		case Peli::KORKEUS:
+		case KORKEUS:
 			muuta_selvityskorkeutta(luku);
 			ulos << this->kutsutunnus << (selvityskorkeus > korkeus ? " nouse " : " laskeudu ") << luku << " jalkaan" << std::endl;
 			break;
-		case Peli::NOPEUS:
+		case NOPEUS:
 			muuta_selvitysnopeutta(luku);
 			ulos << this->kutsutunnus << (selvitysnopeus > nopeus ? " kiihdytä " : " hidasta ") << luku << " solmuun" << std::endl;
 			break;
-        case Peli::ODOTUS:
-            odotuskuvio = ohjelma.sekunnit() + 60;
-			ulos << this->kutsutunnus << " liity odotuskuvioon " << std::endl;
-            break;
-        case Peli::POIS:
-            odotuskuvio = -1;
-			ulos << this->kutsutunnus << " jätä odotuskuvio " << std::endl;
-            break;
-		case Peli::OIKOTIE:
-			if (korkeus < asetukset.anna_asetus("oikotie")) {
-				peli.aseta_virhe(Peli::VIRHE_OIKOTIE);
-			} else {
-				aseta_navipiste(ulosmenopiste);
-			}
-			this->oikotie = true;
-			ulos << this->kutsutunnus << " selvä suoraan kohti " << ulosmenopiste.nimi << std::endl;
-			break;
-		case Peli::LAHESTYMIS:
-			this->poista_reitti();
-			double koneen_suunta = this->suunta;
-
-            double min_suunta = peli.kentta.kiitotiet[peli.atis.laskukiitotie].suunta - asetukset.anna_asetus("lahestymiskulma");
-            double max_suunta = peli.kentta.kiitotiet[peli.atis.laskukiitotie].suunta + asetukset.anna_asetus("lahestymiskulma");
-
-			if (korkeus > asetukset.anna_asetus("maks_lahestymiskorkeus")) {
-				peli.aseta_virhe(Peli::VIRHE_LAHESTYMISKORKEUS);
-			} else if (nopeus > asetukset.anna_asetus("maks_lahestymisnopeus")) {
-				peli.aseta_virhe(Peli::VIRHE_LAHESTYMISNOPEUS);
-			} else if (koneen_suunta < min_suunta || koneen_suunta > max_suunta) {
-				peli.aseta_virhe(Peli::VIRHE_LAHESTYMISSUUNTA);
-			} else {
-				aseta_navipiste(peli.kentta.kiitotiet[peli.atis.laskukiitotie].lahestymispiste);
-				laskubaana = peli.atis.laskukiitotie;
-				ulos << this->kutsutunnus << " selvä lähestymään kiitotietä " << peli.kentta.kiitotiet[peli.atis.laskukiitotie].nimi <<  std::endl;
-			}
 	}
 }
+
+void lentokone::ota_selvitys(double suunta, int toiminto, int kaarto) {
+    muuta_selvityssuuntaa(suunta, kaarto);
+}
+
+void lentokone::ota_selvitys(navipiste& piste) {
+    aseta_navipiste(piste.paikka);
+}
+
+void lentokone::ota_selvitys(int toiminto) {
+    switch (toiminto) {
+    case LAHESTYMIS:
+        this->lahestymisselvitys = true;
+        break;
+    case OIKOTIE:
+        this->oikotie = true;
+    }
+}
+
 
 void lentokone::poista_reitti() {
 	while (this->reitti.size()) {

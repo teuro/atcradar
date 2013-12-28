@@ -20,6 +20,7 @@ public:
 	double alkunoususuunta;
 
 	kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunousuuunta, double lahestymispiste, double hidastuspiste);
+    kiitotie(){}
 
 	bool operator ==(std::string n) {
 		return n == nimi;

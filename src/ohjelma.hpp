@@ -48,7 +48,6 @@ public:
 	bool lue_nappi(nappi n);
 	void tyhjenna_syote();
 
-	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2);
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
 

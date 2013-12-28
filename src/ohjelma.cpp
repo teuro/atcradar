@@ -102,15 +102,6 @@ void Ohjelma::tyhjenna_syote() {
 	while (SDL_PollEvent(&e));
 }
 
-bool Ohjelma::onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade) {
-	double x = std::abs(a.x - b.x);
-	double y = std::abs(a.y - b.y);
-
-	double valimatka = std::sqrt((x*x) + (y*y));
-
-	return valimatka < (2 * apuvalineet::nm2px(sade));
-}
-
 apuvalineet::piste Ohjelma::anna_hiiri() {
 	int x, y;
 
