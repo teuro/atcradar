@@ -1,13 +1,4 @@
-#include "asetukset.h"
 #include "peli.hpp"
-#include "ohjelma.hpp"
-#include "lukija.hpp"
-#include "ajastin.hpp"
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
 
 bool poistetaanko(const lentokone& kone);
 
@@ -246,7 +237,7 @@ void Peli::hoida_koneet() {
                 ++kasitellyt;
             }
         } else if (it->tyyppi == Peli::SAAPUVA) {
-            if (it->nopeus < 4.0) {
+            if (it->anna_nopeus() < 4.0) {
 				it->poistetaan = true;
                 ++kasitellyt;
 			}
@@ -256,17 +247,6 @@ void Peli::hoida_koneet() {
             aseta_virhe(VIRHE_ALUEELTA);
             it->poistetaan = true;
         }
-
-		if (ohjelma.onko_alueella(it->paikka, it->kohde.paikka)) {
-			if (it->reitti.size()) {
-				navipiste tmp = it->anna_piste();
-				it->reitti.pop();
-				it->kohde = tmp;
-			} else {
-				it->kohde.paikka.x = 0;
-				it->kohde.paikka.y = 0;
-			}
-		}
 
 		if (it->odotus) {
 			if (onko_vapaata()) {
@@ -278,43 +258,22 @@ void Peli::hoida_koneet() {
 
 		if (it->odotuskuvio > -1 && it->odotuskuvio < ohjelma.sekunnit()) {
 			it->odotuskuvio += 120;
-			it->muuta_selvityssuuntaa(it->suunta + 180, OIKEA);
+			it->ota_selvitys(it->anna_suunta() + 180, OIKEA);
 		}
 
-		if (it->kohde.paikka.x > 0 && it->kohde.paikka.y > 0) {
-			it->tarkista_suunta_kohteeseen();
-		}
-
-		if (it->laskubaana >= 0) {
-			it->lahesty();
-		}
-
-		if (it->tyyppi == Peli::LAHTEVA) {
-			if (ohjelma.onko_alueella(it->paikka, it->kohde.paikka)) {
-				if (it->reitti.size()) {
-					it->aseta_navipiste(it->anna_piste());
-				}
-			}
-		}
-
-		if (it->tyyppi == Peli::LAHTEVA && it->korkeus < 1200 && it->odotus == false) {
+		if (it->tyyppi == Peli::LAHTEVA && it->anna_korkeus() < 1200 && it->odotus == false) {
 			if (it->nopeus == 0) {
 				it->muuta_selvitysnopeutta(asetukset.anna_asetus("alkunopeus"));
 			}
 
 			if (it->nopeus > 150) {
-				it->muuta_selvityskorkeutta(kentta.kiitotiet[atis.lahtokiitotie].alkunousukorkeus);
-				it->muuta_selvitysnopeutta(asetukset.anna_asetus("alkunousunopeus"));
-				it->muuta_selvityssuuntaa(kentta.kiitotiet[atis.lahtokiitotie].alkunoususuunta);
+				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunousukorkeus, it->KORKEUS);
+				it-ota_selvitys(asetukset.anna_asetus("alkunousunopeus"), it->NOPEUS);
+				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunoususuunta, it->SUUNTA);
 			}
 		}
 
-		it->muuta_tilaa(ajan_muutos);
 		it->liiku(ajan_muutos);
-
-		if (it->polttoaine < asetukset.anna_asetus("minimi_polttoaine")) {
-			ohje = "Koneella " + it->kutsutunnus + " on polttoaine lopussa";
-		}
 	}
 
 	std::vector <lentokone> lyhyt;

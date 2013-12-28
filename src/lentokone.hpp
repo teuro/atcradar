@@ -40,7 +40,6 @@ private:
     bool odotus;
 	bool oikotie;
     enum virheet {VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA};
-	enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
 public:
 	navipiste anna_piste();
 	std::queue <navipiste> reitti;
@@ -78,6 +77,11 @@ public:
 	}
 
     lentokone& operator =(const lentokone&) { return *this; }
+    enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
+
+    double anna_nopeus() { return this->nopeus; }
+    double anna_suunta() { return this->suunta; }
+    double anna_korkeus() { return this->korkeus; }
 };
 
 #endif

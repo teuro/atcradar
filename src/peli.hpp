@@ -1,17 +1,24 @@
 #ifndef _PELI_HPP
 #define _PELI_HPP
 
-#include <vector>
-#include <queue>
-#include <map>
-#include <stdexcept>
-
 #include "apuvalineet.hpp"
 #include "lentokone.hpp"
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
 #include "asetukset.h"
 #include "kieli.hpp"
+#include "ohjelma.hpp"
+#include "lukija.hpp"
+#include "ajastin.hpp"
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+#include <vector>
+#include <queue>
+#include <map>
+#include <stdexcept>
 
 /*
 MVC Model

@@ -15,12 +15,12 @@
 #include <algorithm>
 #include <dirent.h>
 
-std::vector <std::string> lataa_kentan_nimet() {
+std::vector <std::string> lataa_tiedostojen_nimet(std::string kansio) {
 	DIR *dir;
 	struct dirent *ent;
 	std::vector <std::string> tmp;
 
-	if ((dir = opendir ("kentat/")) != NULL) {
+	if ((dir = opendir (kansio.c_str())) != NULL) {
 		while ((ent = readdir (dir)) != NULL) {
 			std::string name = std::string(ent->d_name);
 
@@ -59,7 +59,7 @@ int PeliController::aja() {
 
 	valikko kentat(ohjelma, view);
 
-	std::vector <std::string> nimet = lataa_kentan_nimet();
+	std::vector <std::string> nimet = lataa_tiedostojen_nimet("kentat/");
 
 	for (unsigned int i = 0; i < nimet.size(); ++i) {
 		kentat.lisaa_kohta(i, nimet[i]);
@@ -249,9 +249,20 @@ int PeliController::aja() {
 
 		for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
 			if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
-				peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nimi, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
-				peli.selvitykset.erase(peli.selvitykset.begin() + k);
-			}
+				switch (peli.selvitykset[k].toiminto) {
+                    case peli.koneet[peli.selvitykset[k].kone_id].SUUNTA:
+                        double tmp_suunta = apuvalineet::luvuksi<double>(peli.selvitykset[k].nimi);
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(tmp_suunta, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
+                        peli.selvitykset.erase(peli.selvitykset.begin() + k);
+                        break;
+                    case peli.koneet[peli.selvitykset[k].kone_id].KORKEUS:
+                    case peli.koneet[peli.selvitykset[k].kone_id].NOPEUS:
+                        double tmp_muutos = apuvalineet::luvuksi<double>(peli.selvitykset[k].nimi);
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(tmp_suunta, peli.selvitykset[k].toiminto);
+                        peli.selvitykset.erase(peli.selvitykset.begin() + k);
+                    case
+				}
+            }
 		}
 
 		peli.tarkista_porrastus();
