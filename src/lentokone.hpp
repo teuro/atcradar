@@ -3,7 +3,9 @@
 
 #include "apuvalineet.hpp"
 #include "navipiste.hpp"
-#include "asetukset.h"
+#include "lentokentta.hpp"
+
+#include <algorithm>
 #include <vector>
 #include <queue>
 #include <fstream>
@@ -11,21 +13,15 @@
 const int VASEN = -1;
 const int OIKEA = 1;
 
-class Peli;
-class IOhjelma;
-
 class lentokone {
 private:
 	int kaarron_suunta(double suunta);
 	void muuta_korkeutta(double aika);
 	void muuta_nopeutta(double aika);
 	void muuta_suuntaa(double aika);
-
-	// TODO: N‰ist‰ riippuvuuksista olisi hyv‰ p‰‰st‰ eroon.
-	Peli& peli;
-    IOhjelma& ohjelma;
-	IAsetukset& asetukset;
-
+	double nopeus_muutos;
+	double korkeus_muutos;
+	double suunta_muutos;
 public:
 	navipiste anna_piste();
 	std::queue <navipiste> reitti;
@@ -35,12 +31,14 @@ public:
 
 	bool odotus;
 	bool oikotie;
-	lentokone(Peli& p, IOhjelma& o, IAsetukset& a, std::string kutsutunnus, double x, double y, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
-	lentokone(Peli& p, IOhjelma& o, IAsetukset& a, std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
+	lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
 
 //    lentokone(const lentokone& lk);
 
-	void ota_selvitys(std::string tmp, int toiminto, int kaarto = 0);
+	void ota_selvitys(double suunta, int toiminto, int kaarto);
+	void ota_selvitys(double komento, int toiminto);
+	void ota_selvitys(navipiste& kohde);
+	void ota_selvitys(int toiminto);
 
 	void muuta_selvityksia(double korkeus, double nopeus, double suunta, int kaarto = VASEN);
 	void muuta_tilaa(double aika);
@@ -73,7 +71,7 @@ public:
 	void aseta_navipiste(navipiste paikka);
 	void aseta_navipiste(apuvalineet::piste paikka);
 
-	int laskubaana;
+	kiitotie baana;
 	double reaktioaika;
 	double polttoaine;
 	void lahesty();
@@ -89,7 +87,8 @@ public:
 
 	void poista_reitti();
 private:
-
+    enum virheet {VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA};
+	enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
 };
 
 #endif
