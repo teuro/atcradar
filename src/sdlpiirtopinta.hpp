@@ -4,17 +4,21 @@
 #include "asetukset.h"
 #include "piirtopinta.hpp"
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_gfxPrimitives.h>
+#include <SDL/SDL_ttf.h>
+
 class SDLPiirtoPinta : public IPiirtoPinta
 {
 public:
 	SDLPiirtoPinta(IAsetukset& a);
 
-	void rectangleColor(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Uint32 color);
-	void lineColor(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Uint32 color);
-	void circleColor(Sint16 x, Sint16 y, Sint16 rad, Uint32 color);
-	void trigonColor(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Sint16 x3, Sint16 y3, Uint32 color);
+	void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color);
+	void lineColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color);
+	void circleColor(unsigned short x, unsigned short y, unsigned short rad, unsigned int color);
+	void trigonColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned short x3, unsigned short y3, unsigned int color);
 
-	void piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta = false);
+	void piirra_kuva(const char* tiedosto, int x, int y, bool keskikohta = false);
 	void kirjoita_tekstia(std::string teksti, int x, int y, bool aktiivinen = false);
 
 	int get_fontinkoko();
@@ -25,6 +29,8 @@ private:
 	SDL_Color vari;
 	SDL_Surface *ruutu;
 	int fontin_koko;
+
+	void piirra_kuva(SDL_Surface* pinta, int x, int y, bool keskikohta = false);
 };
 
 #endif

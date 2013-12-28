@@ -7,11 +7,6 @@
 #include "ohjelma.hpp"
 #include "piirtopinta.hpp"
 
-// The following undef required due to some conflict with VS+SDL.' To be removed later...
-#ifdef _MSC_VER
-#undef main
-#endif
-
 using ::testing::Return;
 using ::testing::Sequence;
 
@@ -30,11 +25,11 @@ public:
 
 class MockPinta : public IPiirtoPinta
 {
-	MOCK_METHOD5(rectangleColor, void(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Uint32 color));
-	MOCK_METHOD5(lineColor, void(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Uint32 color));
-	MOCK_METHOD4(circleColor, void(Sint16 x1, Sint16 y1, Sint16 x2, Uint32 color));
-	MOCK_METHOD7(trigonColor, void(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Sint16 x3, Sint16 y3, Uint32 color));
-	MOCK_METHOD4(piirra_kuva, void(SDL_Surface *kuva, int x, int y, bool keskikohta));
+	MOCK_METHOD5(rectangleColor, void(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color));
+	MOCK_METHOD5(lineColor, void(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color));
+	MOCK_METHOD4(circleColor, void(unsigned short x1, unsigned short y1, unsigned short x2, unsigned int color));
+	MOCK_METHOD7(trigonColor, void(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned short x3, unsigned short y3, unsigned int color));
+	MOCK_METHOD4(piirra_kuva, void(const char *tiedosto, int x, int y, bool keskikohta));
 	MOCK_METHOD4(kirjoita_tekstia, void(std::string teksti, int x, int y, bool aktiivinen));
 	MOCK_METHOD0(get_fontinkoko, int());
 	MOCK_METHOD0(flip, void());

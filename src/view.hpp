@@ -3,9 +3,6 @@
 
 #include "asetukset.h"
 #include "piirtopinta.hpp"
-#include <SDL/SDL.h>
-#include <SDL/SDL_gfxPrimitives.h>
-#include <SDL/SDL_ttf.h>
 
 class View
 {

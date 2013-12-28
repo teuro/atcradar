@@ -1,7 +1,6 @@
 #include "asetukset.h"
 #include "peliview.hpp"
 #include "ohjelma.hpp"
-#include "kuvavarasto.hpp"
 #include <iostream>
 #include <stdexcept>
 
@@ -9,7 +8,7 @@
 void PeliView::piirra_valikko(int valittu, std::map <int, std::string> kohdat) {
 	std::clog << "ohjelma::piirra_valikko(" << valittu << ")" << std::endl;
 
-	piirtopinta.piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.png"), 0, 0);
+	piirtopinta.piirra_kuva("kuvat/tausta_valikko.png", 0, 0);
 	int y = 20;
 
 	for (std::map <int, std::string> :: iterator it = kohdat.begin(); it != kohdat.end(); ++it) {
@@ -27,7 +26,7 @@ void PeliView::piirra_valikko(int valittu, std::map <int, std::string> kohdat) {
 
 // Piirt‰‰ pelin.
 void PeliView::piirra() {
-	piirtopinta.piirra_kuva(image_cache::common().get("kuvat/tausta_peli.png"), 0, 0);
+	piirtopinta.piirra_kuva("kuvat/tausta_peli.png", 0, 0);
 	piirra_tilanne();
 
 	piirra_koneet();
@@ -47,13 +46,13 @@ void PeliView::piirra() {
 }
 
 void PeliView::piirra_koneet() {
-	Uint32 vari;
+	unsigned int vari;
 
 	double lentokorkeus;
 	double selvityskorkeus;
 
-	Uint32 ok = 0x000000FF;
-	Uint32 ng = 0xFF0000FF;
+	unsigned int ok = 0x000000FF;
+	unsigned int ng = 0xFF0000FF;
 
 	int listauskorkeus = 90;
 
@@ -203,7 +202,7 @@ void PeliView::piirra_ohje(std::string ohje) {
 }
 
 void PeliView::piirra_atis() {
-	piirtopinta.piirra_kuva(image_cache::common().get("kuvat/tausta_atis.png"), 0, 0);
+	piirtopinta.piirra_kuva("kuvat/tausta_atis.png", 0, 0);
 
 	piirtopinta.kirjoita_tekstia(peli.ohje, 50, 30);
 	piirtopinta.kirjoita_tekstia(peli.syote, 50, 50);
@@ -256,7 +255,7 @@ void PeliView::piirra_odottavat() {
 }
 
 void PeliView::piirra_valinta() {
-	piirtopinta.piirra_kuva(image_cache::common().get("kuvat/tausta_valikko.png"), 0, 0);
+	piirtopinta.piirra_kuva("kuvat/tausta_valikko.png", 0, 0);
 
 	piirtopinta.kirjoita_tekstia(peli.ohje, 50, 30);
 	piirtopinta.kirjoita_tekstia(peli.syote, 50, 50);

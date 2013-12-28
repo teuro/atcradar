@@ -1,12 +1,10 @@
 #include "tilastoview.hpp"
-#include "kuvavarasto.hpp"
 #include <iostream>
-//#include <stdexcept>
 
 void TilastoView::piirra() {
 	std::clog << "TilastoView::piirra()" << std::endl;
 
-	piirtopinta.piirra_kuva(image_cache::common().get("kuvat/tausta_tilasto.png"), 0, 0);
+	piirtopinta.piirra_kuva("kuvat/tausta_tilasto.png", 0, 0);
 
 	int y = 30;
 	int x = 200;
@@ -47,5 +45,4 @@ void TilastoView::piirra() {
 	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(ka_selvitykset / peli.ajat.size()), x + 400, y);
 
 	piirtopinta.flip();
-	//	SDL_Flip(ruutu);
 }

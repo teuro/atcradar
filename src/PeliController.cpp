@@ -246,7 +246,6 @@ int PeliController::aja() {
 			peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_PAINA_TOIMINTONAPPAINTA);
 		}
 
-
 		for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
 			if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
 				peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nimi, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);

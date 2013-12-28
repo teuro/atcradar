@@ -1,4 +1,5 @@
 #include "sdlpiirtopinta.hpp"
+#include "kuvavarasto.hpp"
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_ttf.h>
@@ -34,9 +35,14 @@ int SDLPiirtoPinta::get_fontinkoko()
 	return fontin_koko;
 }
 
-// Piirtää yhden kuvan.
-void SDLPiirtoPinta::piirra_kuva(SDL_Surface *kuva, int x, int y, bool keskikohta) {
-	SDL_Rect r = { (Sint16)x, (Sint16)y };
+void SDLPiirtoPinta::piirra_kuva(const char* tiedosto, int x, int y, bool keskikohta) {
+	SDL_Surface* kuva = image_cache::common().get(tiedosto);
+	piirra_kuva(kuva, x, y, keskikohta);
+}
+
+void SDLPiirtoPinta::piirra_kuva(SDL_Surface* kuva, int x, int y, bool keskikohta)
+{
+	SDL_Rect r = { (unsigned short)x, (unsigned short)y };
 
 	if (keskikohta) {
 		r.x -= kuva->w / 2;
@@ -71,22 +77,22 @@ void SDLPiirtoPinta::kirjoita_tekstia(std::string teksti, int x, int y, bool akt
 	}
 }
 
-void SDLPiirtoPinta::rectangleColor(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Uint32 color)
+void SDLPiirtoPinta::rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color)
 {
 	::rectangleColor(ruutu, x1, y1, x2, y2, color);
 }
 
-void SDLPiirtoPinta::lineColor(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Uint32 color)
+void SDLPiirtoPinta::lineColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color)
 {
 	::lineColor(ruutu, x1, y1, x2, y2, color);
 }
 
-void SDLPiirtoPinta::circleColor(Sint16 x, Sint16 y, Sint16 rad, Uint32 color)
+void SDLPiirtoPinta::circleColor(unsigned short x, unsigned short y, unsigned short rad, unsigned int color)
 {
 	::circleColor(ruutu, x, y, rad, color);
 }
 
-void SDLPiirtoPinta::trigonColor(Sint16 x1, Sint16 y1, Sint16 x2, Sint16 y2, Sint16 x3, Sint16 y3, Uint32 color)
+void SDLPiirtoPinta::trigonColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned short x3, unsigned short y3, unsigned int color)
 {
 	::trigonColor(ruutu, x1, y1, x2, y2, x3, y3, color);
 }
