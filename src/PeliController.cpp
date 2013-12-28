@@ -179,7 +179,8 @@ int PeliController::aja() {
 		peli.syote = lukija.lue_syote();
 
 		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER) && peli.etsi_valittu_kone() >= 0) {
-			peli.koneet[peli.etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
+			// TODO: Fix reaktioaika
+//			peli.koneet[peli.etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
 			std::string komento = lukija.anna_viesti();
 
 			if (peli.toiminto == Peli::KORKEUS) {
@@ -248,7 +249,8 @@ int PeliController::aja() {
 
 		for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
 			if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
-				switch (peli.selvitykset[k].toiminto) {
+				// TODO: Fix this
+				/*switch (peli.selvitykset[k].toiminto) {
                     case peli.koneet[peli.selvitykset[k].kone_id].SUUNTA:
                         double tmp_suunta = apuvalineet::luvuksi<double>(peli.selvitykset[k].nimi);
                         peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(tmp_suunta, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
@@ -260,7 +262,7 @@ int PeliController::aja() {
                         peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(tmp_suunta, peli.selvitykset[k].toiminto);
                         peli.selvitykset.erase(peli.selvitykset.begin() + k);
                     case
-				}
+				}*/
             }
 		}
 

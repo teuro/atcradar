@@ -7,7 +7,7 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 
 	this->kohde.paikka.x = 0;
 	this->kohde.paikka.y = 0;
-	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
+//	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
 	onko_porrastus = true;
 	this->tyyppi = tyyppi;
@@ -76,11 +76,12 @@ void lentokone::muuta_korkeutta(double aika) {
 	} else {
 		double etaisyys = apuvalineet::etaisyys(paikka, baana.alkupiste);
 
-		double koneen_korkeus = peli.kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(this->baana.liukupolku)));
+		// TODO: Fix this
+		/*double koneen_korkeus = peli.kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(this->baana.liukupolku)));
 
 		if (this->korkeus > koneen_korkeus) {
 			this->korkeus = koneen_korkeus;
-		}
+		}*/
 	}
 }
 
@@ -142,12 +143,13 @@ void lentokone::lahesty(kiitotie& baana) {
 	if (apuvalineet::onko_alueella(paikka, this->baana.lahestymispiste, 0.01)) {
 		muuta_selvitysnopeutta(160.0);
 		aseta_navipiste(this->baana.hidastuspiste);
-		muuta_selvityskorkeutta(kentta.korkeus);
+		// TODO: Fix these
+		//muuta_selvityskorkeutta(kentta.korkeus);
 	} else if (apuvalineet::onko_alueella(paikka, this->baana.hidastuspiste, 0.01)) {
 		muuta_selvitysnopeutta(135.0);
 		aseta_navipiste(this->baana.alkupiste);
 	} else if (apuvalineet::onko_alueella(paikka, this->baana.alkupiste, 0.01)) {
-		korkeus = kentta.korkeus;
+		//korkeus = kentta.korkeus;
 		muuta_selvitysnopeutta(0.0);
 		aseta_navipiste(this->baana.loppupiste);
 	}
@@ -164,6 +166,9 @@ void lentokone::tarkista_suunta_kohteeseen() {
 
 void lentokone::ota_selvitys(double komento, int toiminto) {
 	std::ofstream ulos("selvitykset.txt", std::ios::app);
+
+	// TODO: Fix this
+	double luku = 666;
 
 	switch (toiminto) {
 		case KORKEUS:

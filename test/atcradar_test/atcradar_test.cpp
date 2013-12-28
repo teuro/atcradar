@@ -43,7 +43,7 @@ TEST(LentokoneConstructor, LentokoneConstructor) {
 	apuvalineet::piste paikka;
 	paikka.x = 0;
 	paikka.y = 0;
-	lentokone kone(peli, ohjelmaMock, asetukset, "", paikka, 0, 0, 0, 0, false);
+	lentokone kone(/*peli, ohjelmaMock, asetukset, */"", paikka, 0, 0, 0, 0, false);
 }
 
 TEST(ValikkoTests, ValikkoBounds) {

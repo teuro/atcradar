@@ -86,9 +86,9 @@ void Peli::luo_kone(IOhjelma& ohjelma) {
 			odotus = false;
 		}
 
-		koneet.push_back(lentokone(*this, ohjelma, asetukset, tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
+		koneet.push_back(lentokone(/**this, ohjelma, asetukset, */tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
 		koneet.back().ulosmenopiste = navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())];
-		koneet.back().polttoaine = apuvalineet::arvo_luku(8000, 25000);
+		//koneet.back().polttoaine = apuvalineet::arvo_luku(8000, 25000);
 
 		if (koneet.back().odotus) {
 			odottavat.push(koneet.back());
@@ -100,8 +100,8 @@ void Peli::luo_kone(IOhjelma& ohjelma) {
 			i = apuvalineet::arvo_luku(0, navipisteet.size());
 		} while (!onko_vapaata(SAAPUVA, i));
 
-        koneet.push_back(lentokone(*this, ohjelma, asetukset, tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
-		koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
+        koneet.push_back(lentokone(/**this, ohjelma, asetukset, */tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
+		//koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
 	}
 
 	tilasto tmp;
@@ -268,7 +268,7 @@ void Peli::hoida_koneet() {
 
 			if (it->nopeus > 150) {
 				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunousukorkeus, it->KORKEUS);
-				it-ota_selvitys(asetukset.anna_asetus("alkunousunopeus"), it->NOPEUS);
+				it->ota_selvitys(asetukset.anna_asetus("alkunousunopeus"), it->NOPEUS);
 				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunoususuunta, it->SUUNTA);
 			}
 		}

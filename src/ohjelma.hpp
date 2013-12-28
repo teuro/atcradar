@@ -50,6 +50,8 @@ public:
 
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
+	// TODO: fix or remove
+	bool onko_alueella(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade = 0.2) { return false; }
 
 private:
 	IAsetukset& asetukset;

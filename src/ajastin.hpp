@@ -1,3 +1,6 @@
+#ifndef _AJASTIN_HPP
+#define _AJASTIN_HPP
+
 #include <string>
 
 class ajastin {
@@ -10,3 +13,5 @@ public:
 	bool onko_valmis(int leima);
 	void aseta_aika(int aika);
 };
+
+#endif
