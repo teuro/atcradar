@@ -5,6 +5,7 @@
 #include <queue>
 #include <map>
 #include <stdexcept>
+
 #include "apuvalineet.hpp"
 #include "lentokone.hpp"
 #include "lentokentta.hpp"
@@ -40,7 +41,7 @@ public:
     }
 
     IOhjelma& ohjelma;
-	
+
     float ajan_muutos;
     std::vector <std::string> tunnukset;
     std::string syote;
@@ -125,13 +126,11 @@ public:
     } atis;
 
 
-	enum virheet {VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA};
-	enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
 	enum tyyppi {SAAPUVA = 0, LAHTEVA = 1};
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
 	void luo_kone(IOhjelma& ohjelma);
 	void tuhoa_kone(int kone);
-	
+
 	struct Metar {
 		int tuuli;
 		int voimakkuus;
