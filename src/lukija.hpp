@@ -1,8 +1,11 @@
 #ifndef _LUKIJA_HPP
 #define _LUKIJA_HPP
 
+// Syötteen luku siirretty Ohjelma-luokkaan, koska siellä on muutkin Input-asiat
+/*
 #include "peli.hpp"
 #include <string>
+
 
 class syotteenluku {
     private:
@@ -17,5 +20,5 @@ class syotteenluku {
 		std::string lue_syote();
 		void tyhjenna() { this->str = ""; }
 	};
-
+*/
 #endif

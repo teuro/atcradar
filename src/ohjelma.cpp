@@ -17,7 +17,7 @@ void Ohjelma::alku() {
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	asetukset.lataa_asetukset("data/asetukset.ini");
+	//asetukset.lataa_asetukset("data/asetukset.ini");
 
 	SDL_EnableUNICODE(SDL_ENABLE);
 
@@ -68,6 +68,37 @@ Ohjelma::nappi Ohjelma::odota_nappi() {
 	}
 	// Jokin meni pieleen!
 	throw std::runtime_error(SDL_GetError());
+}
+
+std::string Ohjelma::lue_syote() {
+	//peli::syote = this->str;
+	SDL_Event event;
+	SDL_PollEvent(&event);
+	if (event.type == SDL_KEYDOWN)
+	{
+		//Keep a copy of the current version of the string
+		std::string temp = syote;
+
+		//If the string less than maximum size
+		if (syote.length() <= 16)
+		{
+			if (event.key.keysym.unicode == (Uint16)' ' ||
+				(event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9') ||
+				(event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Ä') ||
+				(event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z'))
+			{
+				//Append the character
+				syote += (char)event.key.keysym.unicode;
+			}
+		}
+		//If backspace was pressed and the string isn't blank
+		if ((event.key.keysym.sym == SDLK_BACKSPACE) && (syote.length() != 0))
+		{
+			//Remove a character from the end
+			syote.erase(syote.length() - 1);
+		}
+	}
+	return syote;
 }
 
 // Kertoo napin nykytilan.

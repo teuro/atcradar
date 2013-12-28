@@ -69,7 +69,7 @@ void Peli::aseta_virhe(int virhe) {
 	ulos.close();
 }
 
-void Peli::luo_kone(IOhjelma& ohjelma) {
+void Peli::luo_kone() {
 	int j = apuvalineet::arvo_luku(10, 100) % 2;
 	apuvalineet::piste paikka;
 	bool odotus;
@@ -117,23 +117,19 @@ void Peli::luo_kone(IOhjelma& ohjelma) {
 void Peli::lataa_kentta(std::string kenttaNimi) {
 	std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
 	std::string kansio = "kentat/";
-	std::string tmp;
-    tmp = kansio + kenttaNimi;
+	std::string tmp = kansio + kenttaNimi;
 
 	std::clog << tmp << std::endl;
 
 	std::ifstream sisaan(tmp.c_str(), std::ios::in);
-	std::vector <std::string> asiat;
-
 	if (!sisaan) {
 		throw std::runtime_error("Tiedostoa " + tmp + " ei ole tai se ei aukea");
 	}
 
-	std::string nimi, tunnus;
 	std::string rivi;
 
 	while (std::getline(sisaan, rivi)) {
-		asiat = apuvalineet::pilko_rivi(rivi, " ");
+		std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivi, " ");
 
 		if (asiat[0] == "N") {
 			kentta.nimi = asiat[1];

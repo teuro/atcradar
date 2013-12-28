@@ -6,12 +6,10 @@
 
 class View
 {
-protected:
-	IPiirtoPinta& piirtopinta;
-
 public:
 	View(IPiirtoPinta& pinta) : piirtopinta(pinta) { }
 
+	IPiirtoPinta& piirtopinta;
 	virtual void piirra() = 0;
 };
 

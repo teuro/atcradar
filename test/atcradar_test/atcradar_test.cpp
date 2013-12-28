@@ -3,6 +3,7 @@
 
 #include "lentokone.hpp"
 #include "peli.hpp"
+#include "pelicontroller.hpp"
 #include "peliview.hpp"
 #include "ohjelma.hpp"
 #include "piirtopinta.hpp"
@@ -21,6 +22,10 @@ public:
 	MOCK_METHOD3(onko_alueella, bool(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade));
 	MOCK_METHOD0(anna_hiiri, apuvalineet::piste());
 	MOCK_METHOD0(lue_hiiri, bool());
+
+	MOCK_METHOD0(lue_syote, std::string());
+	MOCK_METHOD0(tyhjenna_viesti, void());
+	MOCK_METHOD0(anna_viesti, std::string());
 };
 
 class MockPinta : public IPiirtoPinta
@@ -39,11 +44,29 @@ TEST(LentokoneConstructor, LentokoneConstructor) {
 	Asetukset asetukset;
 	MockOhjelma ohjelmaMock;
     Kieli kieli;
-    Peli peli(asetukset, ohjelmaMock, kieli, "");
+    Peli peli(asetukset, ohjelmaMock, kieli, "EFKT.TXT");
 	apuvalineet::piste paikka;
 	paikka.x = 0;
 	paikka.y = 0;
 	lentokone kone(/*peli, ohjelmaMock, asetukset, */"", paikka, 0, 0, 0, 0, false);
+}
+
+TEST(PeliControllerTests, LongTimeInterval) {
+	Asetukset asetukset;
+	MockOhjelma ohjelmaMock;
+	MockPinta pinta;
+	Kieli kieli;
+	Peli peli(asetukset, ohjelmaMock, kieli, "EFKT.TXT");
+	PeliView peliview(pinta, asetukset, peli, ohjelmaMock, kieli);
+	PeliController controller(peli, peliview, ohjelmaMock, asetukset, kieli);
+
+	float timef = 0;
+
+	ON_CALL(ohjelmaMock, sekunnit(true)).WillByDefault(Return(timef+=1.0));
+	ON_CALL(ohjelmaMock, sekunnit(false)).WillByDefault(Return(timef += 1.0));
+
+	// Currently calling aja() will run forever
+	//controller.aja();
 }
 
 TEST(ValikkoTests, ValikkoBounds) {
@@ -51,11 +74,9 @@ TEST(ValikkoTests, ValikkoBounds) {
 	MockOhjelma ohjelmaMock;
 	MockPinta pinta;
 	Kieli kieli;
-	Peli peli(asetukset, ohjelmaMock, kieli, "");
-	PeliView peliview(pinta, asetukset, peli, ohjelmaMock, kieli);
 	ValikkoData valikkoData;
 	ValikkoView valikkoView(pinta, valikkoData);
-	valikko v(ohjelmaMock, peliview, valikkoData);
+	valikko v(ohjelmaMock, valikkoView, valikkoData);
 
 	IOhjelma::nappi nappisequence[] = {
 		IOhjelma::nappi::NAPPI_YLOS,

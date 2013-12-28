@@ -27,6 +27,9 @@ public:
 
 	virtual apuvalineet::piste anna_hiiri() = 0;
 	virtual bool lue_hiiri() = 0;
+	virtual std::string lue_syote() = 0;
+	virtual void tyhjenna_viesti() = 0;
+	virtual std::string anna_viesti() = 0;
 };
 
 class Ohjelma : public IOhjelma {
@@ -49,12 +52,16 @@ public:
 
 	apuvalineet::piste anna_hiiri();
 	bool lue_hiiri();
+	std::string lue_syote();
+	std::string anna_viesti() { return syote; }
+	void tyhjenna_viesti() { syote = ""; }
 
 private:
 	IAsetukset& asetukset;
 	unsigned int alku_aika;
 	void alku();
 	void loppu();
+	std::string syote;
 };
 
 class Versio

@@ -180,32 +180,6 @@ void PeliView::piirra_ohje(std::string ohje) {
 	piirtopinta.kirjoita_tekstia(ohje.c_str(), 50, 30);
 }
 
-void PeliView::piirra_atis() {
-	piirtopinta.piirra_kuva("kuvat/tausta_atis.png", 0, 0);
-
-	piirtopinta.kirjoita_tekstia(peli.ohje, 50, 30);
-	piirtopinta.kirjoita_tekstia(peli.syote, 50, 50);
-
-	int y = 70;
-
-	for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-		piirtopinta.kirjoita_tekstia(peli.kentta.kiitotiet[i].nimi, 400, y);
-		y += 20;
-	}
-
-	piirra_metar();
-	piirra_ohje(peli.ohje);
-
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_LAHTOKIITOTIE), 50, 90);
-	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.lahto), 150, 90);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_LASKUKIITOTIE), 50, 110);
-	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.lasku), 150, 110);
-	piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_SIIRTOPINTA), 50, 130);
-	piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.atis.siirtopinta), 150, 130);
-	piirtopinta.flip();
-//	SDL_Flip(ruutu);
-}
-
 void PeliView::piirra_metar() {
 	std::string tuuli 		= apuvalineet::tekstiksi(peli.metar.tuuli);
 	std::string voimakkuus 	= apuvalineet::tekstiksi(peli.metar.voimakkuus);

@@ -16,13 +16,15 @@ PeliController handles and parses game input (from Ohjelma-class), game logic, u
 
 class PeliController : public IController {
 	Peli& peli;
-	PeliView& view;
+	View& view;
 	IOhjelma& ohjelma;
 	IAsetukset& asetukset;
 	Kieli& kieli;
 public:
-	PeliController(Peli& p, PeliView& v, IOhjelma& o, IAsetukset& a, Kieli& k) : peli(p), view(v), ohjelma(o), asetukset(a), kieli(k) { }
+	PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, Kieli& k) : peli(p), view(v), ohjelma(o), asetukset(a), kieli(k) { }
 	int aja();
 	void pyyda_atis();
+private:
+	void logita_peliajat();
 };
 #endif

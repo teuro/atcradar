@@ -15,6 +15,7 @@ public:
 class Asetukset : public IAsetukset
 {
 public:
+	Asetukset();
 	double anna_asetus(std::string asetus);
 	void lataa_asetukset(std::string nimi);
 	void muuta_asetusta(std::string asetus, double arvo);

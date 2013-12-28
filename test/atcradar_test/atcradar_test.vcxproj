@@ -84,13 +84,17 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\ajastin.cpp" />
     <ClCompile Include="..\..\src\apuvalineet.cpp" />
     <ClCompile Include="..\..\src\asetukset.cpp" />
+    <ClCompile Include="..\..\src\atiscontroller.cpp" />
+    <ClCompile Include="..\..\src\atisview.cpp" />
     <ClCompile Include="..\..\src\kieli.cpp" />
     <ClCompile Include="..\..\src\lentokentta.cpp" />
     <ClCompile Include="..\..\src\lentokone.cpp" />
     <ClCompile Include="..\..\src\navipiste.cpp" />
     <ClCompile Include="..\..\src\peli.cpp" />
+    <ClCompile Include="..\..\src\PeliController.cpp" />
     <ClCompile Include="..\..\src\peliview.cpp" />
     <ClCompile Include="..\..\src\valikko.cpp" />
     <ClCompile Include="..\..\src\valikkoview.cpp" />

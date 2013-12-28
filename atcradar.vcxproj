@@ -85,6 +85,8 @@
     <ClCompile Include="src\ajastin.cpp" />
     <ClCompile Include="src\apuvalineet.cpp" />
     <ClCompile Include="src\asetukset.cpp" />
+    <ClCompile Include="src\atiscontroller.cpp" />
+    <ClCompile Include="src\atisview.cpp" />
     <ClCompile Include="src\kieli.cpp" />
     <ClCompile Include="src\lentokentta.cpp" />
     <ClCompile Include="src\lentokone.cpp" />
@@ -106,6 +108,8 @@
     <ClInclude Include="src\ajastin.hpp" />
     <ClInclude Include="src\apuvalineet.hpp" />
     <ClInclude Include="src\asetukset.h" />
+    <ClInclude Include="src\atiscontroller.hpp" />
+    <ClInclude Include="src\atisview.hpp" />
     <ClInclude Include="src\controller.hpp" />
     <ClInclude Include="src\kieli.hpp" />
     <ClInclude Include="src\kuvavarasto.hpp" />

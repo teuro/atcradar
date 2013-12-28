@@ -48,7 +48,13 @@ public:
 		atis.ok = false;
 		lataa_kentta(kentta);
 		ohje = " ";
-    }
+		porrastusvirheet = 0;
+		muut_virheet = 0;
+		kasitellyt = 0;
+		koska_metar = asetukset.anna_asetus("koska_metar");
+		lataa_tunnukset("data/tunnukset.txt");
+		generoi_metar();
+	}
 
     IOhjelma& ohjelma;
 
@@ -115,6 +121,7 @@ public:
     int muut_virheet;
 
     struct Atis {
+		std::string ohje;
 		int lahtokiitotie;// = -1;
 		int laskukiitotie;// = -1;
 		double siirtopinta;// = -1;
@@ -137,7 +144,7 @@ public:
 
 	enum tyyppi {SAAPUVA = 0, LAHTEVA = 1};
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
-	void luo_kone(IOhjelma& ohjelma);
+	void luo_kone();
 	void tuhoa_kone(int kone);
 
 	struct Metar {

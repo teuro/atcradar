@@ -30,7 +30,7 @@ public:
 	}
 
 	void piirra();
-	void piirra_atis();
+	//void piirra_atis();
 
 private:
 	IAsetukset& asetukset;

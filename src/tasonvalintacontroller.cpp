@@ -4,15 +4,15 @@
 int TasonValintaController::aja()
 {
 	int taso = -1;
-	syotteenluku lukija;
+	//syotteenluku lukija;
 
 	while (taso < 0) {
-		lukija.lue_syote();
-		teksti = lukija.anna_viesti();
+		ohjelma.lue_syote();
+		teksti = ohjelma.anna_viesti();
 
 		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
-			if (lukija.anna_viesti().length()) {
-				taso = apuvalineet::luvuksi<int>(lukija.anna_viesti());
+			if (ohjelma.anna_viesti().length()) {
+				taso = apuvalineet::luvuksi<int>(ohjelma.anna_viesti());
 			}
 		}
 

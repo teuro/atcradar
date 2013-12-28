@@ -1,7 +1,12 @@
 #include "lukija.hpp"
 
+// Syötteen luku siirretty Ohjelma-luokkaan, koska siellä on muutkin Input-asiat
+// Poistetaan tämä kun kaikki on muuten selvää.
+
+#if 0
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+
 
 std::string syotteenluku::lue_syote() {
 	//peli::syote = this->str;
@@ -15,26 +20,10 @@ std::string syotteenluku::lue_syote() {
         //If the string less than maximum size
         if( str.length() <= 16 )
         {
-        	//If the key is a space
-            if( event.key.keysym.unicode == (Uint16)' ' )
-            {
-                //Append the character
-                str += (char)event.key.keysym.unicode;
-            }
-             //If the key is a number
-            else if( ( event.key.keysym.unicode >= (Uint16)'0' ) && ( event.key.keysym.unicode <= (Uint16)'9' ) )
-            {
-                //Append the character
-                str += (char)event.key.keysym.unicode;
-            }
-            //If the key is a uppercase letter
-            else if( ( event.key.keysym.unicode >= (Uint16)'A' ) && ( event.key.keysym.unicode <= (Uint16)'Ä' ) )
-            {
-                //Append the character
-                str += (char)event.key.keysym.unicode;
-            }
-            //If the key is a lowercase letter
-            else if( ( event.key.keysym.unicode >= (Uint16)'a' ) && ( event.key.keysym.unicode <= (Uint16)'z' ) )
+            if( event.key.keysym.unicode == (Uint16)' '  || 
+				(event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9') ||
+				(event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Ä') || 
+				(event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z'))
             {
                 //Append the character
                 str += (char)event.key.keysym.unicode;
@@ -57,3 +46,4 @@ syotteenluku::syotteenluku() {
     //Enable Unicode
     SDL_EnableUNICODE( SDL_ENABLE );
 }
+#endif
