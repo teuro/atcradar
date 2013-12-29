@@ -37,16 +37,16 @@ void Ohjelma::loppu() {
 }
 
 // Kertoo nollauksesta kuluneiden sekuntien m‰‰r‰n.
-float Ohjelma::sekunnit(bool nollaa) {
+double Ohjelma::sekunnit(bool nollaa) {
 	Uint32 nyt = SDL_GetTicks();
 	if (nollaa) {
 		alku_aika = nyt;
 	}
-	return (nyt - alku_aika) / 1000.0f;
+	return (nyt - alku_aika) / 1000.0;
 }
 
 // Odottaa lyhyen ajan.
-void Ohjelma::odota(double ms) {
+void Ohjelma::odota(unsigned int ms) {
 	SDL_Delay(ms);
 }
 

@@ -20,13 +20,10 @@ int PeliController::aja() {
 
 	std::srand(std::time(NULL));
 
-	bool loppu = false;
-	bool piirretty = false;
-
 	pyyda_atis();
 
 	// Nollataan kello.
-	float pelin_kello = ohjelma.sekunnit(true);
+	double pelin_kello = ohjelma.sekunnit(true);
 
 	// TODO: Tarvitaanko tätä tyhjennystä?
 	ohjelma.tyhjenna_syote();
@@ -37,6 +34,7 @@ int PeliController::aja() {
 	peli.luo_kone();
 	peli.luo_kone();
 
+	bool loppu = false;
 	while (!loppu) {
 		int alku = ohjelma.sekunnit();
 		apuvalineet::piste hiiri = ohjelma.anna_hiiri();
@@ -179,17 +177,10 @@ int PeliController::aja() {
 
 		while (pelin_kello + peli.ajan_muutos <= ohjelma.sekunnit()) {
 			pelin_kello += peli.ajan_muutos;
-
 			peli.hoida_koneet();
-
-			piirretty = false;
 		}
-		if (piirretty) {
-			ohjelma.odota();
-		} else {
-			view.piirra();
-			piirretty = true;
-		}
+		view.piirra();
+		ohjelma.odota();
 	}
 
 	// TODO: Tarvitaanko tätä?

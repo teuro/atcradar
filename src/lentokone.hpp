@@ -67,7 +67,7 @@ public:
 	void aseta_navipiste(navipiste paikka);
 	void aseta_navipiste(apuvalineet::piste paikka);
 
-	void lahesty(kiitotie& baana);
+	void lahesty(const kiitotie& baana);
 
 	bool onko_porrastus;
 

@@ -14,8 +14,8 @@ using ::testing::Sequence;
 class MockOhjelma : public IOhjelma
 {
 public:
-	MOCK_METHOD1(sekunnit, float(bool nollaa));
-	MOCK_METHOD1(odota, void(double ms));
+	MOCK_METHOD1(sekunnit, double(bool nollaa));
+	MOCK_METHOD1(odota, void(unsigned int ms));
 	MOCK_METHOD0(odota_nappi, nappi());
 	MOCK_METHOD1(lue_nappi, bool(nappi n));
 	MOCK_METHOD0(tyhjenna_syote, void());
@@ -60,7 +60,7 @@ TEST(PeliControllerTests, LongTimeInterval) {
 	PeliView peliview(pinta, asetukset, peli, ohjelmaMock, kieli);
 	PeliController controller(peli, peliview, ohjelmaMock, asetukset, kieli);
 
-	float timef = 0;
+	double timef = 0;
 
 	ON_CALL(ohjelmaMock, sekunnit(true)).WillByDefault(Return(timef+=1.0));
 	ON_CALL(ohjelmaMock, sekunnit(false)).WillByDefault(Return(timef += 1.0));

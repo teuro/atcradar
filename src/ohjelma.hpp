@@ -14,8 +14,8 @@
 class IOhjelma
 {
 public:
-	virtual float sekunnit(bool nollaa = false) = 0;
-	virtual void odota(double ms = 1) = 0;
+	virtual double sekunnit(bool nollaa = false) = 0;
+	virtual void odota(unsigned int ms = 1) = 0;
 
 	enum nappi {
 		NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F7, NAPPI_F8, NAPPI_YLOS, NAPPI_ALAS, NAPPI_I
@@ -43,8 +43,8 @@ public:
 		loppu();
 	}
 
-	float sekunnit(bool nollaa = false);
-	void odota(double ms = 1);
+	double sekunnit(bool nollaa = false);
+	void odota(unsigned int ms = 1);
 
 	nappi odota_nappi();
 	bool lue_nappi(nappi n);

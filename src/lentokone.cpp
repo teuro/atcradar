@@ -1,4 +1,6 @@
 #include "lentokone.hpp"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) {
 	this->kutsutunnus = kutsutunnus;
@@ -123,7 +125,8 @@ int lentokone::kaarron_suunta(double suunta) {
 	double rad_suunta = apuvalineet::deg2rad(suunta);
 	double rad_kone = apuvalineet::deg2rad(this->suunta);
 	double k = rad_kone - rad_suunta;
-	double PII = 3.14;
+
+	const double PII = M_PI;
 	//std::clog << rad_kone << " / " << rad_suunta << std::endl;
 
 	while (k <= PII) {
@@ -137,7 +140,7 @@ int lentokone::kaarron_suunta(double suunta) {
 	return (k > 0) ? VASEN : OIKEA;
 }
 
-void lentokone::lahesty(kiitotie& baana) {
+void lentokone::lahesty(const kiitotie& baana) {
 	lahestymisselvitys = true;
 
 	if (apuvalineet::onko_alueella(paikka, this->baana.lahestymispiste, 0.01)) {
