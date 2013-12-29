@@ -83,9 +83,9 @@ std::string Ohjelma::lue_syote() {
 		if (syote.length() <= 16)
 		{
 			if (event.key.keysym.unicode == (Uint16)' ' ||
-				(event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9') ||
-				(event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Ä') ||
-				(event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z'))
+				((event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9')) ||
+				((event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Ä')) ||
+				((event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z')))
 			{
 				//Append the character
 				syote += (char)event.key.keysym.unicode;

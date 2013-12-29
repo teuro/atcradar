@@ -10,7 +10,7 @@
 class AtisController : IController
 {
 public:
-	AtisController(IAsetukset& a, Kieli& k, IOhjelma& o, View& v, Peli& data) : kieli(k), ohjelma(o), asetukset(a), view(v), peli(data) { }
+	AtisController(IAsetukset& a, Kieli& k, IOhjelma& o, View& v, Peli& data) : peli(data), kieli(k), ohjelma(o), asetukset(a), view(v) { }
 	int aja();
 
 	Peli &peli;

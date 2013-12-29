@@ -8,7 +8,7 @@
 class AtisView : public View
 {
 public:
-	AtisView(IPiirtoPinta& pinta, Kieli& k, Peli& data) : peli(data), kieli(k), View(pinta) { }
+	AtisView(IPiirtoPinta& pinta, Kieli& k, Peli& data) : View(pinta), peli(data), kieli(k)  { }
 	void piirra();
 
 private:
