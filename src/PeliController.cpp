@@ -2,7 +2,6 @@
 #include "peli.hpp"
 #include "pelicontroller.hpp"
 #include "ohjelma.hpp"
-#include "lukija.hpp"
 #include "ajastin.hpp"
 #include "kieli.hpp"
 #include "atiscontroller.hpp"
@@ -18,7 +17,7 @@
 int PeliController::aja() {
 	std::clog << "pelicontroller::aja()" << std::endl;
 
-	std::srand(std::time(NULL));
+	std::srand((unsigned int)std::time(NULL));
 
 	pyyda_atis();
 
