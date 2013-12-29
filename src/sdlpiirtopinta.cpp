@@ -42,7 +42,7 @@ void SDLPiirtoPinta::piirra_kuva(const char* tiedosto, int x, int y, bool keskik
 
 void SDLPiirtoPinta::piirra_kuva(SDL_Surface* kuva, int x, int y, bool keskikohta)
 {
-	SDL_Rect r = { (unsigned short)x, (unsigned short)y };
+	SDL_Rect r = { (Sint16)x, (Sint16)y };
 
 	if (keskikohta) {
 		r.x -= kuva->w / 2;

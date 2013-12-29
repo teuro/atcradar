@@ -24,6 +24,7 @@ public:
 	PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, Kieli& k) : peli(p), view(v), ohjelma(o), asetukset(a), kieli(k) { }
 	int aja();
 	void pyyda_atis();
+	Peli::selvitys anna_selvitys(std::string komento, int toiminto);
 private:
 	void logita_peliajat();
 };

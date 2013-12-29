@@ -76,7 +76,7 @@ public:
 	}
 
     lentokone& operator =(const lentokone&) { return *this; }
-    enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
+    //enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
 
     double anna_nopeus() { return this->nopeus; }
     double anna_suunta() { return this->suunta; }

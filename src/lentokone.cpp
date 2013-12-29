@@ -110,6 +110,7 @@ void lentokone::muuta_suuntaa(double aika) {
 
 void lentokone::liiku(double aika) {
     this->muuta_tilaa(aika);
+    this->tarkista_suunta_kohteeseen();
 	paikka = apuvalineet::uusi_paikka(paikka, suunta, nopeus * (aika / 3600.0));
 }
 
@@ -170,35 +171,32 @@ void lentokone::tarkista_suunta_kohteeseen() {
 void lentokone::ota_selvitys(double komento, int toiminto) {
 	std::ofstream ulos("selvitykset.txt", std::ios::app);
 
-	// TODO: Fix this
-	double luku = 666;
-
 	switch (toiminto) {
-		case KORKEUS:
-			muuta_selvityskorkeutta(luku);
-			ulos << this->kutsutunnus << (selvityskorkeus > korkeus ? " nouse " : " laskeudu ") << luku << " jalkaan" << std::endl;
+		case apuvalineet::KORKEUS:
+			muuta_selvityskorkeutta(komento);
+			ulos << this->kutsutunnus << (selvityskorkeus > korkeus ? " nouse " : " laskeudu ") << komento << " jalkaan" << std::endl;
 			break;
-		case NOPEUS:
-			muuta_selvitysnopeutta(luku);
-			ulos << this->kutsutunnus << (selvitysnopeus > nopeus ? " kiihdyt√§ " : " hidasta ") << luku << " solmuun" << std::endl;
+		case apuvalineet::NOPEUS:
+			muuta_selvitysnopeutta(komento);
+			ulos << this->kutsutunnus << (selvitysnopeus > nopeus ? " kiihdyt‰ " : " hidasta ") << komento << " solmuun" << std::endl;
 			break;
 	}
 }
 
 void lentokone::ota_selvitys(double suunta, int toiminto, int kaarto) {
-    muuta_selvityssuuntaa(suunta, kaarto);
+	this->muuta_selvityssuuntaa(suunta, kaarto);
 }
 
 void lentokone::ota_selvitys(navipiste& piste) {
-    aseta_navipiste(piste.paikka);
+	this->reitti.push(piste);
 }
 
 void lentokone::ota_selvitys(int toiminto) {
-    switch (toiminto) {
-    case LAHESTYMIS:
+	switch (toiminto) {
+    case apuvalineet::LAHESTYMIS:
         this->lahestymisselvitys = true;
         break;
-    case OIKOTIE:
+    case apuvalineet::OIKOTIE:
         this->oikotie = true;
     }
 }

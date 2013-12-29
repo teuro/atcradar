@@ -44,7 +44,7 @@ double apuvalineet::etaisyys(const piste& a, const piste& b) {
 }
 
 double apuvalineet::laske_kulma(const piste& a, const piste& b) {
-	double kulma = (apuvalineet::rad2deg(std::atan2((a.y - b.y), (a.x - b.x))) -90.0);
+	double kulma = apuvalineet::rad2deg(std::atan2((a.y - b.y), (a.x - b.x))) -90.0;
 
 	if (kulma < 0) {
 		kulma += 360;

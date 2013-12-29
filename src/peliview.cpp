@@ -119,13 +119,13 @@ void PeliView::piirra_koneet() {
 				}
 
 				switch (peli.toiminto) {
-				case Peli::SUUNTA:
+				case apuvalineet::SUUNTA:
 					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_SUUNTA), 50, 50);
 					break;
-				case Peli::NOPEUS:
+				case apuvalineet::NOPEUS:
 					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_NOPEUS), 50, 50);
 					break;
-				case Peli::KORKEUS:
+				case apuvalineet::KORKEUS:
 					piirtopinta.kirjoita_tekstia(kieli.anna_teksti(Kieli::TEKSTI_OHJE_KORKEUS), 50, 50);
 					break;
 				}
