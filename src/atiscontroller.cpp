@@ -77,10 +77,9 @@ int AtisController::aja() {
 			double siirtopinta = atis.etsi_siirtopinta(peli.metar.paine);
 
 			double max_vasta = 0;
-			double vasta;
 
 			for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-				vasta = std::cos(apuvalineet::deg2rad(peli.metar.tuuli) - apuvalineet::deg2rad(peli.kentta.kiitotiet[i].suunta)) * peli.metar.voimakkuus;
+				double vasta = std::cos(apuvalineet::deg2rad(peli.metar.tuuli) - apuvalineet::deg2rad(peli.kentta.kiitotiet[i].suunta)) * peli.metar.voimakkuus;
 
 				if (vasta > max_vasta) {
 					max_vasta = vasta;
