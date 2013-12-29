@@ -41,7 +41,7 @@ public:
 
     IOhjelma& ohjelma;
 
-    float ajan_muutos;
+    double ajan_muutos;
     std::vector <std::string> tunnukset;
     std::string syote;
 
@@ -73,7 +73,7 @@ public:
 		int kone_id;
 		std::string nimi;
 		int toiminto;
-		float aika;
+		double aika;
 		int kaarto;
 	};
 

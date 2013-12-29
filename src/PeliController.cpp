@@ -23,7 +23,7 @@ int PeliController::aja() {
 	pyyda_atis();
 
 	// Nollataan kello.
-	float pelin_kello = ohjelma.sekunnit(true);
+	double pelin_kello = ohjelma.sekunnit(true);
 
 	// TODO: Tarvitaanko tätä tyhjennystä?
 	ohjelma.tyhjenna_syote();
