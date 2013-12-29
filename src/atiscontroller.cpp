@@ -5,6 +5,7 @@ int AtisController::aja() {
 	atis.lue_paineet("data/painerajat.txt");
 	int toiminto = Peli::LAHTO;
 	atis.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_ANNA_LAHTOKIITOTIE);
+	ohjelma.tyhjenna_viesti();
 
 	while (atis.ok == false) {
 		peli.syote = ohjelma.lue_syote();
