@@ -6,7 +6,7 @@
 
 class TilastoView : public View {
 public:
-	TilastoView(Kieli& k, IPiirtoPinta& pn, Peli& p) : kieli(k), peli(p), View(pn) { }
+	TilastoView(Kieli& k, IPiirtoPinta& pn, Peli& p) : View(pn), peli(p), kieli(k) { }
 	void piirra();
 private:
 	Peli& peli;

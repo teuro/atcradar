@@ -1,4 +1,6 @@
 ohjelma/radar
+*.o
+.depend
 
 #################
 ## Eclipse

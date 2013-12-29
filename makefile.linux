@@ -1,0 +1,29 @@
+EXECUTABLE=ohjelma/radar
+CC = g++
+CCFLAGS = -c -O2 -pedantic -fpermissive -Wall
+LNFLAGS = -lSDLmain -lSDL -lSDL_ttf -lSDL_gfx -lSDL_image
+#LNFLAGS = SDLmain SDL SDL_ttf SDL_gfx SDL_image
+SOURCES=$(wildcard src/*.cpp)
+HEADERS=$(wildcard src/*.hpp) $(wildcard src/*.h)
+OBJECTS=$(SOURCES:.cpp=.o)
+
+
+depend: .depend $(EXECUTABLE)
+
+.depend: $(SOURCES)
+	rm -f ./.depend
+	$(CC) $(FLAGS) -MM $^ > ./.depend;
+
+include .depend
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(OBJECTS) $(LNFLAGS) -o $(EXECUTABLE)
+
+#%.o: $(SOURCES)
+
+src/%.o: src/%.cpp
+	$(CC) $(CCFLAGS) -o $@ $<
+
+clean:
+	rm src/*.o
+

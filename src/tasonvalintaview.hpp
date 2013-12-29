@@ -7,7 +7,7 @@
 class TasonValintaView : public View
 {
 public:
-	TasonValintaView(IPiirtoPinta& pinta, Kieli& k, std::string& data) : teksti(data), kieli(k), View(pinta) { }
+	TasonValintaView(IPiirtoPinta& pinta, Kieli& k, std::string& data) : View(pinta), teksti(data), kieli(k) { }
 	void piirra();
 
 private:

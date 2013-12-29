@@ -19,7 +19,7 @@ public:
 class ValikkoView : public View
 {
 public:
-	ValikkoView(IPiirtoPinta& p, ValikkoData& d) : data(d), View(p) { }
+	ValikkoView(IPiirtoPinta& p, ValikkoData& d) : View(p), data(d) { }
 	void piirra();
 
 private:

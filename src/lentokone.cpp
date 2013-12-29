@@ -74,7 +74,7 @@ void lentokone::muuta_korkeutta(double aika) {
 			korkeus = selvityskorkeus;
 		}
 	} else {
-		double etaisyys = apuvalineet::etaisyys(paikka, baana.alkupiste);
+		//double etaisyys = apuvalineet::etaisyys(paikka, baana.alkupiste);
 
 		// TODO: Fix this
 		/*double koneen_korkeus = peli.kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(this->baana.liukupolku)));
