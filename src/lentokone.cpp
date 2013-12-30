@@ -146,7 +146,7 @@ int lentokone::kaarron_suunta(double suunta) {
 		k -= 2 * PII;
 	}
 
-	return (k > 0) ? VASEN : OIKEA;
+	return (k > 0) ? apuvalineet::VASEN : apuvalineet::OIKEA;
 }
 
 void lentokone::lahesty(const kiitotie& baana) {
@@ -177,16 +177,12 @@ void lentokone::tarkista_suunta_kohteeseen() {
 }
 
 void lentokone::ota_selvitys(double komento, int toiminto) {
-	std::ofstream ulos("selvitykset.txt", std::ios::app);
-
 	switch (toiminto) {
 		case apuvalineet::KORKEUS:
 			muuta_selvityskorkeutta(komento);
-			ulos << this->kutsutunnus << (selvityskorkeus > korkeus ? " nouse " : " laskeudu ") << komento << " jalkaan" << std::endl;
 			break;
 		case apuvalineet::NOPEUS:
 			muuta_selvitysnopeutta(komento);
-			ulos << this->kutsutunnus << (selvitysnopeus > nopeus ? " kiihdytä " : " hidasta ") << komento << " solmuun" << std::endl;
 			break;
 	}
 }
@@ -206,6 +202,7 @@ void lentokone::ota_selvitys(int toiminto) {
         break;
     case apuvalineet::OIKOTIE:
         this->oikotie = true;
+        this->reitti.push(this->ulosmenopiste);
     }
 }
 

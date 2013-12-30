@@ -71,7 +71,9 @@ public:
 
 	struct selvitys {
 		int kone_id;
-		double arvo;
+		double suunta;
+		double korkeus;
+		double nopeus;
 		navipiste kohde;
 		int toiminto;
 		double aika;
