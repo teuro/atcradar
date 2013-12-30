@@ -110,7 +110,15 @@ void lentokone::muuta_suuntaa(double aika) {
 
 void lentokone::liiku(double aika) {
     this->muuta_tilaa(aika);
-    this->tarkista_suunta_kohteeseen();
+
+    if (this->reitti.size()) {
+        if (this->kohde.nimi == this->anna_piste().nimi) {
+            this->tarkista_suunta_kohteeseen();
+        } else {
+            this->kohde = this->anna_piste();
+        }
+    }
+
 	paikka = apuvalineet::uusi_paikka(paikka, suunta, nopeus * (aika / 3600.0));
 }
 
@@ -161,7 +169,7 @@ void lentokone::lahesty(const kiitotie& baana) {
 
 void lentokone::tarkista_suunta_kohteeseen() {
 	if (this->reitti.size()) {
-		apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde.paikka);
+        apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde.paikka);
 
 		kaarto = kaarron_suunta(vektori_kohteeseen.suunta);
 		muuta_selvityssuuntaa(vektori_kohteeseen.suunta, kaarto);
