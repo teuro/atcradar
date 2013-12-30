@@ -117,13 +117,15 @@ void lentokone::liiku(double aika) {
         } else {
             this->kohde = this->anna_piste();
         }
+    } else if (this->lahestymisselvitys) {
+        this->lahesty();
     }
 
 	paikka = apuvalineet::uusi_paikka(paikka, suunta, nopeus * (aika / 3600.0));
 }
 
-void lentokone::aseta_navipiste(navipiste paikka) {
-	this->kohde = paikka;
+void lentokone::aseta_navipiste(navipiste piste) {
+	this->kohde = piste;
 }
 
 void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
@@ -149,21 +151,24 @@ int lentokone::kaarron_suunta(double suunta) {
 	return (k > 0) ? apuvalineet::VASEN : apuvalineet::OIKEA;
 }
 
-void lentokone::lahesty(const kiitotie& baana) {
-	lahestymisselvitys = true;
+void lentokone::lahesty() {
+    this->tarkista_suunta_kohteeseen();
+
+    this->poista_reitti();
 
 	if (apuvalineet::onko_alueella(paikka, this->baana.lahestymispiste, 0.01)) {
 		muuta_selvitysnopeutta(160.0);
-		aseta_navipiste(this->baana.hidastuspiste);
-		// TODO: Fix these
-		//muuta_selvityskorkeutta(kentta.korkeus);
+		this->aseta_navipiste(this->baana.hidastuspiste);
+		// TODO: Fix this
+		muuta_selvityskorkeutta(150.0);
 	} else if (apuvalineet::onko_alueella(paikka, this->baana.hidastuspiste, 0.01)) {
 		muuta_selvitysnopeutta(135.0);
-		aseta_navipiste(this->baana.alkupiste);
+		this->aseta_navipiste(this->baana.alkupiste);
 	} else if (apuvalineet::onko_alueella(paikka, this->baana.alkupiste, 0.01)) {
-		//korkeus = kentta.korkeus;
+		//TODO fgix this
+		korkeus = 150;
 		muuta_selvitysnopeutta(0.0);
-		aseta_navipiste(this->baana.loppupiste);
+		this->aseta_navipiste(this->baana.loppupiste);
 	}
 }
 
@@ -195,15 +200,15 @@ void lentokone::ota_selvitys(navipiste& piste) {
 	this->reitti.push(piste);
 }
 
+void lentokone::ota_selvitys(int toiminto, kiitotie& baana) {
+    this->lahestymisselvitys = true;
+    this->baana = baana;
+    this->aseta_navipiste(baana.lahestymispiste);
+}
+
 void lentokone::ota_selvitys(int toiminto) {
-	switch (toiminto) {
-    case apuvalineet::LAHESTYMIS:
-        this->lahestymisselvitys = true;
-        break;
-    case apuvalineet::OIKOTIE:
-        this->oikotie = true;
-        this->reitti.push(this->ulosmenopiste);
-    }
+    this->oikotie = true;
+    this->reitti.push(this->ulosmenopiste);
 }
 
 void lentokone::poista_reitti() {

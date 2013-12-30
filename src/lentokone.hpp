@@ -48,6 +48,7 @@ public:
 	void ota_selvitys(double suunta, int toiminto, int kaarto);
 	void ota_selvitys(double komento, int toiminto);
 	void ota_selvitys(navipiste& kohde);
+	void ota_selvitys(int toiminto, kiitotie& baana);
 	void ota_selvitys(int toiminto);
 
 	void liiku(double aika);
@@ -64,7 +65,7 @@ public:
 	void aseta_navipiste(navipiste paikka);
 	void aseta_navipiste(apuvalineet::piste paikka);
 
-	void lahesty(const kiitotie& baana);
+	void lahesty();
 
 	bool onko_porrastus;
 
