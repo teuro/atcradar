@@ -140,7 +140,7 @@ int PeliController::aja() {
                         peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto);
                         break;
                     case apuvalineet::LAHESTYMIS:
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto, peli.kentta.kiitotiet[peli.atis.laskukiitotie]);
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto, peli.kentta.kiitotiet[peli.atis.laskukiitotie], peli.kentta);
                         break;
                     default:
                         break;

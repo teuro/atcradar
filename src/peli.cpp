@@ -157,6 +157,7 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 		} else if (asiat[0] == "K") {
 			apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
 			kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"));
+			tmpa.liukupolku = 3.0;
 
 			kentta.kiitotiet.push_back(tmpa);
 		} else if (asiat[0] == "L") {
