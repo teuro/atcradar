@@ -71,7 +71,10 @@ public:
 
 	struct selvitys {
 		int kone_id;
-		std::string nimi;
+		double suunta;
+		double korkeus;
+		double nopeus;
+		navipiste kohde;
 		int toiminto;
 		double aika;
 		int kaarto;
@@ -144,7 +147,6 @@ public:
 
 	void aseta_virhe(int virhe);
 	std::vector <std::string> lataa_pilvet(std::string pilvet);
-	enum lukeminen { SUUNTA = 1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0 };
 	enum virheet { VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA };
 private:
 		void lataa_kentta(std::string kentta);

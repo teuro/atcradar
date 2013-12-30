@@ -71,70 +71,32 @@ int PeliController::aja() {
 		}
 
 		if (ohjelma.lue_nappi(Ohjelma::NAPPI_F5)) {
-			peli.toiminto = Peli::SUUNTA;
+			peli.toiminto = apuvalineet::SUUNTA;
 		}
 		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F7)) {
-			peli.toiminto = Peli::NOPEUS;
+			peli.toiminto = apuvalineet::NOPEUS;
 		}
 		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F8)) {
-			peli.toiminto = Peli::KORKEUS;
+			peli.toiminto = apuvalineet::KORKEUS;
 		}
 
 		peli.syote = ohjelma.lue_syote(); //lukija.lue_syote();
 
 		int valittu_kone = peli.etsi_valittu_kone();
+
 		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER) && valittu_kone >= 0) {
-			// TODO: Fix reaktioaika
-//			peli.koneet[peli.etsi_valittu_kone()].reaktioaika = pelin_kello + apuvalineet::arvo_luku(4, 10);
 			std::string komento = ohjelma.anna_viesti();// lukija.anna_viesti();
 
-			if (peli.toiminto == Peli::KORKEUS) {
-				if (komento.length() == 2 || komento.length() == 3) {
-					double luku = apuvalineet::luvuksi<double>(komento) * 100;
-					komento = apuvalineet::tekstiksi(luku);
-				}
-			}
+			peli.selvitykset.push_back(anna_selvitys(komento, peli.toiminto));
+			peli.selvitykset.back().kone_id = valittu_kone;
+			peli.selvitykset.back().aika = ohjelma.sekunnit() + 2;
 
-			if ((komento == "ILS" || komento == "ils") && peli.koneet[valittu_kone].tyyppi == Peli::SAAPUVA) {
-				peli.toiminto = Peli::LAHESTYMIS;
-			}
-			else if ((komento == "DCT" || komento == "dct") && peli.koneet[valittu_kone].tyyppi == Peli::LAHTEVA) {
-				peli.toiminto = Peli::OIKOTIE;
-			}
-			else if (komento == "HOLD" || komento == "hold") {
-				peli.toiminto = Peli::ODOTUS;
-			}
-			else if (komento == "OFF" || komento == "off") {
-				peli.toiminto = Peli::POIS;
-			}
-
-			int kaarto = 0;
-
-			if ((komento.substr(0, 1) == "V" || komento.substr(0, 1) == "v") && komento.length() < 5) {
-				kaarto = VASEN;
-				komento = komento.substr(1, std::string::npos);
-			} else if ((komento.substr(0, 1) == "O" || komento.substr(0, 1) == "o") && komento.length() < 5) {
-				kaarto = OIKEA;
-				komento = komento.substr(1, std::string::npos);
-			} else {
-				kaarto = VASEN;
-			}
-
-			Peli::selvitys tmp_selvitys;
-
-			tmp_selvitys.kone_id = valittu_kone;
-			tmp_selvitys.nimi = komento;
-			tmp_selvitys.toiminto = peli.toiminto;
-			tmp_selvitys.aika = ohjelma.sekunnit() + apuvalineet::arvo_luku(3, 10);
-			tmp_selvitys.kaarto = kaarto;
-
-			peli.selvitykset.push_back(tmp_selvitys);
 			peli.lisaa_selvityksia();
 			ohjelma.odota(150);
 
 			//lukija.tyhjenna();
 			ohjelma.tyhjenna_viesti();
-			peli.toiminto = Peli::TYHJA;
+			peli.toiminto = apuvalineet::TYHJA;
 			peli.virheteksti = " ";
 		}
 
@@ -154,21 +116,34 @@ int PeliController::aja() {
 		}
 
 		for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
+		//	std::clog << peli.selvitykset[k].kone_id << " " << (int)peli.selvitykset[k].aika << " " << (int)ohjelma.sekunnit() << " " << peli.selvitykset[k].kohde.nimi << std::endl;
 			if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
-				// TODO: Fix this
-				/*switch (peli.selvitykset[k].toiminto) {
-                    case peli.koneet[peli.selvitykset[k].kone_id].SUUNTA:
-                        double tmp_suunta = apuvalineet::luvuksi<double>(peli.selvitykset[k].nimi);
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(tmp_suunta, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
-                        peli.selvitykset.erase(peli.selvitykset.begin() + k);
+				switch (peli.selvitykset[k].toiminto) {
+					case apuvalineet::KOHDE:
+						peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].kohde);
+						peli.selvitykset.erase(peli.selvitykset.begin()+k);
+						break;
+                    case apuvalineet::SUUNTA:
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].suunta, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
+                        peli.selvitykset.erase(peli.selvitykset.begin()+k);
                         break;
-                    case peli.koneet[peli.selvitykset[k].kone_id].KORKEUS:
-                    case peli.koneet[peli.selvitykset[k].kone_id].NOPEUS:
-                        double tmp_muutos = apuvalineet::luvuksi<double>(peli.selvitykset[k].nimi);
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(tmp_suunta, peli.selvitykset[k].toiminto);
-                        peli.selvitykset.erase(peli.selvitykset.begin() + k);
-                    case
-				}*/
+                    case apuvalineet::NOPEUS:
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nopeus, peli.selvitykset[k].toiminto);
+                        peli.selvitykset.erase(peli.selvitykset.begin()+k);
+                        break;
+                    case apuvalineet::KORKEUS:
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].korkeus, peli.selvitykset[k].toiminto);
+                        peli.selvitykset.erase(peli.selvitykset.begin()+k);
+                        break;
+                    case apuvalineet::OIKOTIE:
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto);
+                        break;
+                    case apuvalineet::LAHESTYMIS:
+                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto);
+                        break;
+                    default:
+                        break;
+				}
             }
 		}
 
@@ -181,9 +156,6 @@ int PeliController::aja() {
 		view.piirra();
 		ohjelma.odota();
 	}
-
-	// TODO: Tarvitaanko tätä?
-	ohjelma.tyhjenna_syote();
 
 	logita_peliajat();
 
@@ -213,4 +185,62 @@ void PeliController::pyyda_atis() {
 	AtisView atisView(view.piirtopinta, kieli, peli);
 	AtisController atiscontroller(asetukset, kieli, ohjelma, atisView, peli);
 	atiscontroller.aja();
+}
+
+Peli::selvitys PeliController::anna_selvitys(std::string komento, int toiminto) {
+	if ((komento == "ILS" || komento == "ils")) {
+		toiminto = apuvalineet::LAHESTYMIS;
+	}
+	else if ((komento == "DCT" || komento == "dct")) {
+		toiminto = apuvalineet::OIKOTIE;
+	}
+	else if (komento == "HOLD" || komento == "hold") {
+		toiminto = apuvalineet::ODOTUS;
+	}
+	else if (komento == "OFF" || komento == "off") {
+		toiminto = apuvalineet::POIS;
+	}
+
+	int kaarto;
+	std::vector <navipiste> :: iterator kohde;
+
+	if (komento.substr(0, 1) == "O") {
+        kaarto = apuvalineet::OIKEA;
+        komento = komento.substr(1);
+	} else if (komento.substr(0, 1) == "V") {
+        kaarto = apuvalineet::VASEN;
+        komento = komento.substr(1);
+	} else {
+        kaarto = apuvalineet::VASEN;
+	}
+
+    if (komento.length() == 5 && toiminto == apuvalineet::SUUNTA) {
+        kohde = std::find(peli.sisapisteet.begin(), peli.sisapisteet.end(), komento);
+
+        if (kohde != peli.navipisteet.end()) {
+            toiminto = apuvalineet::KOHDE;
+        }
+    }
+
+	Peli::selvitys tmp_selvitys;
+
+	switch (toiminto) {
+		case apuvalineet::KOHDE:
+			tmp_selvitys.kohde = *kohde;
+			break;
+        case apuvalineet::NOPEUS:
+            tmp_selvitys.nopeus = apuvalineet::luvuksi<double>(komento);
+            break;
+        case apuvalineet::KORKEUS:
+            tmp_selvitys.korkeus = apuvalineet::luvuksi<double>(komento);
+            break;
+        case apuvalineet::SUUNTA:
+            tmp_selvitys.suunta = apuvalineet::luvuksi<double>(komento);
+            tmp_selvitys.kaarto = kaarto;
+            break;
+	}
+
+	tmp_selvitys.toiminto = toiminto;
+
+	return tmp_selvitys;
 }

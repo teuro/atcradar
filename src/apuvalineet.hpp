@@ -60,6 +60,9 @@ namespace apuvalineet {
 	int pyorista(double luku, int jaollisuus);
 	std::vector <std::string> pilko_rivi(std::string rivi, std::string erotin);
 	bool onko_alueella(const piste& a, const piste& b, double sade = 0.2);
+	enum lukeminen { SUUNTA = 1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, KOHDE, TYHJA = 0 };
+	const int VASEN = -1;
+	const int OIKEA = 1;
 }
 
 #endif

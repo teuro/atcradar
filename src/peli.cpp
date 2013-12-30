@@ -270,7 +270,7 @@ void Peli::hoida_koneet() {
 
 		if (it->odotuskuvio > -1 && it->odotuskuvio < ohjelma.sekunnit()) {
 			it->odotuskuvio += 120;
-			it->ota_selvitys(it->anna_suunta() + 180, OIKEA);
+			it->ota_selvitys(it->anna_suunta() + 180, apuvalineet::OIKEA);
 		}
 
 		if (it->tyyppi == Peli::LAHTEVA && it->anna_korkeus() < 1200 && it->odotus == false) {
@@ -279,9 +279,9 @@ void Peli::hoida_koneet() {
 			}
 
 			if (it->nopeus > 150) {
-				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunousukorkeus, it->KORKEUS);
-				it->ota_selvitys(asetukset.anna_asetus("alkunousunopeus"), it->NOPEUS);
-				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunoususuunta, it->SUUNTA);
+				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunousukorkeus, apuvalineet::KORKEUS);
+				it->ota_selvitys(asetukset.anna_asetus("alkunousunopeus"), apuvalineet::NOPEUS);
+				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunoususuunta, apuvalineet::SUUNTA);
 			}
 		}
 

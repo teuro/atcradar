@@ -10,9 +10,6 @@
 #include <queue>
 #include <fstream>
 
-const int VASEN = -1;
-const int OIKEA = 1;
-
 class lentokone {
 public:
 	std::string kutsutunnus;
@@ -35,7 +32,7 @@ public:
 	void tarkista_suunta_kohteeseen();
 	void muuta_selvityskorkeutta(double korkeus);
 	void muuta_selvitysnopeutta(double nopeus);
-	void muuta_selvityssuuntaa(double suunta, int kaarto = VASEN);
+	void muuta_selvityssuuntaa(double suunta, int kaarto = apuvalineet::VASEN);
     void muuta_tilaa(double aika);
 	bool oikotie;
     enum virheet {VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA};
@@ -76,7 +73,7 @@ public:
 	}
 
     lentokone& operator =(const lentokone&) { return *this; }
-    enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
+    //enum lukeminen {SUUNTA=1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, TYHJA = 0};
 
     double anna_nopeus() { return this->nopeus; }
     double anna_suunta() { return this->suunta; }
