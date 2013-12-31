@@ -25,9 +25,6 @@ int PeliController::aja() {
 	// Nollataan kello.
 	double pelin_kello = ohjelma.sekunnit(true);
 
-	// TODO: Tarvitaanko tätä tyhjennystä?
-	ohjelma.tyhjenna_syote();
-
 	std::vector <ajastin> ajastimet;
 	ajastimet.push_back(ajastin("metar", asetukset.anna_asetus("koska_metar"), 0));
 
@@ -52,7 +49,7 @@ int PeliController::aja() {
 				peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
 			}
 
-			std::clog << kieli.anna_teksti(Kieli::TEKSTI_UUSI_KONE_TULEE) << (peli.koska_uusi_kone - alku) << kieli.anna_teksti(Kieli::TEKSTI_SEKUNNIT) << std::endl;
+			std::clog << kieli.anna_teksti(Kieli::TEKSTI_UUSI_KONE_TULEE) << " " << (peli.koska_uusi_kone - alku) << " " << kieli.anna_teksti(Kieli::TEKSTI_SEKUNNIT) << std::endl;
 		}
 
 		if (alku == peli.koska_metar) {
