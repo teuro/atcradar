@@ -68,6 +68,7 @@ public:
 		timer = new QTimer;
 		connect(timer, SIGNAL(timeout()), SLOT(animate()));
 		timer->start(frameMs);
+        selected_lentokone = NULL;
 	}
 
 protected:

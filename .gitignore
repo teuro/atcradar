@@ -1,5 +1,6 @@
 ohjelma/radar
 ohjelma/*.txt
+ohjelma/*.dll
 *.o
 .depend
 

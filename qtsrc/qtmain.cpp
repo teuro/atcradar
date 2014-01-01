@@ -19,5 +19,5 @@ int main(int argc, char *argv[])
     window.setWindowTitle("ATCRADAR");
     window.show();
 
-    return app.exec();
+    return app.exec(); 
 }
