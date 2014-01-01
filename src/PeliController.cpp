@@ -39,7 +39,7 @@ int PeliController::aja() {
 		kasittele_hiiren_nappi(hiiri);
 
 		double nyt = ohjelma.sekunnit();
-		jatka = aja(nyt - prev);
+		jatka = kasittele_aikaa(nyt - prev);
 		prev = nyt;
 
 		peli.syote = ohjelma.lue_syote();
@@ -104,10 +104,9 @@ bool PeliController::kasittele_komento(const std::string& komento)
 	return true;
 }
 
-// aja(), jota kutsutaan jatkuvasti antaen parametrina
-// kulunut aika. Palautta false, jos peli päättyy.
-bool PeliController::aja(double intervallisek) {
-
+// kasittele_aikaa(), jota kutsutaan jatkuvasti antaen parametrina
+// kulunut aikaintervalli. Palauttaa false, jos peli päättyy.
+bool PeliController::kasittele_aikaa(double intervallisek) {
 	pelin_kello += intervallisek;
 	if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
 		std::clog << kieli.anna_teksti(Kieli::TEKSTI_PORRASTUSVIRHEET) << std::endl;

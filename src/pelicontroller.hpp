@@ -25,14 +25,14 @@ public:
 	{
 	}
 	int aja();
-	bool aja(double sekunnit);
 	
-	void pyyda_atis();
-	Peli::selvitys anna_selvitys(std::string komento, int toiminto);
-
+	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
 	bool kasittele_nappi(IOhjelma::nappi nappi);
 	bool kasittele_komento(const std::string& komento);
+
+	void pyyda_atis();
+	Peli::selvitys anna_selvitys(std::string komento, int toiminto);
 private:
 	void logita_peliajat();
 	double pelin_kello;
