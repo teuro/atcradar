@@ -1,14 +1,17 @@
-#include <QApplication>
-#include <QLabel>
-#include <QSlider>
-#include <QWidget>
-#include <QPushButton>
+#ifndef _LEVELMENU_H_
+#define _LEVELMENU_H_
+
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QPushButton>
 
 class LevelMenu : public QWidget
 {
 	Q_OBJECT
 public:
-	LevelMenu()
+	LevelMenu(QWidget* parent = 0) : QWidget(parent)
 	{
 		slider = new QSlider(Qt::Horizontal, this);
 		slider->setGeometry(50, 50, 130, 30);
@@ -37,8 +40,12 @@ public:
 public slots:
 	void OnOkPressed()
 	{
-		close();
+		emit levelSelected(2);
+		//close();
 	}
+
+signals:
+	void levelSelected(int level);
 
 private:
 	QLabel* title;
@@ -47,3 +54,4 @@ private:
 	QPushButton* okButton;
 };
 
+#endif
