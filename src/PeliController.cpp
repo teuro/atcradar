@@ -35,8 +35,11 @@ int PeliController::aja() {
 	bool jatka = true;
 	while (jatka)
 	{
-		apuvalineet::piste hiiri = ohjelma.anna_hiiri();
-		kasittele_hiiren_nappi(hiiri);
+		if (ohjelma.lue_hiiri())
+		{
+			apuvalineet::piste hiiri = ohjelma.anna_hiiri();
+			kasittele_hiiren_nappi(hiiri);
+		}
 
 		double nyt = ohjelma.sekunnit();
 		jatka = kasittele_aikaa(nyt - prev);

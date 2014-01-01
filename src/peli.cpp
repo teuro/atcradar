@@ -191,13 +191,11 @@ std::string Peli::generoi_tunnus() {
 }
 
 void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
-	if (ohjelma.lue_hiiri()) {
-		for (unsigned int i = 0; i < koneet.size(); ++i) {
-			koneet[i].valittu = false;
+	for (unsigned int i = 0; i < koneet.size(); ++i) {
+		koneet[i].valittu = false;
 
-			if (apuvalineet::onko_alueella(hiiri, koneet[i].paikka)) {
-				koneet[i].valittu = true;
-			}
+		if (apuvalineet::onko_alueella(hiiri, koneet[i].paikka)) {
+			koneet[i].valittu = true;
 		}
 	}
 }
