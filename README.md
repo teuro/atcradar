@@ -19,5 +19,5 @@ Pelin kulku:
 10. Lähtevän koneen ollessa yli 5000 jalkaa voit antaa komennon DCT, jolla kone alkaa hakeutumaan itsxestään kohti uloslentopistettä.
 11. Koneiden ympärillä oleva ympyrä on porrastusminimi, joka ei saa alittua, mikäöi koneiden korkeusero on alle 1000 jalkaa. 
 12. Pelissä saat tehdä korkeintaan 4 porrastusvirhettä, jonka jälkeen 5. aiheuttaa pelin loppumisen.
-13. Pelin saa loppumaanm painamalla ESC-näppäintä milloin vain. Tällöin ruutuun tulostetaan kaikkien koneiden alueelle tuloaika ja poistumisaika, joista lasketaan alueella oloaika sekä annettujen selvitysten määrä.
+13. Pelin saa loppumaan painamalla ESC-näppäintä milloin vain. Tällöin ruutuun tulostetaan kaikkien koneiden alueelle tuloaika ja poistumisaika, joista lasketaan alueella oloaika sekä annettujen selvitysten määrä.
 

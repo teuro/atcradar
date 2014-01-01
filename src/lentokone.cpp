@@ -9,7 +9,6 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 
 	this->kohde.paikka.x = 0;
 	this->kohde.paikka.y = 0;
-//	this->reaktioaika = apuvalineet::arvo_luku(3, 8);
 
 	onko_porrastus = true;
 	this->tyyppi = tyyppi;
@@ -76,14 +75,14 @@ void lentokone::muuta_korkeutta(double aika) {
 			korkeus = selvityskorkeus;
 		}
 	} else {
-		//double etaisyys = apuvalineet::etaisyys(paikka, baana.alkupiste);
+		double etaisyys = apuvalineet::etaisyys(paikka, baana.alkupiste);
 
 		// TODO: Fix this
-		/*double koneen_korkeus = peli.kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(this->baana.liukupolku)));
+		double koneen_korkeus = this->kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(this->baana.liukupolku)));
 
 		if (this->korkeus > koneen_korkeus) {
 			this->korkeus = koneen_korkeus;
-		}*/
+		}
 	}
 }
 
@@ -117,13 +116,15 @@ void lentokone::liiku(double aika) {
         } else {
             this->kohde = this->anna_piste();
         }
+    } else if (this->lahestymisselvitys) {
+        this->lahesty();
     }
 
 	paikka = apuvalineet::uusi_paikka(paikka, suunta, nopeus * (aika / 3600.0));
 }
 
-void lentokone::aseta_navipiste(navipiste paikka) {
-	this->kohde = paikka;
+void lentokone::aseta_navipiste(navipiste piste) {
+	this->kohde = piste;
 }
 
 void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
@@ -149,26 +150,27 @@ int lentokone::kaarron_suunta(double suunta) {
 	return (k > 0) ? apuvalineet::VASEN : apuvalineet::OIKEA;
 }
 
-void lentokone::lahesty(const kiitotie& baana) {
-	lahestymisselvitys = true;
+void lentokone::lahesty() {
+    this->tarkista_suunta_kohteeseen();
+
+    this->poista_reitti();
 
 	if (apuvalineet::onko_alueella(paikka, this->baana.lahestymispiste, 0.01)) {
-		muuta_selvitysnopeutta(160.0);
-		aseta_navipiste(this->baana.hidastuspiste);
-		// TODO: Fix these
-		//muuta_selvityskorkeutta(kentta.korkeus);
+		this->muuta_selvitysnopeutta(160.0);
+		this->aseta_navipiste(this->baana.hidastuspiste);
+		this->muuta_selvityskorkeutta(this->kentta.korkeus);
 	} else if (apuvalineet::onko_alueella(paikka, this->baana.hidastuspiste, 0.01)) {
-		muuta_selvitysnopeutta(135.0);
-		aseta_navipiste(this->baana.alkupiste);
+		this->muuta_selvitysnopeutta(135.0);
+		this->aseta_navipiste(this->baana.alkupiste);
 	} else if (apuvalineet::onko_alueella(paikka, this->baana.alkupiste, 0.01)) {
-		//korkeus = kentta.korkeus;
-		muuta_selvitysnopeutta(0.0);
-		aseta_navipiste(this->baana.loppupiste);
+		this->korkeus = this->kentta.korkeus;
+		this->muuta_selvitysnopeutta(0.0);
+		this->aseta_navipiste(this->baana.loppupiste);
 	}
 }
 
 void lentokone::tarkista_suunta_kohteeseen() {
-	if (this->reitti.size()) {
+	if (this->reitti.size() || (this->kohde.paikka.x > 0 && this->kohde.paikka.y > 0)) {
         apuvalineet::vektori vektori_kohteeseen = apuvalineet::suunta_vektori(this->paikka, this->kohde.paikka);
 
 		kaarto = kaarron_suunta(vektori_kohteeseen.suunta);
@@ -195,15 +197,16 @@ void lentokone::ota_selvitys(navipiste& piste) {
 	this->reitti.push(piste);
 }
 
+void lentokone::ota_selvitys(int toiminto, kiitotie& baana, lentokentta& kentta) {
+    this->lahestymisselvitys = true;
+    this->baana = baana;
+    this->kentta = kentta;
+    this->aseta_navipiste(baana.lahestymispiste);
+}
+
 void lentokone::ota_selvitys(int toiminto) {
-	switch (toiminto) {
-    case apuvalineet::LAHESTYMIS:
-        this->lahestymisselvitys = true;
-        break;
-    case apuvalineet::OIKOTIE:
-        this->oikotie = true;
-        this->reitti.push(this->ulosmenopiste);
-    }
+    this->oikotie = true;
+    this->reitti.push(this->ulosmenopiste);
 }
 
 void lentokone::poista_reitti() {

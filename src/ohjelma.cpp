@@ -17,15 +17,12 @@ void Ohjelma::alku() {
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	//asetukset.lataa_asetukset("data/asetukset.ini");
-
 	SDL_EnableUNICODE(SDL_ENABLE);
 
 	// Nollataan sekuntilaskuri.
 	sekunnit(true);
-	std::ofstream ulos("selvitykset.txt", std::ios::out);
-	ulos << "";
-	ulos.close();
+
+	std::srand(std::time(NULL));
 }
 
 // Lopetusfunktio.

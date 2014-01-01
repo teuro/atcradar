@@ -20,14 +20,19 @@ public:
 	void muuta_korkeutta(double aika);
 	void muuta_nopeutta(double aika);
 	void muuta_suuntaa(double aika);
+	void poista_reitti();
+
 	double nopeus_muutos;
 	double korkeus_muutos;
 	double suunta_muutos;
-	void poista_reitti();
-    double selvityssuunta;
+
+	double selvityssuunta;
 	double selvityskorkeus;
 	double selvitysnopeus;
+
 	kiitotie baana;
+	lentokentta kentta;
+
 	int kaarto;
 	void tarkista_suunta_kohteeseen();
 	void muuta_selvityskorkeutta(double korkeus);
@@ -48,6 +53,7 @@ public:
 	void ota_selvitys(double suunta, int toiminto, int kaarto);
 	void ota_selvitys(double komento, int toiminto);
 	void ota_selvitys(navipiste& kohde);
+	void ota_selvitys(int toiminto, kiitotie& baana, lentokentta& kentta);
 	void ota_selvitys(int toiminto);
 
 	void liiku(double aika);
@@ -64,7 +70,7 @@ public:
 	void aseta_navipiste(navipiste paikka);
 	void aseta_navipiste(apuvalineet::piste paikka);
 
-	void lahesty(const kiitotie& baana);
+	void lahesty();
 
 	bool onko_porrastus;
 

@@ -102,9 +102,8 @@ void Peli::luo_kone() {
 			odotus = false;
 		}
 
-		koneet.push_back(lentokone(/**this, ohjelma, asetukset, */tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
+		koneet.push_back(lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
 		koneet.back().ulosmenopiste = navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())];
-		//koneet.back().polttoaine = apuvalineet::arvo_luku(8000, 25000);
 
 		if (koneet.back().odotus) {
 			odottavat.push(koneet.back());
@@ -116,8 +115,7 @@ void Peli::luo_kone() {
 			i = apuvalineet::arvo_luku(0, navipisteet.size());
 		} while (!onko_vapaata(SAAPUVA, i));
 
-        koneet.push_back(lentokone(/**this, ohjelma, asetukset, */tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
-		//koneet.back().polttoaine = apuvalineet::arvo_luku(3300, 5200);
+        koneet.push_back(lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
 	}
 
 	tilasto tmp;
@@ -157,6 +155,7 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 		} else if (asiat[0] == "K") {
 			apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
 			kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"));
+			tmpa.liukupolku = 3.0;
 
 			kentta.kiitotiet.push_back(tmpa);
 		} else if (asiat[0] == "L") {

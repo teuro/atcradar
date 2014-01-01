@@ -18,6 +18,7 @@ public:
 	double pituus;
 	double alkunousukorkeus;
 	double alkunoususuunta;
+	double liukupolku;
 
 	kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunousuuunta, double lahestymispiste, double hidastuspiste);
     kiitotie(){}

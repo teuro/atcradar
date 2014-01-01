@@ -10,6 +10,8 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 class IOhjelma
 {
