@@ -34,18 +34,22 @@ class PeliView : public QWidget
 	// define mouseClick signal
 	//	void mouseClickEvent();
 
+	// World area dimensions in meters
 	static const int world_width = 10000;
 	static const int world_height = 10000;
 
+	// Display are dimensions in pixels
 	static const int viewport_width = 700;
 	static const int viewport_height = 700;
 
+	// Frame duration in milliseconds
 	static const int frameMs = 1000 / 50;
 
 public:
 	// constructor
 	PeliView(QWidget *aParent = 0)
 	{
+		// Generate a number of objects in random locations with random velocities
 		for (int i = 0; i < 15; i++)
 		{
 			lentokone* lk = new lentokone();
@@ -60,6 +64,7 @@ public:
 			m_lentokoneet.push_back(lk);
 		}
 
+		// Timer to draw the window
 		timer = new QTimer;
 		connect(timer, SIGNAL(timeout()), SLOT(animate()));
 		timer->start(frameMs);
@@ -67,14 +72,9 @@ public:
 
 protected:
 	void mouseMoveEvent(QMouseEvent* e) {
+		// Mouse has moved while the user presses the mouse button
+		// We store mouse position and redraw the screen
 		m_endPoint = e->pos();
-		if (m_mouseClick)
-		{
-			/*// Draw line, I wonder if we can do it directly here
-			QPainter p(this);
-			p.setPen(Qt::green);
-			p.drawLine(m_lastPoint.x(), m_lastPoint.y(), pos.x(), pos.y());*/
-		}
 		update();
 	}
 
@@ -97,10 +97,10 @@ protected:
 			p.drawEllipse(QPointF(lk->x / (double)world_width * (double)viewport_width, lk->y / (double)world_height * (double)viewport_height), 10, 10);
 		}
 
+		// Draw line between selected lentokone and current mouse position
 		if (selected_lentokone)
 		{
 			auto lk = selected_lentokone;
-			// Draw line between selected lentokone and current mouse position
 			p.setPen(Qt::green);
 			p.drawLine(lk->x / (double)world_width * (double)viewport_width, lk->y / (double)world_height * (double)viewport_height, m_endPoint.x(), m_endPoint.y());
 		}
@@ -111,6 +111,7 @@ protected:
 	{
 		if (selected_lentokone)
 		{
+			// Unselect any selected lentokone and reset the acceleration
 			selected_lentokone->ax = 0;
 			selected_lentokone->ay = 0;
 			selected_lentokone = NULL;
@@ -150,7 +151,7 @@ public slots:
 	{
 		if (selected_lentokone)
 		{
-			// accelerate lentokone to the direction of mouse drag
+			// accelerate lentokone to the direction of mouse location
 			selected_lentokone->ax = (double)m_endPoint.x() * (double)world_width / (double)viewport_width - selected_lentokone->x;
 			selected_lentokone->ay = (double)m_endPoint.y() * (double)world_height / (double)viewport_height - selected_lentokone->y;
 		}
