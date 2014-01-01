@@ -151,21 +151,21 @@ int lentokone::kaarron_suunta(double suunta) {
 }
 
 void lentokone::lahesty() {
-    this->tarkista_suunta_kohteeseen();
+    tarkista_suunta_kohteeseen();
 
-    this->poista_reitti();
+    poista_reitti();
 
-	if (apuvalineet::onko_alueella(paikka, this->baana.lahestymispiste, 0.01)) {
-		this->muuta_selvitysnopeutta(160.0);
-		this->aseta_navipiste(this->baana.hidastuspiste);
-		this->muuta_selvityskorkeutta(this->kentta.korkeus);
-	} else if (apuvalineet::onko_alueella(paikka, this->baana.hidastuspiste, 0.01)) {
-		this->muuta_selvitysnopeutta(135.0);
-		this->aseta_navipiste(this->baana.alkupiste);
-	} else if (apuvalineet::onko_alueella(paikka, this->baana.alkupiste, 0.01)) {
-		this->korkeus = this->kentta.korkeus;
-		this->muuta_selvitysnopeutta(0.0);
-		this->aseta_navipiste(this->baana.loppupiste);
+	if (apuvalineet::onko_alueella(paikka, baana.lahestymispiste, 0.01)) {
+		muuta_selvitysnopeutta(160.0);
+		aseta_navipiste(baana.hidastuspiste);
+		muuta_selvityskorkeutta(kentta.korkeus);
+	} else if (apuvalineet::onko_alueella(paikka, baana.hidastuspiste, 0.01)) {
+		muuta_selvitysnopeutta(135.0);
+		aseta_navipiste(baana.alkupiste);
+	} else if (apuvalineet::onko_alueella(paikka, baana.alkupiste, 0.01)) {
+		korkeus = kentta.korkeus;
+		muuta_selvitysnopeutta(0.0);
+		aseta_navipiste(baana.loppupiste);
 	}
 }
 
@@ -179,6 +179,8 @@ void lentokone::tarkista_suunta_kohteeseen() {
 }
 
 void lentokone::ota_selvitys(double komento, int toiminto) {
+	// TODO: Voisiko tämän metodin sijaan kutsua suoraan: muuta_selvityskorkeutta(komento) ja muuta_selvitysnopeutta(komento)
+	// Sen jälkeen tämän metodin voisi poistaa.
 	switch (toiminto) {
 		case apuvalineet::KORKEUS:
 			muuta_selvityskorkeutta(komento);
@@ -190,6 +192,7 @@ void lentokone::ota_selvitys(double komento, int toiminto) {
 }
 
 void lentokone::ota_selvitys(double suunta, int toiminto, int kaarto) {
+	// TODO: Tämä metodi jättää toiminto-parametrin kokonaan huomioimatta. Voisiko sen poistaa?
 	this->muuta_selvityssuuntaa(suunta, kaarto);
 }
 
@@ -198,14 +201,16 @@ void lentokone::ota_selvitys(navipiste& piste) {
 }
 
 void lentokone::ota_selvitys(int toiminto, kiitotie& baana, lentokentta& kentta) {
-    this->lahestymisselvitys = true;
+	// TODO: Tämä metodi jättää toiminto-parametrin kokonaan huomioimatta. Voisiko sen poistaa?
+	this->lahestymisselvitys = true;
     this->baana = baana;
     this->kentta = kentta;
     this->aseta_navipiste(baana.lahestymispiste);
 }
 
 void lentokone::ota_selvitys(int toiminto) {
-    this->oikotie = true;
+	// TODO: Tämä metodi jättää toiminto-parametrin kokonaan huomioimatta. Voisiko sen poistaa?
+	this->oikotie = true;
     this->reitti.push(this->ulosmenopiste);
 }
 

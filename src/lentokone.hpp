@@ -11,11 +11,15 @@
 #include <fstream>
 
 class lentokone {
+private:
+
 public:
-	std::string kutsutunnus;
+	lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
+
 	double suunta;
 	double korkeus;
 	double nopeus;
+	std::string kutsutunnus;
 	int kaarron_suunta(double suunta);
 	void muuta_korkeutta(double aika);
 	void muuta_nopeutta(double aika);
@@ -31,6 +35,10 @@ public:
 	double selvitysnopeus;
 
 	kiitotie baana;
+	// TODO: Tämä on vähän vaarallinen. Kenttää ei ole asetettu ennenkuin on kutsuttu tiettyä ota_selvitys-metodia
+	// Sitä kuitenkin käytetään esim. muuta_korkeutta metodissa.
+	// Lisäksi asetuksen jälkeen tämä on _kopio_ asetetusta kentästä, jolloin alkuperäisen olion muutokset eivät
+	// näy täällä. Pitäisikö tämä olla referenssi ja pitäisikö se asettaa jo konstruktorissa? Sama saattaa päteä baanalle.
 	lentokentta kentta;
 
 	int kaarto;
@@ -48,8 +56,8 @@ public:
 	navipiste kohde;
 	navipiste ulosmenopiste;
 
-	lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
-
+	// TODO: On vähän sekavaa miksi täytyy olla viisi ota_selvitys-metodia, joilla kaikilla vähän eri parametrit, joista myös
+	// osa jätetään käyttämättä. Saisiko tätä selkeytettyä? Voisiko metodit nimetä eri tavalla? Saisiko osan poistettua? Riittääkö yksi?
 	void ota_selvitys(double suunta, int toiminto, int kaarto);
 	void ota_selvitys(double komento, int toiminto);
 	void ota_selvitys(navipiste& kohde);
