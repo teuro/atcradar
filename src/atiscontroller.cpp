@@ -11,17 +11,22 @@ int AtisController::aja() {
 		peli.syote = ohjelma.lue_syote();
 		ohjelma.odota(20);
 
-		if (ohjelma.lue_nappi(Ohjelma::NAPPI_F5)) {
+		auto nappi = ohjelma.lue_nappi();
+
+		switch (nappi)
+		{
+		case IOhjelma::NAPPI_F5:
 			toiminto = Peli::LAHTO;
-		}
-		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F7)) {
+			break;
+		case IOhjelma::NAPPI_F7:
 			toiminto = Peli::LASKU;
-		}
-		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F8)) {
+			break;
+		case IOhjelma::NAPPI_F8:
 			toiminto = Peli::SIIRTOPINTA;
+			break;
 		}
 
-		if (ohjelma.anna_viesti().length() > 1 && ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER)) {
+		if (ohjelma.anna_viesti().length() > 1 && nappi == IOhjelma::NAPPI_ENTER) {
 
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;

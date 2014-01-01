@@ -47,28 +47,82 @@ void Ohjelma::odota(unsigned int ms) {
 	SDL_Delay(ms);
 }
 
+IOhjelma::nappi SDKKeyToNappi(SDLKey key)
+{
+	switch (key) {
+	case SDLK_ESCAPE: return IOhjelma::NAPPI_ESCAPE;
+	case SDLK_RETURN: return IOhjelma::NAPPI_ENTER;
+	case SDLK_LEFT: return IOhjelma::NAPPI_VASEN;
+	case SDLK_RIGHT: return IOhjelma::NAPPI_OIKEA;
+	case SDLK_DOWN: return IOhjelma::NAPPI_ALAS;
+	case SDLK_UP: return IOhjelma::NAPPI_YLOS;
+	default: return IOhjelma::NAPPI_MUU;
+	}
+}
+
+void Ohjelma::process_keyboard(bool wait = false)
+{
+	SDL_Event event;
+	while (SDL_PollEvent(&event) || (wait && SDL_WaitEvent(&event))) {
+		if (event.type == SDL_KEYDOWN)
+		{
+			if (event.key.keysym.unicode == (Uint16)' ' ||
+				((event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9')) ||
+				((event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Ä')) ||
+				((event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z')))
+			{
+				std::clog << "merkki" << std::endl;
+				if (syote.length() <= 16)
+				{
+					//Append the character
+					syote += (char)event.key.keysym.unicode;
+				}
+			}
+			else if (event.key.keysym.sym == SDLK_BACKSPACE)
+			{
+				std::clog << "backspace" << std::endl;
+				if (syote.length() != 0)
+				{
+					//Remove a character from the end
+					syote.erase(syote.length() - 1);
+				}
+			}
+			else {
+				nappi nappi = SDKKeyToNappi(event.key.keysym.sym);
+				std::clog << "muu " << nappi << std::endl;
+				keyboard_buffer.push_back(nappi);
+				break;
+			}
+		}
+	}
+}
+
+Ohjelma::nappi Ohjelma::lue_nappi() {
+	process_keyboard(false);
+
+	if (!keyboard_buffer.empty())
+	{
+		Ohjelma::nappi nappi = *keyboard_buffer.begin();
+		keyboard_buffer.pop_front();
+		return nappi;
+	}
+	else {
+		return nappi::NAPPI_MUU;
+	}
+}
+
 // Lukee seuraavan napinpainalluksen.
 Ohjelma::nappi Ohjelma::odota_nappi() {
 	// Odotellaan, kunnes tulee napinpainallus.
-	SDL_Event e;
-	while (SDL_WaitEvent(&e)) {
-		if (e.type != SDL_KEYDOWN) continue;
-		switch (e.key.keysym.sym) {
-			case SDLK_ESCAPE: return NAPPI_ESCAPE;
-			case SDLK_RETURN: return NAPPI_ENTER;
-			case SDLK_LEFT: return NAPPI_VASEN;
-			case SDLK_RIGHT: return NAPPI_OIKEA;
-			case SDLK_DOWN: return NAPPI_ALAS;
-			case SDLK_UP: return NAPPI_YLOS;
-			default: return NAPPI_MUU;
-		}
-	}
-	// Jokin meni pieleen!
-	throw std::runtime_error(SDL_GetError());
+	process_keyboard(true);
+	Ohjelma::nappi nappi = *keyboard_buffer.begin();
+	keyboard_buffer.pop_front();
+	return nappi;
 }
 
 std::string Ohjelma::lue_syote() {
-	//peli::syote = this->str;
+	process_keyboard();
+/*	//peli::syote = this->str;
 	SDL_Event event;
 	SDL_PollEvent(&event);
 	if (event.type == SDL_KEYDOWN)
@@ -94,12 +148,20 @@ std::string Ohjelma::lue_syote() {
 			//Remove a character from the end
 			syote.erase(syote.length() - 1);
 		}
-	}
+	}*/
 	return syote;
 }
 
 // Kertoo napin nykytilan.
 bool Ohjelma::lue_nappi(nappi n) {
+	process_keyboard();
+
+	if (!keyboard_buffer.empty() && *keyboard_buffer.begin() == n) {
+		keyboard_buffer.pop_front();
+		return true;
+	}
+
+	return false;
 	// Käsketään SDL:n hoitaa viestit, jolloin sen tieto napeista päivittyy.
 	SDL_PumpEvents();
 
@@ -126,8 +188,12 @@ bool Ohjelma::lue_nappi(nappi n) {
 
 // Tyhjentää syötepuskurin.
 void Ohjelma::tyhjenna_syote() {
-	SDL_Event e;
-	while (SDL_PollEvent(&e));
+	process_keyboard();
+	keyboard_buffer.clear();
+	syote = "";
+	return;
+//	SDL_Event e;
+// while (SDL_PollEvent(&e));
 }
 
 apuvalineet::piste Ohjelma::anna_hiiri() {

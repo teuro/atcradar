@@ -18,6 +18,7 @@ public:
 	MOCK_METHOD1(odota, void(unsigned int ms));
 	MOCK_METHOD0(odota_nappi, nappi());
 	MOCK_METHOD1(lue_nappi, bool(nappi n));
+	MOCK_METHOD0(lue_nappi, nappi());
 	MOCK_METHOD0(tyhjenna_syote, void());
 	MOCK_METHOD3(onko_alueella, bool(const apuvalineet::piste& a, const apuvalineet::piste& b, double sade));
 	MOCK_METHOD0(anna_hiiri, apuvalineet::piste());

@@ -41,7 +41,7 @@ public:
 
     IOhjelma& ohjelma;
 
-    double ajan_muutos;
+//    double ajan_muutos;
     std::vector <std::string> tunnukset;
     std::string syote;
 
@@ -92,7 +92,7 @@ public:
     void tarkista_porrastus();
 
     bool onko_vapaata(int tyyppi = LAHTEVA, int piste = -1);
-    void hoida_koneet();
+    void hoida_koneet(double intervalliMs);
     int etsi_valittu_kone();
 
     bool tarkista_atis();

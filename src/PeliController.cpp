@@ -13,150 +13,179 @@
 #include <ctime>
 #include <algorithm>
 
-// Pelin p‰‰funktio.
+void PeliController::kasittele_hiiren_nappi(apuvalineet::piste koordinaatit)
+{
+	peli.valitse_kone(koordinaatit);
+}
+
+// Pelin p‰‰funktio. K‰sittelee kaiken inputin ja syˆtteet ja v‰litt‰‰ ne eri funktiolla itselleen.
+// Muutetaan jatkossa niin, ett‰ kaikki input tulee ulkopuolelta eventettein‰ em. funktiolle
+// ja t‰m‰ voidaan poistaa.
 int PeliController::aja() {
 	std::clog << "pelicontroller::aja()" << std::endl;
 
 	std::srand((unsigned int)std::time(NULL));
-
-	pyyda_atis();
-
-	// Nollataan kello.
-	double pelin_kello = ohjelma.sekunnit(true);
-
-	std::vector <ajastin> ajastimet;
 	ajastimet.push_back(ajastin("metar", asetukset.anna_asetus("koska_metar"), 0));
 
+	pyyda_atis();
 	peli.luo_kone();
 	peli.luo_kone();
 
-	bool loppu = false;
-	while (!loppu) {
-		int alku = ohjelma.sekunnit();
+	double prev = ohjelma.sekunnit(true);
+	bool jatka = true;
+	while (jatka)
+	{
 		apuvalineet::piste hiiri = ohjelma.anna_hiiri();
+		kasittele_hiiren_nappi(hiiri);
 
-		peli.valitse_kone(hiiri);
+		double nyt = ohjelma.sekunnit();
+		jatka = aja(nyt - prev);
+		prev = nyt;
 
-		if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
-			std::clog << kieli.anna_teksti(Kieli::TEKSTI_PORRASTUSVIRHEET) << std::endl;
-			loppu = true;
-		}
+		peli.syote = ohjelma.lue_syote();
 
-		if (alku == peli.koska_uusi_kone) {
-			if (peli.koneet.size() < asetukset.anna_asetus("maks_konemaara")) {
-				peli.luo_kone();
-				peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
+		IOhjelma::nappi nappi = ohjelma.lue_nappi();
+		if (nappi != Ohjelma::NAPPI_MUU)
+		{
+			if (nappi == IOhjelma::NAPPI_ENTER)
+			{
+				kasittele_komento(ohjelma.anna_viesti());
+				ohjelma.tyhjenna_viesti();
 			}
-
-			std::clog << kieli.anna_teksti(Kieli::TEKSTI_UUSI_KONE_TULEE) << " " << (peli.koska_uusi_kone - alku) << " " << kieli.anna_teksti(Kieli::TEKSTI_SEKUNNIT) << std::endl;
-		}
-
-		if (alku == peli.koska_metar) {
-			peli.generoi_metar();
-
-			if (!peli.tarkista_atis()) {
-				peli.atis.ok = false;
-				pyyda_atis();
-			}
-
-			peli.koska_metar += asetukset.anna_asetus("koska_metar");
-		}
-
-		// Esc-nappi lopettaa pelin.
-		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ESCAPE)) {
-			loppu = true;
-		}
-
-		if (ohjelma.lue_nappi(Ohjelma::NAPPI_F5)) {
-			peli.toiminto = apuvalineet::SUUNTA;
-		}
-		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F7)) {
-			peli.toiminto = apuvalineet::NOPEUS;
-		}
-		else if (ohjelma.lue_nappi(Ohjelma::NAPPI_F8)) {
-			peli.toiminto = apuvalineet::KORKEUS;
-		}
-
-		peli.syote = ohjelma.lue_syote(); //lukija.lue_syote();
-
-		int valittu_kone = peli.etsi_valittu_kone();
-
-		if (ohjelma.lue_nappi(Ohjelma::NAPPI_ENTER) && valittu_kone >= 0) {
-			std::string komento = ohjelma.anna_viesti();// lukija.anna_viesti();
-
-			peli.selvitykset.push_back(anna_selvitys(komento, peli.toiminto));
-			peli.selvitykset.back().kone_id = valittu_kone;
-			peli.selvitykset.back().aika = ohjelma.sekunnit() + 2;
-
-			peli.lisaa_selvityksia();
-			ohjelma.odota(150);
-
-			//lukija.tyhjenna();
-			ohjelma.tyhjenna_viesti();
-			peli.toiminto = apuvalineet::TYHJA;
-			peli.virheteksti = " ";
-		}
-
-		if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
-			peli.koska_uusi_kone = -1;
-			if (peli.koneet.size() == 0) {
-				/* Peli loppui */
-				loppu = true;
-			}
-		}
-
-		if (peli.etsi_valittu_kone() < 0) {
-			peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_VALITSE_KONE);
-		}
-		else {
-			peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_PAINA_TOIMINTONAPPAINTA);
-		}
-
-		for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
-		//	std::clog << peli.selvitykset[k].kone_id << " " << (int)peli.selvitykset[k].aika << " " << (int)ohjelma.sekunnit() << " " << peli.selvitykset[k].kohde.nimi << std::endl;
-			if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
-				switch (peli.selvitykset[k].toiminto) {
-					case apuvalineet::KOHDE:
-						peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].kohde);
-						peli.selvitykset.erase(peli.selvitykset.begin()+k);
-						break;
-                    case apuvalineet::SUUNTA:
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].suunta, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
-                        peli.selvitykset.erase(peli.selvitykset.begin()+k);
-                        break;
-                    case apuvalineet::NOPEUS:
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nopeus, peli.selvitykset[k].toiminto);
-                        peli.selvitykset.erase(peli.selvitykset.begin()+k);
-                        break;
-                    case apuvalineet::KORKEUS:
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].korkeus, peli.selvitykset[k].toiminto);
-                        peli.selvitykset.erase(peli.selvitykset.begin()+k);
-                        break;
-                    case apuvalineet::OIKOTIE:
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto);
-                        break;
-                    case apuvalineet::LAHESTYMIS:
-                        peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto, peli.kentta.kiitotiet[peli.atis.laskukiitotie], peli.kentta);
-                        break;
-                    default:
-                        break;
+			else 
+			{
+				if (!kasittele_nappi(nappi))
+				{
+					jatka = false;
 				}
-            }
+			}
 		}
 
-		peli.tarkista_porrastus();
-
-		while (pelin_kello + peli.ajan_muutos <= ohjelma.sekunnit()) {
-			pelin_kello += peli.ajan_muutos;
-			peli.hoida_koneet();
-		}
 		view.piirra();
-		ohjelma.odota();
+		ohjelma.odota(10); // 10 ms
 	}
 
 	logita_peliajat();
-
 	return 0;
+}
+
+bool PeliController::kasittele_nappi(IOhjelma::nappi nappi)
+{
+	switch (nappi)
+	{
+		case IOhjelma::NAPPI_ESCAPE:
+			return false;
+		case IOhjelma::NAPPI_F5:
+			peli.toiminto = apuvalineet::SUUNTA;
+			break;
+		case IOhjelma::NAPPI_F7:
+			peli.toiminto = apuvalineet::NOPEUS;
+			break;
+		case IOhjelma::NAPPI_F8:
+			peli.toiminto = apuvalineet::KORKEUS;
+			break;
+	}
+	return true;
+}
+
+bool PeliController::kasittele_komento(const std::string& komento)
+{
+	int valittu_kone = peli.etsi_valittu_kone();
+
+	if (valittu_kone >= 0) {
+		peli.selvitykset.push_back(anna_selvitys(komento, peli.toiminto));
+		peli.selvitykset.back().kone_id = valittu_kone;
+		peli.selvitykset.back().aika = pelin_kello + 2 * 1000.0;// ohjelma.sekunnit() + 2;
+
+		peli.lisaa_selvityksia();
+		peli.toiminto = apuvalineet::TYHJA;
+		peli.virheteksti = " ";
+	}
+	return true;
+}
+
+// aja(), jota kutsutaan jatkuvasti antaen parametrina
+// kulunut aika. Palautta false, jos peli p‰‰ttyy.
+bool PeliController::aja(double intervallisek) {
+
+	pelin_kello += intervallisek;
+	if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
+		std::clog << kieli.anna_teksti(Kieli::TEKSTI_PORRASTUSVIRHEET) << std::endl;
+		//loppu = true;
+		return false;
+	}
+
+	if (pelin_kello >= peli.koska_uusi_kone) {
+		if (peli.koneet.size() < asetukset.anna_asetus("maks_konemaara")) {
+			peli.luo_kone();
+			peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
+		}
+
+		std::clog << kieli.anna_teksti(Kieli::TEKSTI_UUSI_KONE_TULEE) << " " << (peli.koska_uusi_kone - pelin_kello) << " " << kieli.anna_teksti(Kieli::TEKSTI_SEKUNNIT) << std::endl;
+	}
+
+	if (pelin_kello >= peli.koska_metar) {
+		peli.generoi_metar();
+
+		if (!peli.tarkista_atis()) {
+			peli.atis.ok = false;
+			pyyda_atis();
+		}
+
+		peli.koska_metar += asetukset.anna_asetus("koska_metar");
+	}
+
+	if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
+		peli.koska_uusi_kone = -1;
+		if (peli.koneet.size() == 0) {
+			/* Peli loppui */
+			return false;
+		}
+	}
+
+	if (peli.etsi_valittu_kone() < 0) {
+		peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_VALITSE_KONE);
+	}
+	else {
+		peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_OHJE_PAINA_TOIMINTONAPPAINTA);
+	}
+
+	for (unsigned int k = 0; k < peli.selvitykset.size(); ++k) {
+	//	std::clog << peli.selvitykset[k].kone_id << " " << (int)peli.selvitykset[k].aika << " " << (int)ohjelma.sekunnit() << " " << peli.selvitykset[k].kohde.nimi << std::endl;
+		if ((int)peli.selvitykset[k].aika == (int)ohjelma.sekunnit()) {
+			switch (peli.selvitykset[k].toiminto) {
+				case apuvalineet::KOHDE:
+					peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].kohde);
+					peli.selvitykset.erase(peli.selvitykset.begin()+k);
+					break;
+                case apuvalineet::SUUNTA:
+                    peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].suunta, peli.selvitykset[k].toiminto, peli.selvitykset[k].kaarto);
+                    peli.selvitykset.erase(peli.selvitykset.begin()+k);
+                    break;
+                case apuvalineet::NOPEUS:
+                    peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].nopeus, peli.selvitykset[k].toiminto);
+                    peli.selvitykset.erase(peli.selvitykset.begin()+k);
+                    break;
+                case apuvalineet::KORKEUS:
+                    peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].korkeus, peli.selvitykset[k].toiminto);
+                    peli.selvitykset.erase(peli.selvitykset.begin()+k);
+                    break;
+                case apuvalineet::OIKOTIE:
+                    peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto);
+                    break;
+                case apuvalineet::LAHESTYMIS:
+                    peli.koneet[peli.selvitykset[k].kone_id].ota_selvitys(peli.selvitykset[k].toiminto, peli.kentta.kiitotiet[peli.atis.laskukiitotie], peli.kentta);
+                    break;
+                default:
+                    break;
+			}
+        }
+	}
+
+	peli.tarkista_porrastus();
+	peli.hoida_koneet(intervallisek);
+
+	return true;
 }
 
 void PeliController::logita_peliajat() {

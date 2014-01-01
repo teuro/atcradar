@@ -2,7 +2,7 @@
 
 bool poistetaanko(const lentokone& kone);
 
-Peli::Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta) : asetukset(a), ohjelma(o), ajan_muutos(0.02f), koska_uusi_kone(1) {
+Peli::Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta) : asetukset(a), ohjelma(o), /*ajan_muutos(0.02f), */koska_uusi_kone(1) {
 	atis.lahtokiitotie = -1;
 	atis.laskukiitotie = -1;
 	atis.siirtopinta = -1;
@@ -237,7 +237,7 @@ void Peli::tarkista_porrastus() {
 	}
 }
 
-void Peli::hoida_koneet() {
+void Peli::hoida_koneet(double intervalliMs) {
 	std::vector <lentokone> :: iterator it;
 
     for (it = koneet.begin() ; it != koneet.end(); ++it) {
@@ -284,7 +284,7 @@ void Peli::hoida_koneet() {
 			}
 		}
 
-		it->liiku(ajan_muutos);
+		it->liiku(intervalliMs);
 	}
 
 	std::vector <lentokone> lyhyt;

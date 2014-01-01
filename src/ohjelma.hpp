@@ -7,6 +7,7 @@
 #include "apuvalineet.hpp"
 
 #include <map>
+#include <list>
 #include <fstream>
 #include <iostream>
 #include <cmath>
@@ -25,6 +26,7 @@ public:
 
 	virtual nappi odota_nappi() = 0;
 	virtual bool lue_nappi(nappi n) = 0;
+	virtual nappi lue_nappi() = 0;
 	virtual void tyhjenna_syote() = 0;
 
 	virtual apuvalineet::piste anna_hiiri() = 0;
@@ -50,6 +52,7 @@ public:
 
 	nappi odota_nappi();
 	bool lue_nappi(nappi n);
+	nappi lue_nappi();
 	void tyhjenna_syote();
 
 	apuvalineet::piste anna_hiiri();
@@ -64,6 +67,8 @@ private:
 	void alku();
 	void loppu();
 	std::string syote;
+	void process_keyboard(bool wait);
+	std::list<nappi> keyboard_buffer;
 };
 
 class Versio
