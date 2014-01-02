@@ -9,19 +9,20 @@
 #include <QTimer>
 
 #include <list>
+#include <cmath>
 
 class lentokone
 {
 public:
-	// In world coordinates
-	double x, y;
-	double vx, vy;
-	double ax, ay;
+    // In world coordinates
+    double x, y;
+    double vx, vy;
+    double ax, ay;
 
-	void tickTime(double seconds)
-	{
-		vx += ax * seconds;
-		vy += ay * seconds;
+    void tickTime(double seconds)
+    {
+        vx += ax * seconds;
+        vy += ay * seconds;
 		x += vx * seconds;
 		y += vy * seconds;
 	}
@@ -81,9 +82,9 @@ protected:
 		QPainter p(this);
 
 		p.setPen(Qt::blue);
-		auto fillBrush = QBrush(Qt::black);
+        QBrush fillBrush = QBrush(Qt::black);
 		for (std::list<lentokone*>::iterator it = m_lentokoneet.begin(); it != m_lentokoneet.end(); it++) {
-			auto lk = *it;
+            lentokone* lk = *it;
 			if (lk == selected_lentokone)
 			{
 				p.setBrush(fillBrush);
@@ -97,20 +98,20 @@ protected:
 		// Draw line between selected lentokone and current mouse position
 		if (selected_lentokone)
 		{
-			auto lk = selected_lentokone;
+            lentokone* lk = selected_lentokone;
 			p.setPen(Qt::green);
 			p.drawLine(lk->x / (double)world_width * (double)viewport_width, lk->y / (double)world_height * (double)viewport_height, m_endPoint.x(), m_endPoint.y());
 		}
 	}
 
 	// Mouse button up
-	void mouseReleaseEvent(QMouseEvent * e)
-	{
-		if (selected_lentokone)
-		{
-			// Unselect any selected lentokone and reset the acceleration
-			selected_lentokone->ax = 0;
-			selected_lentokone->ay = 0;
+    void mouseReleaseEvent(QMouseEvent * e)
+    {
+        if (selected_lentokone)
+        {
+            // Unselect any selected lentokone and reset the acceleration
+            selected_lentokone->ax = 0;
+            selected_lentokone->ay = 0;
 			selected_lentokone = NULL;
 		}
 		update();
@@ -118,13 +119,13 @@ protected:
 
 	double distance(double x1, double y1, double x2, double y2)
 	{
-		return sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+        return std::sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
 	}
 
 	// Mouse button down
 	void mousePressEvent(QMouseEvent * e)
 	{
-		auto point = e->pos();
+        QPoint point = e->pos();
 		m_endPoint = point;
 
 		selected_lentokone = NULL;
