@@ -58,8 +58,8 @@ TEST(PeliControllerTests, LongTimeInterval) {
 	MockPinta pinta;
 	Kieli kieli;
 	Peli peli(asetukset, ohjelmaMock, kieli, "EFKT.TXT");
-	PeliView peliview(pinta, asetukset, peli, ohjelmaMock, kieli);
-	PeliController controller(peli, peliview, ohjelmaMock, asetukset, kieli);
+	PeliView peliview(asetukset, peli, ohjelmaMock, kieli);
+	PeliController controller(peli, peliview, ohjelmaMock, asetukset, kieli, pinta);
 
 	double timef = 0;
 
@@ -76,8 +76,8 @@ TEST(ValikkoTests, ValikkoBounds) {
 	MockPinta pinta;
 	Kieli kieli;
 	ValikkoData valikkoData;
-	ValikkoView valikkoView(pinta, valikkoData);
-	valikko v(ohjelmaMock, valikkoView, valikkoData);
+	ValikkoView valikkoView(valikkoData);
+	valikko v(ohjelmaMock, valikkoView, valikkoData, pinta);
 
 	IOhjelma::nappi nappisequence[] = {
 		IOhjelma::nappi::NAPPI_YLOS,

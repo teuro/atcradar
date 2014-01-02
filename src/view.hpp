@@ -7,10 +7,10 @@
 class View
 {
 public:
-	View(IPiirtoPinta& pinta) : piirtopinta(pinta) { }
+	View(/*IPiirtoPinta& pinta*/) /*: piirtopinta(pinta) */{ }
 
-	IPiirtoPinta& piirtopinta;
-	virtual void piirra() = 0;
+//	IPiirtoPinta& piirtopinta;
+	virtual void piirra(IPiirtoPinta& piirtopinta) = 0;
 };
 
 

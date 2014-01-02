@@ -21,7 +21,7 @@ class PeliView : public View {
 private:
 	Kieli kieli;
 public:
-	PeliView(IPiirtoPinta& pinta, IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : View(pinta), asetukset(a), peli(p), ohjelma(o) {
+	PeliView(IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : asetukset(a), peli(p), ohjelma(o) {
 		this->kieli = kieli;
 	}
 
@@ -29,19 +29,19 @@ public:
 	{
 	}
 
-	void piirra();
+	void piirra(IPiirtoPinta& pinta);
 	//void piirra_atis();
 
 private:
 	IAsetukset& asetukset;
 
-	void piirra_koneet();
-	void piirra_navipisteet();
-	void piirra_lentokentta();
-	void piirra_tilanne();
-	void piirra_metar();
-	void piirra_odottavat();
-	void piirra_ohje(std::string ohje);
+	void piirra_koneet(IPiirtoPinta& piirtopinta);
+	void piirra_navipisteet(IPiirtoPinta& piirtopinta);
+	void piirra_lentokentta(IPiirtoPinta& piirtopinta);
+	void piirra_tilanne(IPiirtoPinta& piirtopinta);
+	void piirra_metar(IPiirtoPinta& piirtopinta);
+	void piirra_odottavat(IPiirtoPinta& piirtopinta);
+	void piirra_ohje(IPiirtoPinta& piirtopinta, std::string ohje);
 	Peli& peli;
 	IOhjelma& ohjelma;
 };

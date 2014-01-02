@@ -1,6 +1,6 @@
 #include "tasonvalintaview.hpp"
 
-void TasonValintaView::piirra()
+void TasonValintaView::piirra(IPiirtoPinta& piirtopinta)
 {
 	piirtopinta.piirra_kuva("kuvat/tausta_valikko.png", 0, 0);
 

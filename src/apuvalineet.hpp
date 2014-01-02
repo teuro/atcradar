@@ -11,6 +11,8 @@ namespace apuvalineet {
 
 	class piste {
 	public:
+        piste() : x(0), y(0) { }
+        piste(double nx, double ny) : x(nx), y(ny) { }
 		double x;
 		double y;
 	};

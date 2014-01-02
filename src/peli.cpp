@@ -17,7 +17,6 @@ Peli::Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta) : asetu
 	generoi_metar();
 }
 
-
 void Peli::lataa_tunnukset(std::string tunnukset) {
 	std::clog << "peli::lataa_tunnukset(" << tunnukset << ")" << std::endl;
 	std::string tmp;
@@ -188,6 +187,10 @@ std::string Peli::generoi_tunnus() {
 	std::string luku = apuvalineet::tekstiksi(apuvalineet::arvo_luku(0, 999));
 
 	return tunniste+luku;
+}
+
+void Peli::aseta_hiiren_paikka(const apuvalineet::piste& hiiri) {
+    hiiren_paikka = hiiri;
 }
 
 void Peli::valitse_kone(const apuvalineet::piste& hiiri) {

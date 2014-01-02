@@ -63,8 +63,8 @@ int main(int argc, char** argv) {
 		valikkoData.lisaa_kohta(1, "Peli");
 		valikkoData.lisaa_kohta(0, "Lopeta");
 
-		ValikkoView valikkoView(pinta, valikkoData);
-		valikko paaValikko(ohjelma, valikkoView, valikkoData);
+		ValikkoView valikkoView(valikkoData);
+		valikko paaValikko(ohjelma, valikkoView, valikkoData, pinta);
 		
 		while (true) {
 			// P‰‰valikko
@@ -76,14 +76,14 @@ int main(int argc, char** argv) {
 
 			// Tason valinta
 			std::string tasoData;
-			TasonValintaView tasonvalintaView(pinta, kieli, tasoData);
-			TasonValintaController tasonvalinta(asetukset, kieli, ohjelma, tasonvalintaView, tasoData);
+			TasonValintaView tasonvalintaView(kieli, tasoData);
+			TasonValintaController tasonvalinta(asetukset, kieli, ohjelma, tasonvalintaView, tasoData, pinta);
 			tasonvalinta.aja();
 
 			// Kent‰n valinta
 			ValikkoData kentatData;
-			ValikkoView kentatView(pinta, kentatData);
-			valikko kentatValikko(ohjelma, kentatView, kentatData);
+			ValikkoView kentatView(kentatData);
+			valikko kentatValikko(ohjelma, kentatView, kentatData, pinta);
 			LataaKentat(kentatData);
 
 			int kentta_id = -1;
@@ -94,13 +94,13 @@ int main(int argc, char** argv) {
 
 			// Peli
 			Peli peli(asetukset, ohjelma, kieli, kentatData.kohdat[kentta_id]);
-			PeliView peliView(pinta, asetukset, peli, ohjelma, kieli);
-			PeliController pelicontroller(peli, peliView, ohjelma, asetukset, kieli);
+			PeliView peliView(asetukset, peli, ohjelma, kieli);
+			PeliController pelicontroller(peli, peliView, ohjelma, asetukset, kieli, pinta);
 			pelicontroller.aja();
 
 			// N‰yt‰ tilastot
-			TilastoView tilastoView(kieli, pinta, peli);
-			tilastoView.piirra();
+			TilastoView tilastoView(kieli, peli);
+			tilastoView.piirra(pinta);
 			ohjelma.odota_nappi();
 		}
 

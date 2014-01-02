@@ -1,7 +1,7 @@
 #include "tilastoview.hpp"
 #include <iostream>
 
-void TilastoView::piirra() {
+void TilastoView::piirra(IPiirtoPinta& piirtopinta) {
 	std::clog << "TilastoView::piirra()" << std::endl;
 
 	piirtopinta.piirra_kuva("kuvat/tausta_tilasto.png", 0, 0);

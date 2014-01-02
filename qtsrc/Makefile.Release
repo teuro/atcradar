@@ -46,12 +46,12 @@ OBJECTS_DIR   = release
 SOURCES       = qtmain.cpp release\moc_AtisView.cpp \
 		release\moc_levelmenu.cpp \
 		release\moc_MainWindow.cpp \
-		release\moc_PeliView.cpp
+		release\moc_PeliWidget.cpp
 OBJECTS       = release\qtmain.obj \
 		release\moc_AtisView.obj \
 		release\moc_levelmenu.obj \
 		release\moc_MainWindow.obj \
-		release\moc_PeliView.obj
+		release\moc_PeliWidget.obj
 
 DIST          = 
 QMAKE_TARGET  = qtsrc
@@ -62,26 +62,6 @@ DESTDIR_TARGET = release\qtsrc.exe
 ####### Implicit rules
 
 .SUFFIXES: .c .cpp .cc .cxx
-
-{.}.cpp{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{.}.cc{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{.}.cxx{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{.}.c{release\}.obj::
-	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
 
 {release}.cpp{release\}.obj::
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
@@ -99,6 +79,26 @@ DESTDIR_TARGET = release\qtsrc.exe
 <<
 
 {release}.c{release\}.obj::
+	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{.}.cpp{release\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{.}.cc{release\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{.}.cxx{release\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{.}.c{release\}.obj::
 	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
 	$<
 <<
@@ -123,7 +123,7 @@ dist:
 	$(ZIP) qtsrc.zip $(SOURCES) $(DIST) qtsrc.pro ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\spec_pre.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\common\shell-win32.conf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\qconfig.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_axbase.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_axbase_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_axcontainer.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_axcontainer_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_axserver.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_axserver_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_bluetooth.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_bluetooth_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_bootstrap_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_clucene_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_core.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_core_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_declarative.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_declarative_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_designer.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_gui.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_help.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_help_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_network.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_network_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_nfc.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_nfc_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_opengl.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_openglextensions.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_openglextensions_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_platformsupport_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_positioning.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_positioning_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_qml.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_quick.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_script.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_script_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_scripttools.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_scripttools_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_sensors.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_sensors_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_serialport.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_sql.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_svg.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_testlib.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_uitools.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_webkit.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_webkit_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_webkitwidgets.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_webkitwidgets_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_widgets.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_winextras.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_winextras_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_xml.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_xmlpatterns.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\modules\qt_lib_xmlpatterns_private.pri ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\qt_functions.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\qt_config.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\win32-msvc2012\qmake.conf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\spec_post.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\exclusive_builds.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\default_pre.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\win32\default_pre.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\resolve_config.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\exclusive_builds_post.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\default_post.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\build_pass.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\win32\rtti.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\warn_on.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\qt.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\resources.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\moc.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\win32\opengl.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\uic.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\win32\windows.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\testcase_targets.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\exceptions.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\yacc.prf ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\mkspecs\features\lex.prf qtsrc.pro C:/Qt/Qt5.2.0/5.2.0/msvc2012/lib/Qt5Widgets.prl C:/Qt/Qt5.2.0/5.2.0/msvc2012/lib/Qt5Gui.prl C:/Qt/Qt5.2.0/5.2.0/msvc2012/lib/Qt5Core.prl C:/Qt/Qt5.2.0/5.2.0/msvc2012/lib/libEGL.prl C:/Qt/Qt5.2.0/5.2.0/msvc2012/lib/libGLESv2.prl  RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\qtmain.obj release\moc_AtisView.obj release\moc_levelmenu.obj release\moc_MainWindow.obj release\moc_PeliView.obj
+	-$(DEL_FILE) release\qtmain.obj release\moc_AtisView.obj release\moc_levelmenu.obj release\moc_MainWindow.obj release\moc_PeliWidget.obj
 	-$(DEL_FILE) release\qtsrc.exp release\qtsrc.exe.embed.manifest
 
 distclean: clean
@@ -138,9 +138,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: release\moc_AtisView.cpp release\moc_levelmenu.cpp release\moc_MainWindow.cpp release\moc_PeliView.cpp
+compiler_moc_header_make_all: release\moc_AtisView.cpp release\moc_levelmenu.cpp release\moc_MainWindow.cpp release\moc_PeliWidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) release\moc_AtisView.cpp release\moc_levelmenu.cpp release\moc_MainWindow.cpp release\moc_PeliView.cpp
+	-$(DEL_FILE) release\moc_AtisView.cpp release\moc_levelmenu.cpp release\moc_MainWindow.cpp release\moc_PeliWidget.cpp
 release\moc_AtisView.cpp: ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\QLabel \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\qlabel.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\qframe.h \
@@ -523,7 +523,7 @@ release\moc_MainWindow.cpp: ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\qgridlayout.h \
 		levelmenu.h \
 		atisview.h \
-		peliview.h \
+		PeliWidget.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtGui\QMouseEvent \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtGui\QPainter \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtGui\qpainter.h \
@@ -532,10 +532,27 @@ release\moc_MainWindow.cpp: ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\QTimer \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\qtimer.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\qbasictimer.h \
+		..\src\peliview.hpp \
+		..\src\valikko.hpp \
+		..\src\valikkoview.hpp \
+		..\src\view.hpp \
+		..\src\asetukset.h \
+		..\src\piirtopinta.hpp \
+		..\src\peli.hpp \
+		..\src\apuvalineet.hpp \
+		..\src\lentokone.hpp \
+		..\src\navipiste.hpp \
+		..\src\lentokentta.hpp \
+		..\src\kieli.hpp \
+		..\src\ohjelma.hpp \
+		..\src\lukija.hpp \
+		..\src\ajastin.hpp \
+		..\src\pelicontroller.hpp \
+		..\src\controller.hpp \
 		MainWindow.h
 	C:\Qt\Qt5.2.0\5.2.0\msvc2012\bin\moc.exe $(DEFINES) -D_MSC_VER=1700 -D_WIN32 $(INCPATH) MainWindow.h -o release\moc_MainWindow.cpp
 
-release\moc_PeliView.cpp: ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\QLabel \
+release\moc_PeliWidget.cpp: ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\QLabel \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\qlabel.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\qframe.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\qwidget.h \
@@ -658,8 +675,25 @@ release\moc_PeliView.cpp: ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\Q
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\QTimer \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\qtimer.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\qbasictimer.h \
-		PeliView.h
-	C:\Qt\Qt5.2.0\5.2.0\msvc2012\bin\moc.exe $(DEFINES) -D_MSC_VER=1700 -D_WIN32 $(INCPATH) PeliView.h -o release\moc_PeliView.cpp
+		..\src\peliview.hpp \
+		..\src\valikko.hpp \
+		..\src\valikkoview.hpp \
+		..\src\view.hpp \
+		..\src\asetukset.h \
+		..\src\piirtopinta.hpp \
+		..\src\peli.hpp \
+		..\src\apuvalineet.hpp \
+		..\src\lentokone.hpp \
+		..\src\navipiste.hpp \
+		..\src\lentokentta.hpp \
+		..\src\kieli.hpp \
+		..\src\ohjelma.hpp \
+		..\src\lukija.hpp \
+		..\src\ajastin.hpp \
+		..\src\pelicontroller.hpp \
+		..\src\controller.hpp \
+		PeliWidget.h
+	C:\Qt\Qt5.2.0\5.2.0\msvc2012\bin\moc.exe $(DEFINES) -D_MSC_VER=1700 -D_WIN32 $(INCPATH) PeliWidget.h -o release\moc_PeliWidget.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -814,7 +848,7 @@ release\qtmain.obj: qtmain.cpp ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidg
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidgets\qgridlayout.h \
 		levelmenu.h \
 		atisview.h \
-		peliview.h \
+		PeliWidget.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtGui\QMouseEvent \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtGui\QPainter \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtGui\qpainter.h \
@@ -822,7 +856,24 @@ release\qtmain.obj: qtmain.cpp ..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtWidg
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtGui\qpen.h \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\QTimer \
 		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\qtimer.h \
-		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\qbasictimer.h
+		..\..\..\Qt\Qt5.2.0\5.2.0\msvc2012\include\QtCore\qbasictimer.h \
+		..\src\peliview.hpp \
+		..\src\valikko.hpp \
+		..\src\valikkoview.hpp \
+		..\src\view.hpp \
+		..\src\asetukset.h \
+		..\src\piirtopinta.hpp \
+		..\src\peli.hpp \
+		..\src\apuvalineet.hpp \
+		..\src\lentokone.hpp \
+		..\src\navipiste.hpp \
+		..\src\lentokentta.hpp \
+		..\src\kieli.hpp \
+		..\src\ohjelma.hpp \
+		..\src\lukija.hpp \
+		..\src\ajastin.hpp \
+		..\src\pelicontroller.hpp \
+		..\src\controller.hpp
 
 release\moc_AtisView.obj: release\moc_AtisView.cpp 
 
@@ -830,7 +881,7 @@ release\moc_levelmenu.obj: release\moc_levelmenu.cpp
 
 release\moc_MainWindow.obj: release\moc_MainWindow.cpp 
 
-release\moc_PeliView.obj: release\moc_PeliView.cpp 
+release\moc_PeliWidget.obj: release\moc_PeliWidget.cpp 
 
 ####### Install
 

@@ -30,10 +30,6 @@ public:
 class PeliView : public QWidget
 {
 	Q_OBJECT
-	//signals :
-	// define mouseClick signal
-	//	void mouseClickEvent();
-
 	// World area dimensions in meters
 	static const int world_width = 10000;
 	static const int world_height = 10000;

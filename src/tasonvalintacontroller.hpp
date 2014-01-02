@@ -9,7 +9,7 @@
 class TasonValintaController : IController
 {
 public:
-	TasonValintaController(IAsetukset& a, Kieli& k, IOhjelma& o, View& v, std::string& data) : teksti(data), kieli(k), ohjelma(o), asetukset(a), view(v) { }
+	TasonValintaController(IAsetukset& a, Kieli& k, IOhjelma& o, View& v, std::string& data, IPiirtoPinta& p) : teksti(data), kieli(k), ohjelma(o), asetukset(a), view(v), piirtopinta(p) { }
 	int aja();
 
 	std::string& teksti;
@@ -18,6 +18,7 @@ private:
 	IOhjelma& ohjelma;
 	IAsetukset& asetukset;
 	View& view;
+    IPiirtoPinta& piirtopinta;
 };
 
 #endif

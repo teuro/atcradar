@@ -1,6 +1,6 @@
 #include "atisview.hpp"
 
-void AtisView::piirra() {
+void AtisView::piirra(IPiirtoPinta& piirtopinta) {
 	piirtopinta.piirra_kuva("kuvat/tausta_atis.png", 0, 0);
 
 	piirtopinta.kirjoita_tekstia(peli.ohje, 50, 30);
@@ -13,7 +13,7 @@ void AtisView::piirra() {
 		y += 20;
 	}
 
-	piirra_metar();
+	piirra_metar(piirtopinta);
 //	piirra_ohje(peli.ohje);
 	piirtopinta.kirjoita_tekstia(peli.ohje.c_str(), 50, 30);
 
@@ -27,7 +27,7 @@ void AtisView::piirra() {
 	//	SDL_Flip(ruutu);
 }
 
-void AtisView::piirra_metar() {
+void AtisView::piirra_metar(IPiirtoPinta& piirtopinta) {
 	std::string tuuli = apuvalineet::tekstiksi(peli.metar.tuuli);
 	std::string voimakkuus = apuvalineet::tekstiksi(peli.metar.voimakkuus);
 	std::string paine = apuvalineet::tekstiksi(peli.metar.paine);

@@ -15,7 +15,13 @@
 
 void PeliController::kasittele_hiiren_nappi(apuvalineet::piste koordinaatit)
 {
+    peli.aseta_hiiren_paikka(koordinaatit);
 	peli.valitse_kone(koordinaatit);
+}
+
+void PeliController::kasittele_hiiren_paikka(apuvalineet::piste koordinaatit)
+{
+    peli.aseta_hiiren_paikka(koordinaatit);
 }
 
 // Pelin pääfunktio. Käsittelee kaiken inputin ja syötteet ja välittää ne eri funktiolla itselleen.
@@ -38,7 +44,14 @@ int PeliController::aja() {
 		if (ohjelma.lue_hiiri())
 		{
 			apuvalineet::piste hiiri = ohjelma.anna_hiiri();
-			kasittele_hiiren_nappi(hiiri);
+			if (ohjelma.lue_hiiri())
+			{
+				kasittele_hiiren_nappi(hiiri);
+			}
+			else 
+			{
+				kasittele_hiiren_paikka(hiiri);
+			}
 		}
 
 		double nyt = ohjelma.sekunnit();
@@ -64,7 +77,7 @@ int PeliController::aja() {
 			}
 		}
 
-		view.piirra();
+		view.piirra(piirtopinta);
 		ohjelma.odota(10); // 10 ms
 	}
 
@@ -210,8 +223,8 @@ void PeliController::logita_peliajat() {
 }
 
 void PeliController::pyyda_atis() {
-	AtisView atisView(view.piirtopinta, kieli, peli);
-	AtisController atiscontroller(asetukset, kieli, ohjelma, atisView, peli);
+	AtisView atisView(kieli, peli);
+	AtisController atiscontroller(asetukset, kieli, ohjelma, atisView, peli, piirtopinta);
 	atiscontroller.aja();
 }
 

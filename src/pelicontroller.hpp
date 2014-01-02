@@ -20,20 +20,23 @@ class PeliController : public IController {
 	IOhjelma& ohjelma;
 	IAsetukset& asetukset;
 	Kieli& kieli;
+    IPiirtoPinta& piirtopinta;
 public:
-	PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, Kieli& k) : peli(p), view(v), ohjelma(o), asetukset(a), kieli(k) 
+	PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, Kieli& k, IPiirtoPinta& pinta) : peli(p), view(v), ohjelma(o), asetukset(a), kieli(k), piirtopinta(pinta) 
 	{
 	}
 	int aja();
 	
 	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
+	void kasittele_hiiren_paikka(apuvalineet::piste koordinaatit);
 	bool kasittele_nappi(IOhjelma::nappi nappi);
 	bool kasittele_komento(const std::string& komento);
 
 	void pyyda_atis();
 	Peli::selvitys anna_selvitys(std::string komento, int toiminto);
 private:
+
 	void logita_peliajat();
 	double pelin_kello;
 	std::vector <ajastin> ajastimet;

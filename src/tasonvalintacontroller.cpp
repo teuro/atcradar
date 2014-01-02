@@ -16,7 +16,7 @@ int TasonValintaController::aja()
 			}
 		}
 
-		view.piirra();
+		view.piirra(piirtopinta);
 	}
 
 	switch (taso) {

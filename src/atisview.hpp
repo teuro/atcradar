@@ -8,14 +8,14 @@
 class AtisView : public View
 {
 public:
-	AtisView(IPiirtoPinta& pinta, Kieli& k, Peli& data) : View(pinta), peli(data), kieli(k)  { }
-	void piirra();
+	AtisView(Kieli& k, Peli& data) : peli(data), kieli(k)  { }
+	void piirra(IPiirtoPinta& piirtopinta);
 
 private:
 	// Reference to shared data between view and model/controller
 	Peli& peli;
 	Kieli& kieli;
-	void piirra_metar();
+	void piirra_metar(IPiirtoPinta& piirtopinta);
 };
 
 #endif

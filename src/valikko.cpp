@@ -25,7 +25,7 @@ int valikko::aja() {
 	while (true) {
 		data.valittuRivi = valinta->first;
 		// Piirretään valikon tilanne, odotetaan valintaa.
-		view.piirra();
+		view.piirra(piirtopinta);
 		//view.piirra_valikko(valinta->first, this->kohdat);
 		Ohjelma::nappi n = ohjelma.odota_nappi();
 

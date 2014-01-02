@@ -1,7 +1,7 @@
 #include "valikkoview.hpp"
 #include <iostream>
 
-void ValikkoView::piirra()
+void ValikkoView::piirra(IPiirtoPinta& piirtopinta)
 {
 	std::clog << "ValikkoView::piirra(" << data.valittuRivi << ")" << std::endl;
 

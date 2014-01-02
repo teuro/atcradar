@@ -7,8 +7,8 @@
 class TasonValintaView : public View
 {
 public:
-	TasonValintaView(IPiirtoPinta& pinta, Kieli& k, std::string& data) : View(pinta), teksti(data), kieli(k) { }
-	void piirra();
+	TasonValintaView(Kieli& k, std::string& data) : teksti(data), kieli(k) { }
+	void piirra(IPiirtoPinta& piirtopinta);
 
 private:
 	// Reference to shared data between view and model/controller

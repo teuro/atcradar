@@ -19,8 +19,8 @@ public:
 class ValikkoView : public View
 {
 public:
-	ValikkoView(IPiirtoPinta& p, ValikkoData& d) : View(p), data(d) { }
-	void piirra();
+	ValikkoView(ValikkoData& d) : data(d) { }
+	void piirra(IPiirtoPinta& piirtopinta);
 
 private:
 	ValikkoData& data;

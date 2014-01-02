@@ -5,26 +5,20 @@
 #include <stdexcept>
 
 // Piirt‰‰ pelin.
-void PeliView::piirra() {
+void PeliView::piirra(IPiirtoPinta& piirtopinta) {
 	piirtopinta.piirra_kuva("kuvat/tausta_peli.png", 0, 0);
-	piirra_tilanne();
-
-	piirra_koneet();
-
-	piirra_navipisteet();
-
-	piirra_lentokentta();
-	piirra_ohje(peli.ohje);
-	piirra_odottavat();
-
+	piirra_tilanne(piirtopinta);
+	piirra_koneet(piirtopinta);
+	piirra_navipisteet(piirtopinta);
+	piirra_lentokentta(piirtopinta);
+	piirra_ohje(piirtopinta, peli.ohje);
+	piirra_odottavat(piirtopinta);
 	piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
-
-	piirra_metar();
-
+	piirra_metar(piirtopinta);
 	piirtopinta.flip();
 }
 
-void PeliView::piirra_koneet() {
+void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 	unsigned int vari;
 
 	double lentokorkeus;
@@ -38,7 +32,7 @@ void PeliView::piirra_koneet() {
 	for (unsigned int i = 0; i < peli.koneet.size(); ++i) {
 		if (peli.koneet[i].odotus == false) {
 			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli.koneet[i].paikka, peli.koneet[i].suunta, peli.koneet[i].nopeus * (60.0 / 3600.0));
-			apuvalineet::piste hiiri = ohjelma.anna_hiiri();
+			//apuvalineet::piste hiiri = ohjelma.anna_hiiri();
 
 			if (peli.koneet[i].onko_porrastus) {
 				vari = ok;
@@ -130,11 +124,11 @@ void PeliView::piirra_koneet() {
 					break;
 				}
 
-				piirtopinta.lineColor(peli.koneet[i].paikka.x, peli.koneet[i].paikka.y, hiiri.x, hiiri.y, vari);
-				apuvalineet::vektori vek = apuvalineet::suunta_vektori(peli.koneet[i].paikka, hiiri);
+				piirtopinta.lineColor(peli.koneet[i].paikka.x, peli.koneet[i].paikka.y, peli.hiiren_paikka.x, peli.hiiren_paikka.y, vari);
+				apuvalineet::vektori vek = apuvalineet::suunta_vektori(peli.koneet[i].paikka, peli.hiiren_paikka);
 
-				int x = std::abs(peli.koneet[i].paikka.x + hiiri.x) / 2;
-				int y = std::abs(peli.koneet[i].paikka.y + hiiri.y) / 2;
+				int x = std::abs(peli.koneet[i].paikka.x + peli.hiiren_paikka.x) / 2;
+				int y = std::abs(peli.koneet[i].paikka.y + peli.hiiren_paikka.y) / 2;
 
 				piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor(vek.pituus)) + " / " + apuvalineet::tekstiksi(std::floor(vek.suunta)), x, y);
 			}
@@ -142,7 +136,7 @@ void PeliView::piirra_koneet() {
 	}
 }
 
-void PeliView::piirra_navipisteet() {
+void PeliView::piirra_navipisteet(IPiirtoPinta& piirtopinta) {
 	for (unsigned int i = 0; i < peli.navipisteet.size(); ++i) {
 		apuvalineet::piste tmp = peli.navipisteet[i].paikka;
 		piirtopinta.kirjoita_tekstia(peli.navipisteet[i].nimi, tmp.x, tmp.y);
@@ -156,7 +150,7 @@ void PeliView::piirra_navipisteet() {
 	}
 }
 
-void PeliView::piirra_lentokentta() {
+void PeliView::piirra_lentokentta(IPiirtoPinta& piirtopinta) {
 	for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
 		piirtopinta.lineColor(peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y, peli.kentta.kiitotiet[i].loppupiste.x, peli.kentta.kiitotiet[i].loppupiste.y, 0x223344FF);
 		piirtopinta.kirjoita_tekstia(peli.kentta.kiitotiet[i].nimi, peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y);
@@ -165,7 +159,7 @@ void PeliView::piirra_lentokentta() {
 	}
 }
 
-void PeliView::piirra_tilanne() {
+void PeliView::piirra_tilanne(IPiirtoPinta& piirtopinta) {
 	std::string teksti = "K‰sitellyt " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
 	piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 20);
 
@@ -176,11 +170,11 @@ void PeliView::piirra_tilanne() {
 	piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 60);
 }
 
-void PeliView::piirra_ohje(std::string ohje) {
+void PeliView::piirra_ohje(IPiirtoPinta& piirtopinta, std::string ohje) {
 	piirtopinta.kirjoita_tekstia(ohje.c_str(), 50, 30);
 }
 
-void PeliView::piirra_metar() {
+void PeliView::piirra_metar(IPiirtoPinta& piirtopinta) {
 	std::string tuuli 		= apuvalineet::tekstiksi(peli.metar.tuuli);
 	std::string voimakkuus 	= apuvalineet::tekstiksi(peli.metar.voimakkuus);
 	std::string paine 		= apuvalineet::tekstiksi(peli.metar.paine);
@@ -199,7 +193,7 @@ void PeliView::piirra_metar() {
 	piirtopinta.kirjoita_tekstia(peli.kentta.nimi + " " + tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + pilvet + " " + paine, 50, 10);
 }
 
-void PeliView::piirra_odottavat() {
+void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
 	int y = 120;
 
 	if (peli.odottavat.size()) {

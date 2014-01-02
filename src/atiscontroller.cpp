@@ -71,7 +71,7 @@ int AtisController::aja() {
 		bool lahto_ok = false;
 		bool lasku_ok = false;
 
-		view.piirra();
+		view.piirra(piirtopinta);
 
 		if (atis.lahtokiitotie > -1 && atis.laskukiitotie > -1 && atis.siirtopinta > -1) {
 			peli.ohje = kieli.anna_teksti(Kieli::TEKSTI_ONKO_ATIS_OK);
