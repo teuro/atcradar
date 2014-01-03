@@ -61,6 +61,7 @@ int PeliController::aja() {
 		peli.syote = ohjelma.lue_syote();
 
 		IOhjelma::nappi nappi = ohjelma.lue_nappi();
+
 		if (nappi != Ohjelma::NAPPI_MUU)
 		{
 			if (nappi == IOhjelma::NAPPI_ENTER)

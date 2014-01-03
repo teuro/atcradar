@@ -30,9 +30,8 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 	int listauskorkeus = 90;
 
 	for (unsigned int i = 0; i < peli.koneet.size(); ++i) {
-		if (peli.koneet[i].odotus == false) {
-			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli.koneet[i].paikka, peli.koneet[i].suunta, peli.koneet[i].nopeus * (60.0 / 3600.0));
-			//apuvalineet::piste hiiri = ohjelma.anna_hiiri();
+		if (peli.koneet[i].anna_odotus() == false) {
+			apuvalineet::piste loppupiste = apuvalineet::uusi_paikka(peli.koneet[i].paikka, peli.koneet[i].anna_suunta(), peli.koneet[i].anna_nopeus() * (60.0 / 3600.0));
 
 			if (peli.koneet[i].onko_porrastus) {
 				vari = ok;
@@ -45,71 +44,69 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 			piirtopinta.lineColor(peli.koneet[i].paikka.x, peli.koneet[i].paikka.y, loppupiste.x, loppupiste.y, vari);
 			piirtopinta.circleColor(peli.koneet[i].paikka.x, peli.koneet[i].paikka.y, apuvalineet::nm2px(1.5), vari);
 
-			piirtopinta.kirjoita_tekstia(peli.koneet[i].kutsutunnus, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y);
+			piirtopinta.kirjoita_tekstia(peli.koneet[i].anna_kutsutunnus(), peli.koneet[i].paikka.x, peli.koneet[i].paikka.y);
 
-			piirtopinta.kirjoita_tekstia(peli.koneet[i].kutsutunnus, 30, listauskorkeus);
+			piirtopinta.kirjoita_tekstia(peli.koneet[i].anna_kutsutunnus(), 30, listauskorkeus);
 
-			if (peli.koneet[i].reitti.size() == 0) {
+			if (peli.koneet[i].anna_reitin_koko() == 0) {
 				if (peli.koneet[i].lahestymisselvitys) {
 					piirtopinta.kirjoita_tekstia("ILS", 100, listauskorkeus);
-				} else if (peli.koneet[i].oikotie) {
-					piirtopinta.kirjoita_tekstia(peli.koneet[i].ulosmenopiste.nimi, 100, listauskorkeus);
+				} else if (peli.koneet[i].anna_oikotie()) {
+					piirtopinta.kirjoita_tekstia(peli.koneet[i].anna_ulosmenopiste().nimi, 100, listauskorkeus);
 				}
 
-				if (!peli.koneet[i].lahestymisselvitys && !peli.koneet[i].oikotie) {
-					piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityssuunta), 100, listauskorkeus);
+				if (!peli.koneet[i].anna_lahestymisselvitys() && !peli.koneet[i].anna_oikotie()) {
+					piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].anna_selvityssuunta()), 100, listauskorkeus);
 				}
 			} else {
-				piirtopinta.kirjoita_tekstia(peli.koneet[i].kohde.nimi, 100, listauskorkeus);
+				piirtopinta.kirjoita_tekstia(peli.koneet[i].anna_kohde().nimi, 100, listauskorkeus);
 			}
 
-			piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvityskorkeus), 160, listauskorkeus);
-			piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].selvitysnopeus), 210, listauskorkeus);
+			piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].anna_selvityskorkeus()), 160, listauskorkeus);
+			piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(peli.koneet[i].anna_selvitysnopeus()), 210, listauskorkeus);
 			listauskorkeus += 20;
 
 
-			if (peli.koneet[i].tyyppi == Peli::SAAPUVA) {
-				//std::clog << "Tulee" << std::endl;
-				if ((peli.koneet[i].korkeus / 100) < peli.atis.siirtopinta) {
-					lentokorkeus = std::floor(peli.koneet[i].korkeus);
+			if (peli.koneet[i].anna_tyyppi() == Peli::SAAPUVA) {
+				if ((peli.koneet[i].anna_korkeus() / 100) < peli.atis.siirtopinta) {
+					lentokorkeus = std::floor(peli.koneet[i].anna_korkeus());
 				}
 				else {
-					lentokorkeus = std::floor(peli.koneet[i].korkeus / 100);
+					lentokorkeus = std::floor(peli.koneet[i].anna_korkeus() / 100);
 				}
 
-				if ((peli.koneet[i].selvityskorkeus / 100) < peli.atis.siirtopinta) {
-					selvityskorkeus = std::floor(peli.koneet[i].selvityskorkeus);
+				if ((peli.koneet[i].anna_selvityskorkeus() / 100) < peli.atis.siirtopinta) {
+					selvityskorkeus = std::floor(peli.koneet[i].anna_selvityskorkeus());
 				}
 				else {
-					selvityskorkeus = std::floor(peli.koneet[i].selvityskorkeus / 100);
+					selvityskorkeus = std::floor(peli.koneet[i].anna_selvityskorkeus() / 100);
 				}
 
 			}
 			else {
-				//std::clog << "Menee" << std::endl;
-				if (peli.koneet[i].korkeus < peli.atis.siirtokorkeus) {
-					lentokorkeus = std::floor(peli.koneet[i].korkeus);
+				if (peli.koneet[i].anna_korkeus() < peli.atis.siirtokorkeus) {
+					lentokorkeus = std::floor(peli.koneet[i].anna_korkeus());
 				}
 				else {
-					lentokorkeus = std::floor(peli.koneet[i].korkeus / 100);
+					lentokorkeus = std::floor(peli.koneet[i].anna_korkeus() / 100);
 				}
 
-				if (peli.koneet[i].selvityskorkeus < peli.atis.siirtokorkeus) {
-					selvityskorkeus = std::floor(peli.koneet[i].selvityskorkeus);
+				if (peli.koneet[i].anna_selvityskorkeus() < peli.atis.siirtokorkeus) {
+					selvityskorkeus = std::floor(peli.koneet[i].anna_selvityskorkeus());
 				}
 				else {
-					selvityskorkeus = std::floor(peli.koneet[i].selvityskorkeus / 100);
+					selvityskorkeus = std::floor(peli.koneet[i].anna_selvityskorkeus() / 100);
 				}
 			}
 
 			piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(lentokorkeus) + " / " + apuvalineet::tekstiksi(selvityskorkeus), peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + piirtopinta.get_fontinkoko() + 3);
 
-			if (peli.koneet[i].valittu) {
-				piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor(peli.koneet[i].nopeus)) + " / " + apuvalineet::tekstiksi(peli.koneet[i].selvitysnopeus), peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (2 * piirtopinta.get_fontinkoko()) + 3);
-				piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor(peli.koneet[i].suunta)) + " / " + apuvalineet::tekstiksi(peli.koneet[i].selvityssuunta), peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (3 * piirtopinta.get_fontinkoko()) + 3);
+			if (peli.koneet[i].anna_valittu()) {
+				piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor(peli.koneet[i].anna_nopeus())) + " / " + apuvalineet::tekstiksi(peli.koneet[i].anna_selvitysnopeus()), peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (2 * piirtopinta.get_fontinkoko()) + 3);
+				piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor(peli.koneet[i].anna_suunta())) + " / " + apuvalineet::tekstiksi(peli.koneet[i].anna_selvityssuunta()), peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (3 * piirtopinta.get_fontinkoko()) + 3);
 
 				if (peli.koneet[i].tyyppi == Peli::LAHTEVA) {
-					piirtopinta.kirjoita_tekstia(peli.koneet[i].ulosmenopiste.nimi, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (4 * piirtopinta.get_fontinkoko()) + 3);
+					piirtopinta.kirjoita_tekstia(peli.koneet[i].anna_ulosmenopiste().nimi, peli.koneet[i].paikka.x, peli.koneet[i].paikka.y + (4 * piirtopinta.get_fontinkoko()) + 3);
 				}
 
 				switch (peli.toiminto) {

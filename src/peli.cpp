@@ -102,9 +102,9 @@ void Peli::luo_kone() {
 		}
 
 		koneet.push_back(lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
-		koneet.back().ulosmenopiste = navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())];
+		koneet.back().aseta_ulosmenopiste(navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())]);
 
-		if (koneet.back().odotus) {
+		if (koneet.back().anna_odotus()) {
 			odottavat.push(koneet.back());
 		}
 
@@ -213,7 +213,7 @@ void Peli::tarkista_porrastus() {
 				continue;
 			}
 
-			if (apuvalineet::onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].korkeus - koneet[j].korkeus) < 1000 && (koneet[i].korkeus > 1000 && koneet[j].korkeus > 1000)) {
+			if (apuvalineet::onko_alueella(koneet[i].paikka, koneet[j].paikka, 1.5) && std::abs(koneet[i].anna_korkeus() - koneet[j].anna_korkeus()) < 1000 && (koneet[i].anna_korkeus() > 1000 && koneet[j].anna_korkeus() > 1000)) {
 				alittuu.push_back(i);
 				alittuu.push_back(j);
 
@@ -242,43 +242,43 @@ void Peli::hoida_koneet(double intervalliMs) {
 	std::vector <lentokone> :: iterator it;
 
     for (it = koneet.begin() ; it != koneet.end(); ++it) {
-		it->poistetaan = false;
+		it->aseta_poistetaan(false);
         if (it->tyyppi == Peli::LAHTEVA) {
-            if (apuvalineet::onko_alueella(it->paikka, it->ulosmenopiste.paikka)) {
-				it->poistetaan = true;
+            if (apuvalineet::onko_alueella(it->paikka, it->anna_ulosmenopiste().paikka)) {
+				it->aseta_poistetaan(true);
                 ++kasitellyt;
             }
         } else if (it->tyyppi == Peli::SAAPUVA) {
             if (it->anna_nopeus() < 4.0) {
-				it->poistetaan = true;
+				it->aseta_poistetaan(true);
                 ++kasitellyt;
 			}
         }
 
         if (it->paikka.x < 0 || it->paikka.x > asetukset.anna_asetus("ruutu_leveys") || it->paikka.y < 0 || it->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             aseta_virhe(VIRHE_ALUEELTA);
-            it->poistetaan = true;
+            it->aseta_poistetaan(true);
         }
 
-		if (it->odotus) {
+		if (it->anna_odotus()) {
 			if (onko_vapaata()) {
 				it->paikka = kentta.kiitotiet[atis.lahtokiitotie].alkupiste;
-				it->odotus = false;
+				it->aseta_odotus(false);
 				odottavat.pop();
 			}
 		}
 
-		if (it->odotuskuvio > -1 && it->odotuskuvio < ohjelma.sekunnit()) {
-			it->odotuskuvio += 120;
+		if (it->anna_odotuskuvio() > -1 && it->anna_odotuskuvio() < ohjelma.sekunnit()) {
+			it->aseta_odotuskuvio(120);
 			it->ota_selvitys(it->anna_suunta() + 180, apuvalineet::OIKEA);
 		}
 
-		if (it->tyyppi == Peli::LAHTEVA && it->anna_korkeus() < 1200 && it->odotus == false) {
-			if (it->nopeus == 0) {
-				it->muuta_selvitysnopeutta(asetukset.anna_asetus("alkunopeus"));
+		if (it->tyyppi == Peli::LAHTEVA && it->anna_korkeus() < 1200 && it->anna_odotus() == false) {
+			if (it->anna_nopeus() == 0) {
+				it->ota_selvitys(asetukset.anna_asetus("alkunopeus"), apuvalineet::NOPEUS);
 			}
 
-			if (it->nopeus > 150) {
+			if (it->anna_nopeus() > 150) {
 				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunousukorkeus, apuvalineet::KORKEUS);
 				it->ota_selvitys(asetukset.anna_asetus("alkunousunopeus"), apuvalineet::NOPEUS);
 				it->ota_selvitys(kentta.kiitotiet[atis.lahtokiitotie].alkunoususuunta, apuvalineet::SUUNTA);
@@ -291,11 +291,10 @@ void Peli::hoida_koneet(double intervalliMs) {
 	std::vector <lentokone> lyhyt;
 
 	for (unsigned int i = 0; i < koneet.size(); ++i) {
-		if (koneet[i].poistetaan == false) {
+		if (koneet[i].anna_poistetaan() == false) {
 			lyhyt.push_back(koneet[i]);
 		} else {
-			std::clog << "Kone " << koneet[i].kutsutunnus << " poistuu..." << std::endl;
-			std::vector <tilasto>::iterator ulos = std::find(ajat.begin(), ajat.end(), koneet[i].kutsutunnus);
+			std::vector <tilasto>::iterator ulos = std::find(ajat.begin(), ajat.end(), koneet[i].anna_kutsutunnus());
 			ulos->pois = ohjelma.sekunnit();
 		}
 	}
@@ -311,7 +310,7 @@ void Peli::hoida_koneet(double intervalliMs) {
 
 void Peli::lisaa_selvityksia() {
 	int valittu = etsi_valittu_kone();
-	std::vector <tilasto>::iterator lisattava = std::find(ajat.begin(), ajat.end(), koneet[valittu].kutsutunnus);
+	std::vector <tilasto>::iterator lisattava = std::find(ajat.begin(), ajat.end(), koneet[valittu].anna_kutsutunnus());
 	++lisattava->selvitykset;
 }
 
@@ -365,7 +364,7 @@ void Peli::generoi_metar() {
 bool Peli::onko_vapaata(int tyyppi, int piste) {
 	if (tyyppi == LAHTEVA) {
 		for (unsigned int i = 0; i < koneet.size(); ++i) {
-			if (koneet[i].korkeus < (kentta.korkeus + asetukset.anna_asetus("porrastus_pysty")) && koneet[i].odotus == false) {
+			if (koneet[i].anna_korkeus() < (kentta.korkeus + asetukset.anna_asetus("porrastus_pysty")) && koneet[i].anna_odotus() == false) {
 				return false;
 			}
 		}
