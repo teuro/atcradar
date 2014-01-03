@@ -48,7 +48,7 @@ int PeliController::aja() {
 			{
 				kasittele_hiiren_nappi(hiiri);
 			}
-			else 
+			else
 			{
 				kasittele_hiiren_paikka(hiiri);
 			}
@@ -68,7 +68,7 @@ int PeliController::aja() {
 				kasittele_komento(ohjelma.anna_viesti());
 				ohjelma.tyhjenna_viesti();
 			}
-			else 
+			else
 			{
 				if (!kasittele_nappi(nappi))
 				{
@@ -100,6 +100,8 @@ bool PeliController::kasittele_nappi(IOhjelma::nappi nappi)
 		case IOhjelma::NAPPI_F8:
 			peli.toiminto = apuvalineet::KORKEUS;
 			break;
+        default:
+            break;
 	}
 	return true;
 }
@@ -131,7 +133,7 @@ bool PeliController::kasittele_aikaa(double intervallisek) {
 	}
 
 	if (pelin_kello >= peli.koska_uusi_kone) {
-		if (peli.koneet.size() < asetukset.anna_asetus("maks_konemaara")) {
+		if ((int)peli.koneet.size() < (int)asetukset.anna_asetus("maks_konemaara")) {
 			peli.luo_kone();
 			peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
 		}
