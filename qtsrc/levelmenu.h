@@ -15,6 +15,8 @@ public:
 	{
 		slider = new QSlider(Qt::Horizontal, this);
 		slider->setGeometry(50, 50, 130, 30);
+        slider->setMinimum(0);
+        slider->setMaximum(4);
 
 		title = new QLabel("Valitse vaikeustaso: ", this);
 		title->setGeometry(50, 20, 150, 30);
