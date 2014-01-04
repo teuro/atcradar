@@ -16,6 +16,9 @@ public:
 		title = new QLabel("ATIS Valinta", this);
         title->setGeometry(0, 0, 150, 30);
 
+        Metar = new QLabel("EFRO 1320z 13025KT 080OVC", this);
+        Metar->setGeometry(0, 0, 600, 10);
+
 		okButton = new QPushButton("OK", this);
 		okButton->move(80, 85);
 
@@ -67,6 +70,7 @@ private:
     QLabel* landing;
     QLabel* transitionAltitude;
     QLabel* transitionLevel;
+    QLabel* Metar;
 
 	QPushButton* okButton;
 
