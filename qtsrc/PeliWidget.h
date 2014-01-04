@@ -72,7 +72,7 @@ public:
 		connect(timer, SIGNAL(timeout()), SLOT(animate()));
 		timer->start(frameMs);
 
-//        this->installEventFilter(this);
+        // To get mouse events continuously even when button is not pressed
         setMouseTracking(true) ;
     }
 
@@ -96,24 +96,14 @@ public slots:
 	{
         QPoint& pos = e->pos();
         peliController.kasittele_hiiren_nappi(apuvalineet::piste(pos.x(), pos.y()));
-		update();
+		//update();
 	}
-
-    bool eventFilter(QObject *obj, QEvent *event)
-    {
-      if (event->type() == QEvent::MouseMove)
-      {
-        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-        mouseMoveEvent(mouseEvent);
-      }
-      return false;
-    }
 
     void mouseMoveEvent(QMouseEvent* e) {
 		// Mouse has moved while the user presses the mouse button
         QPoint& pos = e->pos();
         peliController.kasittele_hiiren_paikka(apuvalineet::piste(pos.x(), pos.y()));
-		update();
+		//update();
 	}
 
 private:
