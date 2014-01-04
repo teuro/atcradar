@@ -8,5 +8,5 @@ INCLUDEPATH += .
 QT += widgets
 
 # Input
-HEADERS += AtisView.h levelmenu.h MainWindow.h PeliWidget.h
+HEADERS += AtisView.h levelmenu.h MainWindow.h
 SOURCES += qtmain.cpp

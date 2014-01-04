@@ -24,9 +24,6 @@
     <ClCompile Include="..\release\moc_levelmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\release\moc_MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\release\moc_PeliView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -85,6 +82,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\release\moc_PeliWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\release\moc_MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

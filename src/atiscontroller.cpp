@@ -24,6 +24,8 @@ int AtisController::aja() {
 		case IOhjelma::NAPPI_F8:
 			toiminto = Peli::SIIRTOPINTA;
 			break;
+        default:
+            break;
 		}
 
 		if (ohjelma.anna_viesti().length() > 1 && nappi == IOhjelma::NAPPI_ENTER) {

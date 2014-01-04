@@ -21,19 +21,19 @@ public:
         m_painter = painter;
     }
 
-	void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color)
+    void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color)
     {
         m_painter->drawRect(x1, y1, x2-x1, y2-y1);
     }
 
-	void lineColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) 
+    void lineColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color)
     {
-		m_painter->drawLine(x1, y1, x2, y2);
+        m_painter->drawLine(x1, y1, x2, y2);
     }
 
     void circleColor(unsigned short x, unsigned short y, unsigned short rad, unsigned int color)
     {
-		m_painter->drawEllipse(QPointF(x, y), rad, rad);
+        m_painter->drawEllipse(QPointF(x, y), rad, rad);
     }
 
     void trigonColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned short x3, unsigned short y3, unsigned int color)
@@ -42,25 +42,25 @@ public:
         m_painter->drawPolygon(points, 3);
     }
 
-	void piirra_kuva(const char* tiedosto, int x, int y, bool keskikohta = false)
+    void piirra_kuva(const char* tiedosto, int x, int y, bool keskikohta = false)
     {
     }
 
-	void kirjoita_tekstia(std::string teksti, int x, int y, bool aktiivinen = false){
+    void kirjoita_tekstia(std::string teksti, int x, int y, bool aktiivinen = false){
         m_painter->drawText(x, y, teksti.c_str());
     }
 
     int get_fontinkoko() { return 16; }
-	void flip() {
+    void flip() {
 
     }
 };
 
 class PeliWidget : public QWidget
 {
-	Q_OBJECT
-	// Frame duration in milliseconds
-	static const int frameMs = 1000 / 50;
+    Q_OBJECT
+    // Frame duration in milliseconds
+    static const int frameMs = 1000 / 50;
     QPainterPiirtoPinta piirtopinta;
 
 public:
@@ -77,38 +77,37 @@ public:
     }
 
 public slots:
-	void animate()
-	{
+    void animate()
+    {
         peliController.kasittele_aikaa(frameMs / 1000.0);
         update();
     }
 
-	// Redraw the view completely
-	void paintEvent(QPaintEvent *)
-	{
-		QPainter p(this);
+    // Redraw the view completely
+    void paintEvent(QPaintEvent *)
+    {
+        QPainter p(this);
         piirtopinta.SetPainter(&p);
         peliView.piirra(piirtopinta);
-	}
+    }
 
-	// Mouse button up
-	void mouseReleaseEvent(QMouseEvent * e)
-	{
+    // Mouse button up
+    void mouseReleaseEvent(QMouseEvent * e)
+    {
         QPoint& pos = e->pos();
         peliController.kasittele_hiiren_nappi(apuvalineet::piste(pos.x(), pos.y()));
-		//update();
-	}
+        update();
+    }
 
     void mouseMoveEvent(QMouseEvent* e) {
-		// Mouse has moved while the user presses the mouse button
+        // Mouse has moved while the user presses the mouse button
         QPoint& pos = e->pos();
         peliController.kasittele_hiiren_paikka(apuvalineet::piste(pos.x(), pos.y()));
-		//update();
-	}
+    }
 
 private:
-	// animation timer
-	QTimer *timer;
+    // animation timer
+    QTimer *timer;
     PeliView& peliView;
     Peli& peli;
     PeliController& peliController;
