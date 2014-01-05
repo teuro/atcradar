@@ -8,7 +8,8 @@
 #include <QtWidgets/QVBoxLayout>
 
 #include "levelmenu.h"
-#include "atisview.h"
+#include "AtisWidget.h"
+#include "PeliView.h"
 
 class MainWindow : public QDialog {
 	Q_OBJECT
@@ -18,11 +19,13 @@ public:
 	{
 		levelMenu = new LevelMenu();
         atisView = new AtisView();
+        peliView = new PeliView();
 
 		stack = new QStackedWidget();
 
 		stack->addWidget(levelMenu);
 		stack->addWidget(atisView);
+        stack->addWidget(peliView);
 
 		QVBoxLayout *layout = new QVBoxLayout;
 		layout->addWidget(stack);
@@ -48,5 +51,7 @@ public:
 private:
 	LevelMenu* levelMenu;
 	AtisView* atisView;
+    PeliView* peliView;
+
 	QStackedWidget* stack;
 };

@@ -11,8 +11,7 @@ class LevelMenu : public QWidget
 {
 	Q_OBJECT
 public:
-	LevelMenu(QWidget* parent = 0) : QWidget(parent)
-	{
+    LevelMenu(QWidget* parent = 0) : QWidget(parent) {
 		slider = new QSlider(Qt::Horizontal, this);
 		slider->setGeometry(50, 50, 130, 30);
         slider->setMinimum(0);

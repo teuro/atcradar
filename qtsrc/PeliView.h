@@ -11,16 +11,14 @@
 #include <list>
 #include <cmath>
 
-class lentokone
-{
+class lentokone {
 public:
     // In world coordinates
     double x, y;
     double vx, vy;
     double ax, ay;
 
-    void tickTime(double seconds)
-    {
+    void tickTime(double seconds) {
         vx += ax * seconds;
         vy += ay * seconds;
 		x += vx * seconds;
@@ -44,12 +42,11 @@ class PeliView : public QWidget
 
 public:
 	// constructor
-	PeliView(QWidget *aParent = 0)
-	{
+    PeliView(QWidget *aParent = 0) {
 		// Generate a number of objects in random locations with random velocities
-		for (int i = 0; i < 15; i++)
-		{
+        for (int i = 0; i < 3; i++) {
 			lentokone* lk = new lentokone();
+
 			lk->x = rand() % world_width;
 			lk->y = rand() % world_height;
 
@@ -59,7 +56,7 @@ public:
 			lk->vy = rand() % maxV*2 - maxV;
 
 			m_lentokoneet.push_back(lk);
-		}
+        }
 
 		// Timer to draw the window
 		timer = new QTimer;
