@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QString>
 #include <QValidator>
+#include <iostream>
 
 class AtisView : public QWidget
 {
@@ -23,8 +24,8 @@ public:
 		okButton = new QPushButton("OK", this);
 		okButton->move(80, 85);
 
-        QValidator* validate_dep = new QIntValidator(01, 35, this);
-        QValidator* validate_ldg = new QIntValidator(01, 35, this);
+        QValidator* validate_dep = new QIntValidator(01, 36, this);
+        QValidator* validate_ldg = new QIntValidator(01, 36, this);
         QValidator* validate_TL = new QIntValidator(40, 70, this);
         QValidator* validate_TA = new QIntValidator(3000, 18000, this);
 
@@ -61,7 +62,7 @@ public:
 
 	public slots:
     void OnOkPressed() {
-		emit atisDone();
+        emit atisDone();
 		//close();
 	}
 
