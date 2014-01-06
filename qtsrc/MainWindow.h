@@ -10,15 +10,16 @@
 #include "levelmenu.h"
 #include "AtisWidget.h"
 #include "PeliView.h"
+#include "Metar.hpp"
 
 class MainWindow : public QDialog {
 	Q_OBJECT
 
 public:
-	MainWindow()
-	{
+    MainWindow() {
+        Metar metar;
 		levelMenu = new LevelMenu();
-        atisView = new AtisView();
+        atisView = new AtisView(metar);
         peliView = new PeliView();
 
 		stack = new QStackedWidget();

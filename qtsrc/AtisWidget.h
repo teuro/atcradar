@@ -9,16 +9,18 @@
 #include <QString>
 #include <QValidator>
 #include <iostream>
+#include "Metar.hpp"
+#include "../src/apuvalineet.hpp"
 
 class AtisView : public QWidget {
 	Q_OBJECT
 public:
-    AtisView(QWidget* parent = 0) : QWidget(parent) {
+    AtisView(Metar& metar, QWidget* parent = 0) : QWidget(parent) {
 		title = new QLabel("ATIS Valinta", this);
         title->setGeometry(0, 0, 150, 30);
 
-        Metar = new QLabel("EFRO 1320z 13025KT 080OVC", this);
-        Metar->setGeometry(0, 0, 600, 10);
+        MetarLabel = new QLabel(metar.getMessage(), this);
+        MetarLabel->setGeometry(0, 0, 600, 10);
 
 		okButton = new QPushButton("OK", this);
 		okButton->move(80, 85);
@@ -73,7 +75,7 @@ private:
     QLabel* landing;
     QLabel* transitionAltitude;
     QLabel* transitionLevel;
-    QLabel* Metar;
+    QLabel* MetarLabel;
 
 	QPushButton* okButton;
 
