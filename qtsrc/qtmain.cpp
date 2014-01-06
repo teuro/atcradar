@@ -7,8 +7,7 @@
 //#include "levelmenu.h"
 #include "mainwindow.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char** argv) {
 	srand(time(NULL));
 
     QApplication app(argc, argv);
