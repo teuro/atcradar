@@ -17,7 +17,7 @@ class AtisView : public QWidget {
 public:
     AtisView(Metar& metar, QWidget* parent = 0) : QWidget(parent) {
 		title = new QLabel("ATIS Valinta", this);
-        title->setGeometry(0, 0, 150, 30);
+        title->setGeometry(0, 20, 150, 30);
 
         metarLabel = new QLabel(metar.getMessage(), this);
         metarLabel->setGeometry(0, 0, 600, 10);
