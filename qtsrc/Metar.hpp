@@ -22,7 +22,18 @@ public:
         lampotila       = apuvalineet::arvo_luku(-30, 60);
         ilmankosteus    = apuvalineet::arvo_luku(50, 100);
         kastepiste      = (lampotila - (100 - ilmankosteus)) / 5;
-        pilvet          = "BKN2700 SCT6800 OVC1100";
+
+        std::vector <std::string> pilvityypit;
+        pilvityypit.push_back("SKC");
+
+        pilvityypit.push_back("FEW");
+        pilvityypit.push_back("BKN");
+        pilvityypit.push_back("SCT");
+        pilvityypit.push_back("OVC");
+
+        for (unsigned int i = 0; i < apuvalineet::arvo_luku(0, 5); ++i) {
+            pilvet += pilvityypit[apuvalineet::arvo_luku(0, pilvityypit.size()-1)] + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(1000, 8800), 100)) + " ";
+        }
     }
 
     QString getMessage() {
