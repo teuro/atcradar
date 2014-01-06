@@ -113,7 +113,7 @@ std::vector <std::string> apuvalineet::pilko_rivi(std::string rivi, std::string 
 	std::vector <std::string> asiat;
 	std::string sana;
 
-	while ((pos = rivi.find(erotin)) != std::string::npos) {
+    while ((pos = rivi.find(erotin)) != std::string::npos) {
 		sana = rivi.substr(0, pos);
 		asiat.push_back(sana);
 		rivi.erase(0, pos + erotin.length());
@@ -126,4 +126,8 @@ bool apuvalineet::onko_alueella(const piste& a, const piste& b, double sade) {
     double valimatka = etaisyys(a, b);
 
 	return valimatka < (2 * sade);
+}
+
+double apuvalineet::laske_vastatuuli(double kiitotie, double tuuli) {
+    return (std::cos(tuuli - kiitotie));
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <map>
 
 namespace apuvalineet {
 	extern double zoom;
@@ -54,14 +55,15 @@ namespace apuvalineet {
 		return b;
 	}
 
+    double laske_vastatuuli(double kiitotie, double tuuli);
 	double etaisyys(const piste& a, const piste& b);
 	piste uusi_paikka(const piste& a, double suunta, double pituus);
 	vektori suunta_vektori(const piste& a, const piste& b);
 	double laske_kulma(const piste& a, const piste& b);
 	std::string muuta_pituus(std::string alkuperainen, int haluttupituus);
-	int pyorista(double luku, int jaollisuus);
-	std::vector <std::string> pilko_rivi(std::string rivi, std::string erotin);
-	bool onko_alueella(const piste& a, const piste& b, double sade = 0.2);
+    int pyorista(double luku, int jaollisuus);
+    std::vector <std::string> pilko_rivi(std::string rivi, std::string erotin);
+    bool onko_alueella(const piste& a, const piste& b, double sade = 0.2);
 	enum lukeminen { SUUNTA = 1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, KOHDE, TYHJA = 0 };
 	const int VASEN = -1;
 	const int OIKEA = 1;
