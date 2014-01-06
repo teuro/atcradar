@@ -3,6 +3,23 @@
 
 #include <QString>
 #include "../src/apuvalineet.hpp"
+#include <vector>
+#include <fstream>
+#include <map>
+#include <stdexcept>
+
+class paineraja {
+public:
+    int alaraja;
+    int ylaraja;
+    int siirtopinta;
+
+    paineraja (int ar, int yr, int sp) {
+        this->alaraja = ar;
+        this->ylaraja = yr;
+        this->siirtopinta = sp;
+    }
+};
 
 class Metar {
     int tuuli;
@@ -14,6 +31,7 @@ class Metar {
     int kastepiste;
     std::string pilvet;
 public:
+    std::vector <paineraja> painerajat;
     Metar () {
         tuuli           = apuvalineet::pyorista(apuvalineet::arvo_luku(3, 23), 5);
         voimakkuus      = apuvalineet::arvo_luku(0, 20);
@@ -24,8 +42,8 @@ public:
         kastepiste      = (lampotila - (100 - ilmankosteus)) / 5;
 
         std::vector <std::string> pilvityypit;
-        pilvityypit.push_back("SKC");
 
+        pilvityypit.push_back("SKC");
         pilvityypit.push_back("FEW");
         pilvityypit.push_back("BKN");
         pilvityypit.push_back("SCT");
@@ -36,8 +54,30 @@ public:
         }
     }
 
+    int anna_paine() {
+        return this->paine;
+    }
+
     QString getMessage() {
         return QString::fromStdString("EFRO " + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(tuuli), 3) + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(voimakkuus), 2) + "KT Q" + apuvalineet::tekstiksi(paine) + " " + apuvalineet::tekstiksi(nakyvyys) + " " + apuvalineet::tekstiksi(lampotila) + "/" + apuvalineet::tekstiksi(kastepiste) + " " + pilvet);
+    }
+
+    void downloadPrressureLimit(std::string file, int siirtokorkeus) {
+        std::ifstream in(file.c_str(), std::ios::in);
+        if (!in) {
+            throw std::runtime_error("File " + file + " cannot be open");
+        }
+        std::string line;
+        std::vector <std::string> words;
+
+        while (std::getline(in, line)) {
+            words = apuvalineet::pilko_rivi(line, " ");
+            if (apuvalineet::luvuksi<int>(words[0]) == siirtokorkeus) {
+                this->painerajat.push_back(paineraja(apuvalineet::luvuksi<int>(words[1]), apuvalineet::luvuksi<int>(words[2]), apuvalineet::luvuksi<int>(words[3])));
+            }
+        }
+
+        in.close();
     }
 };
 
