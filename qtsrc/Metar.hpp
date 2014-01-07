@@ -8,19 +8,6 @@
 #include <map>
 #include <stdexcept>
 
-class paineraja {
-public:
-    int alaraja;
-    int ylaraja;
-    int siirtopinta;
-
-    paineraja (int ar, int yr, int sp) {
-        this->alaraja = ar;
-        this->ylaraja = yr;
-        this->siirtopinta = sp;
-    }
-};
-
 class Metar {
     int tuuli;
     int voimakkuus;
@@ -31,8 +18,7 @@ class Metar {
     int kastepiste;
     std::string pilvet;
 public:
-    std::vector <paineraja> painerajat;
-    Metar () {
+    Metar() {
         tuuli           = apuvalineet::pyorista(apuvalineet::arvo_luku(3, 23), 5);
         voimakkuus      = apuvalineet::arvo_luku(0, 20);
         paine           = apuvalineet::arvo_luku(940, 1060);
@@ -60,29 +46,6 @@ public:
 
     QString getMessage() {
         return QString::fromStdString("EFRO " + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(tuuli), 3) + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(voimakkuus), 2) + "KT Q" + apuvalineet::tekstiksi(paine) + " " + apuvalineet::tekstiksi(nakyvyys) + " " + apuvalineet::tekstiksi(lampotila) + "/" + apuvalineet::tekstiksi(kastepiste) + " " + pilvet);
-    }
-
-    void downloadPrressureLimit(std::string file, int siirtokorkeus) {
-        std::ifstream in(file.c_str(), std::ios::in);
-        if (!in) {
-            throw std::runtime_error("File " + file + " cannot be open");
-        }
-        std::string line;
-        std::vector <std::string> words;
-        int place;
-        
-        while (std::getline(in, line)) {
-            words = apuvalineet::pilko_rivi(line, "|");
-            if (words[0] == "P") {
-                if (apuvalineet::luvuksi<int>(words[1]) == siirtokorkeus) {
-                    place = apuvalineet_::luvuksi<int>(words[2]);
-                } else if (words[0] == "K") {
-                    painerajat.push_back(paineraja(apuvalineet_::luvuksi<int>(words[1]), apuvalineet_::luvuksi<int>(words[2]), apuvalineet_::luvuksi<int>(words[place])));
-                }
-            }
-        }
-
-        in.close();
     }
 };
 
