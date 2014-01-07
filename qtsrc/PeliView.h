@@ -5,8 +5,12 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QPushButton>
 #include <QMouseEvent>
+#include <QLabel>
 #include <QPainter>
 #include <QTimer>
+
+#include "AtisController.hpp"
+#include "Metar.hpp"
 
 #include <list>
 #include <cmath>
@@ -39,10 +43,13 @@ class PeliView : public QWidget
 
 	// Frame duration in milliseconds
 	static const int frameMs = 1000 / 50;
+    Metar metar;
+    QLabel* metarLabel;
 
 public:
 	// constructor
-    PeliView(QWidget *aParent = 0) {
+    PeliView(Metar& m, QWidget *aParent = 0) {
+        metar = m;
 		// Generate a number of objects in random locations with random velocities
         for (int i = 0; i < 3; i++) {
 			lentokone* lk = new lentokone();
@@ -74,8 +81,7 @@ protected:
 	}
 
 	// Redraw the view completely
-	void paintEvent(QPaintEvent *)
-	{
+    void paintEvent(QPaintEvent *) {
 		QPainter p(this);
 
 		p.setPen(Qt::blue);

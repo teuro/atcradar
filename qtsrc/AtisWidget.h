@@ -72,6 +72,7 @@ public:
             drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
         } else {
             hideErrorMessage();
+
             Atis::lahtokiitotie = inputFields[0]->text().toStdString();
             Atis::laskukiitotie = inputFields[1]->text().toStdString();
             Atis::siirtokorkeus = inputFields[2]->text().toInt();

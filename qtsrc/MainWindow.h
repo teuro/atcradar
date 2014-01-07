@@ -20,7 +20,7 @@ public:
         Metar metar;
 		levelMenu = new LevelMenu();
         atisView = new AtisView(metar);
-        peliView = new PeliView();
+        peliView = new PeliView(metar);
 
 		stack = new QStackedWidget();
 
