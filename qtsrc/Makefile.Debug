@@ -238,6 +238,8 @@ debug/moc_AtisWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidget
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QValidator \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QToolTip \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qtooltip.h \
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
@@ -390,6 +392,8 @@ debug/moc_MainWindow.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidget
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QValidator \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QToolTip \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qtooltip.h \
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
@@ -782,6 +786,8 @@ debug/moc_AtisWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidget
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QValidator \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QToolTip \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qtooltip.h \
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
@@ -951,6 +957,8 @@ debug/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidge
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QValidator \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QToolTip \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qtooltip.h \
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
@@ -966,7 +974,8 @@ debug/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidge
 debug/apuvalineet.o: ../src/apuvalineet.cpp ../src/apuvalineet.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\apuvalineet.o ..\src\apuvalineet.cpp
 
-debug/AtisController.o: AtisController.cpp AtisController.hpp
+debug/AtisController.o: AtisController.cpp AtisController.hpp \
+		../src/apuvalineet.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\AtisController.o AtisController.cpp
 
 debug/moc_AtisWidget.o: debug/moc_AtisWidget.cpp 

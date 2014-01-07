@@ -56,7 +56,7 @@ public:
         QToolTip::hideText();
     }
 
-	public slots:
+    public slots:
     void OnOkPressed() {
         Atis::downloadPrressureLimit("C:/Users/acer/Documents/GitHub/atcradar/ohjelma/data/painerajat.txt", inputFields[2]->text().toInt());
 
@@ -72,10 +72,14 @@ public:
             drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
         } else {
             hideErrorMessage();
+            Atis::lahtokiitotie = inputFields[0]->text().toStdString();
+            Atis::laskukiitotie = inputFields[1]->text().toStdString();
+            Atis::siirtokorkeus = inputFields[2]->text().toInt();
+            Atis::siirtopinta = inputFields[3]->text().toInt();
+
             emit atisDone();
         }
-
-	}
+    }
 
 signals:
 	void atisDone();
