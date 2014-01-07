@@ -75,7 +75,7 @@ public:
             words = apuvalineet::pilko_rivi(line, "|");
             if (words[0] == "P") {
                 if (apuvalineet::luvuksi<int>(words[1]) == siirtokorkeus) {
-                    place = apuvalineet_::luvuksi<int>(words[1]);
+                    place = apuvalineet_::luvuksi<int>(words[2]);
                 } else if (words[0] == "K") {
                     painerajat.push_back(paineraja(apuvalineet_::luvuksi<int>(words[1]), apuvalineet_::luvuksi<int>(words[2]), apuvalineet_::luvuksi<int>(words[place])));
                 }
