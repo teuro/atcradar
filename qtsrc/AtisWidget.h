@@ -48,8 +48,12 @@ public:
         inputLabel->setGeometry(x-80, y-0, 200, 20);
     }
 
-    void drawTooltip(std::string info, QLineEdit* field) {
+    void drawErrorMessage(std::string info, QLineEdit* field) {
         QToolTip::showText(field->mapToGlobal(QPoint()), QString::fromStdString(info));
+    }
+
+    void hideErrorMessage() {
+        QToolTip::hideText();
     }
 
 	public slots:
@@ -60,14 +64,14 @@ public:
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
         int laskettu_siirtopinta = Atis::calculateTL(metar.anna_paine());
 
-        if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
-            drawTooltip(std::string("Laskepa uudestaan..."), inputFields[3]);
-        } else if (vasta_lahto >= 0) {
-            drawTooltip("Ei osunut...", inputFields[1]);
+        if (vasta_lahto >= 0) {
+            drawErrorMessage("Lähtökiitotie väärin", inputFields[1]);
         } else if (vasta_lasku >= 0) {
-            drawTooltip("Ei osunut...", inputFields[2]);
+            drawErrorMessage("Laskukiitotie väärin", inputFields[2]);
+        } else if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
+            drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
         } else {
-            QToolTip::hideText();
+            hideErrorMessage();
             emit atisDone();
         }
 
