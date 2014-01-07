@@ -69,11 +69,16 @@ public:
         }
         std::string line;
         std::vector <std::string> words;
-
+        int place;
+        
         while (std::getline(in, line)) {
-            words = apuvalineet::pilko_rivi(line, " ");
-            if (apuvalineet::luvuksi<int>(words[0]) == siirtokorkeus) {
-                this->painerajat.push_back(paineraja(apuvalineet::luvuksi<int>(words[1]), apuvalineet::luvuksi<int>(words[2]), apuvalineet::luvuksi<int>(words[3])));
+            words = apuvalineet::pilko_rivi(line, "|");
+            if (words[0] == "P") {
+                if (apuvalineet::luvuksi<int>(words[1]) == siirtokorkeus) {
+                    place = apuvalineet_::luvuksi<int>(words[1]);
+                } else if (words[0] == "K") {
+                    painerajat.push_back(paineraja(apuvalineet_::luvuksi<int>(words[1]), apuvalineet_::luvuksi<int>(words[2]), apuvalineet_::luvuksi<int>(words[place])));
+                }
             }
         }
 
