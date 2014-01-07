@@ -8,5 +8,7 @@ INCLUDEPATH += .
 QT += widgets
 
 # Input
-HEADERS += AtisWidget.h  MainWindow.h levelmenu.h PeliView.h AtisWidget.h Metar.hpp ../src/apuvalineet.hpp
-SOURCES += qtmain.cpp ../src/apuvalineet.cpp
+HEADERS += AtisWidget.h  MainWindow.h levelmenu.h PeliView.h AtisWidget.h Metar.hpp ../src/apuvalineet.hpp \
+    AtisController.hpp
+SOURCES += qtmain.cpp ../src/apuvalineet.cpp \
+    AtisController.cpp

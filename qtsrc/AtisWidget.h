@@ -8,24 +8,12 @@
 #include <QLabel>
 #include <QString>
 #include <QValidator>
+#include <QToolTip>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include "Metar.hpp"
-#include "../src/apuvalineet.hpp"
-
-class paineraja {
-public:
-    int alaraja;
-    int ylaraja;
-    int siirtopinta;
-
-    paineraja (int ar, int yr, int sp) {
-        this->alaraja = ar;
-        this->ylaraja = yr;
-        this->siirtopinta = sp;
-    }
-};
+#include "AtisController.hpp"
 
 class AtisView : public QWidget {
 	Q_OBJECT
@@ -60,18 +48,29 @@ public:
         inputLabel->setGeometry(x-80, y-0, 200, 20);
     }
 
+    void drawTooltip(std::string info, QLineEdit* field) {
+        QToolTip::showText(field->mapToGlobal(QPoint()), QString::fromStdString(info));
+    }
+
 	public slots:
     void OnOkPressed() {
-        //std::ofstream ulos("C:/Users/acer/Documents/GitHub/atcradar/ohjelma/data/tulos.txt");
-        downloadPrressureLimit("C:/Users/acer/Documents/GitHub/atcradar/ohjelma/data/painerajat.txt", inputFields[2]->text().toInt());
+        Atis::downloadPrressureLimit("C:/Users/acer/Documents/GitHub/atcradar/ohjelma/data/painerajat.txt", inputFields[2]->text().toInt());
 
-        if (calculateTL(metar.anna_paine()) == inputFields[3]->text().toInt()) {
-            emit atisDone();
+        double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
+        double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
+        int laskettu_siirtopinta = Atis::calculateTL(metar.anna_paine());
+
+        if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
+            drawTooltip(std::string("Laskepa uudestaan..."), inputFields[3]);
+        } else if (vasta_lahto >= 0) {
+            drawTooltip("Ei osunut...", inputFields[1]);
+        } else if (vasta_lasku >= 0) {
+            drawTooltip("Ei osunut...", inputFields[2]);
         } else {
-            //ulos << calculateTL(metar.anna_paine()) << " " << inputFields[3]->text().toInt() << std::endl;
+            QToolTip::hideText();
+            emit atisDone();
         }
 
-		//close();
 	}
 
 signals:
@@ -87,43 +86,6 @@ private:
 	QPushButton* okButton;
 
     std::vector <QLineEdit*> inputFields;
-    std::vector <paineraja> painerajat;
-
-    void downloadPrressureLimit(std::string file, int siirtokorkeus) {
-        std::ifstream in(file.c_str(), std::ios::in);
-
-        if (!in) {
-            throw std::runtime_error("File " + file + " cannot be open");
-        }
-
-        std::string line;
-        std::vector <std::string> words;
-        int place;
-
-        while (std::getline(in, line)) {
-            words = apuvalineet::pilko_rivi(line, "|");
-
-            if (words[0] == "P" && apuvalineet::luvuksi<int>(words[1]) == siirtokorkeus) {
-                place = apuvalineet::luvuksi<int>(words[2]);
-            } else if (words[0] == "K") {
-                painerajat.push_back(paineraja(apuvalineet::luvuksi<int>(words[1]), apuvalineet::luvuksi<int>(words[2]), apuvalineet::luvuksi<int>(words[place])));
-            }
-
-            words.clear();
-        }
-
-        in.close();
-    }
-
-    int calculateTL(int pressure) {
-        //std::ofstream ulos("C:/Users/acer/Documents/GitHub/atcradar/ohjelma/data/tulos.txt");
-        for (unsigned int i = 0; i < painerajat.size(); ++i) {
-            //ulos << painerajat[i].alaraja << " " << painerajat[i].ylaraja << " " << painerajat[i].siirtopinta << std::endl;
-            if (pressure >= painerajat[i].alaraja && pressure <= painerajat[i].ylaraja) {
-                return painerajat[i].siirtopinta;
-            }
-        }
-    }
 };
 
 #endif

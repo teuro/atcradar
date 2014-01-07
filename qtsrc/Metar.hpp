@@ -21,7 +21,7 @@ public:
     Metar() {
         tuuli           = apuvalineet::pyorista(apuvalineet::arvo_luku(3, 23), 5);
         voimakkuus      = apuvalineet::arvo_luku(0, 20);
-        paine           = apuvalineet::arvo_luku(940, 1060);
+        paine           = apuvalineet::arvo_luku(940, 1050);
         nakyvyys        = apuvalineet::pyorista(apuvalineet::arvo_luku(200, 9999), 100);
         lampotila       = apuvalineet::arvo_luku(-30, 60);
         ilmankosteus    = apuvalineet::arvo_luku(50, 100);
@@ -42,6 +42,10 @@ public:
 
     int anna_paine() {
         return this->paine;
+    }
+
+    int anna_tuuli() {
+        return this->tuuli;
     }
 
     QString getMessage() {
