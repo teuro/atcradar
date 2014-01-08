@@ -1,0 +1,49 @@
+#include "lukija.hpp"
+
+// Syötteen luku siirretty Ohjelma-luokkaan, koska siellä on muutkin Input-asiat
+// Poistetaan tämä kun kaikki on muuten selvää.
+
+#if 0
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
+
+
+std::string syotteenluku::lue_syote() {
+	//peli::syote = this->str;
+    SDL_Event event;
+    SDL_PollEvent(&event);
+    if( event.type == SDL_KEYDOWN )
+    {
+        //Keep a copy of the current version of the string
+        std::string temp = str;
+
+        //If the string less than maximum size
+        if( str.length() <= 16 )
+        {
+            if( event.key.keysym.unicode == (Uint16)' '  || 
+				(event.key.keysym.unicode >= (Uint16)'0') && (event.key.keysym.unicode <= (Uint16)'9') ||
+				(event.key.keysym.unicode >= (Uint16)'A') && (event.key.keysym.unicode <= (Uint16)'Ä') || 
+				(event.key.keysym.unicode >= (Uint16)'a') && (event.key.keysym.unicode <= (Uint16)'z'))
+            {
+                //Append the character
+                str += (char)event.key.keysym.unicode;
+            }
+        }
+        //If backspace was pressed and the string isn't blank
+        if( ( event.key.keysym.sym == SDLK_BACKSPACE ) && ( str.length() != 0 ) )
+        {
+            //Remove a character from the end
+            str.erase( str.length() - 1 );
+        }
+    }
+    return str;
+}
+
+syotteenluku::syotteenluku() {
+    //Initialize the string
+    str = "";
+
+    //Enable Unicode
+    SDL_EnableUNICODE( SDL_ENABLE );
+}
+#endif

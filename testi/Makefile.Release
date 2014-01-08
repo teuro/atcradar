@@ -44,8 +44,24 @@ OBJECTS_DIR   = release
 ####### Files
 
 SOURCES       = qtmain.cpp \
-		..\src\apuvalineet.cpp \
-		AtisController.cpp release\moc_AtisWidget.cpp \
+		apuvalineet.cpp \
+		AtisController.cpp \
+		ajastin.cpp \
+		asetukset.cpp \
+		atisview.cpp \
+		kieli.cpp \
+		lentokentta.cpp \
+		lentokone.cpp \
+		lukija.cpp \
+		navipiste.cpp \
+		peli.cpp \
+		PeliController.cpp \
+		peliview.cpp \
+		tasonvalintacontroller.cpp \
+		tasonvalintaview.cpp \
+		tilastoview.cpp \
+		valikko.cpp \
+		valikkoview.cpp release\moc_AtisWidget.cpp \
 		release\moc_MainWindow.cpp \
 		release\moc_levelmenu.cpp \
 		release\moc_PeliView.cpp \
@@ -53,6 +69,22 @@ SOURCES       = qtmain.cpp \
 OBJECTS       = release/qtmain.o \
 		release/apuvalineet.o \
 		release/AtisController.o \
+		release/ajastin.o \
+		release/asetukset.o \
+		release/atisview.o \
+		release/kieli.o \
+		release/lentokentta.o \
+		release/lentokone.o \
+		release/lukija.o \
+		release/navipiste.o \
+		release/peli.o \
+		release/PeliController.o \
+		release/peliview.o \
+		release/tasonvalintacontroller.o \
+		release/tasonvalintaview.o \
+		release/tilastoview.o \
+		release/valikko.o \
+		release/valikkoview.o \
 		release/moc_AtisWidget.o \
 		release/moc_MainWindow.o \
 		release/moc_levelmenu.o \
@@ -87,7 +119,7 @@ first: all
 all: Makefile.Release  $(DESTDIR_TARGET)
 
 $(DESTDIR_TARGET):  $(OBJECTS) 
-	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
+	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.qtsrc.Release  $(LIBS)
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Release qtsrc.pro
@@ -98,7 +130,7 @@ dist:
 	$(ZIP) qtsrc.zip $(SOURCES) $(DIST) qtsrc.pro ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\spec_pre.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\qdevice.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\device_config.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\common\shell-win32.conf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\qconfig.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axbase.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axbase_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axcontainer.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axcontainer_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axserver.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axserver_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_bluetooth.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_bluetooth_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_bootstrap_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_clucene_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_core.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_declarative.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_declarative_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_help.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_network.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_nfc.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_nfc_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_openglextensions.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_openglextensions_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_platformsupport_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_positioning.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_positioning_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_script.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_script_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_scripttools.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_scripttools_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sensors.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sensors_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkit.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkit_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkitwidgets.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_winextras.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_winextras_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xmlpatterns.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\qt_functions.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\qt_config.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\win32-g++\qmake.conf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\spec_post.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\exclusive_builds.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\default_pre.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\default_pre.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\resolve_config.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\default_post.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\build_pass.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\rtti.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\warn_on.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\qt.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\resources.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\moc.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\opengl.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\uic.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\windows.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\testcase_targets.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\exceptions.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\yacc.prf ..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\lex.prf qtsrc.pro C:/Qt/5.2.0/mingw48_32/lib/Qt5Widgets.prl C:/Qt/5.2.0/mingw48_32/lib/Qt5Gui.prl C:/Qt/5.2.0/mingw48_32/lib/Qt5Core.prl  RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\qtmain.o release\apuvalineet.o release\AtisController.o release\moc_AtisWidget.o release\moc_MainWindow.o release\moc_levelmenu.o release\moc_PeliView.o release\moc_PeliWidget.o
+	-$(DEL_FILE) release\qtmain.o release\apuvalineet.o release\AtisController.o release\ajastin.o release\asetukset.o release\atisview.o release\kieli.o release\lentokentta.o release\lentokone.o release\lukija.o release\navipiste.o release\peli.o release\PeliController.o release\peliview.o release\tasonvalintacontroller.o release\tasonvalintaview.o release\tilastoview.o release\valikko.o release\valikkoview.o release\moc_AtisWidget.o release\moc_MainWindow.o release\moc_levelmenu.o release\moc_PeliView.o release\moc_PeliWidget.o
 
 distclean: clean
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -245,6 +277,7 @@ release/moc_AtisWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
+		apuvalineet.hpp \
 		AtisWidget.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) AtisWidget.h -o release\moc_AtisWidget.cpp
 
@@ -399,6 +432,7 @@ release/moc_MainWindow.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
+		apuvalineet.hpp \
 		PeliView.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QMouseEvent \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QPainter \
@@ -661,9 +695,10 @@ release/moc_PeliView.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidget
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtimer.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h \
 		AtisController.hpp \
-		../src/apuvalineet.hpp \
+		apuvalineet.hpp \
 		Metar.hpp \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QString \
+		../src/apuvalineet.hpp \
 		PeliView.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) PeliView.h -o release\moc_PeliView.cpp
 
@@ -797,6 +832,7 @@ release/moc_AtisWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
+		apuvalineet.hpp \
 		AtisWidget.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) AtisWidget.h -o release\moc_AtisWidget.cpp
 
@@ -923,23 +959,23 @@ release/moc_PeliWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTimer \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtimer.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h \
-		../src/peliview.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/asetukset.h \
-		../src/piirtopinta.hpp \
-		../src/peli.hpp \
-		../src/apuvalineet.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/kieli.hpp \
-		../src/ohjelma.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp \
-		../src/pelicontroller.hpp \
-		../src/controller.hpp \
+		peliview.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		view.hpp \
+		asetukset.h \
+		piirtopinta.hpp \
+		peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		kieli.hpp \
+		ohjelma.hpp \
+		lukija.hpp \
+		ajastin.hpp \
+		pelicontroller.hpp \
+		controller.hpp \
 		PeliWidget.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) PeliWidget.h -o release\moc_PeliWidget.cpp
 
@@ -1111,6 +1147,7 @@ release/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWid
 		Metar.hpp \
 		../src/apuvalineet.hpp \
 		AtisController.hpp \
+		apuvalineet.hpp \
 		PeliView.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QMouseEvent \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QPainter \
@@ -1120,12 +1157,188 @@ release/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWid
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\qtmain.o qtmain.cpp
 
-release/apuvalineet.o: ../src/apuvalineet.cpp ../src/apuvalineet.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\apuvalineet.o ..\src\apuvalineet.cpp
+release/apuvalineet.o: apuvalineet.cpp apuvalineet.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\apuvalineet.o apuvalineet.cpp
 
 release/AtisController.o: AtisController.cpp AtisController.hpp \
-		../src/apuvalineet.hpp
+		apuvalineet.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\AtisController.o AtisController.cpp
+
+release/ajastin.o: ajastin.cpp ajastin.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\ajastin.o ajastin.cpp
+
+release/asetukset.o: asetukset.cpp asetukset.h \
+		apuvalineet.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\asetukset.o asetukset.cpp
+
+release/atisview.o: atisview.cpp atisview.hpp \
+		view.hpp \
+		asetukset.h \
+		piirtopinta.hpp \
+		peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		kieli.hpp \
+		ohjelma.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		lukija.hpp \
+		ajastin.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\atisview.o atisview.cpp
+
+release/kieli.o: kieli.cpp kieli.hpp \
+		apuvalineet.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\kieli.o kieli.cpp
+
+release/lentokentta.o: lentokentta.cpp asetukset.h \
+		lentokentta.hpp \
+		apuvalineet.hpp \
+		ohjelma.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		view.hpp \
+		piirtopinta.hpp \
+		peli.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		kieli.hpp \
+		lukija.hpp \
+		ajastin.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\lentokentta.o lentokentta.cpp
+
+release/lentokone.o: lentokone.cpp lentokone.hpp \
+		apuvalineet.hpp \
+		navipiste.hpp \
+		lentokentta.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\lentokone.o lentokone.cpp
+
+release/lukija.o: lukija.cpp lukija.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\lukija.o lukija.cpp
+
+release/navipiste.o: navipiste.cpp navipiste.hpp \
+		apuvalineet.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\navipiste.o navipiste.cpp
+
+release/peli.o: peli.cpp peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		asetukset.h \
+		kieli.hpp \
+		ohjelma.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		view.hpp \
+		piirtopinta.hpp \
+		lukija.hpp \
+		ajastin.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\peli.o peli.cpp
+
+release/PeliController.o: PeliController.cpp asetukset.h \
+		peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		kieli.hpp \
+		ohjelma.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		view.hpp \
+		piirtopinta.hpp \
+		lukija.hpp \
+		ajastin.hpp \
+		pelicontroller.hpp \
+		controller.hpp \
+		atiscontroller.hpp \
+		atisview.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\PeliController.o PeliController.cpp
+
+release/peliview.o: peliview.cpp asetukset.h \
+		peliview.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		view.hpp \
+		piirtopinta.hpp \
+		peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		kieli.hpp \
+		ohjelma.hpp \
+		lukija.hpp \
+		ajastin.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\peliview.o peliview.cpp
+
+release/tasonvalintacontroller.o: tasonvalintacontroller.cpp tasonvalintacontroller.hpp \
+		controller.hpp \
+		view.hpp \
+		asetukset.h \
+		piirtopinta.hpp \
+		kieli.hpp \
+		apuvalineet.hpp \
+		ohjelma.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		peli.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		lukija.hpp \
+		ajastin.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\tasonvalintacontroller.o tasonvalintacontroller.cpp
+
+release/tasonvalintaview.o: tasonvalintaview.cpp tasonvalintaview.hpp \
+		view.hpp \
+		asetukset.h \
+		piirtopinta.hpp \
+		kieli.hpp \
+		apuvalineet.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\tasonvalintaview.o tasonvalintaview.cpp
+
+release/tilastoview.o: tilastoview.cpp tilastoview.hpp \
+		view.hpp \
+		asetukset.h \
+		piirtopinta.hpp \
+		peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		kieli.hpp \
+		ohjelma.hpp \
+		valikko.hpp \
+		valikkoview.hpp \
+		lukija.hpp \
+		ajastin.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\tilastoview.o tilastoview.cpp
+
+release/valikko.o: valikko.cpp valikko.hpp \
+		valikkoview.hpp \
+		view.hpp \
+		asetukset.h \
+		piirtopinta.hpp \
+		ohjelma.hpp \
+		peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		kieli.hpp \
+		lukija.hpp \
+		ajastin.hpp \
+		peliview.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\valikko.o valikko.cpp
+
+release/valikkoview.o: valikkoview.cpp valikkoview.hpp \
+		view.hpp \
+		asetukset.h \
+		piirtopinta.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\valikkoview.o valikkoview.cpp
 
 release/moc_AtisWidget.o: release/moc_AtisWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_AtisWidget.o release\moc_AtisWidget.cpp
