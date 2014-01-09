@@ -15,6 +15,7 @@
 #include "peli.hpp"
 #include "kieli.hpp"
 #include "asetukset.h"
+#include "pelicontroller.hpp"
 
 class MainWindow : public QDialog {
 	Q_OBJECT
@@ -28,15 +29,26 @@ public:
 
         Peli peli(asetukset, kieli, "EFRO.txt", metar);
 
+        PeliView* peliView = new PeliView(peli, kieli, asetukset);
+
+        peli.luo_kone(0);
+        peli.luo_kone(0);
+
+        QPainterPiirtoPinta* dummyPinta = new QPainterPiirtoPinta;
+
+        PeliController *peliController = new PeliController(peli, asetukset, *dummyPinta);
+
+        PeliWidget* peliWidget = new PeliWidget(*peliView, *peliController, asetukset);
+
 		levelMenu = new LevelMenu();
         atisView = new AtisView(metar);
-        peliView = new PeliView(peli, kieli, asetukset);
 
 		stack = new QStackedWidget();
 
 		stack->addWidget(levelMenu);
 		stack->addWidget(atisView);
         stack->addWidget(peliView);
+        stack->addWidget(peliWidget);
 
 		QVBoxLayout *layout = new QVBoxLayout;
 		layout->addWidget(stack);
@@ -55,14 +67,13 @@ public:
 
 	void OnAtisDone()
 	{
-		stack->setCurrentIndex(2);
+        stack->setCurrentIndex(2);
 		//close();
 	}
 
 private:
 	LevelMenu* levelMenu;
 	AtisView* atisView;
-    PeliView* peliView;
 
-	QStackedWidget* stack;
+    QStackedWidget* stack;
 };

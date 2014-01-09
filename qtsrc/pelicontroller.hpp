@@ -22,14 +22,13 @@ PeliController handles and parses game input (from Ohjelma-class), game logic, u
 
 class PeliController : public IController {
 	Peli& peli;
-    View& view;
 	IAsetukset& asetukset;
     IPiirtoPinta& piirtopinta;
     enum nappi {
         NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F7, NAPPI_F8, NAPPI_YLOS, NAPPI_ALAS, NAPPI_I
     };
 public:
-    PeliController(Peli& p, View& v, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), view(v), asetukset(a), piirtopinta(pinta)  {}
+    PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), asetukset(a), piirtopinta(pinta)  {}
 	
 	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
@@ -39,7 +38,9 @@ public:
 	bool kasittele_komento(const std::string& komento);
 
 	void pyyda_atis();
+
 	Peli::selvitys anna_selvitys(std::string komento, int toiminto);
+
     void ota_aika(double aika) {
         this->pelin_kello = aika;
     }
@@ -49,4 +50,5 @@ private:
 	void logita_peliajat();
 	double pelin_kello;
 };
+
 #endif
