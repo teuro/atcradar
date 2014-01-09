@@ -1,16 +1,16 @@
 #include "pelicontroller.hpp"
 
-bool PeliController::kasittele_nappi(IOhjelma::nappi nappi) {
+bool PeliController::kasittele_nappi(PeliController::nappi nappi) {
     switch (nappi) {
-		case IOhjelma::NAPPI_ESCAPE:
+        case PeliController::NAPPI_ESCAPE:
 			return false;
-		case IOhjelma::NAPPI_F5:
+        case PeliController::NAPPI_F5:
 			peli.toiminto = apuvalineet::SUUNTA;
 			break;
-		case IOhjelma::NAPPI_F7:
+        case PeliController::NAPPI_F7:
 			peli.toiminto = apuvalineet::NOPEUS;
 			break;
-		case IOhjelma::NAPPI_F8:
+        case PeliController::NAPPI_F8:
 			peli.toiminto = apuvalineet::KORKEUS;
 			break;
         default:
@@ -23,8 +23,6 @@ bool PeliController::kasittele_komento(const std::string& komento) {
 	return true;
 }
 
-// kasittele_aikaa(), jota kutsutaan jatkuvasti antaen parametrina
-// kulunut aikaintervalli. Palauttaa false, jos peli p‰‰ttyy.
 bool PeliController::kasittele_aikaa(double intervallisek) {
 
 	return true;
@@ -112,9 +110,9 @@ Peli::selvitys PeliController::anna_selvitys(std::string komento, int toiminto) 
 }
 
 void PeliController::kasittele_hiiren_nappi(apuvalineet::piste koordinaatit) {
-
+    peli.valitse_kone(koordinaatit);
 }
 
 void PeliController::kasittele_hiiren_paikka(apuvalineet::piste koordinaatit) {
-
+    peli.aseta_hiiren_paikka(koordinaatit);
 }

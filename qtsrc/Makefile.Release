@@ -257,7 +257,7 @@ release/moc_AtisWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QToolTip \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qtooltip.h \
 		Metar.hpp \
-		../src/apuvalineet.hpp \
+		apuvalineet.hpp \
 		AtisController.hpp \
 		AtisWidget.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) AtisWidget.h -o release\moc_AtisWidget.cpp
@@ -539,7 +539,7 @@ release/moc_MainWindow.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QToolTip \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qtooltip.h \
 		Metar.hpp \
-		../src/apuvalineet.hpp \
+		apuvalineet.hpp \
 		AtisController.hpp \
 		PeliView.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QMouseEvent \
@@ -548,25 +548,17 @@ release/moc_MainWindow.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTimer \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtimer.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h \
-		../src/piirtopinta.hpp \
-		../src/peli.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/asetukset.h \
-		../src/kieli.hpp \
-		../src/ohjelma.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp \
-		ohjelma.hpp \
-		apuvalineet.hpp \
+		piirtopinta.hpp \
+		peli.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
 		asetukset.h \
+		kieli.hpp \
+		view.hpp \
 		PeliWidget.h \
-		../src/pelicontroller.hpp \
-		../src/controller.hpp \
+		pelicontroller.hpp \
+		controller.hpp \
 		MainWindow.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) MainWindow.h -o release\moc_MainWindow.cpp
 
@@ -695,27 +687,19 @@ release/moc_PeliWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidg
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h \
 		PeliView.h \
 		AtisController.hpp \
-		../src/apuvalineet.hpp \
+		apuvalineet.hpp \
 		Metar.hpp \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QString \
-		../src/piirtopinta.hpp \
-		../src/peli.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/asetukset.h \
-		../src/kieli.hpp \
-		../src/ohjelma.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp \
-		ohjelma.hpp \
-		apuvalineet.hpp \
+		piirtopinta.hpp \
+		peli.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
 		asetukset.h \
-		../src/pelicontroller.hpp \
-		../src/controller.hpp \
+		kieli.hpp \
+		view.hpp \
+		pelicontroller.hpp \
+		controller.hpp \
 		PeliWidget.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) PeliWidget.h -o release\moc_PeliWidget.cpp
 
@@ -743,56 +727,82 @@ release/asetukset.o: asetukset.cpp asetukset.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\asetukset.o asetukset.cpp
 
 release/AtisController.o: AtisController.cpp AtisController.hpp \
-		../src/apuvalineet.hpp
+		apuvalineet.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\AtisController.o AtisController.cpp
 
-release/lentokentta.o: lentokentta.cpp ../src/asetukset.h \
-		lentokentta.hpp \
+release/lentokentta.o: lentokentta.cpp lentokentta.hpp \
 		apuvalineet.hpp \
-		../src/ohjelma.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/piirtopinta.hpp \
-		../src/peli.hpp \
-		../src/apuvalineet.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/kieli.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp
+		asetukset.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\lentokentta.o lentokentta.cpp
 
-release/lentokone.o: lentokone.cpp ../src/lentokone.hpp \
-		../src/apuvalineet.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp
+release/lentokone.o: lentokone.cpp lentokone.hpp \
+		apuvalineet.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		asetukset.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\lentokone.o lentokone.cpp
 
-release/navipiste.o: navipiste.cpp ../src/navipiste.hpp \
-		../src/apuvalineet.hpp
+release/navipiste.o: navipiste.cpp navipiste.hpp \
+		apuvalineet.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\navipiste.o navipiste.cpp
 
 release/pelicontroller.o: pelicontroller.cpp pelicontroller.hpp \
-		../src/controller.hpp \
-		ohjelma.hpp \
-		apuvalineet.hpp \
+		controller.hpp \
 		asetukset.h \
-		../src/peli.hpp \
-		../src/apuvalineet.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/asetukset.h \
-		../src/kieli.hpp \
-		../src/ohjelma.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/piirtopinta.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp
+		apuvalineet.hpp \
+		peli.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		kieli.hpp \
+		view.hpp \
+		piirtopinta.hpp \
+		AtisController.hpp \
+		Metar.hpp \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QString \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstring.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qchar.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobal.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qconfig.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfeatures.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsystemdetection.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qprocessordetection.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcompilerdetection.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobalstatic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasicatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qgenericatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_msvc.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_integrity.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_power.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_alpha.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv7.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv6.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv5.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bfin.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_ia64.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_mips.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_s390.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sparc.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_x86.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_gcc.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_unix.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmutex.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlogging.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qflags.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypeinfo.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypetraits.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsysinfo.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbytearray.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrefcount.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qnamespace.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qarraydata.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringbuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\pelicontroller.o pelicontroller.cpp
 
 release/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QApplication \
@@ -945,7 +955,7 @@ release/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWid
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QToolTip \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qtooltip.h \
 		Metar.hpp \
-		../src/apuvalineet.hpp \
+		apuvalineet.hpp \
 		AtisController.hpp \
 		PeliView.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QMouseEvent \
@@ -954,25 +964,17 @@ release/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWid
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTimer \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtimer.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h \
-		../src/piirtopinta.hpp \
-		../src/peli.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/asetukset.h \
-		../src/kieli.hpp \
-		../src/ohjelma.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp \
-		ohjelma.hpp \
-		apuvalineet.hpp \
+		piirtopinta.hpp \
+		peli.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
 		asetukset.h \
+		kieli.hpp \
+		view.hpp \
 		PeliWidget.h \
-		../src/pelicontroller.hpp \
-		../src/controller.hpp
+		pelicontroller.hpp \
+		controller.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\qtmain.o qtmain.cpp
 
 release/peliview.o: peliview.cpp PeliView.h \
@@ -1100,45 +1102,78 @@ release/peliview.o: peliview.cpp PeliView.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtimer.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h \
 		AtisController.hpp \
-		../src/apuvalineet.hpp \
+		apuvalineet.hpp \
 		Metar.hpp \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QString \
-		../src/piirtopinta.hpp \
-		../src/peli.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/asetukset.h \
-		../src/kieli.hpp \
-		../src/ohjelma.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp \
-		ohjelma.hpp \
-		apuvalineet.hpp \
-		asetukset.h
+		piirtopinta.hpp \
+		peli.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		asetukset.h \
+		kieli.hpp \
+		view.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\peliview.o peliview.cpp
 
-release/peli.o: peli.cpp ../src/peli.hpp \
-		../src/apuvalineet.hpp \
-		../src/lentokone.hpp \
-		../src/navipiste.hpp \
-		../src/lentokentta.hpp \
-		../src/asetukset.h \
-		../src/kieli.hpp \
-		../src/ohjelma.hpp \
-		../src/valikko.hpp \
-		../src/valikkoview.hpp \
-		../src/view.hpp \
-		../src/piirtopinta.hpp \
-		../src/lukija.hpp \
-		../src/ajastin.hpp
+release/peli.o: peli.cpp peli.hpp \
+		apuvalineet.hpp \
+		lentokone.hpp \
+		navipiste.hpp \
+		lentokentta.hpp \
+		asetukset.h \
+		kieli.hpp \
+		view.hpp \
+		piirtopinta.hpp \
+		AtisController.hpp \
+		Metar.hpp \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QString \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstring.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qchar.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobal.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qconfig.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfeatures.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsystemdetection.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qprocessordetection.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcompilerdetection.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobalstatic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasicatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qgenericatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_msvc.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_integrity.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_power.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_alpha.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv7.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv6.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv5.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bfin.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_ia64.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_mips.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_s390.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sparc.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_x86.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_gcc.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_unix.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmutex.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlogging.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qflags.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypeinfo.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypetraits.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsysinfo.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbytearray.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrefcount.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qnamespace.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qarraydata.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringbuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\peli.o peli.cpp
 
-release/kieli.o: kieli.cpp ../src/kieli.hpp \
-		../src/apuvalineet.hpp
+release/kieli.o: kieli.cpp kieli.hpp \
+		apuvalineet.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\kieli.o kieli.cpp
 
 release/moc_AtisWidget.o: release/moc_AtisWidget.cpp 

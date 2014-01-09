@@ -1,6 +1,12 @@
 #ifndef __ASETUKSET_H
 #define __ASETUKSET_H
 
+#include "apuvalineet.hpp"
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdexcept>
 #include <map>
 #include <string>
 

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <stdexcept>
-#include "../src/apuvalineet.hpp"
+#include "apuvalineet.hpp"
 
 class paineraja {
 public:

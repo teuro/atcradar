@@ -7,10 +7,11 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QTimer>
+#include <QTime>
 
 #include "PeliView.h"
-//#include "../src/peli.hpp"
-#include "../src/pelicontroller.hpp"
+//#include "peli.hpp"
+#include "pelicontroller.hpp"
 
 class QPainterPiirtoPinta : public IPiirtoPinta
 {
@@ -65,12 +66,12 @@ class PeliWidget : public QWidget
 
 public:
 	// constructor
-    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, IOhjelma& o, QWidget *aParent = 0) : peliView(v), peliController(pc)
-	{
+    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, QWidget *aParent = 0) : peliView(v), peliController(pc) {
 		// Timer to draw the window
 		timer = new QTimer;
 		connect(timer, SIGNAL(timeout()), SLOT(animate()));
 		timer->start(frameMs);
+        aika = new QTime();
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true) ;
@@ -79,6 +80,7 @@ public:
 public slots:
     void animate() {
         peliController.kasittele_aikaa(frameMs / 1000.0);
+        peliController.ota_aika(aika->elapsed());
         update();
     }
 
@@ -106,6 +108,7 @@ public slots:
 private:
     // animation timer
     QTimer *timer;
+    QTime* aika;
     PeliView& peliView;
     PeliController& peliController;
 };

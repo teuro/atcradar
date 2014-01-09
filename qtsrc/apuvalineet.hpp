@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <map>
+#include <cstdlib>
 
 namespace apuvalineet {
 	extern double zoom;

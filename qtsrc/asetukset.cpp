@@ -1,9 +1,4 @@
 #include "asetukset.h"
-#include "apuvalineet.hpp"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <stdexcept>
 
 Asetukset::Asetukset()
 {

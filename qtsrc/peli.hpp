@@ -6,8 +6,7 @@
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
 #include "asetukset.h"
-#include "../src/kieli.hpp"
-#include "ohjelma.hpp"
+#include "kieli.hpp"
 #include "view.hpp"
 #include "AtisController.hpp"
 #include "Metar.hpp"
@@ -23,8 +22,6 @@
 #include <stdexcept>
 #include <string>
 
-class Iohjelma;
-
 /*
 MVC Model
 
@@ -39,11 +36,10 @@ See PeliController and PeliView for more functionality.
 class Peli {
 private:
     IAsetukset& asetukset;
-    Metar& metar;
-    IOhjelma& ohjelma;
 
 public:
-    Peli(IAsetukset& a, IOhjelma& o, Kieli& kieli, std::string kentta);
+    Metar& metar;
+    Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m);
 
 //    double ajan_muutos;
     std::vector <std::string> tunnukset;
@@ -114,7 +110,7 @@ public:
 
 	enum tyyppi {SAAPUVA = 0, LAHTEVA = 1};
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
-	void luo_kone();
+    void luo_kone(double aika);
 	void tuhoa_kone(int kone);
 
 	void aseta_virhe(int virhe);

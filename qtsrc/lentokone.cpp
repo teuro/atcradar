@@ -1,6 +1,4 @@
 #include "lentokone.hpp"
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) {
 	this->kutsutunnus = kutsutunnus;

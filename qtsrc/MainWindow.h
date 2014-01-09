@@ -12,6 +12,9 @@
 #include "PeliView.h"
 #include "Metar.hpp"
 #include "PeliWidget.h"
+#include "peli.hpp"
+#include "kieli.hpp"
+#include "asetukset.h"
 
 class MainWindow : public QDialog {
 	Q_OBJECT
@@ -19,10 +22,15 @@ class MainWindow : public QDialog {
 public:
     MainWindow() {
         Metar metar;
+        Asetukset asetukset;
+
+        Kieli kieli("fi_FI");
+
+        Peli peli(asetukset, kieli, "EFRO.txt", metar);
+
 		levelMenu = new LevelMenu();
         atisView = new AtisView(metar);
-        peliView = new PeliView();
-
+        peliView = new PeliView(peli, kieli, asetukset);
 
 		stack = new QStackedWidget();
 

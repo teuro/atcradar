@@ -19,10 +19,6 @@ public:
         virtual double sekunnit(bool nollaa = false) = 0;
         virtual void odota(unsigned int ms = 1) = 0;
 
-        enum nappi {
-                NAPPI_VASEN, NAPPI_OIKEA, NAPPI_ENTER, NAPPI_ESCAPE, NAPPI_MUU, NAPPI_F5, NAPPI_F7, NAPPI_F8, NAPPI_YLOS, NAPPI_ALAS, NAPPI_I
-        };
-
         virtual nappi odota_nappi() = 0;
         virtual bool lue_nappi(nappi n) = 0;
         virtual nappi lue_nappi() = 0;
@@ -37,14 +33,9 @@ public:
 
 class Ohjelma : public IOhjelma {
 public:
-        Ohjelma(IAsetukset &a) : asetukset(a) {
-                alku();
-        }
+        Ohjelma(IAsetukset &a) : asetukset(a) { }
 
-        ~Ohjelma()
-        {
-                loppu();
-        }
+        ~Ohjelma() { }
 
         double sekunnit(bool nollaa = false);
         void odota(unsigned int ms = 1);
@@ -63,8 +54,8 @@ public:
 private:
         IAsetukset& asetukset;
         unsigned int alku_aika;
-        void alku();
-        void loppu();
+        void alku() { }
+        void loppu() { }
         std::string syote;
         void process_keyboard(bool wait);
         std::list<nappi> keyboard_buffer;

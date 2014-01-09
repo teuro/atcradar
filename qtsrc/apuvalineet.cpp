@@ -1,5 +1,4 @@
 #include "apuvalineet.hpp"
-#include <cstdlib>
 
 static double PII = 3.1415927;
 

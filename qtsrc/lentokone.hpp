@@ -4,6 +4,8 @@
 #include "apuvalineet.hpp"
 #include "navipiste.hpp"
 #include "lentokentta.hpp"
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 #include <algorithm>
 #include <vector>
