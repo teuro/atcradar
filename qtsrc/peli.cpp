@@ -154,7 +154,7 @@ void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
 		koneet[i].valittu = false;
 
 		if (apuvalineet::onko_alueella(hiiri, koneet[i].paikka)) {
-			koneet[i].valittu = true;
+            koneet[i].valittu = true;
 		}
 	}
 }

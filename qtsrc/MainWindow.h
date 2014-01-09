@@ -42,7 +42,6 @@ public:
 
 		stack->addWidget(levelMenu);
 		stack->addWidget(atisView);
-        stack->addWidget(peliView);
         stack->addWidget(peliWidget);
 
 		QVBoxLayout *layout = new QVBoxLayout;
@@ -60,7 +59,7 @@ public:
 	}
 
     void OnAtisDone() {
-        stack->setCurrentIndex(3);
+        stack->setCurrentIndex(2);
         std::clog << "Atis täytetty oikein" << std::endl;
         peli->luo_kone(0);
         peli->luo_kone(0);
