@@ -24,6 +24,9 @@ bool PeliController::kasittele_komento(const std::string& komento) {
 }
 
 bool PeliController::kasittele_aikaa(double intervallisek) {
+    for (std::vector <lentokone> :: iterator it = peli.koneet.begin(); it < peli.koneet.end(); ++it) {
+        it->liiku(intervallisek);
+    }
 
 	return true;
 }
