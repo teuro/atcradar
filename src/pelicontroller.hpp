@@ -1,9 +1,9 @@
 #ifndef _PELI_CONTROLLER_HPP
 #define _PELI_CONTROLLER_HPP
 
-#include "kieli.hpp"
 #include "controller.hpp"
 #include "ohjelma.hpp"
+#include "asetukset.h"
 
 class PeliView;
 class Peli;
@@ -19,13 +19,9 @@ class PeliController : public IController {
 	View& view;
 	IOhjelma& ohjelma;
 	IAsetukset& asetukset;
-	Kieli& kieli;
     IPiirtoPinta& piirtopinta;
 public:
-	PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, Kieli& k, IPiirtoPinta& pinta) : peli(p), view(v), ohjelma(o), asetukset(a), kieli(k), piirtopinta(pinta) 
-	{
-	}
-	int aja();
+    PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), view(v), ohjelma(o), asetukset(a), piirtopinta(pinta)  {}
 	
 	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
@@ -39,6 +35,5 @@ private:
 
 	void logita_peliajat();
 	double pelin_kello;
-	std::vector <ajastin> ajastimet;
 };
 #endif

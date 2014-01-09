@@ -2,9 +2,8 @@
 #ifndef _OHJELMA_HPP
 #define _OHJELMA_HPP
 
-#include "valikko.hpp"
-#include "peli.hpp"
 #include "apuvalineet.hpp"
+#include "asetukset.h"
 
 #include <map>
 #include <list>

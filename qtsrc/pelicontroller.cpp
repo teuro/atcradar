@@ -1,11 +1,5 @@
 #include "pelicontroller.hpp"
 
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
-
 bool PeliController::kasittele_nappi(IOhjelma::nappi nappi) {
     switch (nappi) {
 		case IOhjelma::NAPPI_ESCAPE:
@@ -115,4 +109,12 @@ Peli::selvitys PeliController::anna_selvitys(std::string komento, int toiminto) 
 	tmp_selvitys.toiminto = toiminto;
 
 	return tmp_selvitys;
+}
+
+void PeliController::kasittele_hiiren_nappi(apuvalineet::piste koordinaatit) {
+
+}
+
+void PeliController::kasittele_hiiren_paikka(apuvalineet::piste koordinaatit) {
+
 }

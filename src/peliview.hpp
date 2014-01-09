@@ -1,10 +1,7 @@
 #ifndef _PELIVIEW_HPP
 #define _PELIVIEW_HPP
 
-#include "valikko.hpp"
-#include "peli.hpp"
 #include "apuvalineet.hpp"
-#include "kieli.hpp"
 #include "view.hpp"
 
 #include <map>
@@ -18,19 +15,13 @@ PeliView is responsible of DISPLAYING the game state. Nothing else.
 */
 
 class PeliView : public View {
-private:
-	Kieli kieli;
-public:
-	PeliView(IAsetukset& a, Peli &p, IOhjelma& o, Kieli& kieli) : asetukset(a), peli(p), ohjelma(o) {
-		this->kieli = kieli;
-	}
 
-	~PeliView()
-	{
-	}
+public:
+    PeliView(IAsetukset& a, IOhjelma& o) : asetukset(a), ohjelma(o) { }
+
+    ~PeliView() { }
 
 	void piirra(IPiirtoPinta& pinta);
-	//void piirra_atis();
 
 private:
 	IAsetukset& asetukset;
@@ -42,7 +33,7 @@ private:
 	void piirra_metar(IPiirtoPinta& piirtopinta);
 	void piirra_odottavat(IPiirtoPinta& piirtopinta);
 	void piirra_ohje(IPiirtoPinta& piirtopinta, std::string ohje);
-	Peli& peli;
+
 	IOhjelma& ohjelma;
 };
 

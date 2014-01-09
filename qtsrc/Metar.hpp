@@ -19,9 +19,9 @@ class Metar {
     std::string pilvet;
 public:
     Metar() {
-        tuuli           = apuvalineet::pyorista(apuvalineet::arvo_luku(3, 23), 5);
+        tuuli           = apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5);
         voimakkuus      = apuvalineet::arvo_luku(0, 20);
-        paine           = apuvalineet::arvo_luku(940, 1050);
+        paine           = apuvalineet::arvo_luku(960, 1050);
         nakyvyys        = apuvalineet::pyorista(apuvalineet::arvo_luku(200, 9999), 100);
         lampotila       = apuvalineet::arvo_luku(-30, 60);
         ilmankosteus    = apuvalineet::arvo_luku(50, 100);
@@ -35,7 +35,7 @@ public:
         pilvityypit.push_back("SCT");
         pilvityypit.push_back("OVC");
 
-        for (unsigned int i = 0; i < apuvalineet::arvo_luku(0, 5); ++i) {
+        for (int i = 0; i < apuvalineet::arvo_luku(0, 5); ++i) {
             pilvet += pilvityypit[apuvalineet::arvo_luku(0, pilvityypit.size()-1)] + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(1000, 8800), 100)) + " ";
         }
     }

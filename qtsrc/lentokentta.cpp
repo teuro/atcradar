@@ -1,6 +1,6 @@
-#include "asetukset.h"
+#include "../src/asetukset.h"
 #include "lentokentta.hpp"
-#include "ohjelma.hpp"
+#include "../src/ohjelma.hpp"
 
 kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunoususuunta, double lahestymispiste, double hidastuspiste) 
 {

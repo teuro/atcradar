@@ -8,5 +8,22 @@ INCLUDEPATH += .
 QT += widgets
 
 # Input
-HEADERS += AtisWidget.h  MainWindow.h levelmenu.h PeliView.h AtisWidget.h Metar.hpp apuvalineet.hpp AtisController.hpp PeliWidget.h
-SOURCES += qtmain.cpp apuvalineet.cpp AtisController.cpp
+
+HEADERS += \
+    apuvalineet.hpp asetukset.h AtisController.hpp AtisWidget.h lentokentta.hpp \
+    lentokone.hpp levelmenu.h MainWindow.h Metar.hpp navipiste.hpp pelicontroller.hpp \
+    PeliWidget.h PeliView.h piirtopinta.hpp peli.hpp ohjelma.hpp view.hpp \
+    kieli.hpp
+
+SOURCES += \
+    apuvalineet.cpp \
+    asetukset.cpp \
+    AtisController.cpp \
+    lentokentta.cpp \
+    lentokone.cpp \
+    navipiste.cpp \
+    pelicontroller.cpp \
+    qtmain.cpp \
+    peliview.cpp \
+    peli.cpp \
+    kieli.cpp

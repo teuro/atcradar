@@ -2,11 +2,12 @@
 
 bool poistetaanko(const lentokone& kone);
 
-Peli::Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta) : asetukset(a), ohjelma(o), /*ajan_muutos(0.02f), */koska_uusi_kone(1) {
-	atis.lahtokiitotie = -1;
-	atis.laskukiitotie = -1;
-	atis.siirtopinta = -1;
-	atis.ok = false;
+Peli::Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta) : asetukset(a), ohjelma(o), koska_uusi_kone(1) {
+    Atis::lahtokiitotie = "";
+    Atis::laskukiitotie = "";
+    Atis::siirtopinta = -1;
+    Atis::siirtokorkeus = -1;
+
 	lataa_kentta(kentta);
 	ohje = " ";
 	porrastusvirheet = 0;

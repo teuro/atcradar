@@ -1,9 +1,16 @@
 #ifndef _PELI_CONTROLLER_HPP
 #define _PELI_CONTROLLER_HPP
 
-#include "kieli.hpp"
-#include "controller.hpp"
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+
+#include "../src/controller.hpp"
 #include "ohjelma.hpp"
+#include "asetukset.h"
+#include "peli.hpp"
 
 class PeliView;
 class Peli;
@@ -16,21 +23,18 @@ PeliController handles and parses game input (from Ohjelma-class), game logic, u
 
 class PeliController : public IController {
 	Peli& peli;
-	View& view;
+    View& view;
 	IOhjelma& ohjelma;
 	IAsetukset& asetukset;
-	Kieli& kieli;
     IPiirtoPinta& piirtopinta;
 public:
-	PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, Kieli& k, IPiirtoPinta& pinta) : peli(p), view(v), ohjelma(o), asetukset(a), kieli(k), piirtopinta(pinta) 
-	{
-	}
-	int aja();
+    PeliController(Peli& p, View& v, IOhjelma& o, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), view(v), ohjelma(o), asetukset(a), piirtopinta(pinta)  {}
 	
 	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
 	void kasittele_hiiren_paikka(apuvalineet::piste koordinaatit);
 	bool kasittele_nappi(IOhjelma::nappi nappi);
+
 	bool kasittele_komento(const std::string& komento);
 
 	void pyyda_atis();
@@ -39,6 +43,5 @@ private:
 
 	void logita_peliajat();
 	double pelin_kello;
-	std::vector <ajastin> ajastimet;
 };
 #endif

@@ -11,9 +11,9 @@ int AtisController::aja() {
 		peli.syote = ohjelma.lue_syote();
 		ohjelma.odota(20);
 
-		auto nappi = ohjelma.lue_nappi();
+        IOhjelma::nappi nappula = ohjelma.lue_nappi();
 
-		switch (nappi)
+        switch (nappula)
 		{
 		case IOhjelma::NAPPI_F5:
 			toiminto = Peli::LAHTO;
@@ -28,7 +28,7 @@ int AtisController::aja() {
             break;
 		}
 
-		if (ohjelma.anna_viesti().length() > 1 && nappi == IOhjelma::NAPPI_ENTER) {
+        if (ohjelma.anna_viesti().length() > 1 && nappula == IOhjelma::NAPPI_ENTER) {
 
 			std::vector <kiitotie>::iterator tmp;
 			size_t index;

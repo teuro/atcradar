@@ -6,10 +6,12 @@
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
 #include "asetukset.h"
-#include "kieli.hpp"
+#include "../src/kieli.hpp"
 #include "ohjelma.hpp"
-#include "lukija.hpp"
-#include "ajastin.hpp"
+#include "view.hpp"
+#include "AtisController.hpp"
+#include "Metar.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -20,6 +22,8 @@
 #include <map>
 #include <stdexcept>
 #include <string>
+
+class Iohjelma;
 
 /*
 MVC Model
@@ -34,12 +38,12 @@ See PeliController and PeliView for more functionality.
 
 class Peli {
 private:
-	IAsetukset& asetukset;
+    IAsetukset& asetukset;
+    Metar& metar;
+    IOhjelma& ohjelma;
 
 public:
-	Peli(IAsetukset& a, IOhjelma &o, Kieli& kieli, std::string kentta);
-
-    IOhjelma& ohjelma;
+    Peli(IAsetukset& a, IOhjelma& o, Kieli& kieli, std::string kentta);
 
 //    double ajan_muutos;
     std::vector <std::string> tunnukset;
@@ -108,43 +112,10 @@ public:
     int porrastusvirheet;
     int muut_virheet;
 
-    struct Atis {
-		std::string ohje;
-		int lahtokiitotie;// = -1;
-		int laskukiitotie;// = -1;
-		double siirtopinta;// = -1;
-		std::string lahto;
-        std::string lasku;
-        int siirtokorkeus;
-        bool ok;
-
-        struct Paine {
-            double alaraja;
-            double ylaraja;
-            double siirtopinta;
-        } paine;
-
-        std::vector <Paine> paineet;
-        void lue_paineet(std::string nimi);
-        double etsi_siirtopinta(double paine);
-    } atis;
-
 	enum tyyppi {SAAPUVA = 0, LAHTEVA = 1};
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
 	void luo_kone();
 	void tuhoa_kone(int kone);
-
-	struct Metar {
-		int tuuli;
-		int voimakkuus;
-		int puuskat;
-		double paine;
-		int nakyvyys;
-		int lampotila;
-		int kastepiste;
-		int ilmankosteus;
-		std::map <std::string, int> pilvet;
-    } metar;
 
 	void aseta_virhe(int virhe);
 	std::vector <std::string> lataa_pilvet(std::string pilvet);

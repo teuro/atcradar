@@ -4,10 +4,6 @@
 #include "asetukset.h"
 #include "piirtopinta.hpp"
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_gfxPrimitives.h>
-#include <SDL/SDL_ttf.h>
-
 class SDLPiirtoPinta : public IPiirtoPinta
 {
 public:
@@ -25,12 +21,7 @@ public:
 	void flip();
 private:
 	IAsetukset& asetukset;
-	TTF_Font* fontti;
-	SDL_Color vari;
-	SDL_Surface *ruutu;
 	int fontin_koko;
-
-	void piirra_kuva(SDL_Surface* pinta, int x, int y, bool keskikohta = false);
 };
 
 #endif

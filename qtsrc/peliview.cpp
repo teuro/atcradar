@@ -1,19 +1,14 @@
-#include "asetukset.h"
-#include "peliview.hpp"
-#include "ohjelma.hpp"
-#include <iostream>
-#include <stdexcept>
+#include "PeliView.h"
 
 // Piirt‰‰ pelin.
 void PeliView::piirra(IPiirtoPinta& piirtopinta) {
-	piirtopinta.piirra_kuva("kuvat/tausta_peli.png", 0, 0);
-	piirra_tilanne(piirtopinta);
+    piirra_tilanne(piirtopinta);
 	piirra_koneet(piirtopinta);
 	piirra_navipisteet(piirtopinta);
 	piirra_lentokentta(piirtopinta);
-	piirra_ohje(piirtopinta, peli.ohje);
+    piirra_ohje(piirtopinta, peli.ohje);
 	piirra_odottavat(piirtopinta);
-	piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
+    piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
 	piirra_metar(piirtopinta);
 	piirtopinta.flip();
 }

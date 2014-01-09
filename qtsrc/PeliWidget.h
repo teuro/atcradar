@@ -8,8 +8,8 @@
 #include <QPainter>
 #include <QTimer>
 
-#include "../src/peliview.hpp"
-#include "../src/peli.hpp"
+#include "PeliView.h"
+//#include "../src/peli.hpp"
 #include "../src/pelicontroller.hpp"
 
 class QPainterPiirtoPinta : public IPiirtoPinta
@@ -65,7 +65,7 @@ class PeliWidget : public QWidget
 
 public:
 	// constructor
-	PeliWidget(Peli&p, PeliView&v, PeliController& pc, IAsetukset& a, IOhjelma& o, Kieli& kieli, QWidget *aParent = 0) : peli(p), peliView(v), peliController(pc)
+    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, IOhjelma& o, QWidget *aParent = 0) : peliView(v), peliController(pc)
 	{
 		// Timer to draw the window
 		timer = new QTimer;
@@ -77,8 +77,7 @@ public:
     }
 
 public slots:
-    void animate()
-    {
+    void animate() {
         peliController.kasittele_aikaa(frameMs / 1000.0);
         update();
     }
@@ -92,8 +91,7 @@ public slots:
     }
 
     // Mouse button up
-    void mouseReleaseEvent(QMouseEvent * e)
-    {
+    void mouseReleaseEvent(QMouseEvent * e) {
         QPoint pos = e->pos();
         peliController.kasittele_hiiren_nappi(apuvalineet::piste(pos.x(), pos.y()));
         update();
@@ -109,7 +107,6 @@ private:
     // animation timer
     QTimer *timer;
     PeliView& peliView;
-    Peli& peli;
     PeliController& peliController;
 };
 
