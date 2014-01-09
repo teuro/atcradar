@@ -41,7 +41,13 @@ public:
     }
 
     QString getMessage() {
-        return QString::fromStdString("EFRO " + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(tuuli), 3) + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(voimakkuus), 2) + "KT Q" + apuvalineet::tekstiksi(paine) + " " + apuvalineet::tekstiksi(nakyvyys) + " " + apuvalineet::tekstiksi(lampotila) + "/" + apuvalineet::tekstiksi(kastepiste) + " " + pilvet);
+        //return QString(apuvalineet::tekstiksi(tuuli).c_str());
+
+        return QString(
+            ("EFRO " + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(tuuli), 3) + 
+            apuvalineet::muuta_pituus(apuvalineet::tekstiksi(voimakkuus), 2) + "KT Q" + 
+            apuvalineet::tekstiksi(paine) + " " + apuvalineet::tekstiksi(nakyvyys) + " " + 
+            apuvalineet::tekstiksi(lampotila) + "/" + apuvalineet::tekstiksi(kastepiste) + " " + pilvet).c_str());
     }
 
     int anna_tuuli() {return this->tuuli; }
@@ -60,7 +66,7 @@ public:
     void aseta_lampotila(int lampotila) {this->lampotila = lampotila;}
     void aseta_ilmankosteus(int ilmankosteus) {this->ilmankosteus = ilmankosteus;}
     void aseta_kastepiste(int kastepiste) {this->kastepiste = kastepiste;}
-    std::string aseta_pilvet(std::string pilvet) { this->pilvet = pilvet;}
+    void aseta_pilvet(std::string pilvet) { this->pilvet = pilvet; }
 };
 
 #endif // METAR_HPP

@@ -1,6 +1,6 @@
 #include "kieli.hpp"
 
-Kieli::Kieli(std::string kieli) {
+Kieli::Kieli(const std::string& kieli) {
 	std::clog << "Luodaan uusi kieli " << kieli << std::endl;
 	this->kieli = kieli;
 	int kohta = -1;

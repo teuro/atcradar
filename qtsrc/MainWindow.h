@@ -21,23 +21,13 @@ class MainWindow : public QDialog {
 	Q_OBJECT
 
 public:
-    MainWindow() {
-        Metar metar;
-        Asetukset asetukset;
+    MainWindow() : kieli(std::string("fi_FI")) {
+        peli = new Peli(asetukset, kieli, "EFRO.txt", metar);
 
-        Kieli kieli("fi_FI");
-
-        Peli peli(asetukset, kieli, "EFRO.txt", metar);
-
-        PeliView* peliView = new PeliView(peli, kieli, asetukset);
-
-        peli.luo_kone(0);
-        peli.luo_kone(0);
-
+        // TODO: Move these to member variables since we're leaking memory here
+        PeliView* peliView = new PeliView(*peli, kieli, asetukset);
         QPainterPiirtoPinta* dummyPinta = new QPainterPiirtoPinta;
-
-        PeliController *peliController = new PeliController(peli, asetukset, *dummyPinta);
-
+        PeliController *peliController = new PeliController(*peli, asetukset, *dummyPinta);
         PeliWidget* peliWidget = new PeliWidget(*peliView, *peliController, asetukset);
 
 		levelMenu = new LevelMenu();
@@ -67,6 +57,8 @@ public:
 
 	void OnAtisDone()
 	{
+        peli->luo_kone(0);
+        peli->luo_kone(0);
         stack->setCurrentIndex(2);
 		//close();
 	}
@@ -74,6 +66,12 @@ public:
 private:
 	LevelMenu* levelMenu;
 	AtisView* atisView;
+    Peli *peli;
+
+    Metar metar;
+    Asetukset asetukset;
+
+    Kieli kieli;
 
     QStackedWidget* stack;
 };

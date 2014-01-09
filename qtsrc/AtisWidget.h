@@ -58,7 +58,7 @@ public:
 
     public slots:
     void OnOkPressed() {
-        Atis::downloadPrressureLimit("C:/Users/acer/Documents/GitHub/atcradar/ohjelma/data/painerajat.txt", inputFields[2]->text().toInt());
+        Atis::downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
 
         double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());

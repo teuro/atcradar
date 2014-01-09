@@ -12,5 +12,3 @@ navipiste::navipiste(std::string nimi, apuvalineet::piste paikka) {
 	this->nimi = nimi;
 	this->paikka = paikka;
 }
-
-navipiste::navipiste();
