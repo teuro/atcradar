@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     MainWindow window;
 
     window.resize(700, 700);
-    window.setWindowTitle("ATCRADAR");
+    window.setWindowTitle("ATC RADAR");
     window.show();
 
     return app.exec();}

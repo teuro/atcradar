@@ -58,15 +58,15 @@ public:
 
     public slots:
     void OnOkPressed() {
-        Atis::downloadPrressureLimit("C:/Users/acer/Documents/GitHub/atcradar/ohjelma/data/painerajat.txt", inputFields[2]->text().toInt());
+        Atis::downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
 
         double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
         int laskettu_siirtopinta = Atis::calculateTL(metar.anna_paine());
 
-        if (vasta_lahto >= 0) {
+        if (vasta_lahto <= 0) {
             drawErrorMessage("Lähtökiitotie väärin", inputFields[1]);
-        } else if (vasta_lasku >= 0) {
+        } else if (vasta_lasku <= 0) {
             drawErrorMessage("Laskukiitotie väärin", inputFields[2]);
         } else if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
             drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
