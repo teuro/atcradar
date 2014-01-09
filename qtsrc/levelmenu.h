@@ -41,7 +41,7 @@ public:
 public slots:
 	void OnOkPressed()
 	{
-		emit levelSelected(2);
+        emit levelSelected(slider->value());
 		//close();
 	}
 

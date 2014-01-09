@@ -18,6 +18,7 @@
 #include "kieli.hpp"
 
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include <list>
 #include <cmath>

@@ -7,6 +7,8 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 
+#include <fstream>
+
 #include "levelmenu.h"
 #include "AtisWidget.h"
 #include "PeliView.h"
@@ -16,10 +18,10 @@
 #include "kieli.hpp"
 #include "asetukset.h"
 #include "pelicontroller.hpp"
+#include "QpiirtoPinta.h"
 
 class MainWindow : public QDialog {
 	Q_OBJECT
-
 public:
     MainWindow() : kieli(std::string("fi_FI")) {
         peli = new Peli(asetukset, kieli, "EFRO.txt", metar);
@@ -49,9 +51,8 @@ public:
 	}
 
 	public slots:
-	void OnLevelSelected(int level)
-	{
-		//close();
+    void OnLevelSelected(int level) {
+        std::clog << "Tasoksi valittu " << level << std::endl;
 		stack->setCurrentIndex(1);
 	}
 
@@ -60,7 +61,7 @@ public:
         peli->luo_kone(0);
         peli->luo_kone(0);
         stack->setCurrentIndex(2);
-		//close();
+        std::clog << "Atis täytetty oikein" << std::endl;
 	}
 
 private:

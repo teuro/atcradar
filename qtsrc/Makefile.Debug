@@ -557,8 +557,11 @@ debug/moc_MainWindow.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidget
 		kieli.hpp \
 		view.hpp \
 		PeliWidget.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTime \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdatetime.h \
 		pelicontroller.hpp \
 		controller.hpp \
+		QpiirtoPinta.h \
 		MainWindow.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) MainWindow.h -o debug\moc_MainWindow.cpp
 
@@ -685,6 +688,8 @@ debug/moc_PeliWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidget
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTimer \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtimer.h \
 		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasictimer.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTime \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdatetime.h \
 		PeliView.h \
 		AtisController.hpp \
 		apuvalineet.hpp \
@@ -973,8 +978,11 @@ debug/qtmain.o: qtmain.cpp ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidge
 		kieli.hpp \
 		view.hpp \
 		PeliWidget.h \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTime \
+		../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdatetime.h \
 		pelicontroller.hpp \
-		controller.hpp
+		controller.hpp \
+		QpiirtoPinta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qtmain.o qtmain.cpp
 
 debug/peliview.o: peliview.cpp PeliView.h \
