@@ -20,15 +20,34 @@ public:
     }
 };
 
-namespace Atis {
-    extern std::string lahtokiitotie;
-    extern std::string laskukiitotie;
-    extern int siirtokorkeus;
-    extern int siirtopinta;
+class Atis {
+    std::string lahtokiitotie;
+    std::string laskukiitotie;
+    int siirtokorkeus;
+    int siirtopinta;
+public:
+    Atis() {
+        std::clog << "Atis luotu" << std::endl;
+        lahtokiitotie = "";
+        laskukiitotie = "";
+        siirtokorkeus = -1;
+        siirtopinta = -1;
+    }
+
+    void aseta_lahtokiitotie(std::string lk) { this->lahtokiitotie = lk; }
+    void aseta_laskukiitotie(std::string lk) { this->laskukiitotie = lk; }
+    void aseta_siirtopinta(int sp) { this->siirtopinta = sp; }
+    void aseta_siirtokorkeus(int sk) { this->siirtokorkeus = sk; }
+
+    std::string anna_lahtokiitotie() { return this->lahtokiitotie; }
+    std::string anna_laskukiitotie() { return this->laskukiitotie; }
+    int anna_siirtokorkeus() { return this->siirtokorkeus; }
+    int anna_siirtopinta() { return this->siirtopinta; }
 
     void downloadPrressureLimit(std::string file, int siirtokorkeus);
     int calculateTL(int pressure);
-    extern std::vector <paineraja> painerajat;
-}
+
+    std::vector <paineraja> painerajat;
+};
 
 #endif // ATISCONTROLLER_HPP

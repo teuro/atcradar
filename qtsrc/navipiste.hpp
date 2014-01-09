@@ -3,6 +3,7 @@
 
 #include "apuvalineet.hpp"
 #include <string>
+#include <iostream>
 
 class navipiste {
 	public:

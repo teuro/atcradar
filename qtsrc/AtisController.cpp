@@ -1,14 +1,5 @@
 #include "AtisController.hpp"
 
-namespace Atis {
-    std::vector <paineraja> painerajat;
-
-    std::string lahtokiitotie;
-    std::string laskukiitotie;
-    int siirtokorkeus;
-    int siirtopinta;
-}
-
 void Atis::downloadPrressureLimit(std::string file, int siirtokorkeus) {
     std::ifstream in(file.c_str(), std::ios::in);
 
@@ -18,7 +9,7 @@ void Atis::downloadPrressureLimit(std::string file, int siirtokorkeus) {
 
     std::string line;
     std::vector <std::string> words;
-    int place;
+    int place = -1;
 
     while (std::getline(in, line)) {
         words = apuvalineet::pilko_rivi(line, "|");
@@ -41,6 +32,4 @@ int Atis::calculateTL(int pressure) {
             return painerajat[i].siirtopinta;
         }
     }
-
-    throw std::runtime_error("Pyydetty paine on liian pieni");
 }

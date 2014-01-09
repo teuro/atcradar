@@ -104,7 +104,7 @@ $(DESTDIR_TARGET):  $(OBJECTS)
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.qtsrc.Debug  $(LIBS)
 
 qmake: FORCE
-	@$(QMAKE) -o Makefile.Debug qtsrc.pro
+	@$(QMAKE) -spec win32-g++ -o Makefile.Debug qtsrc.pro
 
 qmake_all: FORCE
 
@@ -705,6 +705,7 @@ debug/moc_PeliWidget.cpp: ../../../../../../Qt/5.2.0/mingw48_32/include/QtWidget
 		view.hpp \
 		pelicontroller.hpp \
 		controller.hpp \
+		QpiirtoPinta.h \
 		PeliWidget.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) PeliWidget.h -o debug\moc_PeliWidget.cpp
 

@@ -36,10 +36,11 @@ See PeliController and PeliView for more functionality.
 class Peli {
 private:
     IAsetukset& asetukset;
+    Atis& atis;
 
 public:
     Metar& metar;
-    Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m);
+    Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis& at);
 
 //    double ajan_muutos;
     std::vector <std::string> tunnukset;

@@ -63,14 +63,14 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
 
             if (peli.koneet[i].anna_tyyppi() == Peli::SAAPUVA) {
-                if ((peli.koneet[i].anna_korkeus() / 100) < Atis::siirtopinta) {
+                if ((peli.koneet[i].anna_korkeus() / 100) < atis.anna_siirtopinta()) {
                     lentokorkeus = std::floor(peli.koneet[i].anna_korkeus());
 				}
 				else {
                     lentokorkeus = std::floor(peli.koneet[i].anna_korkeus() / 100);
 				}
 
-                if ((peli.koneet[i].anna_selvityskorkeus() / 100) < Atis::siirtopinta) {
+                if ((peli.koneet[i].anna_selvityskorkeus() / 100) < atis.anna_siirtopinta()) {
                     selvityskorkeus = std::floor(peli.koneet[i].anna_selvityskorkeus());
 				}
 				else {
@@ -79,14 +79,14 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
 			}
 			else {
-                if (peli.koneet[i].anna_korkeus() < Atis::siirtokorkeus) {
+                if (peli.koneet[i].anna_korkeus() < atis.anna_siirtokorkeus()) {
                     lentokorkeus = std::floor(peli.koneet[i].anna_korkeus());
 				}
 				else {
                     lentokorkeus = std::floor(peli.koneet[i].anna_korkeus() / 100);
 				}
 
-                if (peli.koneet[i].anna_selvityskorkeus() < Atis::siirtokorkeus) {
+                if (peli.koneet[i].anna_selvityskorkeus() < atis.anna_siirtokorkeus()) {
                     selvityskorkeus = std::floor(peli.koneet[i].anna_selvityskorkeus());
 				}
 				else {

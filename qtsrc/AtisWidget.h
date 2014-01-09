@@ -18,8 +18,7 @@
 class AtisView : public QWidget {
 	Q_OBJECT
 public:
-    AtisView(Metar& m, QWidget* parent = 0) : QWidget(parent) {
-        metar = m;
+    AtisView(Metar& m, Atis& at, QWidget* parent = 0) : metar(m), atis(at), QWidget(parent) {
 		title = new QLabel("ATIS Valinta", this);
         title->setGeometry(0, 20, 150, 30);
 
@@ -58,11 +57,11 @@ public:
 
     public slots:
     void OnOkPressed() {
-        Atis::downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
+        atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
 
         double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
-        int laskettu_siirtopinta = Atis::calculateTL(metar.anna_paine());
+        int laskettu_siirtopinta = atis.calculateTL(metar.anna_paine());
 
         if (vasta_lahto <= 0) {
             drawErrorMessage("Lähtökiitotie väärin", inputFields[1]);
@@ -73,10 +72,10 @@ public:
         } else {
             hideErrorMessage();
 
-            Atis::lahtokiitotie = inputFields[0]->text().toStdString();
-            Atis::laskukiitotie = inputFields[1]->text().toStdString();
-            Atis::siirtokorkeus = inputFields[2]->text().toInt();
-            Atis::siirtopinta = inputFields[3]->text().toInt();
+            atis.aseta_lahtokiitotie(inputFields[0]->text().toStdString());
+            atis.aseta_laskukiitotie(inputFields[1]->text().toStdString());
+            atis.aseta_siirtokorkeus(inputFields[2]->text().toInt());
+            atis.aseta_siirtopinta(inputFields[3]->text().toInt());
 
             emit atisDone();
         }
@@ -86,7 +85,8 @@ signals:
 	void atisDone();
 
 private:
-    Metar metar;
+    Metar& metar;
+    Atis& atis;
 	QLabel* title;
     QLabel* inputLabel;
     QLabel* metarLabel;

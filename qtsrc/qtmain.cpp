@@ -11,7 +11,8 @@ int main(int argc, char** argv) {
 
     QApplication app(argc, argv);
 
-    MainWindow window;
+    Kieli kieli("fi_FI");
+    MainWindow window(kieli);
 
     window.resize(700, 700);
     window.setWindowTitle("ATC RADAR");
