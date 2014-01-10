@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <list>
 
 #include "controller.hpp"
 #include "asetukset.h"
