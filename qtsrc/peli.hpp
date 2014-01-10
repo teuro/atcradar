@@ -17,6 +17,7 @@
 #include <ctime>
 #include <algorithm>
 #include <vector>
+#include <list>
 #include <queue>
 #include <map>
 #include <stdexcept>
@@ -67,7 +68,8 @@ public:
 
     int kasitellyt;
 
-    std::vector <lentokone> koneet;
+    std::list <lentokone*> koneet;
+    lentokone* valittuKone;
     std::queue <lentokone> odottavat;
 
 	struct selvitys {
@@ -96,7 +98,6 @@ public:
 
     bool onko_vapaata(int tyyppi = LAHTEVA, int piste = -1);
     void hoida_koneet(double intervalliMs);
-    int etsi_valittu_kone();
 
     bool tarkista_atis();
     void generoi_metar();
