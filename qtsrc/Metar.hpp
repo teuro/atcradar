@@ -18,31 +18,7 @@ class Metar {
     int kastepiste;
     std::string pilvet;
 public:
-    Metar() {
-        tuuli           = apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5);
-        voimakkuus      = apuvalineet::arvo_luku(0, 20);
-        paine           = apuvalineet::arvo_luku(960, 1050);
-        nakyvyys        = apuvalineet::pyorista(apuvalineet::arvo_luku(200, 9999), 100);
-        lampotila       = apuvalineet::arvo_luku(-30, 60);
-        ilmankosteus    = apuvalineet::arvo_luku(50, 100);
-        kastepiste      = (lampotila - (100 - ilmankosteus)) / 5;
-
-        std::vector <std::string> pilvityypit;
-
-        pilvityypit.push_back("SKC");
-        pilvityypit.push_back("FEW");
-        pilvityypit.push_back("BKN");
-        pilvityypit.push_back("SCT");
-        pilvityypit.push_back("OVC");
-
-        for (int i = 0; i < apuvalineet::arvo_luku(0, 5); ++i) {
-            pilvet += pilvityypit[apuvalineet::arvo_luku(0, pilvityypit.size()-1)] + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(1000, 8800), 100)) + " ";
-        }
-    }
-
     QString getMessage() {
-        //return QString(apuvalineet::tekstiksi(tuuli).c_str());
-
         return QString(
             ("EFRO " + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(tuuli), 3) + 
             apuvalineet::muuta_pituus(apuvalineet::tekstiksi(voimakkuus), 2) + "KT Q" + 
