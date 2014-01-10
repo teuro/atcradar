@@ -153,13 +153,13 @@ void PeliView::piirra_lentokentta(IPiirtoPinta& piirtopinta) {
 
 void PeliView::piirra_tilanne(IPiirtoPinta& piirtopinta) {
     std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
-	piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 20);
+    piirtopinta.kirjoita_tekstia(teksti, 500, 20);
 
     teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_porrastusvirhe"));
-	piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 40);
+    piirtopinta.kirjoita_tekstia(teksti, 500, 40);
 
     teksti = "muut virheet " + apuvalineet::tekstiksi(peli.muut_virheet);
-	piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), 60);
+    piirtopinta.kirjoita_tekstia(teksti, 500, 60);
 }
 
 void PeliView::piirra_ohje(IPiirtoPinta& piirtopinta, std::string ohje) {
