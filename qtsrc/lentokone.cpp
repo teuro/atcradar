@@ -23,7 +23,6 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 
 	lahestymisselvitys = false;
 	laskuselvitys = false;
-	valittu = false;
 
 	odotuskuvio = -1;
 	this->poistetaan = false;

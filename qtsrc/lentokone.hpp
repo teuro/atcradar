@@ -83,7 +83,6 @@ public:
 
 	void liiku(double aika);
 
-	bool valittu;
 	int tyyppi;
 
 	bool lahestymisselvitys;
@@ -124,10 +123,9 @@ public:
 
     bool anna_oikotie() { return this->oikotie; }
     bool anna_tyyppi() { return this->tyyppi; }
-    bool anna_valittu() { return this->valittu; }
+
     navipiste anna_kohde() { return this->kohde; }
     bool anna_lahestymisselvitys() { return this->lahestymisselvitys; }
-    void aseta_valittu(bool valittu) { this->valittu = valittu; }
 };
 
 #endif
