@@ -63,6 +63,7 @@ public:
         std::clog << "Atis täytetty oikein" << std::endl;
         peli->luo_kone(0);
         peli->luo_kone(0);
+        peli->luo_kone(0);
 	}
 
 private:
