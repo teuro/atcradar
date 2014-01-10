@@ -177,12 +177,6 @@ void lentokone::tarkista_suunta_kohteeseen() {
 	}
 }
 
-void lentokone::ota_selvitys(selvitys tmp) {
-    this->muuta_selvityskorkeutta(tmp.anna_korkeus());
-    this->muuta_selvitysnopeutta(tmp.anna_nopeus());
-    this->muuta_selvityssuuntaa(tmp.anna_suunta(), tmp.anna_kaarto());
-}
-
 void lentokone::poista_reitti() {
 	while (this->reitti.size()) {
 		this->reitti.pop();

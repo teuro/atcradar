@@ -4,7 +4,6 @@
 #include "apuvalineet.hpp"
 #include "navipiste.hpp"
 #include "lentokentta.hpp"
-#include "Selvitys.hpp"
 #define _USE_MATH_DEFINES
 #include <cmath>
 
@@ -60,7 +59,6 @@ private:
 	navipiste kohde;
 	navipiste ulosmenopiste;
 
-	void aseta_navipiste(navipiste paikka);
 	void aseta_navipiste(apuvalineet::piste paikka);
 
 	void lahesty();
@@ -72,10 +70,11 @@ public:
 
     apuvalineet::piste paikka;
 
-    void ota_selvitys(selvitys tmp);
     void muuta_selvityskorkeutta(double korkeus);
     void muuta_selvitysnopeutta(double nopeus);
     void muuta_selvityssuuntaa(double suunta, int kaarto = apuvalineet::VASEN);
+
+    void aseta_navipiste(navipiste paikka);
 
 	void liiku(double aika);
 

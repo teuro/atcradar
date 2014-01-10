@@ -11,7 +11,6 @@
 #include "controller.hpp"
 #include "asetukset.h"
 #include "peli.hpp"
-#include "Selvitys.hpp"
 
 class PeliView;
 class Peli;
@@ -41,7 +40,7 @@ public:
 
 	void pyyda_atis();
 
-    selvitys anna_selvitys(std::string komento, int toiminto);
+    void anna_selvitys(std::string komento, int toiminto);
 
     void ota_aika(double aika) {
         this->pelin_kello = aika;

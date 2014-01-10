@@ -152,9 +152,9 @@ void Peli::aseta_hiiren_paikka(const apuvalineet::piste& hiiri) {
 
 void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
     valittuKone = NULL;
-
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
-        if (apuvalineet::onko_alueella(hiiri, (*it)->paikka), 2) {
+        std::clog << "hiiri.paikka = {" << hiiri.x << ", " << hiiri.y << "} " << "kone.paikka = {" << (*it)->paikka.x << ", " << (*it)->paikka.y << "}" << std::endl;
+        if (apuvalineet::onko_alueella(hiiri, (*it)->paikka)) {
             valittuKone = *it;
             break;
 		}

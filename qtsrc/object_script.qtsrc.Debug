@@ -10,7 +10,6 @@ INPUT(
 ./debug\peliview.o
 ./debug\peli.o
 ./debug\kieli.o
-./debug\selvitys.o
 ./debug\moc_AtisWidget.o
 ./debug\moc_levelmenu.o
 ./debug\moc_MainWindow.o

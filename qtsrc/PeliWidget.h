@@ -59,9 +59,14 @@ public slots:
     }
 
     void OnOkPressed() {
+        std::string komento;
+        int i = 1;
         for (std::vector <QLineEdit*> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
-            peliController.kasittele_komento((*it)->text().toStdString());
+            komento += (*it)->text().toStdString() + "|" + apuvalineet::tekstiksi(i) + "|";
+            ++i;
         }
+
+        peliController.kasittele_komento(komento);
     }
 
     // Redraw the view completely

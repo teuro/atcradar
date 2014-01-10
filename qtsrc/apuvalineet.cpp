@@ -37,7 +37,7 @@ double apuvalineet::etaisyys(const piste& a, const piste& b) {
 	double x = std::abs((a.x - b.x));
 	double y = std::abs((a.y - b.y));
 
-	double matka = px2nm(std::sqrt((x * x) + (y * y)));
+    double matka = px2nm(std::sqrt((x * x) + (y * y)));
 
 	return matka;
 }

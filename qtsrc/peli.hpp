@@ -10,7 +10,6 @@
 #include "view.hpp"
 #include "AtisController.hpp"
 #include "Metar.hpp"
-#include "Selvitys.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -49,7 +48,6 @@ public:
 
     void lataa_tunnukset(std::string tunnukset);
 
-    selvitys peli_selvitys;
     void lisaa_selvityksia();
 
     struct tilasto {
@@ -72,8 +70,6 @@ public:
     std::list <lentokone*> koneet;
     lentokone* valittuKone;
     std::queue <lentokone> odottavat;
-
-	std::vector <selvitys> selvitykset;
 
     std::vector <navipiste> navipisteet;
     std::vector <navipiste> sisapisteet;

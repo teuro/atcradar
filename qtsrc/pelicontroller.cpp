@@ -20,10 +20,17 @@ bool PeliController::kasittele_nappi(PeliController::nappi nappi) {
 }
 
 bool PeliController::kasittele_komento(const std::string& komento) {
-    peli.peli_selvitys = anna_selvitys(komento, peli.toiminto);
+    /* Suunta nopeus korkeus */
+    std::vector <std::string> asiat = apuvalineet::pilko_rivi(komento, "|");
 
     if (peli.valittuKone) {
-        peli.valittuKone->ota_selvitys(peli.peli_selvitys);
+        for (std::vector <std::string> :: iterator it = asiat.begin(); it < asiat.end(); ++it) {
+            std::string selvitys = *it;
+            ++it;
+            int tyyppi = apuvalineet::luvuksi<int>(*it);
+
+            anna_selvitys(selvitys, tyyppi);
+        }
     }
 }
 
@@ -55,7 +62,7 @@ void PeliController::pyyda_atis() {
 
 }
 
-selvitys PeliController::anna_selvitys(std::string komento, int toiminto) {
+void PeliController::anna_selvitys(std::string komento, int toiminto) {
     std::clog << komento << " " << toiminto << std::endl;
 	if ((komento == "ILS" || komento == "ils")) {
 		toiminto = apuvalineet::LAHESTYMIS;
@@ -91,28 +98,23 @@ selvitys PeliController::anna_selvitys(std::string komento, int toiminto) {
         }
     }
 
-    selvitys tmp_selvitys;
-
 	switch (toiminto) {
 		case apuvalineet::KOHDE:
-            tmp_selvitys.aseta_kohde(*kohde);
+            peli.valittuKone->aseta_navipiste(*kohde);
 			break;
         case apuvalineet::NOPEUS:
             std::clog << "Aseta nopeudeksi " << komento << std::endl;
-            tmp_selvitys.aseta_nopeus(apuvalineet::luvuksi<double>(komento));
+            peli.valittuKone->muuta_selvitysnopeutta(apuvalineet::luvuksi<double>(komento));
             break;
         case apuvalineet::KORKEUS:
             std::clog << "Aseta korkeudeksi " << komento << std::endl;
-            tmp_selvitys.aseta_korkeus(apuvalineet::luvuksi<double>(komento));
+            peli.valittuKone->muuta_selvityskorkeutta(apuvalineet::luvuksi<double>(komento));
             break;
         case apuvalineet::SUUNTA:
             std::clog << "Aseta suunnaksi " << komento << std::endl;
-            tmp_selvitys.aseta_suunta(apuvalineet::luvuksi<double>(komento));
-            tmp_selvitys.aseta_kaarto(kaarto);
+            peli.valittuKone->muuta_selvityssuuntaa(apuvalineet::luvuksi<double>(komento), kaarto);
             break;
 	}
-
-	return tmp_selvitys;
 }
 
 void PeliController::kasittele_hiiren_nappi(apuvalineet::piste koordinaatit) {
