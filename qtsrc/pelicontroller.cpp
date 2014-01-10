@@ -1,24 +1,5 @@
 #include "pelicontroller.hpp"
 
-bool PeliController::kasittele_nappi(PeliController::nappi nappi) {
-    switch (nappi) {
-        case PeliController::NAPPI_ESCAPE:
-			return false;
-        case PeliController::NAPPI_F5:
-			peli.toiminto = apuvalineet::SUUNTA;
-			break;
-        case PeliController::NAPPI_F7:
-			peli.toiminto = apuvalineet::NOPEUS;
-			break;
-        case PeliController::NAPPI_F8:
-			peli.toiminto = apuvalineet::KORKEUS;
-			break;
-        default:
-            break;
-	}
-	return true;
-}
-
 bool PeliController::kasittele_komento(const std::string& komento) {
     /* Suunta nopeus korkeus */
     std::vector <std::string> asiat = apuvalineet::pilko_rivi(komento, "|");
