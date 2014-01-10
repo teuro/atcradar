@@ -63,9 +63,11 @@ public:
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
         int laskettu_siirtopinta = atis.calculateTL(metar.anna_paine());
 
-        if (vasta_lahto <= 0) {
-            drawErrorMessage("Lähtökiitotie väärin", inputFields[1]);
-        } else if (vasta_lasku <= 0) {
+        std::clog << apuvalineet::laske_vastatuuli((inputFields[0]->text().toInt() * 10), metar.anna_tuuli()) << std::endl;
+
+        if (vasta_lahto >= 0) {
+            drawErrorMessage("Lähtökiitotie väärin", inputFields[1]);            
+        } else if (vasta_lasku >= 0) {
             drawErrorMessage("Laskukiitotie väärin", inputFields[2]);
         } else if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
             drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
