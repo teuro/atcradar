@@ -33,9 +33,9 @@ public:
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);
 
-        addInputField("Suunta", 100, 20, 0, 360, apuvalineet::SUUNTA);
-        addInputField("Nopeus", 100, 40, 160, 440, apuvalineet::NOPEUS);
-        addInputField("Korkeus", 100, 60, 2000, 24000, apuvalineet::KORKEUS);
+        addInputField("Suunta", 100, 20, 0, 360);
+        addInputField("Nopeus", 100, 40, 160, 440);
+        addInputField("Korkeus", 100, 60, 2000, 24000);
 
         okButton = new QPushButton("OK", this);
         okButton->move(100, 80);
@@ -43,14 +43,9 @@ public:
         connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed()));
     }
 
-    void addInputField(QString name, int x, int y, int minimum, int maximum, int type) {
-        inputField tmp;
-
-        tmp.edit = new QLineEdit("", this);
-        tmp.edit->move(x, y);
-        tmp.type = type;
-
-        inputFields.push_back(tmp);
+    void addInputField(QString name, int x, int y, int minimum, int maximum) {
+        inputFields.push_back(new QLineEdit("", this));
+        inputFields.back()->move(x, y);
 
         inputLabel = new QLabel(name, this);
         inputLabel->setGeometry(x-80, y-0, 200, 20);
@@ -64,8 +59,8 @@ public slots:
     }
 
     void OnOkPressed() {
-        for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
-            peliController.kasittele_komento(it->edit->text().toStdString(), it->type);
+        for (std::vector <QLineEdit*> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
+            peliController.kasittele_komento((*it)->text().toStdString());
         }
     }
 
@@ -103,12 +98,7 @@ private:
 
     QPushButton* okButton;
 
-    struct inputField {
-        QLineEdit* edit;
-        int type;
-    };
-
-    std::vector <inputField> inputFields;
+    std::vector <QLineEdit*> inputFields;
 };
 
 

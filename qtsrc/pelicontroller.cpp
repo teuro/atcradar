@@ -19,8 +19,8 @@ bool PeliController::kasittele_nappi(PeliController::nappi nappi) {
 	return true;
 }
 
-bool PeliController::kasittele_komento(const std::string& komento, int tyyppi) {
-    peli.peli_selvitys = anna_selvitys(komento, tyyppi);
+bool PeliController::kasittele_komento(const std::string& komento) {
+    peli.peli_selvitys = anna_selvitys(komento, peli.toiminto);
 
     if (peli.valittuKone) {
         peli.valittuKone->ota_selvitys(peli.peli_selvitys);

@@ -37,7 +37,7 @@ public:
 	void kasittele_hiiren_paikka(apuvalineet::piste koordinaatit);
     bool kasittele_nappi(PeliController::nappi nappi);
 
-    bool kasittele_komento(const std::string& komento, int tyyppi);
+    bool kasittele_komento(const std::string& komento);
 
 	void pyyda_atis();
 
