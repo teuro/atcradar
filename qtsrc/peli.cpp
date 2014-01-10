@@ -154,8 +154,8 @@ void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
     valittuKone = NULL;
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
-        if (apuvalineet::onko_alueella(hiiri, (*it)->paikka)) {
-            valittuKone = (*it);
+        if (apuvalineet::onko_alueella(hiiri, (*it)->paikka), 2) {
+            valittuKone = *it;
             break;
 		}
 	}
@@ -218,21 +218,16 @@ void Peli::hoida_koneet(double intervalliMs) {
 				odottavat.pop();
 			}
 		}
-/*
-		if (it->anna_odotuskuvio() > -1 && it->anna_odotuskuvio() < ohjelma.sekunnit()) {
-			it->aseta_odotuskuvio(120);
-			it->ota_selvitys(it->anna_suunta() + 180, apuvalineet::OIKEA);
-        }*/
 
         if ((*it)->tyyppi == Peli::LAHTEVA && (*it)->anna_korkeus() < 1200 && (*it)->anna_odotus() == false) {
             if ((*it)->anna_nopeus() == 0) {
-                (*it)->ota_selvitys(asetukset.anna_asetus("alkunopeus"), apuvalineet::NOPEUS);
+                (*it)->muuta_selvitysnopeutta(asetukset.anna_asetus("alkunopeus"));
 			}
 
             if ((*it)->anna_nopeus() > 150) {
-                (*it)->ota_selvitys(haku_lahto->alkunousukorkeus, apuvalineet::KORKEUS);
-                (*it)->ota_selvitys(asetukset.anna_asetus("alkunousunopeus"), apuvalineet::NOPEUS);
-                (*it)->ota_selvitys(haku_lahto->alkunoususuunta, apuvalineet::SUUNTA);
+                (*it)->muuta_selvityskorkeutta(haku_lahto->alkunousukorkeus);
+                (*it)->muuta_selvitysnopeutta(asetukset.anna_asetus("alkunousunopeus"));
+                (*it)->muuta_selvityssuuntaa(haku_lahto->alkunoususuunta);
 			}
 		}
 

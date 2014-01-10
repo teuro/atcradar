@@ -96,7 +96,7 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
             piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(lentokorkeus) + " / " + apuvalineet::tekstiksi(selvityskorkeus), (*it)->paikka.x, (*it)->paikka.y + piirtopinta.get_fontinkoko() + 3);
 
-            if (peli.valittuKone) {
+            if (peli.valittuKone == (*it)) {
                 piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor((*it)->anna_nopeus())) + " / " + apuvalineet::tekstiksi((*it)->anna_selvitysnopeus()), (*it)->paikka.x, (*it)->paikka.y + (2 * piirtopinta.get_fontinkoko()) + 3);
                 piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor((*it)->anna_suunta())) + " / " + apuvalineet::tekstiksi((*it)->anna_selvityssuunta()), (*it)->paikka.x, (*it)->paikka.y + (3 * piirtopinta.get_fontinkoko()) + 3);
 

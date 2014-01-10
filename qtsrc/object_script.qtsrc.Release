@@ -10,6 +10,7 @@ INPUT(
 ./release\peliview.o
 ./release\peli.o
 ./release\kieli.o
+./release\selvitys.o
 ./release\moc_AtisWidget.o
 ./release\moc_levelmenu.o
 ./release\moc_MainWindow.o

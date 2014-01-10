@@ -11,6 +11,7 @@
 #include "controller.hpp"
 #include "asetukset.h"
 #include "peli.hpp"
+#include "Selvitys.hpp"
 
 class PeliView;
 class Peli;
@@ -36,11 +37,11 @@ public:
 	void kasittele_hiiren_paikka(apuvalineet::piste koordinaatit);
     bool kasittele_nappi(PeliController::nappi nappi);
 
-	bool kasittele_komento(const std::string& komento);
+    bool kasittele_komento(const std::string& komento, int tyyppi);
 
 	void pyyda_atis();
 
-	Peli::selvitys anna_selvitys(std::string komento, int toiminto);
+    selvitys anna_selvitys(std::string komento, int toiminto);
 
     void ota_aika(double aika) {
         this->pelin_kello = aika;

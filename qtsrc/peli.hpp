@@ -10,6 +10,7 @@
 #include "view.hpp"
 #include "AtisController.hpp"
 #include "Metar.hpp"
+#include "Selvitys.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -43,12 +44,12 @@ public:
     Metar& metar;
     Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis& at);
 
-//    double ajan_muutos;
     std::vector <std::string> tunnukset;
     std::string syote;
 
     void lataa_tunnukset(std::string tunnukset);
 
+    selvitys peli_selvitys;
     void lisaa_selvityksia();
 
     struct tilasto {
@@ -71,17 +72,6 @@ public:
     std::list <lentokone*> koneet;
     lentokone* valittuKone;
     std::queue <lentokone> odottavat;
-
-	struct selvitys {
-		int kone_id;
-		double suunta;
-		double korkeus;
-		double nopeus;
-		navipiste kohde;
-		int toiminto;
-		double aika;
-		int kaarto;
-	};
 
 	std::vector <selvitys> selvitykset;
 

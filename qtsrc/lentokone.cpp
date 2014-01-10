@@ -177,40 +177,10 @@ void lentokone::tarkista_suunta_kohteeseen() {
 	}
 }
 
-void lentokone::ota_selvitys(double komento, int toiminto) {
-	// TODO: Voisiko tämän metodin sijaan kutsua suoraan: muuta_selvityskorkeutta(komento) ja muuta_selvitysnopeutta(komento)
-	// Sen jälkeen tämän metodin voisi poistaa.
-	switch (toiminto) {
-		case apuvalineet::KORKEUS:
-			muuta_selvityskorkeutta(komento);
-			break;
-		case apuvalineet::NOPEUS:
-			muuta_selvitysnopeutta(komento);
-			break;
-	}
-}
-
-void lentokone::ota_selvitys(double suunta, int toiminto, int kaarto) {
-	// TODO: Tämä metodi jättää toiminto-parametrin kokonaan huomioimatta. Voisiko sen poistaa?
-	this->muuta_selvityssuuntaa(suunta, kaarto);
-}
-
-void lentokone::ota_selvitys(navipiste& piste) {
-	this->reitti.push(piste);
-}
-
-void lentokone::ota_selvitys(int toiminto, kiitotie& baana, lentokentta& kentta) {
-	// TODO: Tämä metodi jättää toiminto-parametrin kokonaan huomioimatta. Voisiko sen poistaa?
-	this->lahestymisselvitys = true;
-    this->baana = baana;
-    this->kentta = kentta;
-    this->aseta_navipiste(baana.lahestymispiste);
-}
-
-void lentokone::ota_selvitys(int toiminto) {
-	// TODO: Tämä metodi jättää toiminto-parametrin kokonaan huomioimatta. Voisiko sen poistaa?
-	this->oikotie = true;
-    this->reitti.push(this->ulosmenopiste);
+void lentokone::ota_selvitys(selvitys tmp) {
+    this->muuta_selvityskorkeutta(tmp.anna_korkeus());
+    this->muuta_selvitysnopeutta(tmp.anna_nopeus());
+    this->muuta_selvityssuuntaa(tmp.anna_suunta(), tmp.anna_kaarto());
 }
 
 void lentokone::poista_reitti() {

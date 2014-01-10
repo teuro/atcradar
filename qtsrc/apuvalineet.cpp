@@ -123,7 +123,6 @@ std::vector <std::string> apuvalineet::pilko_rivi(std::string rivi, std::string 
 
 bool apuvalineet::onko_alueella(const piste& a, const piste& b, double sade) {
     double valimatka = etaisyys(a, b);
-    //std::clog << a.x << ", " << a.y << " " << b.x << ", " << b.y << " " << etaisyys(a, b) << std::endl;
 
 	return valimatka < (2 * sade);
 }

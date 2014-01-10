@@ -19,8 +19,12 @@ bool PeliController::kasittele_nappi(PeliController::nappi nappi) {
 	return true;
 }
 
-bool PeliController::kasittele_komento(const std::string& komento) {
-	return true;
+bool PeliController::kasittele_komento(const std::string& komento, int tyyppi) {
+    peli.peli_selvitys = anna_selvitys(komento, tyyppi);
+
+    if (peli.valittuKone) {
+        peli.valittuKone->ota_selvitys(peli.peli_selvitys);
+    }
 }
 
 bool PeliController::kasittele_aikaa(double intervallisek) {
@@ -51,7 +55,8 @@ void PeliController::pyyda_atis() {
 
 }
 
-Peli::selvitys PeliController::anna_selvitys(std::string komento, int toiminto) {
+selvitys PeliController::anna_selvitys(std::string komento, int toiminto) {
+    std::clog << komento << " " << toiminto << std::endl;
 	if ((komento == "ILS" || komento == "ils")) {
 		toiminto = apuvalineet::LAHESTYMIS;
 	}
@@ -86,25 +91,26 @@ Peli::selvitys PeliController::anna_selvitys(std::string komento, int toiminto) 
         }
     }
 
-	Peli::selvitys tmp_selvitys;
+    selvitys tmp_selvitys;
 
 	switch (toiminto) {
 		case apuvalineet::KOHDE:
-			tmp_selvitys.kohde = *kohde;
+            tmp_selvitys.aseta_kohde(*kohde);
 			break;
         case apuvalineet::NOPEUS:
-            tmp_selvitys.nopeus = apuvalineet::luvuksi<double>(komento);
+            std::clog << "Aseta nopeudeksi " << komento << std::endl;
+            tmp_selvitys.aseta_nopeus(apuvalineet::luvuksi<double>(komento));
             break;
         case apuvalineet::KORKEUS:
-            tmp_selvitys.korkeus = apuvalineet::luvuksi<double>(komento);
+            std::clog << "Aseta korkeudeksi " << komento << std::endl;
+            tmp_selvitys.aseta_korkeus(apuvalineet::luvuksi<double>(komento));
             break;
         case apuvalineet::SUUNTA:
-            tmp_selvitys.suunta = apuvalineet::luvuksi<double>(komento);
-            tmp_selvitys.kaarto = kaarto;
+            std::clog << "Aseta suunnaksi " << komento << std::endl;
+            tmp_selvitys.aseta_suunta(apuvalineet::luvuksi<double>(komento));
+            tmp_selvitys.aseta_kaarto(kaarto);
             break;
 	}
-
-	tmp_selvitys.toiminto = toiminto;
 
 	return tmp_selvitys;
 }
