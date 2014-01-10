@@ -17,7 +17,7 @@ double apuvalineet::nm2px(double nm) {
 }
 
 double apuvalineet::deg2rad(double deg) {
-	return (PII * deg) / 180.0;
+   return (PII * deg) / 180.0;
 }
 
 double apuvalineet::rad2deg(double rad) {
@@ -123,10 +123,15 @@ std::vector <std::string> apuvalineet::pilko_rivi(std::string rivi, std::string 
 
 bool apuvalineet::onko_alueella(const piste& a, const piste& b, double sade) {
     double valimatka = etaisyys(a, b);
+    //std::clog << a.x << ", " << a.y << " " << b.x << ", " << b.y << " " << etaisyys(a, b) << std::endl;
 
 	return valimatka < (2 * sade);
 }
 
 double apuvalineet::laske_vastatuuli(double kiitotie, double tuuli) {
-    return (std::cos(tuuli - kiitotie));
+    return (std::cos(deg2rad(std::abs((tuuli + 180) - kiitotie))));
+}
+
+double apuvalineet::laske_sivutuuli(double kiitotie, double tuuli) {
+    return (std::sin(deg2rad(std::abs((tuuli + 180) - kiitotie))));
 }
