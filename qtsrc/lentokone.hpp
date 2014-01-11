@@ -65,7 +65,6 @@ private:
 
 	void lahesty();
 
-	bool poistetaan;
 	bool laskuselvitys;
 public:
     lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus, lentokentta& k, Atis&a );
@@ -111,9 +110,6 @@ public:
 
     void aseta_odotus(bool venttaa) {  this->odotus = venttaa; }
     bool anna_odotus() { return this->odotus; }
-
-    void aseta_poistetaan(bool poistuu) { this->poistetaan = poistuu; }
-    bool anna_poistetaan() { return this->poistetaan; }
 
     void aseta_odotuskuvio(double aika) { this->odotuskuvio += aika; }
     double anna_odotuskuvio() { return this->odotuskuvio; }

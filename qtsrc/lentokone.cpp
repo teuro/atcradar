@@ -25,7 +25,6 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	laskuselvitys = false;
 
 	odotuskuvio = -1;
-	this->poistetaan = false;
 
 	this->odotus = odotus;
 	this->oikotie = false;
