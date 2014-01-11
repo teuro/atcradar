@@ -192,22 +192,21 @@ void Peli::hoida_koneet(double intervalliMs) {
     std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
-        (*it)->aseta_poistetaan(false);
         if ((*it)->tyyppi == Peli::LAHTEVA) {
             if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka)) {
-                (*it)->aseta_poistetaan(true);
+                koneet.erase(it++);
                 ++kasitellyt;
             }
         } else if ((*it)->tyyppi == Peli::SAAPUVA) {
             if ((*it)->anna_nopeus() < 4.0) {
-                (*it)->aseta_poistetaan(true);
+                koneet.erase(it++);
                 ++kasitellyt;
 			}
         }
 
         if ((*it)->paikka.x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             aseta_virhe(VIRHE_ALUEELTA);
-            (*it)->aseta_poistetaan(true);
+            koneet.erase(it++);
         }
 
         if ((*it)->anna_odotus()) {

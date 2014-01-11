@@ -34,7 +34,7 @@ class PeliView : public QWidget {
     Asetukset& asetukset;
     Atis& atis;
 public:
-    PeliView(Peli& p, Kieli& k, Asetukset& a, Atis& at, QWidget* QW = 0) : peli(p), kieli(k), asetukset(a), atis(at) {}
+    PeliView(Peli& p, Kieli& k, Asetukset& a, Atis& at) : peli(p), kieli(k), asetukset(a), atis(at) {}
 
     ~PeliView() { }
 

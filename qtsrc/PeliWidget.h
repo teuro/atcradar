@@ -24,7 +24,7 @@ class PeliWidget : public QWidget {
 
 public:
 	// constructor
-    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, Peli& p, QWidget *aParent = 0) : peliView(v), peliController(pc), peli(p) {
+    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, Peli& p) : peliView(v), peliController(pc), peli(p) {
 		// Timer to draw the window
 		timer = new QTimer;
 		connect(timer, SIGNAL(timeout()), SLOT(animate()));
@@ -42,11 +42,15 @@ public:
         lahesty->move(200, 80);
 
         keskeyta = new QPushButton("Keskeyta", this);
-        keskeyta->move(200, 80);
+        keskeyta->move(200, 100);
 
-        connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed()));
-        connect(lahesty, SIGNAL(clicked()), this, SLOT(OnApproach()));
-        connect(keskeyta, SIGNAL(clicked()), this, SLOT(OnCancel()));
+        oikotie = new QPushButton("Oikotie", this);
+        oikotie->move(200, 120);
+
+        std::clog << connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed())) << std::endl;
+        std::clog << connect(lahesty, SIGNAL(clicked()), this, SLOT(OnApproach())) << std::endl;
+        std::clog << connect(keskeyta, SIGNAL(clicked()), this, SLOT(OnCancel())) << std::endl;
+        std::clog << connect(oikotie, SIGNAL(clicked()), this, SLOT(OnShortCut())) << std::endl;
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);
@@ -57,6 +61,10 @@ public:
 
         tmp.field = new QLineEdit("", this);
         tmp.label = new QLabel(name, this);
+
+        QValidator* tmp_validator = new QIntValidator(minimum, maximum, tmp.field);
+        tmp.field->setValidator(tmp_validator);
+
         tmp.field->move(x, y);
         tmp.label->setGeometry(x-80, y-0, 200, 20);
 
@@ -70,12 +78,17 @@ public slots:
 
         lahesty->hide();
         keskeyta->hide();
+        oikotie->hide();
 
         if (peli.valittuKone) {
-            if (peli.valittuKone->lahestymisselvitys) {
-                keskeyta->show();
-            } else {
-                lahesty->show();
+            if (peli.valittuKone->tyyppi == Peli::LAHTEVA) {
+                oikotie->show();
+            } else if (peli.valittuKone->tyyppi == Peli::SAAPUVA) {
+                if (peli.valittuKone->lahestymisselvitys) {
+                    keskeyta->show();
+                } else {
+                    lahesty->show();
+                }
             }
         }
 
@@ -92,15 +105,23 @@ public slots:
     }
 
     void OnApproach() {
+        std::clog << "Lähesty" << std::endl;
         peliController.kasittele_komento("ILS|" + apuvalineet::tekstiksi(apuvalineet::LAHESTYMIS) + "|");
         peli.valittuKone = NULL;
     }
 
     void OnCancel() {
+        std::clog << "Keskeytä" << std::endl;
+    }
 
+    void OnShortCut() {
+        std::clog << "Oikotie" << std::endl;
+        peliController.kasittele_komento("DCT|" + apuvalineet::tekstiksi(apuvalineet::OIKOTIE) + "|");
+        peli.valittuKone = NULL;
     }
 
     void OnOkPressed() {
+        std::clog << "OK" << std::endl;
         std::string komento;
         int i = 1;
 
@@ -142,6 +163,7 @@ private:
     // animation timer
     QTimer *timer;
     QTime* aika;
+
     PeliView& peliView;
     PeliController& peliController;
     Peli& peli;
@@ -153,6 +175,7 @@ private:
     QPushButton* okButton;
     QPushButton* lahesty;
     QPushButton* keskeyta;
+    QPushButton* oikotie;
 
     struct inputField {
         QLineEdit* field;
