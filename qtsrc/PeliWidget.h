@@ -42,8 +42,6 @@ public:
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);
-
-        nayta_selvityslomake = false;
     }
 
     void addInputField(QString name, int x, int y, int minimum, int maximum) {
@@ -62,21 +60,12 @@ public slots:
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(aika->elapsed());
 
-        if (peli.valittuKone) {
-            nayta_selvityslomake = true;
-        } else {
-            nayta_selvityslomake = false;
-        }
-
         for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
-            if (nayta_selvityslomake) {
+            if (peli.valittuKone && !it->field->isVisible()) {
                 it->label->show();
                 it->field->show();
                 okButton->show();
-            } else {
-                it->label->hide();
-                it->field->hide();
-                okButton->hide();
+                it->field->setFocus();
             }
         }
 
@@ -86,12 +75,18 @@ public slots:
     void OnOkPressed() {
         std::string komento;
         int i = 1;
+
         for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
+            it->label->hide();
+            it->field->hide();
             komento += it->field->text().toStdString() + "|" + apuvalineet::tekstiksi(i) + "|";
             ++i;
         }
 
+        okButton->hide();
+
         peliController.kasittele_komento(komento);
+        peli.valittuKone = NULL;
     }
 
     // Redraw the view completely
@@ -126,8 +121,6 @@ private:
     QLabel* inputLabel;
     QLabel* metarLabel;
     QLabel* error;
-
-    bool nayta_selvityslomake;
 
     QPushButton* okButton;
 
