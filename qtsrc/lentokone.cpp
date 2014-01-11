@@ -2,7 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus) {
+lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus, lentokentta& k, Atis& a) : kentta(k), atis(a) {
 	this->kutsutunnus = kutsutunnus;
 
 	this->paikka = paikka;
@@ -75,8 +75,6 @@ void lentokone::muuta_korkeutta(double aika) {
 		}
 	} else {
 		double etaisyys = apuvalineet::etaisyys(paikka, baana.alkupiste);
-
-		// TODO: Fix this
 		double koneen_korkeus = this->kentta.korkeus + apuvalineet::mi2ft(etaisyys * std::tan(apuvalineet::deg2rad(this->baana.liukupolku)));
 
 		if (this->korkeus > koneen_korkeus) {
@@ -153,7 +151,8 @@ void lentokone::ota_selvitys(int tyyppi) {
     if (tyyppi == apuvalineet::OIKOTIE) {
 
     } else if (tyyppi == apuvalineet::LAHESTYMIS) {
-
+        std::vector <kiitotie> :: iterator haku = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_laskukiitotie());
+        this->baana = *haku;
     }
 }
 

@@ -11,6 +11,7 @@
 #include <QTimer>
 #include <QTime>
 
+#include "peli.hpp"
 #include "PeliView.h"
 #include "pelicontroller.hpp"
 #include "QpiirtoPinta.h"
@@ -23,7 +24,7 @@ class PeliWidget : public QWidget {
 
 public:
 	// constructor
-    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, QWidget *aParent = 0) : peliView(v), peliController(pc) {
+    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, Peli& p, QWidget *aParent = 0) : peliView(v), peliController(pc), peli(p) {
 		// Timer to draw the window
 		timer = new QTimer;
 		connect(timer, SIGNAL(timeout()), SLOT(animate()));
@@ -41,28 +42,52 @@ public:
         okButton->move(100, 80);
 
         connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed()));
+
+        nayta_selvityslomake = false;
     }
 
     void addInputField(QString name, int x, int y, int minimum, int maximum) {
-        inputFields.push_back(new QLineEdit("", this));
-        inputFields.back()->move(x, y);
+        inputField tmp;
 
-        inputLabel = new QLabel(name, this);
-        inputLabel->setGeometry(x-80, y-0, 200, 20);
+        tmp.field = new QLineEdit("", this);
+        tmp.label = new QLabel(name, this);
+        tmp.field->move(x, y);
+        tmp.label->setGeometry(x-80, y-0, 200, 20);
     }
 
 public slots:
     void animate() {
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(aika->elapsed());
+
+        nayta_selvityslomake = false;
+
+        for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
+            if (nayta_selvityslomake) {
+                it->field->show();
+                it->label->show();
+                okButton->show();
+            } else {
+                it->field->hide();
+                it->label->hide();
+                okButton->hide();
+            }
+        }
+
+        if (peli.valittuKone) {
+            nayta_selvityslomake = true;
+        } else {
+            nayta_selvityslomake = false;
+        }
+
         update();
     }
 
     void OnOkPressed() {
         std::string komento;
         int i = 1;
-        for (std::vector <QLineEdit*> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
-            komento += (*it)->text().toStdString() + "|" + apuvalineet::tekstiksi(i) + "|";
+        for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
+            komento += it->field->text().toStdString() + "|" + apuvalineet::tekstiksi(i) + "|";
             ++i;
         }
 
@@ -96,14 +121,23 @@ private:
     QTime* aika;
     PeliView& peliView;
     PeliController& peliController;
+    Peli& peli;
 
     QLabel* inputLabel;
     QLabel* metarLabel;
     QLabel* error;
 
+    bool nayta_selvityslomake;
+
     QPushButton* okButton;
 
-    std::vector <QLineEdit*> inputFields;
+    struct inputField {
+        QLineEdit* field;
+        QLabel* label;
+    };
+
+    std::vector <inputField> inputFields;
+
 };
 
 

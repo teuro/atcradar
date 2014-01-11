@@ -54,7 +54,7 @@ void Peli::luo_kone(double aika) {
 			odotus = false;
 		}
 
-        koneet.push_back(new lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus));
+        koneet.push_back(new lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus, kentta, atis));
         koneet.back()->aseta_ulosmenopiste(navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())]);
 
         if (koneet.back()->anna_odotus()) {
@@ -67,7 +67,7 @@ void Peli::luo_kone(double aika) {
 			i = apuvalineet::arvo_luku(0, navipisteet.size());
 		} while (!onko_vapaata(SAAPUVA, i));
 
-        koneet.push_back(new lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false));
+        koneet.push_back(new lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false, kentta, atis));
 	}
 
 	tilasto tmp;

@@ -68,7 +68,7 @@ private:
 	bool poistetaan;
 	bool laskuselvitys;
 public:
-	lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus);
+    lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus, lentokentta& k, Atis&a );
 
     apuvalineet::piste paikka;
 

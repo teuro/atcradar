@@ -33,7 +33,7 @@ public:
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
         peliController = new PeliController(*peli, *asetukset, *dummyPinta);
-        peliWidget = new PeliWidget(*peliView, *peliController, *asetukset);
+        peliWidget = new PeliWidget(*peliView, *peliController, *asetukset, *peli);
 
 		levelMenu = new LevelMenu();
         atisView = new AtisView(*metar, *atis);
