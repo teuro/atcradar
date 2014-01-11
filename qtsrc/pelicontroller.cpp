@@ -46,11 +46,12 @@ void PeliController::pyyda_atis() {
 void PeliController::anna_selvitys(std::string komento, int toiminto) {
     std::clog << komento << " " << toiminto << std::endl;
 	if ((komento == "ILS" || komento == "ils")) {
-		toiminto = apuvalineet::LAHESTYMIS;
         peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS);
+        std::clog << "Annetaan lähestymisselvitys" << std::endl;
 	}
 	else if ((komento == "DCT" || komento == "dct")) {
         peli.valittuKone->ota_selvitys(apuvalineet::OIKOTIE);
+        std::clog << "Annetaan oikotie" << std::endl;
 	}
 	else if (komento == "HOLD" || komento == "hold") {
 		toiminto = apuvalineet::ODOTUS;

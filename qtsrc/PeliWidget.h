@@ -38,7 +38,15 @@ public:
         okButton = new QPushButton("OK", this);
         okButton->move(100, 80);
 
+        lahesty = new QPushButton("Lähesty", this);
+        lahesty->move(200, 80);
+
+        keskeyta = new QPushButton("Keskeyta", this);
+        keskeyta->move(200, 80);
+
         connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed()));
+        connect(lahesty, SIGNAL(clicked()), this, SLOT(OnApproach()));
+        connect(keskeyta, SIGNAL(clicked()), this, SLOT(OnCancel()));
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);
@@ -60,6 +68,14 @@ public slots:
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(aika->elapsed());
 
+        if (peli.valittuKone && peli.valittuKone->lahestymisselvitys) {
+            keskeyta->show();
+            lahesty->hide();
+        } else {
+            keskeyta->hide();
+            lahesty->show();
+        }
+
         for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
             if (peli.valittuKone && !it->field->isVisible()) {
                 it->label->show();
@@ -70,6 +86,15 @@ public slots:
         }
 
         update();
+    }
+
+    void OnApproach() {
+        peliController.kasittele_komento("ILS|" + apuvalineet::tekstiksi(apuvalineet::LAHESTYMIS) + "|");
+        peli.valittuKone = NULL;
+    }
+
+    void OnCancel() {
+
     }
 
     void OnOkPressed() {
@@ -123,6 +148,8 @@ private:
     QLabel* error;
 
     QPushButton* okButton;
+    QPushButton* lahesty;
+    QPushButton* keskeyta;
 
     struct inputField {
         QLineEdit* field;
