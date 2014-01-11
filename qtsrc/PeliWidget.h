@@ -31,9 +31,6 @@ public:
 		timer->start(frameMs);
         aika = new QTime();
 
-        // To get mouse events continuously even when button is not pressed
-        setMouseTracking(true);
-
         addInputField("Suunta", 100, 20, 0, 360);
         addInputField("Nopeus", 100, 40, 160, 440);
         addInputField("Korkeus", 100, 60, 2000, 24000);
@@ -42,6 +39,9 @@ public:
         okButton->move(100, 80);
 
         connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed()));
+
+        // To get mouse events continuously even when button is not pressed
+        setMouseTracking(true);
 
         nayta_selvityslomake = false;
     }
@@ -53,6 +53,8 @@ public:
         tmp.label = new QLabel(name, this);
         tmp.field->move(x, y);
         tmp.label->setGeometry(x-80, y-0, 200, 20);
+
+        inputFields.push_back(tmp);
     }
 
 public slots:
@@ -60,24 +62,22 @@ public slots:
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(aika->elapsed());
 
-        nayta_selvityslomake = false;
-
-        for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
-            if (nayta_selvityslomake) {
-                it->field->show();
-                it->label->show();
-                okButton->show();
-            } else {
-                it->field->hide();
-                it->label->hide();
-                okButton->hide();
-            }
-        }
-
         if (peli.valittuKone) {
             nayta_selvityslomake = true;
         } else {
             nayta_selvityslomake = false;
+        }
+
+        for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
+            if (nayta_selvityslomake) {
+                it->label->show();
+                it->field->show();
+                okButton->show();
+            } else {
+                it->label->hide();
+                it->field->hide();
+                okButton->hide();
+            }
         }
 
         update();
