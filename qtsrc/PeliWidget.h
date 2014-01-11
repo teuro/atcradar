@@ -68,12 +68,15 @@ public slots:
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(aika->elapsed());
 
-        if (peli.valittuKone && peli.valittuKone->lahestymisselvitys) {
-            keskeyta->show();
-            lahesty->hide();
-        } else {
-            keskeyta->hide();
-            lahesty->show();
+        lahesty->hide();
+        keskeyta->hide();
+
+        if (peli.valittuKone) {
+            if (peli.valittuKone->lahestymisselvitys) {
+                keskeyta->show();
+            } else {
+                lahesty->show();
+            }
         }
 
         for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
