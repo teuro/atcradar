@@ -47,9 +47,10 @@ void PeliController::anna_selvitys(std::string komento, int toiminto) {
     std::clog << komento << " " << toiminto << std::endl;
 	if ((komento == "ILS" || komento == "ils")) {
 		toiminto = apuvalineet::LAHESTYMIS;
+        peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS);
 	}
 	else if ((komento == "DCT" || komento == "dct")) {
-		toiminto = apuvalineet::OIKOTIE;
+        peli.valittuKone->ota_selvitys(apuvalineet::OIKOTIE);
 	}
 	else if (komento == "HOLD" || komento == "hold") {
 		toiminto = apuvalineet::ODOTUS;

@@ -149,6 +149,14 @@ int lentokone::kaarron_suunta(double suunta) {
 	return (k > 0) ? apuvalineet::VASEN : apuvalineet::OIKEA;
 }
 
+void lentokone::ota_selvitys(int tyyppi) {
+    if (tyyppi == apuvalineet::OIKOTIE) {
+
+    } else if (tyyppi == apuvalineet::LAHESTYMIS) {
+
+    }
+}
+
 void lentokone::lahesty() {
     tarkista_suunta_kohteeseen();
 
