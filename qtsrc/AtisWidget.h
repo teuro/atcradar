@@ -19,7 +19,7 @@
 class AtisWidget : public QWidget {
 	Q_OBJECT
 public:
-    AtisWidget(Metar& m, Atis& at, Peli& p, QWidget* parent = 0) : metar(m), atis(at), peli(p), QWidget(parent) {
+    AtisWidget(Metar& m, Atis& at, Peli& p) : metar(m), atis(at), peli(p) {
 		title = new QLabel("ATIS Valinta", this);
         title->setGeometry(0, 20, 150, 30);
 
