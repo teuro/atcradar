@@ -1,0 +1,5 @@
+0|Helpoin taso pelata paljon avustusta. Mahdollisuus pausettaa kesken pelin|
+1|Helpohko taso avustusta tarjolla. Mahdollisuus pausettaa, joika laskee pisteitä|
+2|Normaali taso ei mahdollista pausettaa|
+3|Vaikea taso koneita on paljon ja niitä generoidaan lisää|
+4|Vaikein taso kaikista|
