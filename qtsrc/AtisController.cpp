@@ -16,6 +16,8 @@ void Atis::downloadPrressureLimit(std::string file, int siirtokorkeus) {
 
         if (words[0] == "P" && apuvalineet::luvuksi<int>(words[1]) == siirtokorkeus) {
             place = apuvalineet::luvuksi<int>(words[2]);
+        } else if (words[0] == "K" && place < 0) {
+            return;
         } else if (words[0] == "K") {
             painerajat.push_back(paineraja(apuvalineet::luvuksi<int>(words[1]), apuvalineet::luvuksi<int>(words[2]), apuvalineet::luvuksi<int>(words[place])));
         }
@@ -32,4 +34,6 @@ int Atis::calculateTL(int pressure) {
             return painerajat[i].siirtopinta;
         }
     }
+
+    return 0;
 }

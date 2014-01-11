@@ -65,10 +65,12 @@ public:
 
         std::clog << apuvalineet::laske_vastatuuli((inputFields[0]->text().toInt() * 10), metar.anna_tuuli()) << std::endl;
 
-        if (vasta_lahto >= 0) {
-            drawErrorMessage("Lähtökiitotie väärin", inputFields[1]);            
+        if (laskettu_siirtopinta == 0) {
+            drawErrorMessage("Siirtokorkeus on väärin", inputFields[2]);
+        } else if (vasta_lahto >= 0) {
+            drawErrorMessage("Lähtökiitotie väärin", inputFields[0]);
         } else if (vasta_lasku >= 0) {
-            drawErrorMessage("Laskukiitotie väärin", inputFields[2]);
+            drawErrorMessage("Laskukiitotie väärin", inputFields[1]);
         } else if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
             drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
         } else {
