@@ -36,12 +36,12 @@ public:
         peliWidget = new PeliWidget(*peliView, *peliController, *asetukset, *peli);
 
 		levelMenu = new LevelMenu();
-        atisView = new AtisView(*metar, *atis);
+        atisWidget = new AtisWidget(*metar, *atis, *peli);
 
 		stack = new QStackedWidget();
 
 		stack->addWidget(levelMenu);
-		stack->addWidget(atisView);
+        stack->addWidget(atisWidget);
         stack->addWidget(peliWidget);
 
 		QVBoxLayout *layout = new QVBoxLayout;
@@ -49,7 +49,7 @@ public:
 		setLayout(layout);
 
 		connect(levelMenu, SIGNAL(levelSelected(int)), this, SLOT(OnLevelSelected(int)));
-		connect(atisView, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
+        connect(atisWidget, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
 	}
 
 	public slots:
@@ -68,7 +68,7 @@ public:
 
 private:
 	LevelMenu* levelMenu;
-	AtisView* atisView;
+    AtisWidget* atisWidget;
     Peli* peli;
     Atis* atis;
 

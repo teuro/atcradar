@@ -1,5 +1,5 @@
-#ifndef _ATISVIEW_H_
-#define _ATISVIEW_H_
+#ifndef _AtisWidget_H_
+#define _AtisWidget_H_
 
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
@@ -14,11 +14,12 @@
 #include <vector>
 #include "Metar.hpp"
 #include "AtisController.hpp"
+#include "peli.hpp"
 
-class AtisView : public QWidget {
+class AtisWidget : public QWidget {
 	Q_OBJECT
 public:
-    AtisView(Metar& m, Atis& at, QWidget* parent = 0) : metar(m), atis(at), QWidget(parent) {
+    AtisWidget(Metar& m, Atis& at, Peli& p, QWidget* parent = 0) : metar(m), atis(at), peli(p), QWidget(parent) {
 		title = new QLabel("ATIS Valinta", this);
         title->setGeometry(0, 20, 150, 30);
 
@@ -57,7 +58,13 @@ public:
 
     public slots:
     void OnOkPressed() {
+        atis.tyhjenna();
         atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
+
+        std::clog << peli.kentta.kiitotiet.size() << std::endl;
+
+        std::vector <kiitotie> :: iterator haku_lahto = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[0]->text().toStdString());
+        std::vector <kiitotie> :: iterator haku_lasku = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[1]->text().toStdString());
 
         double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
@@ -65,7 +72,11 @@ public:
 
         std::clog << apuvalineet::laske_vastatuuli((inputFields[0]->text().toInt() * 10), metar.anna_tuuli()) << std::endl;
 
-        if (laskettu_siirtopinta == 0) {
+        if (haku_lasku == peli.kentta.kiitotiet.end()) {
+            drawErrorMessage("Laskukiitotietä ei ole kentällä", inputFields[1]);
+        } else if (haku_lahto == peli.kentta.kiitotiet.end()) {
+            drawErrorMessage("Lahtokiitotietä ei ole kentällä", inputFields[0]);
+        } else if (laskettu_siirtopinta == 0) {
             drawErrorMessage("Siirtokorkeus on väärin", inputFields[2]);
         } else if (vasta_lahto >= 0) {
             drawErrorMessage("Lähtökiitotie väärin", inputFields[0]);
@@ -91,6 +102,8 @@ signals:
 private:
     Metar& metar;
     Atis& atis;
+    Peli& peli;
+
 	QLabel* title;
     QLabel* inputLabel;
     QLabel* metarLabel;

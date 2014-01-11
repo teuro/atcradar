@@ -47,6 +47,8 @@ public:
     void downloadPrressureLimit(std::string file, int siirtokorkeus);
     int calculateTL(int pressure);
 
+    void tyhjenna() { painerajat.clear(); }
+
     std::vector <paineraja> painerajat;
 };
 
