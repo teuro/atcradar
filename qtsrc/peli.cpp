@@ -95,7 +95,7 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 	std::string rivi;
 
 	while (std::getline(sisaan, rivi)) {
-		std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivi, " ");
+        std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivi, "|");
 
 		if (asiat[0] == "N") {
 			kentta.nimi = asiat[1];
