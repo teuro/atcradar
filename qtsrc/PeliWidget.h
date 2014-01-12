@@ -76,22 +76,22 @@ public slots:
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(aika->elapsed());
 
-        lahesty->hide();
+        /*lahesty->hide();
         keskeyta->hide();
-        oikotie->hide();
+        oikotie->hide();*/
 
         if (peli.valittuKone) {
             if (peli.valittuKone->tyyppi == Peli::LAHTEVA) {
-                oikotie->show();
+                //oikotie->show();
             } else if (peli.valittuKone->tyyppi == Peli::SAAPUVA) {
                 if (peli.valittuKone->lahestymisselvitys) {
-                    keskeyta->show();
+                    //keskeyta->show();
                 } else {
-                    lahesty->show();
+                    //lahesty->show();
                 }
             }
         }
-
+/*
         for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
             if (peli.valittuKone && !it->field->isVisible()) {
                 it->label->show();
@@ -100,7 +100,7 @@ public slots:
                 it->field->setFocus();
             }
         }
-
+*/
         update();
     }
 
