@@ -120,7 +120,7 @@ void lentokone::liiku(double aika) {
 }
 
 void lentokone::aseta_navipiste(navipiste piste) {
-	this->kohde = piste;
+    this->reitti.push(piste);
 }
 
 void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
@@ -148,7 +148,8 @@ int lentokone::kaarron_suunta(double suunta) {
 
 void lentokone::ota_selvitys(int tyyppi, bool lahesty) {
     if (tyyppi == apuvalineet::OIKOTIE) {
-
+        this->aseta_navipiste(this->ulosmenopiste);
+        std::clog << "Oikotie havaittu mennään kohti " << ulosmenopiste.nimi << std::endl;
     } else if (tyyppi == apuvalineet::LAHESTYMIS) {
         this->lahestymisselvitys = lahesty;
 

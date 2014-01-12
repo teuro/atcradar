@@ -76,8 +76,10 @@ public slots:
         lahesty->hide();
         keskeyta->hide();
         oikotie->hide();
+        okButton->hide();
 
         if (peli.valittuKone) {
+            okButton->show();
             if (peli.valittuKone->tyyppi == Peli::LAHTEVA) {
                 oikotie->show();
             } else if (peli.valittuKone->tyyppi == Peli::SAAPUVA) {
@@ -93,8 +95,6 @@ public slots:
             if (peli.valittuKone && !it->field->isVisible()) {
                 it->label->show();
                 it->field->show();
-                okButton->show();
-                it->field->setFocus();
             }
         }
 

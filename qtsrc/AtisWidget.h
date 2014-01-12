@@ -34,15 +34,15 @@ public:
 		okButton = new QPushButton("OK", this);
         okButton->move(100, 160);
 
-        connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed()));
+        connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
 	}
 
     void addInputField(QString name, int x, int y, int minimum, int maximum) {
-        syottokentat.push_back(new QLineEdit("", this));
-        syottokentat.back()->move(x, y);
+        inputFields.push_back(new QLineEdit("", this));
+        inputFields.back()->move(x, y);
 
-        QIntValidator* tmp = new QIntValidator(minimum, maximum, syottokentat.back());
-        syottokentat.back()->setValidator(tmp);
+        QIntValidator* tmp = new QIntValidator(minimum, maximum, inputFields.back());
+        inputFields.back()->setValidator(tmp);
 
         inputLabel = new QLabel(name, this);
         inputLabel->setGeometry(x-80, y-0, 200, 20);
@@ -59,38 +59,38 @@ public:
     public slots:
     void OnOkPressed() {
         atis.tyhjenna();
-        atis.downloadPrressureLimit("data/painerajat.txt", syottokentat[2]->text().toInt());
+        atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
 
         std::clog << peli.kentta.kiitotiet.size() << std::endl;
 
-        std::vector <kiitotie> :: iterator haku_lahto = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), syottokentat[0]->text().toStdString());
-        std::vector <kiitotie> :: iterator haku_lasku = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), syottokentat[1]->text().toStdString());
+        std::vector <kiitotie> :: iterator haku_lahto = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[0]->text().toStdString());
+        std::vector <kiitotie> :: iterator haku_lasku = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[1]->text().toStdString());
 
-        double vasta_lahto = apuvalineet::laske_vastatuuli(syottokentat[0]->text().toInt() * 10, metar.anna_tuuli());
-        double vasta_lasku = apuvalineet::laske_vastatuuli(syottokentat[1]->text().toInt() * 10, metar.anna_tuuli());
+        double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
+        double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
         int laskettu_siirtopinta = atis.calculateTL(metar.anna_paine());
 
-        std::clog << apuvalineet::laske_vastatuuli((syottokentat[0]->text().toInt() * 10), metar.anna_tuuli()) << std::endl;
+        std::clog << apuvalineet::laske_vastatuuli((inputFields[0]->text().toInt() * 10), metar.anna_tuuli()) << std::endl;
 
         if (haku_lasku == peli.kentta.kiitotiet.end()) {
-            drawErrorMessage("Laskukiitotietä ei ole kentällä", syottokentat[1]);
+            drawErrorMessage("Laskukiitotietä ei ole kentällä", inputFields[1]);
         } else if (haku_lahto == peli.kentta.kiitotiet.end()) {
-            drawErrorMessage("Lahtokiitotietä ei ole kentällä", syottokentat[0]);
+            drawErrorMessage("Lahtokiitotietä ei ole kentällä", inputFields[0]);
         } else if (laskettu_siirtopinta == 0) {
-            drawErrorMessage("Siirtokorkeus on väärin", syottokentat[2]);
+            drawErrorMessage("Siirtokorkeus on väärin", inputFields[2]);
         } else if (vasta_lahto >= 0) {
-            drawErrorMessage("Lähtökiitotie väärin", syottokentat[0]);
+            drawErrorMessage("Lähtökiitotie väärin", inputFields[0]);
         } else if (vasta_lasku >= 0) {
-            drawErrorMessage("Laskukiitotie väärin", syottokentat[1]);
-        } else if (laskettu_siirtopinta != syottokentat[3]->text().toInt()) {
-            drawErrorMessage(std::string("Siirtopinta väärin"), syottokentat[3]);
+            drawErrorMessage("Laskukiitotie väärin", inputFields[1]);
+        } else if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
+            drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
         } else {
             hideErrorMessage();
 
-            atis.aseta_lahtokiitotie(syottokentat[0]->text().toStdString());
-            atis.aseta_laskukiitotie(syottokentat[1]->text().toStdString());
-            atis.aseta_siirtokorkeus(syottokentat[2]->text().toInt());
-            atis.aseta_siirtopinta(syottokentat[3]->text().toInt());
+            atis.aseta_lahtokiitotie(inputFields[0]->text().toStdString());
+            atis.aseta_laskukiitotie(inputFields[1]->text().toStdString());
+            atis.aseta_siirtokorkeus(inputFields[2]->text().toInt());
+            atis.aseta_siirtopinta(inputFields[3]->text().toInt());
 
             emit atisDone();
         }
@@ -111,7 +111,7 @@ private:
 
 	QPushButton* okButton;
 
-    std::vector <QLineEdit*> syottokentat;
+    std::vector <QLineEdit*> inputFields;
 };
 
 #endif
