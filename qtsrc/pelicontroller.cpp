@@ -45,18 +45,20 @@ void PeliController::pyyda_atis() {
 
 void PeliController::anna_selvitys(std::string komento, int toiminto) {
     std::clog << komento << " " << toiminto << std::endl;
-	if ((komento == "ILS" || komento == "ils")) {
-        peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS);
+    if (komento == "ILS") {
+        peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, true);
         std::clog << "Annetaan lähestymisselvitys" << std::endl;
-	}
-	else if ((komento == "DCT" || komento == "dct")) {
+    } else if (komento == "CNL") {
+        peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, false);
+        std::clog << "Annetaan oikotie" << std::endl;
+    } else if (komento == "DCT") {
         peli.valittuKone->ota_selvitys(apuvalineet::OIKOTIE);
         std::clog << "Annetaan oikotie" << std::endl;
-	}
-	else if (komento == "HOLD" || komento == "hold") {
+    } else if (komento == "HOLD") {
+        std::clog << "Annetaan odotuskuvio" << std::endl;
 		toiminto = apuvalineet::ODOTUS;
-	}
-	else if (komento == "OFF" || komento == "off") {
+    } else if (komento == "OFF") {
+        std::clog << "Annetaan odotuskuvion poisto" << std::endl;
 		toiminto = apuvalineet::POIS;
 	}
 

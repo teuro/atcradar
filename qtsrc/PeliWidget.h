@@ -42,15 +42,15 @@ public:
         lahesty->move(200, 80);
 
         keskeyta = new QPushButton("Keskeyta", this);
-        keskeyta->move(200, 100);
+        keskeyta->move(200, 80);
 
         oikotie = new QPushButton("Oikotie", this);
-        oikotie->move(200, 120);
+        oikotie->move(200, 80);
 
-        std::clog << connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed())) << std::endl;
-        std::clog << connect(lahesty, SIGNAL(clicked()), this, SLOT(OnApproach())) << std::endl;
-        std::clog << connect(keskeyta, SIGNAL(clicked()), this, SLOT(OnCancel())) << std::endl;
-        std::clog << connect(oikotie, SIGNAL(clicked()), this, SLOT(OnShortCut())) << std::endl;
+        std::clog << connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed())) << std::endl;
+        std::clog << connect(lahesty, SIGNAL(pressed()), this, SLOT(OnApproach())) << std::endl;
+        std::clog << connect(keskeyta, SIGNAL(pressed()), this, SLOT(OnCancel())) << std::endl;
+        std::clog << connect(oikotie, SIGNAL(pressed()), this, SLOT(OnShortCut())) << std::endl;
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);
@@ -61,9 +61,6 @@ public:
 
         tmp.field = new QLineEdit("", this);
         tmp.label = new QLabel(name, this);
-
-        QValidator* tmp_validator = new QIntValidator(minimum, maximum, tmp.field);
-        tmp.field->setValidator(tmp_validator);
 
         tmp.field->move(x, y);
         tmp.label->setGeometry(x-80, y-0, 200, 20);
@@ -76,22 +73,22 @@ public slots:
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(aika->elapsed());
 
-        /*lahesty->hide();
+        lahesty->hide();
         keskeyta->hide();
-        oikotie->hide();*/
+        oikotie->hide();
 
         if (peli.valittuKone) {
             if (peli.valittuKone->tyyppi == Peli::LAHTEVA) {
-                //oikotie->show();
+                oikotie->show();
             } else if (peli.valittuKone->tyyppi == Peli::SAAPUVA) {
                 if (peli.valittuKone->lahestymisselvitys) {
-                    //keskeyta->show();
+                    keskeyta->show();
                 } else {
-                    //lahesty->show();
+                    lahesty->show();
                 }
             }
         }
-/*
+
         for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
             if (peli.valittuKone && !it->field->isVisible()) {
                 it->label->show();
@@ -100,7 +97,7 @@ public slots:
                 it->field->setFocus();
             }
         }
-*/
+
         update();
     }
 
@@ -112,6 +109,8 @@ public slots:
 
     void OnCancel() {
         std::clog << "Keskeytä" << std::endl;
+        peliController.kasittele_komento("CNL|" + apuvalineet::tekstiksi(apuvalineet::LAHESTYMIS) + "|");
+        peli.valittuKone = NULL;
     }
 
     void OnShortCut() {

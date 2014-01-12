@@ -146,14 +146,17 @@ int lentokone::kaarron_suunta(double suunta) {
 	return (k > 0) ? apuvalineet::VASEN : apuvalineet::OIKEA;
 }
 
-void lentokone::ota_selvitys(int tyyppi) {
+void lentokone::ota_selvitys(int tyyppi, bool lahesty) {
     if (tyyppi == apuvalineet::OIKOTIE) {
 
     } else if (tyyppi == apuvalineet::LAHESTYMIS) {
-        std::vector <kiitotie> :: iterator haku = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_laskukiitotie());
-        this->baana = *haku;
-        this->lahestymisselvitys = true;
-        this->aseta_navipiste(baana.lahestymispiste);
+        this->lahestymisselvitys = lahesty;
+
+        if (this->lahestymisselvitys) {
+            std::vector <kiitotie> :: iterator haku = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_laskukiitotie());
+            this->baana = *haku;
+            this->aseta_navipiste(baana.lahestymispiste);
+        }
     }
 }
 
