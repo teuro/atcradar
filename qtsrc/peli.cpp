@@ -193,7 +193,7 @@ void Peli::hoida_koneet(double intervalliMs) {
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         if ((*it)->tyyppi == Peli::LAHTEVA) {
-            if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka), 0.3) {
+            if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka, 0.05)) {
                 koneet.erase(it++);
                 ++kasitellyt;
             }
