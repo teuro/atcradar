@@ -28,7 +28,7 @@ class PeliController : public IController {
 public:
     PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), asetukset(a), piirtopinta(pinta)  {
         pelin_kello = 0;
-        koska_uusi_kone = apuvalineet::arvo_luku(1, 10);
+        koska_uusi_kone = 150;
     }
 	
 	bool kasittele_aikaa(double sekunnit);

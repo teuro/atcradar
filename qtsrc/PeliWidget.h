@@ -28,9 +28,10 @@ public:
     PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, Peli& p) : peliView(v), peliController(pc), peli(p) {
 		// Timer to draw the window
 		timer = new QTimer;
-		connect(timer, SIGNAL(timeout()), SLOT(animate()));
-		timer->start(frameMs);
+        connect(timer, SIGNAL(timeout()), SLOT(animate()));
+        timer->start(frameMs);
         aika = new QTime();
+        aika->start();
 
         addInputField("Suunta", 100, 20, 0, 360);
         addInputField("Nopeus", 100, 40, 160, 440);
@@ -72,7 +73,7 @@ public:
 public slots:
     void animate() {
         peliController.kasittele_aikaa(frameMs / 1000.0);
-        peliController.ota_aika(aika->elapsed());
+        peliController.ota_aika(aika->elapsed() / 1000.0);
 
         lahesty->hide();
         keskeyta->hide();

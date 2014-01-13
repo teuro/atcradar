@@ -193,20 +193,20 @@ void Peli::hoida_koneet(double intervalliMs) {
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         if ((*it)->tyyppi == Peli::LAHTEVA) {
-            if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka)) {
-                //koneet.erase(it++);
+            if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka), 0.3) {
+                koneet.erase(it++);
                 ++kasitellyt;
             }
         } else if ((*it)->tyyppi == Peli::SAAPUVA) {
             if ((*it)->anna_nopeus() < 4.0) {
-                //koneet.erase(it++);
+                koneet.erase(it++);
                 ++kasitellyt;
 			}
         }
-
+        //std::clog << asetukset.anna_asetus("ruutu_leveys") << ", " << asetukset.anna_asetus("ruutu_korkeus") << std::endl;
         if ((*it)->paikka.x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             aseta_virhe(VIRHE_ALUEELTA);
-            //koneet.erase(it++);
+            koneet.erase(it++);
         }
 
         if ((*it)->anna_odotus()) {
