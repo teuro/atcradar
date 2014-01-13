@@ -26,7 +26,10 @@ class PeliController : public IController {
 	IAsetukset& asetukset;
     IPiirtoPinta& piirtopinta;
 public:
-    PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), asetukset(a), piirtopinta(pinta)  {}
+    PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), asetukset(a), piirtopinta(pinta)  {
+        pelin_kello = 0;
+        koska_uusi_kone = apuvalineet::arvo_luku(1, 10);
+    }
 	
 	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
@@ -46,6 +49,7 @@ private:
 
 	void logita_peliajat();
 	double pelin_kello;
+    int koska_uusi_kone;
 };
 
 #endif

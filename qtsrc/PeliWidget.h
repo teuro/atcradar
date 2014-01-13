@@ -48,10 +48,10 @@ public:
         oikotie = new QPushButton("Oikotie", this);
         oikotie->move(200, 80);
 
-        std::clog << connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed())) << std::endl;
-        std::clog << connect(lahesty, SIGNAL(pressed()), this, SLOT(OnApproach())) << std::endl;
-        std::clog << connect(keskeyta, SIGNAL(pressed()), this, SLOT(OnCancel())) << std::endl;
-        std::clog << connect(oikotie, SIGNAL(pressed()), this, SLOT(OnShortCut())) << std::endl;
+        connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
+        connect(lahesty, SIGNAL(pressed()), this, SLOT(OnApproach()));
+        connect(keskeyta, SIGNAL(pressed()), this, SLOT(OnCancel()));
+        connect(oikotie, SIGNAL(pressed()), this, SLOT(OnShortCut()));
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);

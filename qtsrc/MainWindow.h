@@ -8,6 +8,7 @@
 #include <QtWidgets/QVBoxLayout>
 
 #include <fstream>
+#include <iostream>
 
 #include "levelmenu.h"
 #include "AtisWidget.h"
@@ -28,6 +29,7 @@ public:
         metar = new Metar;
         asetukset = new Asetukset;
 
+        std::clog << "Ennen pelin luomista" << std::endl;
         peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *metar, *atis);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
@@ -53,7 +55,10 @@ public:
 	}
 
     void resizeEvent(QResizeEvent* e) {
-        //std::clog << this->width() << ", " << this->height() << std::endl;
+        if (this->width() < 700 || this->height() < 600) {
+            this->resize(700, 600);
+        }
+
         asetukset->muuta_asetusta("ruutu_leveys", this->width());
         asetukset->muuta_asetusta("ruutu_korkeus", this->height());
     }
