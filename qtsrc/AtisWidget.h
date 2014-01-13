@@ -9,9 +9,11 @@
 #include <QString>
 #include <QValidator>
 #include <QToolTip>
+
 #include <iostream>
 #include <fstream>
 #include <vector>
+
 #include "Metar.hpp"
 #include "AtisController.hpp"
 #include "peli.hpp"
@@ -57,6 +59,7 @@ public:
     }
 
     public slots:
+
     void OnOkPressed() {
         atis.tyhjenna();
         atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());

@@ -10,6 +10,7 @@
 #include <QPainter>
 #include <QTimer>
 #include <QTime>
+#include <QResizeEvent>
 
 #include "peli.hpp"
 #include "PeliView.h"

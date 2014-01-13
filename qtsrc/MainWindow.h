@@ -52,6 +52,12 @@ public:
         connect(atisWidget, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
 	}
 
+    void resizeEvent(QResizeEvent* e) {
+        //std::clog << this->width() << ", " << this->height() << std::endl;
+        asetukset->muuta_asetusta("ruutu_leveys", this->width());
+        asetukset->muuta_asetusta("ruutu_korkeus", this->height());
+    }
+
 	public slots:
     void OnLevelSelected(int level) {
         std::clog << "Tasoksi valittu " << level << std::endl;
