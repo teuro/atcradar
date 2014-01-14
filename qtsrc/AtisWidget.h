@@ -28,7 +28,7 @@ public:
         metarLabel = new QLabel(m.getMessage(), this);
         metarLabel->setGeometry(0, 0, 600, 10);
 
-        addInputField("Lähtökiitotie", 100, 60, 1, 36);
+        addInputField("Lähtökiitotie", 100, 60, 1, 36, "03", "Moikka");
         addInputField("Laskukiitotie", 100, 80, 1, 36);
         addInputField("Siirtokorkeus", 100, 100, 3000, 18000);
         addInputField("Siirtopinta", 100, 120, 30, 220);
@@ -39,8 +39,8 @@ public:
         connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
 	}
 
-    void addInputField(QString name, int x, int y, int minimum, int maximum) {
-        inputFields.push_back(new QLineEdit("", this));
+    void addInputField(QString name, int x, int y, int minimum, int maximum, QString defaultValue = "", QString infoText = "") {
+        inputFields.push_back(new QLineEdit(defaultValue, this));
         inputFields.back()->move(x, y);
 
         QIntValidator* tmp = new QIntValidator(minimum, maximum, inputFields.back());
@@ -48,6 +48,11 @@ public:
 
         inputLabel = new QLabel(name, this);
         inputLabel->setGeometry(x-80, y-0, 200, 20);
+
+        if (infoText.length()) {
+            infoLabel = new QLabel(infoText, this);
+            infoLabel->setGeometry(x+160, y-0, 200, 20);
+        }
     }
 
     void drawErrorMessage(std::string info, QLineEdit* field) {
@@ -109,6 +114,7 @@ private:
 
 	QLabel* title;
     QLabel* inputLabel;
+    QLabel* infoLabel;
     QLabel* metarLabel;
     QLabel* error;
 
