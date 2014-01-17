@@ -130,7 +130,7 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 
 			navipisteet.push_back(tmp);
 		} else {
-			throw std::runtime_error("Tiedosto " + kenttaNimi + " on väärässä formaatissa");
+			throw std::runtime_error("Tiedosto " + kenttaNimi + " on vï¿½ï¿½rï¿½ssï¿½ formaatissa");
 		}
 
 		asiat.clear();

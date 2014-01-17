@@ -38,6 +38,7 @@ class Peli {
 private:
     IAsetukset& asetukset;
     Atis& atis;
+    int level;
 
 public:
     Metar& metar;
@@ -100,6 +101,9 @@ public:
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
     void luo_kone(double aika);
 	void tuhoa_kone(int kone);
+
+    int getLevel() { return this->level; }
+    void setLevel(int level) { this->level = level; }
 
 	void aseta_virhe(int virhe);
 	std::vector <std::string> lataa_pilvet(std::string pilvet);
