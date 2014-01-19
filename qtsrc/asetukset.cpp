@@ -6,8 +6,7 @@ Asetukset::Asetukset()
 }
 
 void Asetukset::lataa_asetukset(std::string nimi) {
-	std::clog << "asetukset::lataa_asetukset(" << nimi << ")" << std::endl;
-	std::ifstream sisaan(nimi.c_str(), std::ios::in);
+    std::ifstream sisaan(nimi.c_str(), std::ios::in);
 
 	if (!sisaan) {
 		throw std::runtime_error("Tiedosto " + nimi + " ei aukea tai puuttuu");

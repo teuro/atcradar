@@ -1,8 +1,7 @@
 #include "kieli.hpp"
 
 Kieli::Kieli(const std::string& kieli) {
-	std::clog << "Luodaan uusi kieli " << kieli << std::endl;
-	this->kieli = kieli;
+    this->kieli = kieli;
 	int kohta = -1;
 	
 	if (kieli == "fi_FI") {

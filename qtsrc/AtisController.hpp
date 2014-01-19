@@ -27,7 +27,6 @@ class Atis {
     int siirtopinta;
 public:
     Atis() {
-        std::clog << "Atis luotu" << std::endl;
         lahtokiitotie = "";
         laskukiitotie = "";
         siirtokorkeus = -1;
