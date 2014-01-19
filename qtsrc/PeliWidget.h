@@ -33,9 +33,9 @@ public:
         aika = new QTime();
         aika->start();
 
-        addInputField("Suunta", 100, 20, 0, 360);
-        addInputField("Nopeus", 100, 40, 160, 440);
-        addInputField("Korkeus", 100, 60, 2000, 24000);
+        addInputField("Suunta", 100, 20, 0, 360, apuvalineet::SUUNTA);
+        addInputField("Nopeus", 100, 40, 160, 440, apuvalineet::NOPEUS);
+        addInputField("Korkeus", 100, 60, 2000, 24000, apuvalineet::KORKEUS);
 
         okButton = new QPushButton("OK", this);
         okButton->move(100, 80);
@@ -58,7 +58,7 @@ public:
         setMouseTracking(true);
     }
 
-    void addInputField(QString name, int x, int y, int minimum, int maximum) {
+    void addInputField(QString name, int x, int y, int minimum, int maximum, int type) {
         inputField tmp;
 
         tmp.field = new QLineEdit("", this);
@@ -66,6 +66,8 @@ public:
 
         tmp.field->move(x, y);
         tmp.label->setGeometry(x-80, y-0, 200, 20);
+
+        tmp.type = type;
 
         inputFields.push_back(tmp);
     }
@@ -129,7 +131,7 @@ public slots:
         for (std::vector <inputField> :: iterator it = inputFields.begin(); it != inputFields.end(); ++it) {
             it->label->hide();
             it->field->hide();
-            komento += it->field->text().toStdString() + "|" + apuvalineet::tekstiksi(i) + "|";
+            komento += it->field->text().toStdString() + "|" + apuvalineet::tekstiksi(it->type) + "|";
             ++i;
         }
 
@@ -181,6 +183,7 @@ private:
     struct inputField {
         QLineEdit* field;
         QLabel* label;
+        int type;
     };
 
     std::vector <inputField> inputFields;
