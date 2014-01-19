@@ -10,9 +10,61 @@ bool PeliController::kasittele_komento(const std::string& komento) {
             ++it;
             int tyyppi = apuvalineet::luvuksi<int>(*it);
 
-            anna_selvitys(selvitys, tyyppi);
+            if (tarkista_selvitys(selvitys, tyyppi)) {
+                anna_selvitys(selvitys, tyyppi);
+            }
         }
     }
+}
+
+bool PeliController::tarkista_selvitys(std::string selvitys, int tyyppi) {
+    std::vector <kiitotie> :: iterator haku_lasku = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), atis.anna_laskukiitotie());
+
+    switch (tyyppi) {
+    case apuvalineet::NOPEUS:
+        if (apuvalineet::luvuksi<int>(selvitys) < asetukset.anna_asetus("selvitysnopeus_ala")) {
+            peli.aseta_virhe(Peli::VIRHE_NOPEUS_ALA);
+            return false;
+        } else if (apuvalineet::luvuksi<int>(selvitys) > asetukset.anna_asetus("selvitysnopeus_yla")) {
+            peli.aseta_virhe(Peli::VIRHE_NOPEUS_YLA);
+            return false;
+        }
+        break;
+    case apuvalineet::KORKEUS:
+        if (apuvalineet::luvuksi<int>(selvitys) < asetukset.anna_asetus("selvityskorkeus_ala")) {
+            peli.aseta_virhe(Peli::VIRHE_KORKEUS_ALA);
+            return false;
+        } else if (apuvalineet::luvuksi<int>(selvitys) > asetukset.anna_asetus("selvityskorkeus_yla")) {
+            peli.aseta_virhe(Peli::VIRHE_KORKEUS_YLA);
+            return false;
+        }
+        break;
+    case apuvalineet::LAHESTYMIS:
+        if (peli.valittuKone->anna_nopeus() > asetukset.anna_asetus("maks_lahestymisnopeus")) {
+            peli.aseta_virhe(Peli::VIRHE_NOPEUS_ALA);
+            return false;
+        }
+
+        if (peli.valittuKone->anna_korkeus() > asetukset.anna_asetus("maks_lahestymiskorkeus")) {
+            peli.aseta_virhe(Peli::VIRHE_NOPEUS_YLA);
+            return false;
+        }
+
+        if (std::abs(peli.valittuKone->anna_suunta() - haku_lasku->suunta) > asetukset.anna_asetus("lahestymiskulma")) {
+            return false;
+        }
+        break;
+    case apuvalineet::OIKOTIE:
+        if (apuvalineet::luvuksi<int>(selvitys) < asetukset.anna_asetus("oikotie")) {
+            peli.aseta_virhe(Peli::VIRHE_OIKOTIE);
+            return false;
+        }
+        break;
+    default:
+        break;
+    }
+
+    return true;
 }
 
 bool PeliController::kasittele_aikaa(double intervallisek) {

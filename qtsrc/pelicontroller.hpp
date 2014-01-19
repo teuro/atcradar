@@ -11,6 +11,7 @@
 #include "controller.hpp"
 #include "asetukset.h"
 #include "peli.hpp"
+#include "AtisController.hpp"
 
 class PeliView;
 class Peli;
@@ -25,8 +26,9 @@ class PeliController : public IController {
 	Peli& peli;
 	IAsetukset& asetukset;
     IPiirtoPinta& piirtopinta;
+    Atis& atis;
 public:
-    PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta) : peli(p), asetukset(a), piirtopinta(pinta)  {
+    PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta, Atis& at) : peli(p), asetukset(a), piirtopinta(pinta), atis(at)  {
         pelin_kello = 0;
         koska_uusi_kone = 150;
     }
@@ -46,7 +48,7 @@ public:
     }
 
 private:
-
+    bool tarkista_selvitys(std::string selvitys, int tyyppi);
 	void logita_peliajat();
 	double pelin_kello;
     int koska_uusi_kone;
