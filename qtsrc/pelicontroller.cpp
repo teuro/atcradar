@@ -55,7 +55,7 @@ bool PeliController::tarkista_selvitys(std::string selvitys, int tyyppi) {
         }
         break;
     case apuvalineet::OIKOTIE:
-        if (apuvalineet::luvuksi<int>(selvitys) < asetukset.anna_asetus("oikotie")) {
+        if (peli.valittuKone->anna_korkeus() < asetukset.anna_asetus("oikotie")) {
             peli.aseta_virhe(Peli::VIRHE_OIKOTIE);
             return false;
         }
