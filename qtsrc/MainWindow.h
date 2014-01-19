@@ -73,9 +73,9 @@ public:
     void OnAtisDone() {
         stack->setCurrentIndex(2);
         std::clog << "Atis täytetty oikein" << std::endl;
-        peli->luo_kone(0);
-        peli->luo_kone(0);
-        peli->luo_kone(0);
+        peli->luo_kone();
+        peli->luo_kone();
+        peli->luo_kone();
 	}
 
 private:

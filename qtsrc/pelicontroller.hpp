@@ -29,7 +29,6 @@ class PeliController : public IController {
     Atis& atis;
 public:
     PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta, Atis& at) : peli(p), asetukset(a), piirtopinta(pinta), atis(at)  {
-        pelin_kello = 0;
         koska_uusi_kone = 150;
     }
 	
@@ -44,13 +43,12 @@ public:
     void anna_selvitys(std::string komento, int toiminto);
 
     void ota_aika(double aika) {
-        this->pelin_kello += aika;
+        peli.aseta_pelin_kello(aika);
     }
 
 private:
     bool tarkista_selvitys(std::string selvitys, int tyyppi);
 	void logita_peliajat();
-	double pelin_kello;
     int koska_uusi_kone;
 };
 

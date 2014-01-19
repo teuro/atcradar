@@ -99,7 +99,7 @@ public:
 
 	enum tyyppi {SAAPUVA = 0, LAHTEVA = 1};
 	enum atis_toiminnot {LAHTO, LASKU, SIIRTOPINTA};
-    void luo_kone(double aika);
+    void luo_kone();
 	void tuhoa_kone(int kone);
 
     int getLevel() { return this->level; }
@@ -108,8 +108,11 @@ public:
 	void aseta_virhe(int virhe);
 	std::vector <std::string> lataa_pilvet(std::string pilvet);
 	enum virheet { VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA };
+    double anna_pelin_kello() { return this->pelin_kello; }
+    void aseta_pelin_kello(double aika) { this->pelin_kello += aika; }
 private:
 	void lataa_kentta(std::string kentta);
+    double pelin_kello;
 };
 
 #endif
