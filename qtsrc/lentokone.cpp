@@ -133,7 +133,6 @@ int lentokone::kaarron_suunta(double suunta) {
 	double k = rad_kone - rad_suunta;
 
 	const double PII = M_PI;
-	//std::clog << rad_kone << " / " << rad_suunta << std::endl;
 
 	while (k <= PII) {
 		k += 2 * PII;
@@ -149,7 +148,6 @@ int lentokone::kaarron_suunta(double suunta) {
 void lentokone::ota_selvitys(int tyyppi, bool lahesty) {
     if (tyyppi == apuvalineet::OIKOTIE) {
         this->aseta_navipiste(this->ulosmenopiste);
-        std::clog << "Oikotie havaittu mennään kohti " << ulosmenopiste.nimi << std::endl;
     } else if (tyyppi == apuvalineet::LAHESTYMIS) {
         this->lahestymisselvitys = lahesty;
 

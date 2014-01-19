@@ -231,24 +231,33 @@ void Peli::tarkista_porrastus() {
 	}
 }
 
+void Peli::logita_aika(lentokone* lk) {
+    std::vector <tilasto> :: iterator haku_pois = std::find(ajat.begin(), ajat.end(), lk->anna_kutsutunnus());
+    haku_pois->pois = this->pelin_kello;
+}
+
 void Peli::hoida_koneet(double intervalliMs) {
     std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         if ((*it)->tyyppi == Peli::LAHTEVA) {
             if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka, 0.05)) {
-                koneet.erase(it++);
+                //koneet.erase(it++);
+                logita_aika(*it);
+                koneet.erase(++it);
                 ++kasitellyt;
             }
         } else if ((*it)->tyyppi == Peli::SAAPUVA) {
             if ((*it)->anna_nopeus() < 4.0) {
                 koneet.erase(it++);
+                logita_aika(*it);
                 ++kasitellyt;
 			}
         }
         //std::clog << asetukset.anna_asetus("ruutu_leveys") << ", " << asetukset.anna_asetus("ruutu_korkeus") << std::endl;
         if ((*it)->paikka.x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             aseta_virhe(VIRHE_ALUEELTA);
+            logita_aika(*it);
             koneet.erase(it++);
         }
 
