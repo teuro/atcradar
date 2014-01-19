@@ -27,12 +27,14 @@ public:
 
         metarLabel = new QLabel(m.getMessage(), this);
         metarLabel->setGeometry(0, 0, 600, 10);
+    }
 
+    void drawInputFields() {
         std::string paras_lahto;
         std::string paras_lasku;
 
         for (int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-            if (apuvalineet::laske_vastatuuli(peli.kentta.kiitotiet[i].suunta, m.anna_tuuli()) < 0) {
+            if (apuvalineet::laske_vastatuuli(peli.kentta.kiitotiet[i].suunta, metar.anna_tuuli()) < 0) {
                 paras_lahto = peli.kentta.kiitotiet[i].nimi;
                 paras_lasku = peli.kentta.kiitotiet[i].nimi;
                 break;
@@ -40,30 +42,31 @@ public:
         }
 
         atis.downloadPrressureLimit("data/painerajat.txt", 5000);
-        int siirtopinta = atis.calculateTL(m.anna_paine());
+        int siirtopinta = atis.calculateTL(metar.anna_paine());
 
         addInputField("Lähtökiitotie", 100, 60, 1, 36, QString::fromStdString(paras_lahto), "Moikka");
         addInputField("Laskukiitotie", 100, 80, 1, 36, QString::fromStdString(paras_lasku), "Heippa");
         addInputField("Siirtokorkeus", 100, 100, 3000, 18000, "5000", "korkeus");
         addInputField("Siirtopinta", 100, 120, 30, 220, QString::fromStdString(apuvalineet::tekstiksi(siirtopinta)), "pinta");
 
-		okButton = new QPushButton("OK", this);
+        okButton = new QPushButton("OK", this);
         okButton->move(100, 160);
 
         connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
-	}
+    }
 
     void addInputField(QString name, int x, int y, int minimum, int maximum, QString defaultValue = "", QString infoText = "") {
-        inputFields.push_back(new QLineEdit(defaultValue, this));
-        inputFields.back()->move(x, y);
-
-        QIntValidator* tmp = new QIntValidator(minimum, maximum, inputFields.back());
-        inputFields.back()->setValidator(tmp);
-
+        if (this->level < 2) {
+            inputFields.push_back(new QLineEdit(defaultValue, this));
+            inputFields.back()->move(x, y);
+        } else {
+            inputFields.push_back(new QLineEdit("", this));
+            inputFields.back()->move(x, y);
+        }
         inputLabel = new QLabel(name, this);
         inputLabel->setGeometry(x-80, y-0, 200, 20);
 
-        if (infoText.length()) {
+        if (infoText.length() && this->level < 2) {
             infoLabel = new QLabel(infoText, this);
             infoLabel->setGeometry(x+160, y-0, 200, 20);
         }
@@ -76,6 +79,8 @@ public:
     void hideErrorMessage() {
         QToolTip::hideText();
     }
+
+    void setLevel(int level) { this->level = level; }
 
     public slots:
 
@@ -135,6 +140,7 @@ private:
 	QPushButton* okButton;
 
     std::vector <QLineEdit*> inputFields;
+    int level;
 };
 
 #endif
