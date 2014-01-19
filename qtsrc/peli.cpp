@@ -62,9 +62,9 @@ void Peli::aseta_virhe(int virhe) {
             ulos << "Annettu selvitysnopeus on suuri pieni aikaan " << this->pelin_kello << std::endl;
             break;
         case VIRHE_PORRASTUS:
-                virheteksti = "Porrastuksen tulee olla pystysuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_pysty")) + " jalkaa ja vaakasuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_vaaka")) + " mailia";
-                ulos << "Porrastusminimi alittui aikaan " << this->pelin_kello << std::endl;
-                break;
+            virheteksti = "Porrastuksen tulee olla pystysuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_pysty")) + " jalkaa ja vaakasuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_vaaka")) + " mailia";
+            ulos << "Porrastusminimi alittui aikaan " << this->pelin_kello << std::endl;
+            break;
         case VIRHE_OIKOTIE:
             virheteksti = "Oikotien saa antaa vasta " + apuvalineet::tekstiksi(asetukset.anna_asetus("oikotie")) + " jalassa";
             ulos << "Annettu oikotie liian aikaisin aikaan " << this->pelin_kello << std::endl;
