@@ -37,12 +37,12 @@ public:
         peliController = new PeliController(*peli, *asetukset, *dummyPinta);
         peliWidget = new PeliWidget(*peliView, *peliController, *asetukset, *peli);
 
-		levelMenu = new LevelMenu();
+        levelMenu = new LevelMenu();
         atisWidget = new AtisWidget(*metar, *atis, *peli);
 
 		stack = new QStackedWidget();
 
-		stack->addWidget(levelMenu);
+        stack->addWidget(levelMenu);
         stack->addWidget(atisWidget);
         stack->addWidget(peliWidget);
 

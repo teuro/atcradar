@@ -28,10 +28,24 @@ public:
         metarLabel = new QLabel(m.getMessage(), this);
         metarLabel->setGeometry(0, 0, 600, 10);
 
-        addInputField("Lähtökiitotie", 100, 60, 1, 36, "03", "Moikka");
-        addInputField("Laskukiitotie", 100, 80, 1, 36);
-        addInputField("Siirtokorkeus", 100, 100, 3000, 18000);
-        addInputField("Siirtopinta", 100, 120, 30, 220);
+        std::string paras_lahto;
+        std::string paras_lasku;
+
+        for (int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
+            if (apuvalineet::laske_vastatuuli(peli.kentta.kiitotiet[i].suunta, m.anna_tuuli()) < 0) {
+                paras_lahto = peli.kentta.kiitotiet[i].nimi;
+                paras_lasku = peli.kentta.kiitotiet[i].nimi;
+                break;
+            }
+        }
+
+        atis.downloadPrressureLimit("data/painerajat.txt", 5000);
+        int siirtopinta = atis.calculateTL(m.anna_paine());
+
+        addInputField("Lähtökiitotie", 100, 60, 1, 36, QString::fromStdString(paras_lahto), "Moikka");
+        addInputField("Laskukiitotie", 100, 80, 1, 36, QString::fromStdString(paras_lasku), "Heippa");
+        addInputField("Siirtokorkeus", 100, 100, 3000, 18000, "5000", "korkeus");
+        addInputField("Siirtopinta", 100, 120, 30, 220, QString::fromStdString(apuvalineet::tekstiksi(siirtopinta)), "pinta");
 
 		okButton = new QPushButton("OK", this);
         okButton->move(100, 160);
