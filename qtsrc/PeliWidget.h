@@ -9,7 +9,6 @@
 #include <QValidator>
 #include <QPainter>
 #include <QTimer>
-#include <QTime>
 #include <QResizeEvent>
 
 #include "peli.hpp"
@@ -30,8 +29,6 @@ public:
 		timer = new QTimer;
         connect(timer, SIGNAL(timeout()), SLOT(animate()));
         timer->start(frameMs);
-        aika = new QTime();
-        aika->start();
 
         addInputField("Suunta", 100, 20, 0, 360, apuvalineet::SUUNTA);
         addInputField("Nopeus", 100, 40, 160, 440, apuvalineet::NOPEUS);
@@ -75,7 +72,7 @@ public:
 public slots:
     void animate() {
         peliController.kasittele_aikaa(frameMs / 1000.0);
-        peliController.ota_aika(aika->elapsed() / 1000.0);
+        peliController.ota_aika(frameMs / 1000.0);
 
         lahesty->hide();
         keskeyta->hide();
@@ -106,25 +103,21 @@ public slots:
     }
 
     void OnApproach() {
-        std::clog << "Lähesty" << std::endl;
         peliController.kasittele_komento("ILS|" + apuvalineet::tekstiksi(apuvalineet::LAHESTYMIS) + "|");
         peli.valittuKone = NULL;
     }
 
     void OnCancel() {
-        std::clog << "Keskeytä" << std::endl;
         peliController.kasittele_komento("CNL|" + apuvalineet::tekstiksi(apuvalineet::LAHESTYMIS) + "|");
         peli.valittuKone = NULL;
     }
 
     void OnShortCut() {
-        std::clog << "Oikotie" << std::endl;
         peliController.kasittele_komento("DCT|" + apuvalineet::tekstiksi(apuvalineet::OIKOTIE) + "|");
         peli.valittuKone = NULL;
     }
 
     void OnOkPressed() {
-        std::clog << "OK" << std::endl;
         std::string komento;
         int i = 1;
 
@@ -187,7 +180,6 @@ private:
     };
 
     std::vector <inputField> inputFields;
-
 };
 
 
