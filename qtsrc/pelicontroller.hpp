@@ -44,7 +44,7 @@ public:
     void anna_selvitys(std::string komento, int toiminto);
 
     void ota_aika(double aika) {
-        this->pelin_kello = aika;
+        this->pelin_kello += aika;
     }
 
 private:

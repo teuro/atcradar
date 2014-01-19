@@ -1,7 +1,6 @@
 #include "pelicontroller.hpp"
 
 bool PeliController::kasittele_komento(const std::string& komento) {
-    /* Suunta nopeus korkeus */
     std::vector <std::string> asiat = apuvalineet::pilko_rivi(komento, "|");
 
     if (peli.valittuKone) {
@@ -101,22 +100,16 @@ void PeliController::pyyda_atis() {
 
 }
 
-void PeliController::anna_selvitys(std::string komento, int toiminto) {
-    std::clog << komento << " " << toiminto << std::endl;
+void PeliController::anna_selvitys(std::string komento, int toiminto) {    
     if (komento == "ILS") {
         peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, true);
-        std::clog << "Annetaan lähestymisselvitys" << std::endl;
     } else if (komento == "CNL") {
         peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, false);
-        std::clog << "Annetaan oikotie" << std::endl;
     } else if (komento == "DCT") {
         peli.valittuKone->ota_selvitys(apuvalineet::OIKOTIE);
-        std::clog << "Annetaan oikotie" << std::endl;
     } else if (komento == "HOLD") {
-        std::clog << "Annetaan odotuskuvio" << std::endl;
 		toiminto = apuvalineet::ODOTUS;
     } else if (komento == "OFF") {
-        std::clog << "Annetaan odotuskuvion poisto" << std::endl;
 		toiminto = apuvalineet::POIS;
 	}
 
@@ -146,15 +139,12 @@ void PeliController::anna_selvitys(std::string komento, int toiminto) {
             peli.valittuKone->aseta_navipiste(*kohde);
 			break;
         case apuvalineet::NOPEUS:
-            std::clog << "Aseta nopeudeksi " << komento << std::endl;
             peli.valittuKone->muuta_selvitysnopeutta(apuvalineet::luvuksi<double>(komento));
             break;
         case apuvalineet::KORKEUS:
-            std::clog << "Aseta korkeudeksi " << komento << std::endl;
             peli.valittuKone->muuta_selvityskorkeutta(apuvalineet::luvuksi<double>(komento));
             break;
         case apuvalineet::SUUNTA:
-            std::clog << "Aseta suunnaksi " << komento << std::endl;
             peli.valittuKone->muuta_selvityssuuntaa(apuvalineet::luvuksi<double>(komento), kaarto);
             break;
 	}
