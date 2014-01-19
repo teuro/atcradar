@@ -30,13 +30,56 @@ void Peli::lataa_tunnukset(std::string tunnukset) {
 }
 
 void Peli::aseta_virhe(int virhe) {
-	std::clog << "peli::aseta_virhe(" << virhe << ") " << std::endl;
-	virheteksti = " ";
-    ++muut_virheet;
+    std::ofstream ulos("virhedata.txt", std::ios::app);
+
+    switch (virhe) {
+        case VIRHE_KORKEUS_ALA:
+            virheteksti = "Korkeuden alaraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvityskorkeus_ala")) + " jalkaa";
+            ulos << "Annettu selvityskorkeus liian alhainen aikaan " << this->pelin_kello << std::endl;
+            break;
+        case VIRHE_KORKEUS_YLA:
+            virheteksti = "Korkeuden yläraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvityskorkeus_yla")) + " jalkaa";
+            ulos << "Annettu selvityskorkeus liian suuri aikaan " << this->pelin_kello << std::endl;
+            break;
+        case VIRHE_LAHESTYMISKORKEUS:
+            virheteksti = "Lähestymisen yläraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_lahestymiskorkeus")) + " jalkaa";
+            ulos << "Koneella liian suuri korkeus lähestymiseen aikaan " << this->pelin_kello << " " << asetukset.anna_asetus("maks_lahestymiskorkeus") << std::endl;
+            break;
+        case VIRHE_LAHESTYMISNOPEUS:
+            virheteksti = "Lähestymisen maksiminopeus on " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_lahestymisnopeus")) + " solmua";
+            ulos << "Koneella liian suuri nopeus lähestymiseen aikaan " << this->pelin_kello << std::endl;
+            break;
+        case VIRHE_LAHESTYMISSUUNTA:
+            virheteksti ="Koneen suunnan tulee olla kiitotien suunnasta +- " + apuvalineet::tekstiksi(asetukset.anna_asetus("lahestymiskulma"));
+            ulos << "Koneen suunnan tulee olla +- " << asetukset.anna_asetus("lahestymiskulma") << std::endl;
+            break;
+        case VIRHE_NOPEUS_ALA:
+            virheteksti = "Nopeuden alaraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_ala")) + " solmua";
+            ulos << "Annettu selvitysnopeus on liian pieni aikaan " << this->pelin_kello << std::endl;
+            break;
+        case VIRHE_NOPEUS_YLA:
+            virheteksti = "Nopeuden yläraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_yla")) + " solmua";
+            ulos << "Annettu selvitysnopeus on suuri pieni aikaan " << this->pelin_kello << std::endl;
+            break;
+        case VIRHE_PORRASTUS:
+                virheteksti = "Porrastuksen tulee olla pystysuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_pysty")) + " jalkaa ja vaakasuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_vaaka")) + " mailia";
+                ulos << "Porrastusminimi alittui aikaan " << this->pelin_kello << std::endl;
+                break;
+        case VIRHE_OIKOTIE:
+            virheteksti = "Oikotien saa antaa vasta " + apuvalineet::tekstiksi(asetukset.anna_asetus("oikotie")) + " jalassa";
+            ulos << "Annettu oikotie liian aikaisin aikaan " << this->pelin_kello << std::endl;
+            break;
+        case VIRHE_ALUEELTA:
+            virheteksti = "Kone poistui alueeltasi";
+            ulos << "Kone poistui alueeltasi aikaan " << this->pelin_kello << std::endl;
+            break;
+    }
+
+    ulos.close();
 }
 
-void Peli::luo_kone(double aika) {
-    std::clog << "Peli::luo_kone(" << aika << ")" << std::endl;
+void Peli::luo_kone() {
+    std::clog << "Peli::luo_kone(" << this->pelin_kello << ")" << std::endl;
 	int j = apuvalineet::arvo_luku(10, 100) % 2;
 	apuvalineet::piste paikka;
 	bool odotus;
@@ -73,7 +116,7 @@ void Peli::luo_kone(double aika) {
 	tilasto tmp;
 
 	tmp.tunnus = tunnus;
-    tmp.sisaan = aika;
+    tmp.sisaan = this->pelin_kello;
 	tmp.pois = 0.0;
 	tmp.selvitykset = 0;
 
