@@ -44,7 +44,7 @@ void Peli::luo_kone(double aika) {
 
 	if (j == LAHTEVA) {
         std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
-        double suunta = haku_lahto->alkunoususuunta;
+        double suunta = haku_lahto->suunta;
 
 		if (!onko_vapaata()) {
             paikka = haku_lahto->odotuspiste;

@@ -92,6 +92,7 @@ public:
                 inputFields[1]->setText(QString::fromStdString(paras_lasku));
                 this->ekaPiirto = false;
             }
+
             inputFields[3]->setText(QString::fromStdString(apuvalineet::tekstiksi(siirtopinta)));
         }
         atis.tyhjenna();
