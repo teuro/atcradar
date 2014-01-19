@@ -9,6 +9,7 @@
 #include <QString>
 #include <QValidator>
 #include <QToolTip>
+#include <QTimer>
 
 #include <iostream>
 #include <fstream>
@@ -24,49 +25,36 @@ public:
     AtisWidget(Metar& m, Atis& at, Peli& p) : metar(m), atis(at), peli(p) {
 		title = new QLabel("ATIS Valinta", this);
         title->setGeometry(0, 20, 150, 30);
+        this->level = 6;
+        this->ekaPiirto = true;
 
         metarLabel = new QLabel(m.getMessage(), this);
         metarLabel->setGeometry(0, 0, 600, 10);
-    }
 
-    void drawInputFields() {
-        std::string paras_lahto;
-        std::string paras_lasku;
-
-        for (int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-            if (apuvalineet::laske_vastatuuli(peli.kentta.kiitotiet[i].suunta, metar.anna_tuuli()) < 0) {
-                paras_lahto = peli.kentta.kiitotiet[i].nimi;
-                paras_lasku = peli.kentta.kiitotiet[i].nimi;
-                break;
-            }
-        }
-
-        atis.downloadPrressureLimit("data/painerajat.txt", 5000);
-        int siirtopinta = atis.calculateTL(metar.anna_paine());
-
-        addInputField("Lähtökiitotie", 100, 60, 1, 36, QString::fromStdString(paras_lahto), "Moikka");
-        addInputField("Laskukiitotie", 100, 80, 1, 36, QString::fromStdString(paras_lasku), "Heippa");
-        addInputField("Siirtokorkeus", 100, 100, 3000, 18000, "5000", "korkeus");
-        addInputField("Siirtopinta", 100, 120, 30, 220, QString::fromStdString(apuvalineet::tekstiksi(siirtopinta)), "pinta");
+        addInputField("Lähtökiitotie", 100, 60, 1, 36);
+        addInputField("Laskukiitotie", 100, 80, 1, 36);
+        addInputField("Siirtokorkeus", 100, 100, 3000, 18000);
+        addInputField("Siirtopinta", 100, 120, 30, 220);
 
         okButton = new QPushButton("OK", this);
         okButton->move(100, 160);
 
         connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
+
+        timer = new QTimer;
+        connect(timer, SIGNAL(timeout()), SLOT(displayHelpers()));
+        timer->setInterval(100);
+        timer->start();
     }
 
-    void addInputField(QString name, int x, int y, int minimum, int maximum, QString defaultValue = "", QString infoText = "") {
-        if (this->level < 2) {
-            inputFields.push_back(new QLineEdit(defaultValue, this));
-            inputFields.back()->move(x, y);
-        } else {
-            inputFields.push_back(new QLineEdit("", this));
-            inputFields.back()->move(x, y);
-        }
+    void addInputField(QString name, int x, int y, int minimum, int maximum, QString defaultValue = "", QString infoText = "") {        
+        inputFields.push_back(new QLineEdit(defaultValue, this));
+        inputFields.back()->move(x, y);
+
         inputLabel = new QLabel(name, this);
         inputLabel->setGeometry(x-80, y-0, 200, 20);
 
-        if (infoText.length() && this->level < 2) {
+        if (infoText.length()) {
             infoLabel = new QLabel(infoText, this);
             infoLabel->setGeometry(x+160, y-0, 200, 20);
         }
@@ -83,6 +71,31 @@ public:
     void setLevel(int level) { this->level = level; }
 
     public slots:
+
+    void displayHelpers() {
+        std::string paras_lahto;
+        std::string paras_lasku;
+
+        for (int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
+            if (apuvalineet::laske_vastatuuli(peli.kentta.kiitotiet[i].suunta, metar.anna_tuuli()) < 0) {
+                paras_lahto = peli.kentta.kiitotiet[i].nimi;
+                paras_lasku = peli.kentta.kiitotiet[i].nimi;
+                break;
+            }
+        }
+
+        atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
+        int siirtopinta = atis.calculateTL(metar.anna_paine());
+        if (this->level < 2 ) {
+            if (this->ekaPiirto) {
+                inputFields[0]->setText(QString::fromStdString(paras_lahto));
+                inputFields[1]->setText(QString::fromStdString(paras_lasku));
+                this->ekaPiirto = false;
+            }
+            inputFields[3]->setText(QString::fromStdString(apuvalineet::tekstiksi(siirtopinta)));
+        }
+        atis.tyhjenna();
+    }
 
     void OnOkPressed() {
         atis.tyhjenna();
@@ -141,6 +154,9 @@ private:
 
     std::vector <QLineEdit*> inputFields;
     int level;
+    bool ekaPiirto;
+
+    QTimer* timer;
 };
 
 #endif

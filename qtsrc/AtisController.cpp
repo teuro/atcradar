@@ -29,7 +29,6 @@ void Atis::downloadPrressureLimit(std::string file, int siirtokorkeus) {
 }
 
 int Atis::calculateTL(int pressure) {
-    std::clog << pressure << std::endl;
     for (unsigned int i = 0; i < painerajat.size(); ++i) {
         if (pressure >= Atis::painerajat[i].alaraja && pressure <= Atis::painerajat[i].ylaraja) {
             return painerajat[i].siirtopinta;

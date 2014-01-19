@@ -67,7 +67,7 @@ public:
     void OnLevelSelected(int level) {
         std::clog << "Tasoksi valittu " << level << std::endl;
         stack->setCurrentIndex(1);
-        atisWidget->drawInputFields();
+        atisWidget->setLevel(level);
 	}
 
     void OnAtisDone() {
