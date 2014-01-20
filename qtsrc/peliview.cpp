@@ -6,10 +6,8 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
 	piirra_koneet(piirtopinta);
 	piirra_navipisteet(piirtopinta);
 	piirra_lentokentta(piirtopinta);
-    piirra_ohje(piirtopinta, peli.ohje);
-	piirra_odottavat(piirtopinta);
-    piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
-	piirra_metar(piirtopinta);
+    piirra_odottavat(piirtopinta);
+    piirra_metar(piirtopinta);
 	piirtopinta.flip();
 }
 

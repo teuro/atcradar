@@ -67,7 +67,7 @@ bool PeliController::tarkista_selvitys(std::string selvitys, int tyyppi) {
 }
 
 bool PeliController::kasittele_aikaa(double intervallisek) {
-    peli.hoida_koneet(intervallisek);    
+    peli.hoida_koneet(intervallisek);
 
     if (peli.anna_pelin_kello() >= koska_uusi_kone) {
         peli.luo_kone();

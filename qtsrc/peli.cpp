@@ -2,7 +2,7 @@
 
 bool poistetaanko(const lentokone& kone);
 
-Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis &at) : asetukset(a), koska_uusi_kone(1), metar(m), atis(at) {
+Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis &at) : asetukset(a), metar(m), atis(at) {
 	lataa_kentta(kentta);
 	ohje = " ";
 	porrastusvirheet = 0;

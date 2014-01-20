@@ -66,7 +66,11 @@ public:
     void OnLevelSelected(int level) {
         stack->setCurrentIndex(1);
         atisWidget->setLevel(level);
-	}
+        peli->setLevel(level);
+
+        asetukset->muuta_asetusta("koska_uusi_ala", 60 / peli->getLevel());
+        asetukset->muuta_asetusta("koska_uusi_yla", 120 / peli->getLevel());
+    }
 
     void OnAtisDone() {
         stack->setCurrentIndex(2);

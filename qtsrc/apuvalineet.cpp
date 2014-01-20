@@ -24,7 +24,7 @@ double apuvalineet::deg2rad(double deg) {
 }
 
 double apuvalineet::rad2deg(double rad) {
-    return (deg = (rad * 180.0) / PII;)
+    return (rad * 180.0) / PII;
 }
 
 int apuvalineet::arvo_luku(int ala, int yla) {
