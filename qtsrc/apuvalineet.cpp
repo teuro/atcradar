@@ -24,16 +24,11 @@ double apuvalineet::deg2rad(double deg) {
 }
 
 double apuvalineet::rad2deg(double rad) {
-	double deg = (rad * 180.0) / PII;
-
-	return deg;
+    return (deg = (rad * 180.0) / PII;)
 }
-int apuvalineet::arvo_luku(int ala, int yla){
-    int tmp_luku;
 
-    tmp_luku = ala + std::rand() % (yla - ala);
-
-    return tmp_luku;
+int apuvalineet::arvo_luku(int ala, int yla) {
+    return (ala + std::rand() % (yla - ala));
 }
 
 double apuvalineet::etaisyys(const piste& a, const piste& b) {
