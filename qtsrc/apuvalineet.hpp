@@ -9,6 +9,9 @@
 #include <cstdlib>
 
 namespace apuvalineet {
+    extern const int ruutu_leveys;
+    extern const int ruutu_korkeus;
+    extern const int matka_vaaka;
 	extern double zoom;
 
 	class piste {

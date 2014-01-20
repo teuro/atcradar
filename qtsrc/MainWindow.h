@@ -54,8 +54,8 @@ public:
 	}
 
     void resizeEvent(QResizeEvent* e) {
-        if (this->width() < 700 || this->height() < 600) {
-            this->resize(700, 600);
+        if (this->width() < apuvalineet::ruutu_leveys || this->height() < apuvalineet::ruutu_korkeus) {
+            this->resize(apuvalineet::ruutu_leveys, apuvalineet::ruutu_korkeus);
         }
 
         asetukset->muuta_asetusta("ruutu_leveys", this->width());

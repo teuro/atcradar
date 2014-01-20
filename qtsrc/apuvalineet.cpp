@@ -5,8 +5,11 @@ static double PII = 3.1415927;
 // Seuraavat kaksi olivat asetuksissa. Siirsin ne t‰h‰n, koska static metodit px2nm ja nm2px
 // k‰yttiv‰t niit‰. N‰iden rutiinien t‰ytyisi olla l‰hemp‰n‰ tietoa siit‰ mik‰ visualisointi on,
 // ts. PeliView:ss‰. Toisaalta staattista Asetukset-luokkaa ei en‰‰ ole.
-const int ruutu_leveys = 900;
-const int matka_vaaka = 100;
+namespace apuvalineet {
+    const int ruutu_leveys = 900;
+    const int ruutu_korkeus = 700;
+    const int matka_vaaka = 100;
+}
 
 double apuvalineet::px2nm(double px) {
 	return px / (ruutu_leveys / matka_vaaka);
