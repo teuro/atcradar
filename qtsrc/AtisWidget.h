@@ -54,6 +54,8 @@ public:
         inputLabel = new QLabel(name, this);
         inputLabel->setGeometry(x-80, y-0, 200, 20);
 
+        inputFields.back()->setValidator(new QIntValidator(minimum, maximum, inputFields.back()));
+
         if (infoText.length()) {
             infoLabel = new QLabel(infoText, this);
             infoLabel->setGeometry(x+160, y-0, 200, 20);
@@ -76,7 +78,7 @@ public:
         std::string paras_lahto;
         std::string paras_lasku;
 
-        for (int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
+        for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
             if (apuvalineet::laske_vastatuuli(peli.kentta.kiitotiet[i].suunta, metar.anna_tuuli()) < 0) {
                 paras_lahto = peli.kentta.kiitotiet[i].nimi;
                 paras_lasku = peli.kentta.kiitotiet[i].nimi;

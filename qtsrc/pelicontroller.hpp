@@ -36,7 +36,7 @@ public:
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
 	void kasittele_hiiren_paikka(apuvalineet::piste koordinaatit);
 
-    bool kasittele_komento(const std::string& komento);
+  void kasittele_komento(const std::string& komento);
 
 	void pyyda_atis();
 

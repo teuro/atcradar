@@ -1,6 +1,6 @@
 #include "pelicontroller.hpp"
 
-bool PeliController::kasittele_komento(const std::string& komento) {
+void PeliController::kasittele_komento(const std::string& komento) {
     std::vector <std::string> asiat = apuvalineet::pilko_rivi(komento, "|");
 
     if (peli.valittuKone) {

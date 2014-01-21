@@ -6,17 +6,12 @@
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QPushButton>
-#include <QString>
-#include <fstream>
-#include <vector>
-#include <stdexcept>
-#include "apuvalineet.hpp"
 
 class LevelMenu : public QWidget
 {
 	Q_OBJECT
 public:
-    LevelMenu(QWidget* parent = 0) : QWidget(parent) {
+    LevelMenu(QWidget* parent = 0) : QWidget(parent) {        
 		slider = new QSlider(Qt::Horizontal, this);
 		slider->setGeometry(50, 50, 130, 30);
         slider->setMinimum(1);
@@ -57,27 +52,8 @@ private:
 	QLabel* title;
 	QSlider* slider;
 	QLabel* levelLabel;
-    QLabel* ruutu;
     QPushButton* okButton;
 
-    QString getInfo(int level) {
-        std::ifstream sisaan("data/tasot.txt", std::ios::in);
-
-        if (!sisaan) {
-            throw std::runtime_error("Tiedosto data/tasot.txt ei aukea");
-        }
-
-        std::string teksti;
-
-        while (std::getline(sisaan, teksti)) {
-            std::vector <std::string> asiat = apuvalineet::pilko_rivi(teksti, "|");
-            if (apuvalineet::luvuksi<int>(asiat[0]) == level) {
-                std::clog << asiat[1] << std::endl;
-                sisaan.close();
-                return QString::fromStdString(asiat[1]);
-            }
-        }
-    }
 };
 
 #endif

@@ -34,7 +34,7 @@ public:
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
         peliController = new PeliController(*peli, *asetukset, *dummyPinta, *atis);
-        peliWidget = new PeliWidget(*peliView, *peliController, *asetukset, *peli);
+        peliWidget = new PeliWidget(*peliView, *peliController, *peli);
 
         levelMenu = new LevelMenu();
         atisWidget = new AtisWidget(*metar, *atis, *peli);
@@ -53,7 +53,7 @@ public:
         connect(atisWidget, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
 	}
 
-    void resizeEvent(QResizeEvent* e) {
+    void resizeEvent() {
         if (this->width() < apuvalineet::ruutu_leveys || this->height() < apuvalineet::ruutu_korkeus) {
             this->resize(apuvalineet::ruutu_leveys, apuvalineet::ruutu_korkeus);
         }
