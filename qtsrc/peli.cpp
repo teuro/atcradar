@@ -6,8 +6,7 @@ Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis& at, Metar& m) : as
 	porrastusvirheet = 0;
 	muut_virheet = 0;
 	kasitellyt = 0;
-	koska_metar = asetukset.anna_asetus("koska_metar");
-	lataa_tunnukset("data/tunnukset.txt");
+    lataa_tunnukset("data/tunnukset.txt");
 	generoi_metar();
     valittuKone = NULL;
 }

@@ -6,6 +6,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
+#include <QDebug>
 
 #include <fstream>
 #include <iostream>
@@ -74,9 +75,6 @@ public:
 
     void OnAtisDone() {
         stack->setCurrentIndex(2);
-        peli->luo_kone();
-        peli->luo_kone();
-        peli->luo_kone();
 	}
 
 private:
