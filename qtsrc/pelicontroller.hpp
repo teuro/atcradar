@@ -30,6 +30,9 @@ class PeliController : public IController {
 public:
     PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta, Atis& at) : peli(p), asetukset(a), piirtopinta(pinta), atis(at)  {
         koska_uusi_kone = 250;
+        peli.luo_kone();
+        peli.luo_kone();
+        peli.luo_kone();
     }
 	
 	bool kasittele_aikaa(double sekunnit);
