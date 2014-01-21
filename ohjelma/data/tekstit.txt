@@ -22,3 +22,5 @@
 22|Alueelta|Outbound|
 23|Aika|Time|
 24|Selvitykset|Clearances|
+25|Tiedostoa|File|
+26|Ei löydy tai se ei aukea|Can't open or it is missing|
