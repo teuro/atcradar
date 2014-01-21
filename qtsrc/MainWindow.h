@@ -29,7 +29,7 @@ public:
         metar = new Metar;
         asetukset = new Asetukset;
 
-        peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *metar, *atis);
+        peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;

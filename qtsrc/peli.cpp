@@ -1,8 +1,6 @@
 #include "peli.hpp"
 
-bool poistetaanko(const lentokone& kone);
-
-Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis &at) : asetukset(a), metar(m), atis(at) {
+Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis& at, Metar& m) : asetukset(a), kieli(k), atis(at), metar(m) {
 	lataa_kentta(kentta);
 	ohje = " ";
 	porrastusvirheet = 0;
@@ -20,7 +18,7 @@ void Peli::lataa_tunnukset(std::string tunnukset) {
 	std::ifstream sisaan(tunnukset.c_str(), std::ios::in);
 
 	if (!sisaan) {
-		throw std::runtime_error("Tiedostoa " + tunnukset + " ei ole tai se ei aukea");
+        throw std::runtime_error(kieli.anna_teksti(Kieli::TEKSTI_VIRHE_TIEDOSTOA) + tunnukset + kieli.anna_teksti(Kieli::TEKSTI_VIRHE_EI_LOYDY));
 	}
 
 	while (sisaan >> tmp) {
