@@ -24,7 +24,7 @@ class PeliWidget : public QWidget {
 
 public:
 	// constructor
-    PeliWidget(PeliView& v, PeliController& pc, Peli& p) : peliView(v), peliController(pc), peli(p) {
+    PeliWidget(PeliView& v, PeliController& pc, IAsetukset& a, Peli& p) : peliView(v), peliController(pc), peli(p) {
 		// Timer to draw the window
 		timer = new QTimer;
         connect(timer, SIGNAL(timeout()), SLOT(animate()));
@@ -65,8 +65,6 @@ public:
         tmp.label->setGeometry(x-80, y-0, 200, 20);
 
         tmp.type = type;
-
-        tmp.field->setValidator(new QIntValidator(minimum, maximum, tmp.field));
 
         inputFields.push_back(tmp);
     }

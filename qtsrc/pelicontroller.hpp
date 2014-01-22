@@ -29,17 +29,14 @@ class PeliController : public IController {
     Atis& atis;
 public:
     PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta, Atis& at) : peli(p), asetukset(a), piirtopinta(pinta), atis(at)  {
-        koska_uusi_kone = 250;
-        peli.luo_kone();
-        peli.luo_kone();
-        peli.luo_kone();
+        koska_uusi_kone = 150;
     }
 	
 	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);
 	void kasittele_hiiren_paikka(apuvalineet::piste koordinaatit);
 
-  void kasittele_komento(const std::string& komento);
+    bool kasittele_komento(const std::string& komento);
 
 	void pyyda_atis();
 

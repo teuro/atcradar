@@ -6,7 +6,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
-#include <QDebug>
 
 #include <fstream>
 #include <iostream>
@@ -30,12 +29,13 @@ public:
         metar = new Metar;
         asetukset = new Asetukset;
 
-        peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
+        std::clog << "Ennen pelin luomista" << std::endl;
+        peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *metar, *atis);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
         peliController = new PeliController(*peli, *asetukset, *dummyPinta, *atis);
-        peliWidget = new PeliWidget(*peliView, *peliController, *peli);
+        peliWidget = new PeliWidget(*peliView, *peliController, *asetukset, *peli);
 
         levelMenu = new LevelMenu();
         atisWidget = new AtisWidget(*metar, *atis, *peli);
@@ -54,9 +54,9 @@ public:
         connect(atisWidget, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
 	}
 
-    void resizeEvent() {
-        if (this->width() < apuvalineet::ruutu_leveys || this->height() < apuvalineet::ruutu_korkeus) {
-            this->resize(apuvalineet::ruutu_leveys, apuvalineet::ruutu_korkeus);
+    void resizeEvent(QResizeEvent* e) {
+        if (this->width() < 700 || this->height() < 600) {
+            this->resize(700, 600);
         }
 
         asetukset->muuta_asetusta("ruutu_leveys", this->width());
@@ -65,16 +65,17 @@ public:
 
 	public slots:
     void OnLevelSelected(int level) {
+        std::clog << "Tasoksi valittu " << level << std::endl;
         stack->setCurrentIndex(1);
         atisWidget->setLevel(level);
-        peli->setLevel(level);
-
-        asetukset->muuta_asetusta("koska_uusi_ala", 60 / peli->getLevel());
-        asetukset->muuta_asetusta("koska_uusi_yla", 120 / peli->getLevel());
-    }
+	}
 
     void OnAtisDone() {
         stack->setCurrentIndex(2);
+        std::clog << "Atis täytetty oikein" << std::endl;
+        peli->luo_kone();
+        peli->luo_kone();
+        peli->luo_kone();
 	}
 
 private:

@@ -1,23 +1,27 @@
 #include "peli.hpp"
 
-Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis& at, Metar& m) : asetukset(a), kieli(k), atis(at), metar(m) {
+bool poistetaanko(const lentokone& kone);
+
+Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis &at) : asetukset(a), koska_uusi_kone(1), metar(m), atis(at) {
 	lataa_kentta(kentta);
 	ohje = " ";
 	porrastusvirheet = 0;
 	muut_virheet = 0;
 	kasitellyt = 0;
-    lataa_tunnukset("data/tunnukset.txt");
+	koska_metar = asetukset.anna_asetus("koska_metar");
+	lataa_tunnukset("data/tunnukset.txt");
 	generoi_metar();
     valittuKone = NULL;
 }
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
-    std::string tmp;
+	std::clog << "peli::lataa_tunnukset(" << tunnukset << ")" << std::endl;
+	std::string tmp;
 
 	std::ifstream sisaan(tunnukset.c_str(), std::ios::in);
 
 	if (!sisaan) {
-        throw std::runtime_error(kieli.anna_teksti(Kieli::TEKSTI_VIRHE_TIEDOSTOA) + tunnukset + kieli.anna_teksti(Kieli::TEKSTI_VIRHE_EI_LOYDY));
+		throw std::runtime_error("Tiedostoa " + tunnukset + " ei ole tai se ei aukea");
 	}
 
 	while (sisaan >> tmp) {
@@ -75,7 +79,8 @@ void Peli::aseta_virhe(int virhe) {
 }
 
 void Peli::luo_kone() {
-    int j = apuvalineet::arvo_luku(10, 100) % 2;
+    std::clog << "Peli::luo_kone(" << this->pelin_kello << ")" << std::endl;
+	int j = apuvalineet::arvo_luku(10, 100) % 2;
 	apuvalineet::piste paikka;
 	bool odotus;
 	std::string tunnus = generoi_tunnus();
@@ -119,8 +124,11 @@ void Peli::luo_kone() {
 }
 
 void Peli::lataa_kentta(std::string kenttaNimi) {
-    std::string kansio = "kentat/";
+	std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
+	std::string kansio = "kentat/";
 	std::string tmp = kansio + kenttaNimi;
+
+	std::clog << tmp << std::endl;
 
 	std::ifstream sisaan(tmp.c_str(), std::ios::in);
 	if (!sisaan) {
@@ -134,11 +142,15 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 
 		if (asiat[0] == "N") {
 			kentta.nimi = asiat[1];
+            std::clog << "Kentta.nimi = " << kentta.nimi << std::endl;
 		} else if (asiat[0] == "H") {
 			kentta.korkeus = apuvalineet::luvuksi<double>(asiat[1]);
+            std::clog << "Kentta.nimi = " << kentta.korkeus << std::endl;
 		} else if (asiat[0] == "P") {
 			kentta.paikka.x = apuvalineet::luvuksi<double>(asiat[1]);
 			kentta.paikka.y = apuvalineet::luvuksi<double>(asiat[2]);
+
+            std::clog << "Kentta.paikka = " << kentta.paikka.x << ", " << kentta.paikka.y << std::endl;
 		} else if (asiat[0] == "K") {
 			apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
 			kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"));
@@ -230,6 +242,7 @@ void Peli::hoida_koneet(double intervalliMs) {
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         if ((*it)->tyyppi == Peli::LAHTEVA) {
             if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka, 0.05)) {
+                //koneet.erase(it++);
                 logita_aika(*it);
                 koneet.erase(++it);
                 ++kasitellyt;
@@ -241,7 +254,7 @@ void Peli::hoida_koneet(double intervalliMs) {
                 ++kasitellyt;
 			}
         }
-
+        //std::clog << asetukset.anna_asetus("ruutu_leveys") << ", " << asetukset.anna_asetus("ruutu_korkeus") << std::endl;
         if ((*it)->paikka.x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             aseta_virhe(VIRHE_ALUEELTA);
             logita_aika(*it);
@@ -311,7 +324,7 @@ void Peli::generoi_metar() {
 
 	for (int i = 0; i < pilvia; ++i) {
 		tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
-        pilvi += tyyppi + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")), 100)) + " ";
+        pilvi += apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")), 100);
 	}
 
     metar.aseta_pilvet(pilvi);
