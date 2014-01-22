@@ -6,14 +6,21 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
 	piirra_koneet(piirtopinta);
 	piirra_navipisteet(piirtopinta);
 	piirra_lentokentta(piirtopinta);
-    piirra_odottavat(piirtopinta);
-    piirra_metar(piirtopinta);
+    piirra_ohje(piirtopinta, peli.ohje);
+	piirra_odottavat(piirtopinta);
+    piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
+	piirra_metar(piirtopinta);
 	piirtopinta.flip();
 }
 
 void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
-    double lentokorkeus;
+	unsigned int vari;
+
+	double lentokorkeus;
 	double selvityskorkeus;
+
+	unsigned int ok = 0x000000FF;
+	unsigned int ng = 0xFF0000FF;
 
     int listauskorkeus = 120;
 
@@ -21,9 +28,16 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
         if ((*it)->anna_odotus() == false) {
             apuvalineet::piste loppupiste = apuvalineet::uusi_paikka((*it)->paikka, (*it)->anna_suunta(), (*it)->anna_nopeus() * (60.0 / 3600.0));
 
-            piirtopinta.rectangleColor((*it)->paikka.x - 3, (*it)->paikka.y - 3, (*it)->paikka.x + 3, (*it)->paikka.y + 3);
-            piirtopinta.lineColor((*it)->paikka.x, (*it)->paikka.y, loppupiste.x, loppupiste.y);
-            piirtopinta.circleColor((*it)->paikka.x, (*it)->paikka.y, apuvalineet::nm2px(1.5));
+            if ((*it)->onko_porrastus) {
+				vari = ok;
+			}
+			else {
+				vari = ng;
+			}
+
+            piirtopinta.rectangleColor((*it)->paikka.x - 3, (*it)->paikka.y - 3, (*it)->paikka.x + 3, (*it)->paikka.y + 3, vari);
+            piirtopinta.lineColor((*it)->paikka.x, (*it)->paikka.y, loppupiste.x, loppupiste.y, vari);
+            piirtopinta.circleColor((*it)->paikka.x, (*it)->paikka.y, apuvalineet::nm2px(1.5), vari);
 
             piirtopinta.kirjoita_tekstia((*it)->anna_kutsutunnus(), (*it)->paikka.x, (*it)->paikka.y);
 
@@ -102,7 +116,7 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 					break;
 				}
 
-                piirtopinta.lineColor((*it)->paikka.x, (*it)->paikka.y, peli.hiiren_paikka.x, peli.hiiren_paikka.y);
+                piirtopinta.lineColor((*it)->paikka.x, (*it)->paikka.y, peli.hiiren_paikka.x, peli.hiiren_paikka.y, vari);
                 apuvalineet::vektori vek = apuvalineet::suunta_vektori((*it)->paikka, peli.hiiren_paikka);
 
                 int x = std::abs((*it)->paikka.x + peli.hiiren_paikka.x) / 2;
@@ -118,22 +132,22 @@ void PeliView::piirra_navipisteet(IPiirtoPinta& piirtopinta) {
     for (unsigned int i = 0; i < peli.navipisteet.size(); ++i) {
         apuvalineet::piste tmp = peli.navipisteet[i].paikka;
         piirtopinta.kirjoita_tekstia(peli.navipisteet[i].nimi, tmp.x, tmp.y);
-        piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3);
+		piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3, 456);
 	}
 
     for (unsigned int i = 0; i < peli.sisapisteet.size(); ++i) {
         apuvalineet::piste tmp = peli.sisapisteet[i].paikka;
         piirtopinta.kirjoita_tekstia(peli.sisapisteet[i].nimi, tmp.x, tmp.y);
-        piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3);
+		piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3, 456);
 	}
 }
 
 void PeliView::piirra_lentokentta(IPiirtoPinta& piirtopinta) {
     for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-        piirtopinta.lineColor(peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y, peli.kentta.kiitotiet[i].loppupiste.x, peli.kentta.kiitotiet[i].loppupiste.y);
+        piirtopinta.lineColor(peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y, peli.kentta.kiitotiet[i].loppupiste.x, peli.kentta.kiitotiet[i].loppupiste.y, 0x223344FF);
         piirtopinta.kirjoita_tekstia(peli.kentta.kiitotiet[i].nimi, peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y);
 
-        piirtopinta.circleColor(peli.kentta.kiitotiet[i].lahestymispiste.x, peli.kentta.kiitotiet[i].lahestymispiste.y, apuvalineet::nm2px(0.5));
+        piirtopinta.circleColor(peli.kentta.kiitotiet[i].lahestymispiste.x, peli.kentta.kiitotiet[i].lahestymispiste.y, apuvalineet::nm2px(0.5), 0xAAAAAAFF);
 	}
 }
 

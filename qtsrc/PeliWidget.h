@@ -60,13 +60,12 @@ public:
 
         tmp.field = new QLineEdit("", this);
         tmp.label = new QLabel(name, this);
+        tmp.field->setValidator(new QIntValidator(minimum, maximum, tmp.field));
 
         tmp.field->move(x, y);
         tmp.label->setGeometry(x-80, y-0, 200, 20);
 
         tmp.type = type;
-
-        tmp.field->setValidator(new QIntValidator(minimum, maximum, tmp.field));
 
         inputFields.push_back(tmp);
     }

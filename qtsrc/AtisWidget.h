@@ -51,10 +51,10 @@ public:
         inputFields.push_back(new QLineEdit(defaultValue, this));
         inputFields.back()->move(x, y);
 
+        inputFields.back()->setValidator(new QIntValidator(minimum, maximum));
+
         inputLabel = new QLabel(name, this);
         inputLabel->setGeometry(x-80, y-0, 200, 20);
-
-        inputFields.back()->setValidator(new QIntValidator(minimum, maximum, inputFields.back()));
 
         if (infoText.length()) {
             infoLabel = new QLabel(infoText, this);
@@ -104,12 +104,16 @@ public:
         atis.tyhjenna();
         atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
 
+        std::clog << peli.kentta.kiitotiet.size() << std::endl;
+
         std::vector <kiitotie> :: iterator haku_lahto = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[0]->text().toStdString());
         std::vector <kiitotie> :: iterator haku_lasku = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[1]->text().toStdString());
 
         double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
         int laskettu_siirtopinta = atis.calculateTL(metar.anna_paine());
+
+        std::clog << apuvalineet::laske_vastatuuli((inputFields[0]->text().toInt() * 10), metar.anna_tuuli()) << std::endl;
 
         if (haku_lasku == peli.kentta.kiitotiet.end()) {
             drawErrorMessage("Laskukiitotietä ei ole kentällä", inputFields[1]);

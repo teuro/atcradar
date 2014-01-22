@@ -1,6 +1,7 @@
 #include "navipiste.hpp"
 
 navipiste::navipiste(std::string nimi, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta) {
+std::clog << "Navipiste::navipiste(" << nimi << ", " << paikka.x << ", " << paikka.y << ", " << korkeus << ", " << nopeus << ", " << suunta << ")" << std::endl;
     this->nimi = nimi;
 	this->paikka = paikka;
 	this->lentokorkeus = korkeus;
@@ -9,7 +10,8 @@ navipiste::navipiste(std::string nimi, apuvalineet::piste paikka, double korkeus
 }
 
 navipiste::navipiste(std::string nimi, apuvalineet::piste paikka) {
-    this->nimi = nimi;
+    std::clog << "Navipiste::navipiste(" << nimi << ", " << paikka.x << ", " << paikka.y << ")" << std::endl;
+	this->nimi = nimi;
 	this->paikka = paikka;
 }
 

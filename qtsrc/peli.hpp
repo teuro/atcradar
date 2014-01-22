@@ -92,6 +92,7 @@ public:
     lentokentta kentta;
 
     int toiminto;
+    int koska_uusi_kone;
     int koska_metar;
     int porrastusvirheet;
     int muut_virheet;

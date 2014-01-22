@@ -29,6 +29,7 @@ public:
         metar = new Metar;
         asetukset = new Asetukset;
 
+        std::clog << "Ennen pelin luomista" << std::endl;
         peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *metar, *atis);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
@@ -54,8 +55,8 @@ public:
 	}
 
     void resizeEvent() {
-        if (this->width() < apuvalineet::ruutu_leveys || this->height() < apuvalineet::ruutu_korkeus) {
-            this->resize(apuvalineet::ruutu_leveys, apuvalineet::ruutu_korkeus);
+        if (this->width() < 700 || this->height() < 600) {
+            this->resize(700, 600);
         }
 
         asetukset->muuta_asetusta("ruutu_leveys", this->width());
@@ -64,16 +65,14 @@ public:
 
 	public slots:
     void OnLevelSelected(int level) {
+        std::clog << "Tasoksi valittu " << level << std::endl;
         stack->setCurrentIndex(1);
         atisWidget->setLevel(level);
-        peli->setLevel(level);
-
-        asetukset->muuta_asetusta("koska_uusi_ala", 60 / peli->getLevel());
-        asetukset->muuta_asetusta("koska_uusi_yla", 120 / peli->getLevel());
-    }
+	}
 
     void OnAtisDone() {
         stack->setCurrentIndex(2);
+        std::clog << "Atis täytetty oikein" << std::endl;
         peli->luo_kone();
         peli->luo_kone();
         peli->luo_kone();
