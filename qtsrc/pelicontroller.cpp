@@ -1,6 +1,6 @@
 #include "pelicontroller.hpp"
 
-bool PeliController::kasittele_komento(const std::string& komento) {
+void PeliController::kasittele_komento(const std::string& komento) {
     std::vector <std::string> asiat = apuvalineet::pilko_rivi(komento, "|");
 
     if (peli.valittuKone) {
@@ -69,9 +69,9 @@ bool PeliController::tarkista_selvitys(std::string selvitys, int tyyppi) {
 bool PeliController::kasittele_aikaa(double intervallisek) {
     peli.hoida_koneet(intervallisek);    
 
-    if (peli.anna_pelin_kello() >= koska_uusi_kone) {
+    if (peli.anna_pelin_kello() >= peli.koska_uusi_kone) {
         peli.luo_kone();
-        koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
+        peli.koska_uusi_kone += apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala"), asetukset.anna_asetus("koska_uusi_yla"));
     }
 
 	return true;
