@@ -30,7 +30,7 @@ public:
         asetukset = new Asetukset;
 
         std::clog << "Ennen pelin luomista" << std::endl;
-        peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *metar, *atis);
+        peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;

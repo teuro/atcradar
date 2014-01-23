@@ -7,8 +7,6 @@ TARGET = qtsrc
 INCLUDEPATH += .
 QT += widgets
 
-RESOURCES     = atcradar.qrc
-
 # Input
 
 HEADERS += \
@@ -20,6 +18,3 @@ HEADERS += \
 SOURCES += \
     apuvalineet.cpp asetukset.cpp AtisController.cpp lentokentta.cpp lentokone.cpp \
     navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp kieli.cpp
-
-OTHER_FILES += \
-    atcradar.rc

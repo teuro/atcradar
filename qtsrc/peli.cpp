@@ -2,7 +2,7 @@
 
 bool poistetaanko(const lentokone& kone);
 
-Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis &at) : asetukset(a), koska_uusi_kone(1), metar(m), atis(at) {
+Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Atis &at, Metar& m) : asetukset(a), atis(at), metar(m), koska_uusi_kone(1) {
 	lataa_kentta(kentta);
 	ohje = " ";
 	porrastusvirheet = 0;
@@ -317,15 +317,15 @@ void Peli::generoi_metar() {
     metar.aseta_ilmankosteus(apuvalineet::arvo_luku(asetukset.anna_asetus("ilmankosteus_ala"), asetukset.anna_asetus("ilmankosteus_yla")));
     metar.aseta_kastepiste(metar.anna_lampotila() - ((100 - metar.anna_ilmankosteus()) / 5));
 
-	int pilvia = apuvalineet::arvo_luku(asetukset.anna_asetus("pilvet_ala"), asetukset.anna_asetus("pilvet_yla"));
-	std::vector <std::string> tyypit = lataa_pilvet("data/pilvet.txt");
-	std::string tyyppi;
-    std::string pilvi;
+        int pilvia = apuvalineet::arvo_luku(asetukset.anna_asetus("pilvet_ala"), asetukset.anna_asetus("pilvet_yla"));
+        std::vector <std::string> tyypit = lataa_pilvet("data/pilvet.txt");
+        std::string tyyppi;
+        std::string pilvi;
 
-	for (int i = 0; i < pilvia; ++i) {
-		tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
-        pilvi += apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")), 100);
-	}
+        for (int i = 0; i < pilvia; ++i) {
+                tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
+        pilvi += tyyppi + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")), 100)) + " ";
+        }
 
     metar.aseta_pilvet(pilvi);
 }

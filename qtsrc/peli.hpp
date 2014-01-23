@@ -42,7 +42,7 @@ private:
 
 public:
     Metar& metar;
-    Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Metar& m, Atis& at);
+    Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Atis& at, Metar& m);
 
     std::vector <std::string> tunnukset;
     std::string syote;
