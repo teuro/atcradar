@@ -11,9 +11,9 @@ QT += widgets
 
 HEADERS += \
     apuvalineet.hpp asetukset.h AtisController.hpp AtisWidget.h lentokentta.hpp \
-    lentokone.hpp levelmenu.h MainWindow.h Metar.hpp navipiste.hpp pelicontroller.hpp \
+    lentokone.hpp MainWindow.h Metar.hpp navipiste.hpp pelicontroller.hpp \
     PeliWidget.h PeliView.h piirtopinta.hpp peli.hpp view.hpp kieli.hpp \
-    QpiirtoPinta.h
+    QpiirtoPinta.h levelwidget.hpp
 
 SOURCES += \
     apuvalineet.cpp asetukset.cpp AtisController.cpp lentokentta.cpp lentokone.cpp \

@@ -1,7 +1,9 @@
 #include "kieli.hpp"
 
 Kieli::Kieli(const std::string& kieli) {
+#ifdef DEBUG
 	std::clog << "Luodaan uusi kieli " << kieli << std::endl;
+#endif
 	this->kieli = kieli;
 	int kohta = -1;
 	

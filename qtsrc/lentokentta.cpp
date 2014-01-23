@@ -1,9 +1,6 @@
 #include "lentokentta.hpp"
 
-kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunoususuunta, double lahestymispiste, double hidastuspiste) 
-{
-	std::clog << "kiitotie::kiitotie(" << nimi << " " << alkupiste.x << " " << alkupiste.y << " " << pituus << " " << suunta << " " << alkunousukorkeus << ")" << std::endl;
-
+kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunoususuunta, double lahestymispiste, double hidastuspiste) {
 	this->alkupiste = alkupiste;
 	this->pituus = pituus;
 	this->suunta = suunta;

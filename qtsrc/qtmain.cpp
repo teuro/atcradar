@@ -5,11 +5,11 @@
 #include <QtWidgets/QPushButton>
 #include <qdesktopwidget.h>
 
-#include <time.h>
+#include <ctime>
 #include "mainwindow.h"
 
 int main(int argc, char** argv) {
-	srand(time(NULL));
+    std::srand(std::time(NULL));
 
     try {
         QApplication app(argc, argv);

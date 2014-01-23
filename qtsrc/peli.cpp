@@ -1,8 +1,6 @@
 #include "peli.hpp"
 
-bool poistetaanko(const lentokone& kone);
-
-Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Atis &at, Metar& m) : asetukset(a), atis(at), metar(m), koska_uusi_kone(1) {
+Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis &at, Metar& m) : asetukset(a), kieli(k), atis(at), metar(m), koska_uusi_kone(1) {
 	lataa_kentta(kentta);
 	ohje = " ";
 	porrastusvirheet = 0;
@@ -15,13 +13,12 @@ Peli::Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Atis &at, Metar& m) 
 }
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
-	std::clog << "peli::lataa_tunnukset(" << tunnukset << ")" << std::endl;
 	std::string tmp;
 
 	std::ifstream sisaan(tunnukset.c_str(), std::ios::in);
 
 	if (!sisaan) {
-		throw std::runtime_error("Tiedostoa " + tunnukset + " ei ole tai se ei aukea");
+        throw std::runtime_error(kieli.anna_teksti(Kieli::TEKSTI_TIEDOSTO) + " " + tunnukset + " " + kieli.anna_teksti(Kieli::TEKSTI_EI_AUKEA));
 	}
 
 	while (sisaan >> tmp) {
@@ -124,11 +121,11 @@ void Peli::luo_kone() {
 }
 
 void Peli::lataa_kentta(std::string kenttaNimi) {
+#ifdef DEBUG
 	std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
+#endif
 	std::string kansio = "kentat/";
 	std::string tmp = kansio + kenttaNimi;
-
-	std::clog << tmp << std::endl;
 
 	std::ifstream sisaan(tmp.c_str(), std::ios::in);
 	if (!sisaan) {
@@ -142,15 +139,11 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 
 		if (asiat[0] == "N") {
 			kentta.nimi = asiat[1];
-            std::clog << "Kentta.nimi = " << kentta.nimi << std::endl;
 		} else if (asiat[0] == "H") {
 			kentta.korkeus = apuvalineet::luvuksi<double>(asiat[1]);
-            std::clog << "Kentta.nimi = " << kentta.korkeus << std::endl;
 		} else if (asiat[0] == "P") {
 			kentta.paikka.x = apuvalineet::luvuksi<double>(asiat[1]);
 			kentta.paikka.y = apuvalineet::luvuksi<double>(asiat[2]);
-
-            std::clog << "Kentta.paikka = " << kentta.paikka.x << ", " << kentta.paikka.y << std::endl;
 		} else if (asiat[0] == "K") {
 			apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
 			kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"));
@@ -254,7 +247,7 @@ void Peli::hoida_koneet(double intervalliMs) {
                 ++kasitellyt;
 			}
         }
-        //std::clog << asetukset.anna_asetus("ruutu_leveys") << ", " << asetukset.anna_asetus("ruutu_korkeus") << std::endl;
+
         if ((*it)->paikka.x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             aseta_virhe(VIRHE_ALUEELTA);
             logita_aika(*it);

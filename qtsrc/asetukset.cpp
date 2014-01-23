@@ -1,12 +1,10 @@
 #include "asetukset.h"
 
-Asetukset::Asetukset()
-{
+Asetukset::Asetukset() {
 	lataa_asetukset("data/asetukset.ini");
 }
 
 void Asetukset::lataa_asetukset(std::string nimi) {
-	std::clog << "asetukset::lataa_asetukset(" << nimi << ")" << std::endl;
 	std::ifstream sisaan(nimi.c_str(), std::ios::in);
 
 	if (!sisaan) {

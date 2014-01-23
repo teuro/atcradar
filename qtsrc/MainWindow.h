@@ -10,7 +10,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "levelmenu.h"
+#include "levelwidget.hpp"
 #include "AtisWidget.h"
 #include "PeliView.h"
 #include "Metar.hpp"
@@ -29,7 +29,6 @@ public:
         metar = new Metar;
         asetukset = new Asetukset;
 
-        std::clog << "Ennen pelin luomista" << std::endl;
         peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
@@ -65,14 +64,12 @@ public:
 
 	public slots:
     void OnLevelSelected(int level) {
-        std::clog << "Tasoksi valittu " << level << std::endl;
         stack->setCurrentIndex(1);
         atisWidget->setLevel(level);
 	}
 
     void OnAtisDone() {
         stack->setCurrentIndex(2);
-        std::clog << "Atis täytetty oikein" << std::endl;
         peli->luo_kone();
         peli->luo_kone();
         peli->luo_kone();

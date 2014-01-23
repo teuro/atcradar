@@ -37,12 +37,13 @@ See PeliController and PeliView for more functionality.
 class Peli {
 private:
     IAsetukset& asetukset;
+    Kieli& kieli;
     Atis& atis;
     int level;
 
 public:
     Metar& metar;
-    Peli(IAsetukset& a, Kieli& kieli, std::string kentta, Atis& at, Metar& m);
+    Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis& at, Metar& m);
 
     std::vector <std::string> tunnukset;
     std::string syote;
