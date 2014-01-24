@@ -82,6 +82,7 @@ public:
 	void liiku(double aika);
 
 	int tyyppi;
+    bool poistetaanko;
 
 	bool lahestymisselvitys;
 

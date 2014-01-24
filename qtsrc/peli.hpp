@@ -115,6 +115,7 @@ private:
 	void lataa_kentta(std::string kentta);
     double pelin_kello;
     void logita_aika(lentokone *lk);
+    bool poistetaanko(lentokone* kone);
 };
 
 #endif

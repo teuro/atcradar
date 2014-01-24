@@ -76,7 +76,6 @@ void Peli::aseta_virhe(int virhe) {
 }
 
 void Peli::luo_kone() {
-    std::clog << "Peli::luo_kone(" << this->pelin_kello << ")" << std::endl;
 	int j = apuvalineet::arvo_luku(10, 100) % 2;
 	apuvalineet::piste paikka;
 	bool odotus;
@@ -229,29 +228,32 @@ void Peli::logita_aika(lentokone* lk) {
     haku_pois->pois = this->pelin_kello;
 }
 
+bool pois(lentokone* kone) {
+    return kone->poistetaanko;
+}
+
 void Peli::hoida_koneet(double intervalliMs) {
     std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
 
+    std::list <lentokone*> :: iterator loppu;
+    loppu = std::remove_if(koneet.begin(), koneet.end(), pois);
+    koneet.erase(loppu, koneet.end());
+
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
-        if ((*it)->tyyppi == Peli::LAHTEVA) {
+        if ((*it)->anna_tyyppi() == Peli::LAHTEVA) {
             if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka, 0.05)) {
-                //koneet.erase(it++);
-                logita_aika(*it);
-                koneet.erase(++it);
+                (*it)->poistetaanko = true;
                 ++kasitellyt;
             }
-        } else if ((*it)->tyyppi == Peli::SAAPUVA) {
+        } else if ((*it)->anna_tyyppi() == Peli::SAAPUVA) {
             if ((*it)->anna_nopeus() < 4.0) {
-                koneet.erase(it++);
-                logita_aika(*it);
+                (*it)->poistetaanko = true;
                 ++kasitellyt;
-			}
+            }
         }
 
-        if ((*it)->paikka.x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
-            aseta_virhe(VIRHE_ALUEELTA);
-            logita_aika(*it);
-            koneet.erase(it++);
+        if ((*it)->anna_paikka().x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
+            (*it)->poistetaanko = true;
         }
 
         if ((*it)->anna_odotus()) {
