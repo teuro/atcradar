@@ -30,9 +30,9 @@ public:
         connect(timer, SIGNAL(timeout()), SLOT(animate()));
         timer->start(frameMs);
 
-        addInputField("Suunta", 100, 20, 0, 360, apuvalineet::SUUNTA);
-        addInputField("Nopeus", 100, 40, 160, 440, apuvalineet::NOPEUS);
-        addInputField("Korkeus", 100, 60, 2000, 24000, apuvalineet::KORKEUS);
+        addInputField("Suunta", 100, 20, apuvalineet::SUUNTA);
+        addInputField("Nopeus", 100, 40, apuvalineet::NOPEUS);
+        addInputField("Korkeus", 100, 60, apuvalineet::KORKEUS);
 
         okButton = new QPushButton("OK", this);
         okButton->move(100, 80);
@@ -55,12 +55,11 @@ public:
         setMouseTracking(true);
     }
 
-    void addInputField(QString name, int x, int y, int minimum, int maximum, int type) {
+    void addInputField(QString name, int x, int y, int type) {
         inputField tmp;
 
         tmp.field = new QLineEdit("", this);
         tmp.label = new QLabel(name, this);
-        tmp.field->setValidator(new QIntValidator(minimum, maximum, tmp.field));
 
         tmp.field->move(x, y);
         tmp.label->setGeometry(x-80, y-0, 200, 20);
