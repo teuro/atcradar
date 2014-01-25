@@ -158,6 +158,11 @@ void lentokone::ota_selvitys(int tyyppi, bool lahesty) {
             this->baana = *haku;
             this->aseta_navipiste(baana.lahestymispiste);
         }
+    } else if (tyyppi == apuvalineet::KESKEYTA) {
+        this->lahestymisselvitys = false;
+        this->muuta_selvityskorkeutta(baana.alkunousukorkeus);
+        this->muuta_selvityssuuntaa(baana.alkunoususuunta);
+        this->muuta_selvitysnopeutta(250);
     }
 }
 
