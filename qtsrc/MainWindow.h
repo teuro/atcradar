@@ -66,6 +66,7 @@ public:
     void OnLevelSelected(int level) {
         stack->setCurrentIndex(1);
         atisWidget->setLevel(level);
+        peli->setLevel(level);
 	}
 
     void OnAtisDone() {

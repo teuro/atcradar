@@ -58,7 +58,8 @@ public:
         TEKSTI_PORRASTUS_VAAKA,
         TEKSTI_MAILIA,
         TEKSTI_OIKOTIE,
-        TEKSTI_ALUEELTA
+        TEKSTI_ALUEELTA,
+        TEKSTI_TUNTEMATON_VIRHE
 	};
 };
 

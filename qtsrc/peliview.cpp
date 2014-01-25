@@ -9,6 +9,7 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
     piirra_ohje(piirtopinta, peli.ohje);
 	piirra_odottavat(piirtopinta);
     piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
+    piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi(peli.koska_uusi_kone - peli.anna_pelin_kello()), 500, 50);
 	piirra_metar(piirtopinta);
 	piirtopinta.flip();
 }

@@ -39,3 +39,4 @@
 39|mailia|miles|
 40|Oikotien saa antaa vasta|Direct can't give until|
 41|Kone poistui alueeltasi|Airplane left Your area|
+42|Tuntematon virhe|Unknown error|

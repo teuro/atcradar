@@ -43,13 +43,13 @@ void Peli::aseta_virhe(int virhe) {
             virheteksti = kieli.anna_teksti(Kieli::TEKSTI_LAHESTYMISEN_YLARAJA_NOPEUS) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_lahestymisnopeus")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
             break;
         case VIRHE_LAHESTYMISSUUNTA:
-            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_LAHESTYMISKULMA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("lahestymiskulma")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_LAHESTYMISKULMA) + " +- " + apuvalineet::tekstiksi(asetukset.anna_asetus("lahestymiskulma")) + " " + kieli.anna_teksti(Kieli::TEKSTI_ASTETTA) +  " ";
             break;
         case VIRHE_NOPEUS_ALA:
             virheteksti = kieli.anna_teksti(Kieli::TEKSTI_NOPEUDEN_ALARAJA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_ala")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
             break;
         case VIRHE_NOPEUS_YLA:
-            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_NOPEUDEN_YLARAJA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_ala")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_NOPEUDEN_YLARAJA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_yla")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
             break;
         case VIRHE_PORRASTUS:
             virheteksti = kieli.anna_teksti(Kieli::TEKSTI_PORRASTUS_PYSTY) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_pysty")) + " " + kieli.anna_teksti(Kieli::TEKSTI_JALKAA) + " " + kieli.anna_teksti(Kieli::TEKSTI_PORRASTUS_VAAKA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_vaaka")) + " " + kieli.anna_teksti(Kieli::TEKSTI_MAILIA);
@@ -60,9 +60,12 @@ void Peli::aseta_virhe(int virhe) {
         case VIRHE_ALUEELTA:
             virheteksti = kieli.anna_teksti(Kieli::TEKSTI_ALUEELTA);
             break;
+        default:
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_TUNTEMATON_VIRHE);
+            break;
     }
 
-    ulos << virheteksti << this->pelin_kello << std::endl;
+    ulos << virheteksti << " " << this->pelin_kello << std::endl;
     ulos.close();
 }
 

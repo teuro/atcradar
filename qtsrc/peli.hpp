@@ -108,7 +108,7 @@ public:
 
 	void aseta_virhe(int virhe);
 	std::vector <std::string> lataa_pilvet(std::string pilvet);
-	enum virheet { VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_LASKU, VIRHE_OIKOTIE, VIRHE_EI_VALITTUA_KONETTA, VIRHE_PORRASTUS, VIRHE_ALUEELTA };
+    enum virheet { VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_OIKOTIE, VIRHE_PORRASTUS, VIRHE_ALUEELTA };
     double anna_pelin_kello() { return this->pelin_kello; }
     void aseta_pelin_kello(double aika) { this->pelin_kello += aika; }
 private:
