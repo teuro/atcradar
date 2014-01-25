@@ -5,7 +5,7 @@
 5|Valitse kone klikkaamalla|Choose plane by click|
 6|Paina toimintonäppäintä F5, F7 tai F8|Press function button F5, F7 or F8|
 7|Tiedot syötetty tarkistetaan onko oikein|Info inserted check if correct|
-8|Siirtopinta väärin pitäisi olla |Transition level wrong should be |
+8|Siirtopinta väärin pitäisi olla|Transition level wrong should be|
 9|Lahtokiitie valittu väärin|Depart runway wrong|
 10|Laskukiitotie valittu väärin|Landing runway wrong|
 11|Valitse lähtökiitotie|Choose depart runway|
@@ -24,3 +24,18 @@
 24|Selvitykset|Clearances|
 25|Tiedostoa|File|
 26|Ei löydy tai se ei aukea|Can't open or it is missing|
+27|Korkeuden alaraja on|Height lower limit is|
+28|Korkeuden yläraja on|Height upper limit is|
+29|jalkaa|feet|
+30|Lähestymiskorkeuden yläraja on|Approach upper height is|
+31|Lähestymisen maksiminopeus on|Approach max speed is|
+32|solmua|knots|
+33|Lähestymiskulma tulee olla|Approach heading should be|
+34|astetta|degrees|
+35|Nopeuden alaraja on|Speed lower limit is|
+36|Nopeuden yläraja on|Speed upper limit is|
+37|Porrastuksen tulee olla pystysuuntaa|Vertical separation should be|
+38|Porrastuksen tulee olla vaakasuuntaan|Horizontyal separation should be|
+39|mailia|miles|
+40|Oikotien saa antaa vasta|Direct can't give until|
+41|Kone poistui alueeltasi|Airplane left Your area|

@@ -31,47 +31,38 @@ void Peli::aseta_virhe(int virhe) {
 
     switch (virhe) {
         case VIRHE_KORKEUS_ALA:
-            virheteksti = "Korkeuden alaraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvityskorkeus_ala")) + " jalkaa";
-            ulos << "Annettu selvityskorkeus liian alhainen aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_KORKEUDEN_ALARAJA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvityskorkeus_ala")) + " " + kieli.anna_teksti(Kieli::TEKSTI_JALKAA) +  " ";            
             break;
         case VIRHE_KORKEUS_YLA:
-            virheteksti = "Korkeuden yläraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvityskorkeus_yla")) + " jalkaa";
-            ulos << "Annettu selvityskorkeus liian suuri aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_KORKEUDEN_YLARAJA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvityskorkeus_yla")) + " " + kieli.anna_teksti(Kieli::TEKSTI_JALKAA) +  " ";
             break;
         case VIRHE_LAHESTYMISKORKEUS:
-            virheteksti = "Lähestymisen yläraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_lahestymiskorkeus")) + " jalkaa";
-            ulos << "Koneella liian suuri korkeus lähestymiseen aikaan " << this->pelin_kello << " " << asetukset.anna_asetus("maks_lahestymiskorkeus") << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_LAHESTYMISEN_YLARAJA_KORKEUS) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_lahestymiskorkeus")) + " " + kieli.anna_teksti(Kieli::TEKSTI_JALKAA) +  " ";
             break;
         case VIRHE_LAHESTYMISNOPEUS:
-            virheteksti = "Lähestymisen maksiminopeus on " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_lahestymisnopeus")) + " solmua";
-            ulos << "Koneella liian suuri nopeus lähestymiseen aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_LAHESTYMISEN_YLARAJA_NOPEUS) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_lahestymisnopeus")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
             break;
         case VIRHE_LAHESTYMISSUUNTA:
-            virheteksti ="Koneen suunnan tulee olla kiitotien suunnasta +- " + apuvalineet::tekstiksi(asetukset.anna_asetus("lahestymiskulma"));
-            ulos << "Koneen suunnan tulee olla +- " << asetukset.anna_asetus("lahestymiskulma") << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_LAHESTYMISKULMA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("lahestymiskulma")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
             break;
         case VIRHE_NOPEUS_ALA:
-            virheteksti = "Nopeuden alaraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_ala")) + " solmua";
-            ulos << "Annettu selvitysnopeus on liian pieni aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_NOPEUDEN_ALARAJA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_ala")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
             break;
         case VIRHE_NOPEUS_YLA:
-            virheteksti = "Nopeuden yläraja on " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_yla")) + " solmua";
-            ulos << "Annettu selvitysnopeus on suuri pieni aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_NOPEUDEN_YLARAJA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("selvitysnopeus_ala")) + " " + kieli.anna_teksti(Kieli::TEKSTI_SOLMUA) +  " ";
             break;
         case VIRHE_PORRASTUS:
-            virheteksti = "Porrastuksen tulee olla pystysuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_pysty")) + " jalkaa ja vaakasuuntaan " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_vaaka")) + " mailia";
-            ulos << "Porrastusminimi alittui aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_PORRASTUS_PYSTY) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_pysty")) + " " + kieli.anna_teksti(Kieli::TEKSTI_JALKAA) + " " + kieli.anna_teksti(Kieli::TEKSTI_PORRASTUS_VAAKA) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("porrastus_vaaka")) + " " + kieli.anna_teksti(Kieli::TEKSTI_MAILIA);
             break;
         case VIRHE_OIKOTIE:
-            virheteksti = "Oikotien saa antaa vasta " + apuvalineet::tekstiksi(asetukset.anna_asetus("oikotie")) + " jalassa";
-            ulos << "Annettu oikotie liian aikaisin aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_OIKOTIE) + " " + apuvalineet::tekstiksi(asetukset.anna_asetus("oikotie"));
             break;
         case VIRHE_ALUEELTA:
-            virheteksti = "Kone poistui alueeltasi";
-            ulos << "Kone poistui alueeltasi aikaan " << this->pelin_kello << std::endl;
+            virheteksti = kieli.anna_teksti(Kieli::TEKSTI_ALUEELTA);
             break;
     }
 
+    ulos << virheteksti << this->pelin_kello << std::endl;
     ulos.close();
 }
 
