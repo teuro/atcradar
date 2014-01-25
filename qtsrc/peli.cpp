@@ -1,6 +1,6 @@
 #include "peli.hpp"
 
-Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis &at, Metar& m) : asetukset(a), kieli(k), atis(at), metar(m), koska_uusi_kone(1) {
+Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis &at, Metar& m) : asetukset(a), kieli(k), atis(at), metar(m), koska_uusi_kone(50) {
 	lataa_kentta(kentta);
 	ohje = " ";
 	porrastusvirheet = 0;

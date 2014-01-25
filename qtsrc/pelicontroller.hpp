@@ -28,9 +28,7 @@ class PeliController : public IController {
     IPiirtoPinta& piirtopinta;
     Atis& atis;
 public:
-    PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta, Atis& at) : peli(p), asetukset(a), piirtopinta(pinta), atis(at)  {
-        peli.koska_uusi_kone = 150;
-    }
+    PeliController(Peli& p, IAsetukset& a, IPiirtoPinta& pinta, Atis& at) : peli(p), asetukset(a), piirtopinta(pinta), atis(at)  { }
 	
 	bool kasittele_aikaa(double sekunnit);
 	void kasittele_hiiren_nappi(apuvalineet::piste koordinaatit);

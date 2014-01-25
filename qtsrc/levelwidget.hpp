@@ -19,13 +19,13 @@ public:
     LevelMenu(QWidget* parent = 0) : QWidget(parent) {
 		slider = new QSlider(Qt::Horizontal, this);
 		slider->setGeometry(50, 50, 130, 30);
-        slider->setMinimum(0);
+        slider->setMinimum(1);
         slider->setMaximum(4);
 
 		title = new QLabel("Valitse vaikeustaso: ", this);
         title->setGeometry(50, 20, 150, 30);
 
-        levelLabel = new QLabel("0", this);
+        levelLabel = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(slider->minimum())) , this);
         levelLabel->setGeometry(230, 50, 20, 30);
 
 		okButton = new QPushButton("OK", this);
