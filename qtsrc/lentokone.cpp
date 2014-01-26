@@ -155,6 +155,11 @@ void lentokone::ota_selvitys(int tyyppi, bool lahesty) {
 
         if (this->lahestymisselvitys) {
             std::vector <kiitotie> :: iterator haku = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_laskukiitotie());
+
+            if (haku == kentta.kiitotiet.end()) {
+                throw std::runtime_error("Baanaa ei ole");
+            }
+
             this->baana = *haku;
             this->aseta_navipiste(baana.lahestymispiste);
         }

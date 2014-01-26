@@ -73,15 +73,11 @@ public:
 
     void OnAtisDone() {
         stack->setCurrentIndex(2);
-        peli->luo_kone();
-        peli->luo_kone();
-        peli->luo_kone();
-        peli->luo_kone();
-        peli->luo_kone();
-        peli->luo_kone();
-        peli->luo_kone();
-        peli->luo_kone();
-	}
+
+        for (int i = 0; i < (peli->getLevel() * 3); ++i) {
+            peli->luo_kone();
+        }
+    }
 
 private:
 	LevelMenu* levelMenu;
