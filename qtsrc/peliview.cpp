@@ -158,7 +158,7 @@ void PeliView::piirra_lentokentta(IPiirtoPinta& piirtopinta) {
 }
 
 void PeliView::piirra_tilanne(IPiirtoPinta& piirtopinta) {
-    std::string teksti = "Käsitellyt " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
+    std::string teksti = "Hoidetut " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
     piirtopinta.kirjoita_tekstia(teksti, 500, 20);
 
     teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_porrastusvirhe"));

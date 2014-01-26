@@ -15,16 +15,18 @@
 #include "PeliView.h"
 #include "pelicontroller.hpp"
 #include "QpiirtoPinta.h"
+#include "asetukset.h"
 
 class PeliWidget : public QWidget {
     Q_OBJECT
     // Frame duration in milliseconds
     static const int frameMs = 1000 / 50;
     QPainterPiirtoPinta piirtopinta;
+    IAsetukset& asetukset;
 
 public:
 	// constructor
-    PeliWidget(PeliView& v, PeliController& pc, Peli& p) : peliView(v), peliController(pc), peli(p) {
+    PeliWidget(PeliView& v, PeliController& pc, Peli& p, IAsetukset& a) : peliView(v), peliController(pc), peli(p), asetukset(a) {
 		// Timer to draw the window
 		timer = new QTimer;
         connect(timer, SIGNAL(timeout()), SLOT(animate()));
@@ -69,8 +71,17 @@ public:
         inputFields.push_back(tmp);
     }
 
+signals:
+    void peliDone();
+
 public slots:
     void animate() {
+        if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
+            if (peli.koneet.size() == 0) {
+                emit peliDone();
+            }
+        }
+
         peliController.kasittele_aikaa(frameMs / 1000.0);
         peliController.ota_aika(frameMs / 1000.0);
 

@@ -107,7 +107,11 @@ void PeliController::pyyda_atis() {
 
 }
 
-void PeliController::anna_selvitys(std::string komento, int toiminto) {    
+void PeliController::anna_selvitys(std::string komento, int toiminto) {
+    std::vector <Peli::tilasto> :: iterator selvitykset = std::find(peli.ajat.begin(), peli.ajat.end(), peli.valittuKone->anna_kutsutunnus());
+
+    ++selvitykset->selvitykset;
+
     if (komento == "ILS") {
         peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, true);
     } else if (komento == "CNL") {

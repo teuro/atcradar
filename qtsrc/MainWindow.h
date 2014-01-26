@@ -34,7 +34,7 @@ public:
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
         peliController = new PeliController(*peli, *asetukset, *dummyPinta, *atis);
-        peliWidget = new PeliWidget(*peliView, *peliController, *peli);
+        peliWidget = new PeliWidget(*peliView, *peliController, *peli, *asetukset);
 
         levelMenu = new LevelMenu();
         atisWidget = new AtisWidget(*metar, *atis, *peli);
@@ -51,6 +51,7 @@ public:
 
 		connect(levelMenu, SIGNAL(levelSelected(int)), this, SLOT(OnLevelSelected(int)));
         connect(atisWidget, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
+        connect(peliWidget, SIGNAL(peliDone()), this, SLOT(OnPeliDone()));
 	}
 
     void resizeEvent(QResizeEvent* e) {
@@ -77,6 +78,10 @@ public:
         for (int i = 0; i < (peli->getLevel() * 3); ++i) {
             peli->luo_kone();
         }
+    }
+
+    void OnPeliDone() {
+
     }
 
 private:
