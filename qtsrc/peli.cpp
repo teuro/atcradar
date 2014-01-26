@@ -253,16 +253,19 @@ void Peli::hoida_koneet(double intervalliMs) {
             if (apuvalineet::onko_alueella((*it)->paikka, (*it)->anna_ulosmenopiste().paikka, 0.05)) {
                 (*it)->poistetaanko = true;
                 ++kasitellyt;
+                logita_aika((*it));
             }
         } else if ((*it)->anna_tyyppi() == Peli::SAAPUVA) {
             if ((*it)->anna_nopeus() < 4.0) {
                 (*it)->poistetaanko = true;
                 ++kasitellyt;
+                logita_aika((*it));
             }
         }
 
         if ((*it)->anna_paikka().x < 0 || (*it)->paikka.x > asetukset.anna_asetus("ruutu_leveys") || (*it)->paikka.y < 0 || (*it)->paikka.y > asetukset.anna_asetus("ruutu_korkeus")) {
             (*it)->poistetaanko = true;
+            logita_aika((*it));
         }
 
         if ((*it)->anna_odotus()) {
