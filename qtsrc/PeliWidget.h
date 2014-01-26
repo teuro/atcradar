@@ -119,7 +119,7 @@ public slots:
     }
 
     void OnCancel() {
-        peliController.kasittele_komento("CNL|" + apuvalineet::tekstiksi(apuvalineet::LAHESTYMIS) + "|");
+        peliController.kasittele_komento("CNL|" + apuvalineet::tekstiksi(apuvalineet::KESKEYTA) + "|");
         peli.valittuKone = NULL;
     }
 
