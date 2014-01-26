@@ -9,7 +9,8 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
     piirra_ohje(piirtopinta, peli.ohje);
 	piirra_odottavat(piirtopinta);
     piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
-    piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi(peli.koska_uusi_kone - peli.anna_pelin_kello()), 500, 50);
+    piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi((int)(peli.koska_uusi_kone - peli.anna_pelin_kello())), 610, 20);
+    piirtopinta.kirjoita_tekstia("pelin kello " + apuvalineet::tekstiksi((int)peli.anna_pelin_kello()) + " s", 610, 60);
     piirra_metar(piirtopinta);
 	piirtopinta.flip();
 }
@@ -186,6 +187,6 @@ void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
     int y = 120;
 
     if (peli.odottavat.size()) {
-        piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), y - piirtopinta.get_fontinkoko() - 5);
+        piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", 610, 40);
 	}
 }
