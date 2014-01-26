@@ -53,10 +53,12 @@ public:
         connect(atisWidget, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
 	}
 
-    void resizeEvent() {
+    void resizeEvent(QResizeEvent* e) {
         if (this->width() < 700 || this->height() < 600) {
             this->resize(700, 600);
         }
+
+        QWidget::resizeEvent(e);
 
         asetukset->muuta_asetusta("ruutu_leveys", this->width());
         asetukset->muuta_asetusta("ruutu_korkeus", this->height());
@@ -71,6 +73,11 @@ public:
 
     void OnAtisDone() {
         stack->setCurrentIndex(2);
+        peli->luo_kone();
+        peli->luo_kone();
+        peli->luo_kone();
+        peli->luo_kone();
+        peli->luo_kone();
         peli->luo_kone();
         peli->luo_kone();
         peli->luo_kone();
