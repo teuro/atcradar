@@ -190,31 +190,45 @@ void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
 }
 
 void Peli::tarkista_porrastus() {
-	bool virheita = false;
-	std::vector <int> alittuu;
+    int virheita = 0;
+    std::list <lentokone*> alittuu;
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         for (std::list <lentokone*> :: iterator jt = koneet.begin(); jt != koneet.end(); ++jt) {
-            if (*it == *jt) {
+            if (it == jt) {
 				continue;
 			}
 
-            if (apuvalineet::onko_alueella((*it)->paikka, (*jt)->paikka, 1.5) && std::abs((*it)->anna_korkeus() - (*jt)->anna_korkeus()) < 1000 && ((*it)->anna_korkeus() > 1000 && (*jt)->anna_korkeus() > 1000)) {
-                if ((*it)->onko_porrastus == true || (*jt)->onko_porrastus == true) {
-					virheita = true;
-				}
-			}
+            if (!(*it)->anna_odotus() && !(*jt)->anna_odotus()) {
+                if (apuvalineet::etaisyys((*it)->paikka, (*jt)->paikka) < asetukset.anna_asetus("porrastus_vaaka")) {
+                    if (std::abs((*it)->anna_korkeus() - (*jt)->anna_korkeus()) < asetukset.anna_asetus("porrastus_pysty")) {
+                        alittuu.push_back((*it));
+                        alittuu.push_back((*jt));
+
+                        if ((*it)->onko_porrastus || (*jt)->onko_porrastus) {
+                            ++virheita;
+                        }
+
+                        (*it)->onko_porrastus = false;
+                        (*jt)->onko_porrastus = false;
+                    }
+                }
+            }
 		}
 	}
 
-	if (virheita) {
-		++porrastusvirheet;
-		aseta_virhe(VIRHE_PORRASTUS);
-	}
+    if (virheita) {
+        porrastusvirheet += virheita;
+        aseta_virhe(VIRHE_PORRASTUS);
+    }
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         (*it)->onko_porrastus = true;
-	}
+    }
+
+    for (std::list <lentokone*> :: iterator it = alittuu.begin(); it != alittuu.end(); ++it) {
+        (*it)->onko_porrastus = false;
+    }
 }
 
 void Peli::logita_aika(lentokone* lk) {
@@ -227,6 +241,7 @@ bool pois(lentokone* kone) {
 }
 
 void Peli::hoida_koneet(double intervalliMs) {
+    tarkista_porrastus();
     std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
 
     std::list <lentokone*> :: iterator loppu;

@@ -39,7 +39,6 @@ public:
     ~PeliView() { }
 
     void piirra(IPiirtoPinta& pinta);
-
 private:
 
     void piirra_koneet(IPiirtoPinta& piirtopinta);

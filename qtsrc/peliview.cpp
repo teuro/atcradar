@@ -10,18 +10,18 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
 	piirra_odottavat(piirtopinta);
     piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
     piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi(peli.koska_uusi_kone - peli.anna_pelin_kello()), 500, 50);
-	piirra_metar(piirtopinta);
+    piirra_metar(piirtopinta);
 	piirtopinta.flip();
 }
 
 void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
-	unsigned int vari;
+    unsigned int vari;
 
 	double lentokorkeus;
 	double selvityskorkeus;
 
-	unsigned int ok = 0x000000FF;
-	unsigned int ng = 0xFF0000FF;
+    unsigned int ok = IPiirtoPinta::NORMAALI;
+    unsigned int ng = IPiirtoPinta::VIRHE;
 
     int listauskorkeus = 120;
 
@@ -133,22 +133,22 @@ void PeliView::piirra_navipisteet(IPiirtoPinta& piirtopinta) {
     for (unsigned int i = 0; i < peli.navipisteet.size(); ++i) {
         apuvalineet::piste tmp = peli.navipisteet[i].paikka;
         piirtopinta.kirjoita_tekstia(peli.navipisteet[i].nimi, tmp.x, tmp.y);
-		piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3, 456);
+        piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3, IPiirtoPinta::NORMAALI);
 	}
 
     for (unsigned int i = 0; i < peli.sisapisteet.size(); ++i) {
         apuvalineet::piste tmp = peli.sisapisteet[i].paikka;
         piirtopinta.kirjoita_tekstia(peli.sisapisteet[i].nimi, tmp.x, tmp.y);
-		piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3, 456);
+        piirtopinta.trigonColor(tmp.x - 3, tmp.y + 3, tmp.x + 3, tmp.y + 3, tmp.x, tmp.y - 3, IPiirtoPinta::NORMAALI);
 	}
 }
 
 void PeliView::piirra_lentokentta(IPiirtoPinta& piirtopinta) {
     for (unsigned int i = 0; i < peli.kentta.kiitotiet.size(); ++i) {
-        piirtopinta.lineColor(peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y, peli.kentta.kiitotiet[i].loppupiste.x, peli.kentta.kiitotiet[i].loppupiste.y, 0x223344FF);
+        piirtopinta.lineColor(peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y, peli.kentta.kiitotiet[i].loppupiste.x, peli.kentta.kiitotiet[i].loppupiste.y, IPiirtoPinta::NORMAALI);
         piirtopinta.kirjoita_tekstia(peli.kentta.kiitotiet[i].nimi, peli.kentta.kiitotiet[i].alkupiste.x, peli.kentta.kiitotiet[i].alkupiste.y);
 
-        piirtopinta.circleColor(peli.kentta.kiitotiet[i].lahestymispiste.x, peli.kentta.kiitotiet[i].lahestymispiste.y, apuvalineet::nm2px(0.5), 0xAAAAAAFF);
+        piirtopinta.circleColor(peli.kentta.kiitotiet[i].lahestymispiste.x, peli.kentta.kiitotiet[i].lahestymispiste.y, apuvalineet::nm2px(0.5), IPiirtoPinta::NORMAALI);
 	}
 }
 
@@ -183,7 +183,7 @@ void PeliView::piirra_metar(IPiirtoPinta& piirtopinta) {
 }
 
 void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
-	int y = 120;
+    int y = 120;
 
     if (peli.odottavat.size()) {
         piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys") - asetukset.anna_asetus("info_leveys"), y - piirtopinta.get_fontinkoko() - 5);

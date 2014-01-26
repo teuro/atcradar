@@ -31,6 +31,7 @@ int apuvalineet::arvo_luku(int ala, int yla){
 }
 
 double apuvalineet::etaisyys(const piste& a, const piste& b) {
+//    std::clog << "apuvalineet::etaisyys(" << a.x << ", " << a.y << " " << b.x << ", " << b.y << std::endl;
 	double x = std::abs((a.x - b.x));
 	double y = std::abs((a.y - b.y));
 

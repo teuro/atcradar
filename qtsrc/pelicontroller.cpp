@@ -40,16 +40,17 @@ bool PeliController::tarkista_selvitys(std::string selvitys, int tyyppi) {
         break;
     case apuvalineet::LAHESTYMIS:
         if (peli.valittuKone->anna_nopeus() > asetukset.anna_asetus("maks_lahestymisnopeus")) {
-            peli.aseta_virhe(Peli::VIRHE_NOPEUS_ALA);
+            peli.aseta_virhe(Peli::VIRHE_LAHESTYMISNOPEUS);
             return false;
         }
 
         if (peli.valittuKone->anna_korkeus() > asetukset.anna_asetus("maks_lahestymiskorkeus")) {
-            peli.aseta_virhe(Peli::VIRHE_NOPEUS_YLA);
+            peli.aseta_virhe(Peli::VIRHE_LAHESTYMISKORKEUS);
             return false;
         }
 
         if (std::abs(peli.valittuKone->anna_suunta() - haku_lasku->suunta) > asetukset.anna_asetus("lahestymiskulma")) {
+            peli.aseta_virhe(Peli::VIRHE_LAHESTYMISSUUNTA);
             return false;
         }
         break;
