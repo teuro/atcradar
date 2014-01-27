@@ -11,10 +11,10 @@
 #include <iostream>
 
 #include "levelwidget.hpp"
-#include "AtisWidget.h"
-#include "PeliView.h"
+#include "AtisWidget.hpp"
+#include "PeliView.hpp"
 #include "Metar.hpp"
-#include "PeliWidget.h"
+#include "PeliWidget.hpp"
 #include "peli.hpp"
 #include "kieli.hpp"
 #include "asetukset.hpp"
@@ -38,7 +38,7 @@ public:
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
         peliController = new PeliController(*peli, *asetukset, *dummyPinta, *atis);
-        peliWidget = new PeliWidget(*peliView, *peliController, *peli, *asetukset);
+        peliWidget = new PeliWidget(*asetukset, *peliView, *peliController, *peli);
 
         levelMenu = new LevelMenu();
         atisWidget = new AtisWidget(*metar, *atis, *peli);
@@ -57,9 +57,9 @@ public:
 		layout->addWidget(stack);
 		setLayout(layout);
 
-		connect(levelMenu, SIGNAL(levelSelected(int)), this, SLOT(OnLevelSelected(int)));
-        connect(atisWidget, SIGNAL(atisDone()), this, SLOT(OnAtisDone()));
-        connect(peliWidget, SIGNAL(peliDone()), this, SLOT(OnPeliDone()));
+        connect(levelMenu, SIGNAL(taso_valittu(int)), this, SLOT(kun_taso_valittu(int)));
+        connect(atisWidget, SIGNAL(atis_valmis()), this, SLOT(kun_atis_valmis()));
+        connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
 	}
 
     void resizeEvent(QResizeEvent* e) {
@@ -74,26 +74,26 @@ public:
     }
 
 	public slots:
-    void OnLevelSelected(int level) {
+    void kun_taso_valittu(int taso) {
         stack->setCurrentIndex(1);
-        atisWidget->setLevel(level);
-        peli->setLevel(level);
+        atisWidget->aseta_taso(taso);
+        peli->aseta_taso(taso);
 	}
 
-    void OnAtisDone() {
+    void kun_atis_valmis() {
         stack->setCurrentIndex(2);
 
-        for (int i = 0; i < (peli->getLevel() * 1); ++i) {
+        for (int i = 0; i < (peli->anna_taso() * 1); ++i) {
             peli->luo_kone();
         }
     }
 
-    void OnPeliDone() {
+    void kun_peli_valmis() {
         stack->setCurrentIndex(3);
     }
 
 private:
-	LevelMenu* levelMenu;
+    LevelMenu* levelMenu;
     AtisWidget* atisWidget;
     Peli* peli;
     Atis* atis;

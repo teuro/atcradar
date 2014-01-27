@@ -22,8 +22,7 @@ public:
 // asetukset, jotta niitä ei tarvitsisi referoida virhealttiilla merkkijonoilla.
 // Esim. asetukset.koska_metar eikä asetukset.anna_asetus("koska_metar")
 // Sitten olisi erikseen AsetusLukija, joka lukisi asetukset tiedostosta.
-class Asetukset : public IAsetukset
-{
+class Asetukset : public IAsetukset {
 public:
 	Asetukset();
 	int anna_asetus(std::string asetus);

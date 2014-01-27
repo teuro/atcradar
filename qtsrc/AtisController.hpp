@@ -43,8 +43,8 @@ public:
     int anna_siirtokorkeus() { return this->siirtokorkeus; }
     int anna_siirtopinta() { return this->siirtopinta; }
 
-    void downloadPrressureLimit(std::string file, int siirtokorkeus);
-    int calculateTL(int pressure);
+    void lataa_painerajat(std::string tiedosto, int siirtokorkeus);
+    int laske_siirtopinta(int paine);
 
     void tyhjenna() { painerajat.clear(); }
 

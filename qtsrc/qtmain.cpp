@@ -6,7 +6,7 @@
 #include <qdesktopwidget.h>
 
 #include <ctime>
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 
 int main(int argc, char** argv) {
     std::srand(std::time(NULL));

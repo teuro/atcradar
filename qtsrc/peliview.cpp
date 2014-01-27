@@ -1,4 +1,4 @@
-#include "PeliView.h"
+#include "PeliView.hpp"
 
 // Piirt‰‰ pelin.
 void PeliView::piirra(IPiirtoPinta& piirtopinta) {

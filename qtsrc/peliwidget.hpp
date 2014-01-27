@@ -12,7 +12,7 @@
 #include <QResizeEvent>
 
 #include "peli.hpp"
-#include "PeliView.h"
+#include "PeliView.hpp"
 #include "pelicontroller.hpp"
 #include "QTpiirtopinta.hpp"
 #include "asetukset.hpp"
@@ -26,7 +26,7 @@ class PeliWidget : public QWidget {
 
 public:
 	// constructor
-    PeliWidget(PeliView& v, PeliController& pc, Peli& p, IAsetukset& a) : peliView(v), peliController(pc), peli(p), asetukset(a) {
+    PeliWidget(IAsetukset& a, PeliView& v, PeliController& pc, Peli& p) :asetukset(a), peliView(v), peliController(pc), peli(p) {
 		// Timer to draw the window
 		timer = new QTimer;
         connect(timer, SIGNAL(timeout()), SLOT(animate()));
@@ -72,13 +72,13 @@ public:
     }
 
 signals:
-    void peliDone();
+    void peli_valmis();
 
 public slots:
     void animate() {
         if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
             if (peli.koneet.size() == 0) {
-                emit peliDone();
+                emit peli_valmis();
             }
         }
 

@@ -1,10 +1,10 @@
 #include "AtisController.hpp"
 
-void Atis::downloadPrressureLimit(std::string file, int siirtokorkeus) {
-    std::ifstream in(file.c_str(), std::ios::in);
+void Atis::lataa_painerajat(std::string tiedosto, int siirtokorkeus) {
+    std::ifstream in(tiedosto.c_str(), std::ios::in);
 
     if (!in) {
-        throw std::runtime_error("File " + file + " cannot be open");
+        throw std::runtime_error("File " + tiedosto + " cannot be open");
     }
 
     std::string line;
@@ -28,7 +28,7 @@ void Atis::downloadPrressureLimit(std::string file, int siirtokorkeus) {
     in.close();
 }
 
-int Atis::calculateTL(int pressure) {
+int Atis::laske_siirtopinta(int pressure) {
     for (unsigned int i = 0; i < painerajat.size(); ++i) {
         if (pressure >= Atis::painerajat[i].alaraja && pressure <= Atis::painerajat[i].ylaraja) {
             return painerajat[i].siirtopinta;

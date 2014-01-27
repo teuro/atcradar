@@ -360,11 +360,11 @@ bool Peli::onko_vapaata(int tyyppi, int piste) {
 bool Peli::tarkista_atis() {
     std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
 
-    atis.downloadPrressureLimit("data/painerajat.txt", atis.anna_siirtokorkeus());
+    atis.lataa_painerajat("data/painerajat.txt", atis.anna_siirtokorkeus());
 
     double vasta_lahto = std::cos(std::abs(haku_lahto->suunta - metar.anna_tuuli()));
     double vasta_lasku = std::cos(std::abs(haku_lahto->suunta - metar.anna_tuuli()));
-    double siirtopinta = atis.calculateTL(metar.anna_paine());
+    double siirtopinta = atis.laske_siirtopinta(metar.anna_paine());
 
     if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis.anna_siirtopinta()) {
 		return false;

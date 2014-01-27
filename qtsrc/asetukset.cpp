@@ -1,4 +1,4 @@
-#include "asetukset.h"
+#include "asetukset.hpp"
 
 Asetukset::Asetukset() {
 	lataa_asetukset("data/asetukset.ini");

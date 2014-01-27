@@ -42,7 +42,7 @@ public:
         connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
 
         timer = new QTimer;
-        connect(timer, SIGNAL(timeout()), SLOT(displayHelpers()));
+        connect(timer, SIGNAL(timeout()), SLOT(piirra_avut()));
         timer->setInterval(100);
         timer->start();
     }
@@ -62,19 +62,19 @@ public:
         }
     }
 
-    void drawErrorMessage(std::string info, QLineEdit* field) {
+    void piirra_virheviesti(std::string info, QLineEdit* field) {
         QToolTip::showText(field->mapToGlobal(QPoint()), QString::fromStdString(info));
     }
 
-    void hideErrorMessage() {
+    void piilota_virheviesti() {
         QToolTip::hideText();
     }
 
-    void setLevel(int level) { this->level = level; }
+    void aseta_taso(int level) { this->level = level; }
 
     public slots:
 
-    void displayHelpers() {
+    void piirra_avut() {
         std::string paras_lahto;
         std::string paras_lasku;
 
@@ -86,8 +86,8 @@ public:
             }
         }
 
-        atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
-        int siirtopinta = atis.calculateTL(metar.anna_paine());
+        atis.lataa_painerajat("data/painerajat.txt", inputFields[2]->text().toInt());
+        int siirtopinta = atis.laske_siirtopinta(metar.anna_paine());
         if (this->level < 3 ) {
             if (this->ekaPiirto) {
                 if (this->level < 2) {
@@ -104,41 +104,41 @@ public:
 
     void OnOkPressed() {
         atis.tyhjenna();
-        atis.downloadPrressureLimit("data/painerajat.txt", inputFields[2]->text().toInt());
+        atis.lataa_painerajat("data/painerajat.txt", inputFields[2]->text().toInt());
 
         std::vector <kiitotie> :: iterator haku_lahto = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[0]->text().toStdString());
         std::vector <kiitotie> :: iterator haku_lasku = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), inputFields[1]->text().toStdString());
 
         double vasta_lahto = apuvalineet::laske_vastatuuli(inputFields[0]->text().toInt() * 10, metar.anna_tuuli());
         double vasta_lasku = apuvalineet::laske_vastatuuli(inputFields[1]->text().toInt() * 10, metar.anna_tuuli());
-        int laskettu_siirtopinta = atis.calculateTL(metar.anna_paine());
+        int laskettu_siirtopinta = atis.laske_siirtopinta(metar.anna_paine());
 
         if (haku_lasku == peli.kentta.kiitotiet.end()) {
-            drawErrorMessage("Laskukiitotietä ei ole kentällä", inputFields[1]);
+            piirra_virheviesti("Laskukiitotietä ei ole kentällä", inputFields[1]);
         } else if (haku_lahto == peli.kentta.kiitotiet.end()) {
-            drawErrorMessage("Lahtokiitotietä ei ole kentällä", inputFields[0]);
+            piirra_virheviesti("Lahtokiitotietä ei ole kentällä", inputFields[0]);
         } else if (laskettu_siirtopinta == 0) {
-            drawErrorMessage("Siirtokorkeus on väärin", inputFields[2]);
+            piirra_virheviesti("Siirtokorkeus on väärin", inputFields[2]);
         } else if (vasta_lahto >= 0) {
-            drawErrorMessage("Lähtökiitotie väärin", inputFields[0]);
+            piirra_virheviesti("Lähtökiitotie väärin", inputFields[0]);
         } else if (vasta_lasku >= 0) {
-            drawErrorMessage("Laskukiitotie väärin", inputFields[1]);
+            piirra_virheviesti("Laskukiitotie väärin", inputFields[1]);
         } else if (laskettu_siirtopinta != inputFields[3]->text().toInt()) {
-            drawErrorMessage(std::string("Siirtopinta väärin"), inputFields[3]);
+            piirra_virheviesti(std::string("Siirtopinta väärin"), inputFields[3]);
         } else {
-            hideErrorMessage();
+            piilota_virheviesti();
 
             atis.aseta_lahtokiitotie(inputFields[0]->text().toStdString());
             atis.aseta_laskukiitotie(inputFields[1]->text().toStdString());
             atis.aseta_siirtokorkeus(inputFields[2]->text().toInt());
             atis.aseta_siirtopinta(inputFields[3]->text().toInt());
 
-            emit atisDone();
+            emit atis_valmis();
         }
     }
 
 signals:
-	void atisDone();
+    void atis_valmis();
 
 private:
     Metar& metar;

@@ -39,7 +39,7 @@ private:
     IAsetukset& asetukset;
     Kieli& kieli;
     Atis& atis;
-    int level;
+    int taso;
 
 public:
     Metar& metar;
@@ -103,8 +103,8 @@ public:
     void luo_kone();
 	void tuhoa_kone(int kone);
 
-    int getLevel() { return this->level; }
-    void setLevel(int level) { this->level = level; }
+    int anna_taso() { return this->taso; }
+    void aseta_taso(int taso) { this->taso = taso; }
 
 	void aseta_virhe(int virhe);
 	std::vector <std::string> lataa_pilvet(std::string pilvet);

@@ -74,7 +74,7 @@ bool PeliController::kasittele_aikaa(double intervallisek) {
         peli.luo_kone();
 
         if (peli.kasitellyt < asetukset.anna_asetus("vaadittavat_kasitellyt")) {
-            int koska = apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala") / peli.getLevel(), asetukset.anna_asetus("koska_uusi_yla") / peli.getLevel());
+            int koska = apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala") / peli.anna_taso(), asetukset.anna_asetus("koska_uusi_yla") / peli.anna_taso());
             peli.koska_uusi_kone += koska;
         } else {
             peli.koska_uusi_kone = -1;

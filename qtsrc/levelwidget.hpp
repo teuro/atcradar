@@ -32,7 +32,7 @@ public:
 		okButton->move(80, 85);
 
         connect(slider, SIGNAL(valueChanged(int)), levelLabel, SLOT(setNum(int)));
-		connect(okButton, SIGNAL(clicked()), this, SLOT(OnOkPressed()));
+        connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));
 	}
 
 	virtual ~LevelMenu()
@@ -44,14 +44,14 @@ public:
 	}
 
 public slots:
-    void OnOkPressed()
+    void kun_ok_painettu()
     {
-        emit levelSelected(slider->value());
+        emit taso_valittu(slider->value());
 		//close();
     }
 
 signals:
-	void levelSelected(int level);
+    void taso_valittu(int level);
 
 private:
 	QLabel* title;
