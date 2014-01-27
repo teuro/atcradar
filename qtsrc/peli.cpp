@@ -5,7 +5,7 @@ Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis &at, Metar& m) : as
 	ohje = " ";
 	porrastusvirheet = 0;
 	muut_virheet = 0;
-	kasitellyt = 0;
+    kasitellyt = 0;
 	koska_metar = asetukset.anna_asetus("koska_metar");
 	lataa_tunnukset("data/tunnukset.txt");
 	generoi_metar();
@@ -182,7 +182,7 @@ void Peli::aseta_hiiren_paikka(const apuvalineet::piste& hiiri) {
 void Peli::valitse_kone(const apuvalineet::piste& hiiri) {
     valittuKone = NULL;
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
-        if (apuvalineet::onko_alueella(hiiri, (*it)->paikka)) {
+        if (apuvalineet::onko_alueella(hiiri, (*it)->paikka, 0.5)) {
             valittuKone = *it;
             break;
 		}

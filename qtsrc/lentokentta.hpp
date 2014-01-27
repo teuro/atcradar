@@ -2,7 +2,7 @@
 #define _LENTOKENTTA_HPP
 
 #include "apuvalineet.hpp"
-#include "asetukset.h"
+#include "asetukset.hpp"
 #include <vector>
 
 class kiitotie {

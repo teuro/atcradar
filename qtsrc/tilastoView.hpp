@@ -9,9 +9,13 @@
 #include <QPainter>
 #include <QTimer>
 
+#include <vector>
+#include <iostream>
+
 #include "piirtopinta.hpp"
 #include "peli.hpp"
 #include "kieli.hpp"
+#include "apuvalineet.hpp"
 
 class TilastoView : public QWidget {
     Peli& peli;

@@ -14,7 +14,7 @@
 #include "piirtopinta.hpp"
 #include "peli.hpp"
 #include "kieli.hpp"
-#include "asetukset.h"
+#include "asetukset.hpp"
 #include "kieli.hpp"
 
 #include <iostream>

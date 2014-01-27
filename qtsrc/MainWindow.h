@@ -17,12 +17,12 @@
 #include "PeliWidget.h"
 #include "peli.hpp"
 #include "kieli.hpp"
-#include "asetukset.h"
+#include "asetukset.hpp"
 #include "pelicontroller.hpp"
-#include "QpiirtoPinta.h"
-#include "TiedostoPeliTallenne.hpp"
-#include "tilastoView.hpp"
-#include "TilastoWidget.hpp"
+#include "QTpiirtopinta.hpp"
+#include "pelitallenne_tiedosto.hpp"
+#include "tilastoview.hpp"
+#include "tilastowidget.hpp"
 
 class MainWindow : public QDialog {
 	Q_OBJECT
@@ -33,9 +33,6 @@ public:
         asetukset = new Asetukset;
         tallenne = new TiedostoPeliTallenne;
 
-        tilastoView = new TilastoView(*peli, kieli);
-        tilastoWidget = new TilastoWidget(*tilastoView);
-
         peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
@@ -45,6 +42,9 @@ public:
 
         levelMenu = new LevelMenu();
         atisWidget = new AtisWidget(*metar, *atis, *peli);
+
+        tilastoView = new TilastoView(*peli, kieli);
+        tilastoWidget = new TilastoWidget(*tilastoView);
 
 		stack = new QStackedWidget();
 
@@ -83,13 +83,13 @@ public:
     void OnAtisDone() {
         stack->setCurrentIndex(2);
 
-        for (int i = 0; i < (peli->getLevel() * 3); ++i) {
+        for (int i = 0; i < (peli->getLevel() * 1); ++i) {
             peli->luo_kone();
         }
     }
 
     void OnPeliDone() {
-        tallenne->tallenna();
+        stack->setCurrentIndex(3);
     }
 
 private:

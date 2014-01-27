@@ -1,7 +1,7 @@
 #ifndef _VIEW_HPP
 #define _VIEW_HPP
 
-#include "asetukset.h"
+#include "asetukset.hpp"
 #include "piirtopinta.hpp"
 
 class View

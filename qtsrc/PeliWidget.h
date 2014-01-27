@@ -14,8 +14,8 @@
 #include "peli.hpp"
 #include "PeliView.h"
 #include "pelicontroller.hpp"
-#include "QpiirtoPinta.h"
-#include "asetukset.h"
+#include "QTpiirtopinta.hpp"
+#include "asetukset.hpp"
 
 class PeliWidget : public QWidget {
     Q_OBJECT

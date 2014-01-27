@@ -9,7 +9,7 @@
 #include <list>
 
 #include "controller.hpp"
-#include "asetukset.h"
+#include "asetukset.hpp"
 #include "peli.hpp"
 #include "AtisController.hpp"
 

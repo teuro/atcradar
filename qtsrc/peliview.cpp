@@ -12,7 +12,7 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
     if (peli.koska_uusi_kone > 0) {
         piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi((int)(peli.koska_uusi_kone - peli.anna_pelin_kello())), 610, 20);
     } else {
-        piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi((int)(peli.koska_uusi_kone - peli.anna_pelin_kello())), 610, 20);
+        piirtopinta.kirjoita_tekstia("Uutta konetta ei tule", 610, 20);
     }
     piirtopinta.kirjoita_tekstia("pelin kello " + apuvalineet::tekstiksi((int)peli.anna_pelin_kello()) + " s", 610, 40);
     piirra_metar(piirtopinta);

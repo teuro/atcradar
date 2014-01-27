@@ -4,7 +4,7 @@
 #include <QtWidgets/QWidget>
 
 #include "tilastoView.hpp"
-#include "QpiirtoPinta.h"
+#include "QTpiirtopinta.hpp"
 
 class TilastoWidget : public QWidget {
     Q_OBJECT

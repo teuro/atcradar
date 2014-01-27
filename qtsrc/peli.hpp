@@ -5,7 +5,7 @@
 #include "lentokone.hpp"
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
-#include "asetukset.h"
+#include "asetukset.hpp"
 #include "kieli.hpp"
 #include "view.hpp"
 #include "AtisController.hpp"

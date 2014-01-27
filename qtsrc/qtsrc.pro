@@ -10,16 +10,24 @@ QT += widgets
 # Input
 
 HEADERS += \
-    apuvalineet.hpp asetukset.h AtisController.hpp AtisWidget.h lentokentta.hpp \
-    lentokone.hpp Metar.hpp navipiste.hpp pelicontroller.hpp PeliWidget.h PeliView.h \
-    piirtopinta.hpp peli.hpp view.hpp kieli.hpp QpiirtoPinta.h levelwidget.hpp MainWindow.h \
+    apuvalineet.hpp lentokentta.hpp \
+    lentokone.hpp navipiste.hpp pelicontroller.hpp \
+    piirtopinta.hpp peli.hpp view.hpp kieli.hpp levelwidget.hpp MainWindow.h \
     pelitallenne.hpp \
-    TiedostoPeliTallenne.hpp \
-    tilastoView.hpp \
-    TilastoWidget.hpp
+    QTpiirtopinta.hpp \
+    pelitallenne_tiedosto.hpp \
+    peliwidget.h \
+    peliview.h \
+    metar.hpp \
+    atiswidget.h \
+    atiscontroller.hpp \
+    tilastowidget.hpp \
+    asetukset.hpp \
+    tilastoview.hpp
 
 SOURCES += \
-    apuvalineet.cpp asetukset.cpp AtisController.cpp lentokentta.cpp lentokone.cpp \
+    apuvalineet.cpp asetukset.cpp lentokentta.cpp lentokone.cpp \
     navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp kieli.cpp \
-    TilastoVieww.cpp
+    atiscontroller.cpp \
+    tilastoview.cpp
 
