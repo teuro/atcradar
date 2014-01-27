@@ -20,6 +20,9 @@
 #include "asetukset.h"
 #include "pelicontroller.hpp"
 #include "QpiirtoPinta.h"
+#include "TiedostoPeliTallenne.hpp"
+#include "tilastoView.hpp"
+#include "TilastoWidget.hpp"
 
 class MainWindow : public QDialog {
 	Q_OBJECT
@@ -28,6 +31,10 @@ public:
         atis = new Atis;
         metar = new Metar;
         asetukset = new Asetukset;
+        tallenne = new TiedostoPeliTallenne;
+
+        tilastoView = new TilastoView(*peli, kieli);
+        tilastoWidget = new TilastoWidget(*tilastoView);
 
         peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
 
@@ -44,6 +51,7 @@ public:
         stack->addWidget(levelMenu);
         stack->addWidget(atisWidget);
         stack->addWidget(peliWidget);
+        stack->addWidget(tilastoWidget);
 
 		QVBoxLayout *layout = new QVBoxLayout;
 		layout->addWidget(stack);
@@ -81,7 +89,7 @@ public:
     }
 
     void OnPeliDone() {
-
+        tallenne->tallenna();
     }
 
 private:
@@ -101,4 +109,8 @@ private:
     QPainterPiirtoPinta* dummyPinta;
     PeliController *peliController;
     PeliWidget* peliWidget;
+    TiedostoPeliTallenne* tallenne;
+
+    TilastoWidget* tilastoWidget;
+    TilastoView* tilastoView;
 };
