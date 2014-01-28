@@ -17,6 +17,7 @@ public:
         colors[IPiirtoPinta::NORMAALI] = new QColor(30, 30, 30);
         colors[IPiirtoPinta::OK] = new QColor(30, 150, 30);
         colors[IPiirtoPinta::VIRHE] = new QColor(150, 30, 30);
+        colors[IPiirtoPinta::VALITTU] = new QColor(60, 180, 60);
     }
 
     void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) {
@@ -34,16 +35,15 @@ public:
         m_painter->drawEllipse(QPointF(x, y), rad, rad);
     }
 
-    void trigonColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned short x3, unsigned short y3, unsigned int color) {
+    void trigonColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned short x3, unsigned short y3, unsigned int color = 0) {
         m_painter->setPen(*colors[color]);
         QPoint points[3] = {QPoint(x1, y1), QPoint(x2, y2), QPoint(x3, y3)};
         m_painter->drawPolygon(points, 3);
     }
 
-    void kirjoita_tekstia(std::string teksti, int x, int y, bool aktiivinen = false) {
-        if (!aktiivinen) {
-            m_painter->drawText(x, y, teksti.c_str());
-        }
+    void kirjoita_tekstia(std::string teksti, int x, int y, unsigned int color) {
+        m_painter->setPen(*colors[color]);
+        m_painter->drawText(x, y, teksti.c_str());
     }
 
     int get_fontinkoko() { return 16; }
