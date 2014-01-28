@@ -71,7 +71,9 @@ bool PeliController::kasittele_aikaa(double intervallisek) {
     peli.hoida_koneet(intervallisek);    
 
     if (peli.anna_pelin_kello() >= peli.koska_uusi_kone && peli.koska_uusi_kone > 0) {
-        peli.luo_kone();
+        if (peli.koneet.size() <= asetukset.anna_asetus("maks_konemaara")) {
+            peli.luo_kone();
+        }
 
         if (peli.kasitellyt < asetukset.anna_asetus("vaadittavat_kasitellyt")) {
             int koska = apuvalineet::arvo_luku(asetukset.anna_asetus("koska_uusi_ala") / peli.anna_taso(), asetukset.anna_asetus("koska_uusi_yla") / peli.anna_taso());
