@@ -188,8 +188,6 @@ void PeliView::piirra_metar(IPiirtoPinta& piirtopinta) {
 }
 
 void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
-    int y = 120;
-
     if (peli.odottavat.size()) {
         piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", 610, 60);
 	}

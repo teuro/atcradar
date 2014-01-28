@@ -84,9 +84,11 @@ public:
     void kun_atis_valmis() {
         stack->setCurrentIndex(2);
 
-        for (int i = 0; i < (peli->anna_taso() * 1); ++i) {
+        for (int i = 0; i < (peli->anna_taso() * 3); ++i) {
             peli->luo_kone();
         }
+
+        tallenne->tallenna();
     }
 
     void kun_peli_valmis() {
