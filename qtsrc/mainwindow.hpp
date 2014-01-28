@@ -31,7 +31,6 @@ public:
         atis = new Atis;
         metar = new Metar;
         asetukset = new Asetukset;
-        tallenne = new TiedostoPeliTallenne;
 
         peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
 
@@ -45,6 +44,8 @@ public:
 
         tilastoView = new TilastoView(*peli, kieli);
         tilastoWidget = new TilastoWidget(*tilastoView);
+
+        tallenne = new TiedostoPeliTallenne(*peli);
 
 		stack = new QStackedWidget();
 

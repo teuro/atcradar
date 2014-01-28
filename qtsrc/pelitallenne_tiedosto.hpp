@@ -7,9 +7,9 @@
 
 class TiedostoPeliTallenne : public IPeliTallenne {
 public:
-    void tallenna() {
-        std::clog << "Peli tallenteen tallennus" << std::endl;
-    }
+    TiedostoPeliTallenne(Peli& p);
+    void tallenna();
+    void lataa();
 };
 
 #endif // TIEDOSTOPELITALLENNE_HPP
