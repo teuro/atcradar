@@ -61,6 +61,7 @@ public:
         connect(levelMenu, SIGNAL(taso_valittu(int)), this, SLOT(kun_taso_valittu(int)));
         connect(atisWidget, SIGNAL(atis_valmis()), this, SLOT(kun_atis_valmis()));
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
+        connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
 	}
 
     void resizeEvent(QResizeEvent* e) {
@@ -79,6 +80,8 @@ public:
         stack->setCurrentIndex(1);
         atisWidget->aseta_taso(taso);
         peli->aseta_taso(taso);
+        asetukset->muuta_asetusta("vaadittavat_kasitellyt", asetukset->anna_asetus("vaadittavat_kasitellyt") * taso);
+        asetukset->muuta_asetusta("maks_konemaara", asetukset->anna_asetus("maks_konemaara") * taso);
 	}
 
     void kun_atis_valmis() {
@@ -87,11 +90,13 @@ public:
         for (int i = 0; i < (peli->anna_taso() * 3); ++i) {
             peli->luo_kone();
         }
-
-        tallenne->tallenna();
     }
 
     void kun_peli_valmis() {
+        stack->setCurrentIndex(3);
+    }
+
+    void porrastusvirheet_taynna() {
         stack->setCurrentIndex(3);
     }
 
