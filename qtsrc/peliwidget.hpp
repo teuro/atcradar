@@ -73,6 +73,7 @@ public:
 
 signals:
     void peli_valmis();
+    void porrastusvirheet();
 
 public slots:
     void animate() {
@@ -80,6 +81,8 @@ public slots:
             if (peli.koneet.size() == 0) {
                 emit peli_valmis();
             }
+        } else if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
+            emit porrastusvirheet();
         }
 
         peliController.kasittele_aikaa(frameMs / 1000.0);
