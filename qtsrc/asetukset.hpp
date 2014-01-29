@@ -15,7 +15,7 @@ class IAsetukset
 public:
 	virtual int anna_asetus(std::string asetus) = 0;
 	virtual void lataa_asetukset(std::string nimi) = 0;
-	virtual void muuta_asetusta(std::string asetus, int arvo) = 0;
+    virtual void muuta_asetusta(std::string asetus, int arvo) = 0;
 };
 
 // TODO: Voisi harkita että asetukset-oliolla olisi vaan membereinä

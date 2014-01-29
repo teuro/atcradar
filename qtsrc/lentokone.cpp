@@ -2,7 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus, lentokentta& k, Atis& a) : kentta(k), atis(a) {
+lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus, lentokentta& k, Atis& a, IAsetukset& as) : kentta(k), atis(a), asetukset(as) {
 	this->kutsutunnus = kutsutunnus;
 
 	this->paikka = paikka;
@@ -31,9 +31,9 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 	this->odotus = odotus;
 	this->oikotie = false;
 
-	this->nopeus_muutos = 4.0;
-	this->korkeus_muutos = 35.0;
-	this->suunta_muutos = 3.0;
+    this->nopeus_muutos = asetukset.anna_asetus("nopeus_muutos");
+    this->korkeus_muutos = asetukset.anna_asetus("korkeus_muutos");
+    this->suunta_muutos = asetukset.anna_asetus("suunta_muutos");
 }
 
 void lentokone::muuta_selvityskorkeutta(double korkeus) {

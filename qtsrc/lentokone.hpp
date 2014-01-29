@@ -5,6 +5,8 @@
 #include "navipiste.hpp"
 #include "lentokentta.hpp"
 #include "AtisController.hpp"
+#include "asetukset.hpp"
+
 #define _USE_MATH_DEFINES
 #include <cmath>
 
@@ -41,7 +43,8 @@ private:
 
     kiitotie baana;
     lentokentta kentta;
-    Atis atis;
+    Atis& atis;
+    IAsetukset& asetukset;
 
 	int kaarto;
 
@@ -67,7 +70,7 @@ private:
 
 	bool laskuselvitys;
 public:
-    lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus, lentokentta& k, Atis&a );
+    lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi, bool odotus, lentokentta& k, Atis& a, IAsetukset& as);
 
     apuvalineet::piste paikka;
 
