@@ -86,7 +86,6 @@ public slots:
         }
 
         peliController.kasittele_aikaa(frameMs / 1000.0);
-        peliController.ota_aika(frameMs / 1000.0);
 
         lahesty->hide();
         keskeyta->hide();
@@ -159,6 +158,12 @@ public slots:
     void mouseReleaseEvent(QMouseEvent* e) {
         QPoint pos = e->pos();
         peliController.kasittele_hiiren_nappi(apuvalineet::piste(pos.x(), pos.y()));
+
+        if (peli.valittuKone) {
+            inputFields[0].field->setText(QString::fromStdString(apuvalineet::tekstiksi(peli.valittuKone->anna_selvityssuunta())));
+            inputFields[1].field->setText(QString::fromStdString(apuvalineet::tekstiksi(peli.valittuKone->anna_selvitysnopeus())));
+            inputFields[2].field->setText(QString::fromStdString(apuvalineet::tekstiksi(peli.valittuKone->anna_selvityskorkeus())));
+        }
 
         update();
     }

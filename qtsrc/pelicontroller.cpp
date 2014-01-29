@@ -83,6 +83,8 @@ bool PeliController::kasittele_aikaa(double intervallisek) {
         }
     }
 
+    this->ota_aika(intervallisek);
+
 	return true;
 }
 
