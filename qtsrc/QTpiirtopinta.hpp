@@ -20,6 +20,10 @@ public:
         colors[IPiirtoPinta::VALITTU] = new QColor(60, 180, 60);
     }
 
+    ~QPainterPiirtoPinta() {
+        //delete m_painter;
+    }
+
     void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) {
         m_painter->setPen(*colors[color]);
         m_painter->drawRect(x1, y1, x2-x1, y2-y1);
