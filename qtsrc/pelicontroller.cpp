@@ -2,6 +2,7 @@
 
 void PeliController::kasittele_komento(const std::string& komento) {
     std::vector <std::string> asiat = apuvalineet::pilko_rivi(komento, "|");
+    std::vector <Peli::tilasto> :: iterator selvitykset = std::find(peli.ajat.begin(), peli.ajat.end(), peli.valittuKone->anna_kutsutunnus());
 
     if (peli.valittuKone) {
         for (std::vector <std::string> :: iterator it = asiat.begin(); it < asiat.end(); ++it) {
@@ -10,6 +11,7 @@ void PeliController::kasittele_komento(const std::string& komento) {
             int tyyppi = apuvalineet::luvuksi<int>(*it);
 
             if (tarkista_selvitys(selvitys, tyyppi)) {
+                ++selvitykset->selvitykset;
                 anna_selvitys(selvitys, tyyppi);
             }
         }
@@ -20,12 +22,19 @@ bool PeliController::tarkista_selvitys(std::string selvitys, int tyyppi) {
     std::vector <kiitotie> :: iterator haku_lasku = std::find(peli.kentta.kiitotiet.begin(), peli.kentta.kiitotiet.end(), atis.anna_laskukiitotie());
 
     switch (tyyppi) {
+    case apuvalineet::SUUNTA:
+        if (peli.valittuKone->anna_selvityssuunta() == apuvalineet::luvuksi<int>(selvitys)) {
+            return false;
+        }
+        break;
     case apuvalineet::NOPEUS:
         if (apuvalineet::luvuksi<int>(selvitys) < asetukset.anna_asetus("selvitysnopeus_ala")) {
             peli.aseta_virhe(Peli::VIRHE_NOPEUS_ALA);
             return false;
         } else if (apuvalineet::luvuksi<int>(selvitys) > asetukset.anna_asetus("selvitysnopeus_yla")) {
             peli.aseta_virhe(Peli::VIRHE_NOPEUS_YLA);
+            return false;
+        } else if (peli.valittuKone->anna_selvitysnopeus() == apuvalineet::luvuksi<int>(selvitys)) {
             return false;
         }
         break;
@@ -35,6 +44,8 @@ bool PeliController::tarkista_selvitys(std::string selvitys, int tyyppi) {
             return false;
         } else if (apuvalineet::luvuksi<int>(selvitys) > asetukset.anna_asetus("selvityskorkeus_yla")) {
             peli.aseta_virhe(Peli::VIRHE_KORKEUS_YLA);
+            return false;
+        } else if (peli.valittuKone->anna_selvityskorkeus() == apuvalineet::luvuksi<int>(selvitys)) {
             return false;
         }
         break;
@@ -71,7 +82,7 @@ bool PeliController::kasittele_aikaa(double intervallisek) {
     peli.hoida_koneet(intervallisek);    
 
     if (peli.anna_pelin_kello() >= peli.koska_uusi_kone && peli.koska_uusi_kone > 0) {
-        if (peli.koneet.size() <= asetukset.anna_asetus("maks_konemaara")) {
+        if (peli.koneet.size() <= (unsigned int)asetukset.anna_asetus("maks_konemaara")) {
             peli.luo_kone();
         }
 
@@ -111,11 +122,7 @@ void PeliController::pyyda_atis() {
 
 }
 
-void PeliController::anna_selvitys(std::string komento, int toiminto) {
-    std::vector <Peli::tilasto> :: iterator selvitykset = std::find(peli.ajat.begin(), peli.ajat.end(), peli.valittuKone->anna_kutsutunnus());
-
-    ++selvitykset->selvitykset;
-
+void PeliController::anna_selvitys(std::string komento, int toiminto) {    
     if (komento == "ILS") {
         peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, true);
     } else if (komento == "CNL") {
