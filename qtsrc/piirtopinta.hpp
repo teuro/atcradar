@@ -3,8 +3,7 @@
 
 // Abstrakti piirtopinta, jota n‰kym‰t (View) voivat k‰ytt‰‰ piirt‰miseen
 
-class IPiirtoPinta
-{
+class IPiirtoPinta {
 public:
     virtual void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) = 0;
     virtual void lineColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) = 0;
@@ -16,6 +15,8 @@ public:
 
 	virtual int get_fontinkoko() = 0;
 	virtual void flip() = 0;
+
+    virtual ~IPiirtoPinta() { }
 
     enum tyypit {NORMAALI, OK, VIRHE, VALITTU};
 };
