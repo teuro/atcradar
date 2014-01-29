@@ -20,12 +20,11 @@
 #include "asetukset.hpp"
 #include "pelicontroller.hpp"
 #include "QTpiirtopinta.hpp"
-#include "pelitallenne_tiedosto.hpp"
 #include "tilastoview.hpp"
 #include "tilastowidget.hpp"
 
 class MainWindow : public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 public:
     MainWindow(Kieli& k) : kieli(k) {
         atis = new Atis;
@@ -45,24 +44,22 @@ public:
         tilastoView = new TilastoView(*peli, kieli);
         tilastoWidget = new TilastoWidget(*tilastoView);
 
-        tallenne = new TiedostoPeliTallenne(*peli);
-
-		stack = new QStackedWidget();
+        stack = new QStackedWidget();
 
         stack->addWidget(levelMenu);
         stack->addWidget(atisWidget);
         stack->addWidget(peliWidget);
         stack->addWidget(tilastoWidget);
 
-		QVBoxLayout *layout = new QVBoxLayout;
-		layout->addWidget(stack);
-		setLayout(layout);
+        QVBoxLayout *layout = new QVBoxLayout;
+        layout->addWidget(stack);
+        setLayout(layout);
 
         connect(levelMenu, SIGNAL(taso_valittu(int)), this, SLOT(kun_taso_valittu(int)));
         connect(atisWidget, SIGNAL(atis_valmis()), this, SLOT(kun_atis_valmis()));
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
         connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
-	}
+    }
 
     void resizeEvent(QResizeEvent* e) {
         if (this->width() < 700 || this->height() < 600) {
@@ -117,7 +114,6 @@ private:
     QPainterPiirtoPinta* dummyPinta;
     PeliController *peliController;
     PeliWidget* peliWidget;
-    TiedostoPeliTallenne* tallenne;
 
     TilastoWidget* tilastoWidget;
     TilastoView* tilastoView;
