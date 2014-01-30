@@ -11,3 +11,5 @@ Pelissä käytetään (versiosta 1.30) alkaen QT-käyttöliittymäkirjastoa. Ver
 1.20 asti peli käytti SDL-kirjastoa.
 
 Wikissä on joitakin peliohjeita, joita tulee tarpeen mukaan lisääkin.
+
+Peliä saa pelata täysin ilmaiseksi, sekä pelin edelleen kehittäminen on sallittua. Julkaisulisenssiä en ole valinnut, mutta käytä miten lystäät sopii varmasti tähän hyvin. 
