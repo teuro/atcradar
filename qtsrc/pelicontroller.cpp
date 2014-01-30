@@ -82,7 +82,7 @@ bool PeliController::kasittele_aikaa(double intervallisek) {
     peli.hoida_koneet(intervallisek);    
 
     if (peli.anna_pelin_kello() >= peli.koska_uusi_kone && peli.koska_uusi_kone > 0) {
-        if (peli.koneet.size() <= (unsigned int)asetukset.anna_asetus("maks_konemaara")) {
+        if (peli.koneet.size() <= asetukset.anna_asetus("maks_konemaara")) {
             peli.luo_kone();
         }
 

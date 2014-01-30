@@ -57,11 +57,13 @@ public:
         double sisaan;
         double pois;
         int selvitykset;
+        double pisteet;
 
         bool operator ==(std::string kutsutunnus) {
             return kutsutunnus == tunnus;
         }
     };
+
     std::vector <tilasto> ajat;
 
     std::string ohje;

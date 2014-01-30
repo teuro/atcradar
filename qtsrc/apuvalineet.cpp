@@ -22,7 +22,10 @@ double apuvalineet::rad2deg(double rad) {
 
 	return deg;
 }
-int apuvalineet::arvo_luku(int ala, int yla){
+int apuvalineet::arvo_luku(int ala, int yla) {
+    if (yla == 0) {
+        throw std::logic_error("Jako nollalla!");
+    }
     int tmp_luku;
 
     tmp_luku = ala + std::rand() % (yla - ala);
@@ -31,7 +34,6 @@ int apuvalineet::arvo_luku(int ala, int yla){
 }
 
 double apuvalineet::etaisyys(const piste& a, const piste& b) {
-//    std::clog << "apuvalineet::etaisyys(" << a.x << ", " << a.y << " " << b.x << ", " << b.y << std::endl;
 	double x = std::abs((a.x - b.x));
 	double y = std::abs((a.y - b.y));
 

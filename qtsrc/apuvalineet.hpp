@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 #include <vector>
 #include <map>

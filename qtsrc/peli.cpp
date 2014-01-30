@@ -10,6 +10,8 @@ Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis &at, Metar& m) : as
 	lataa_tunnukset("data/tunnukset.txt");
 	generoi_metar();
     valittuKone = NULL;
+    taso = 1;
+    koska_uusi_kone = -1;
 }
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
@@ -234,6 +236,7 @@ void Peli::tarkista_porrastus() {
 void Peli::logita_aika(lentokone* lk) {
     std::vector <tilasto> :: iterator haku_pois = std::find(ajat.begin(), ajat.end(), lk->anna_kutsutunnus());
     haku_pois->pois = this->pelin_kello;
+    haku_pois->pisteet += 100 * 7 / haku_pois->selvitykset;
 }
 
 bool pois(lentokone* kone) {
@@ -330,8 +333,8 @@ void Peli::generoi_metar() {
         std::string pilvi;
 
         for (int i = 0; i < pilvia; ++i) {
-                tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
-        pilvi += tyyppi + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")), 100)) + " ";
+            tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
+            pilvi += tyyppi + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")), 100)) + " ";
         }
 
     metar.aseta_pilvet(pilvi);
