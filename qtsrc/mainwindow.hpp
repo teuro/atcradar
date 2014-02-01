@@ -59,6 +59,7 @@ public:
         connect(atisWidget, SIGNAL(atis_valmis()), this, SLOT(kun_atis_valmis()));
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
         connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
+        connect(peliWidget, SIGNAL(tallennettu()), this, SLOT(kun_tallennettu()));
     }
 
     void resizeEvent(QResizeEvent* e) {
@@ -95,6 +96,10 @@ public slots:
     }
 
     void porrastusvirheet_taynna() {
+        stack->setCurrentIndex(3);
+    }
+
+    void kun_tallennettu() {
         stack->setCurrentIndex(3);
     }
 
