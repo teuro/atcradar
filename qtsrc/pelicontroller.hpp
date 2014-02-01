@@ -18,8 +18,10 @@ class Peli;
 class IAsetukset;
 
 /*
-MVC Controller
-PeliController handles and parses game input (from Ohjelma-class), game logic, updates game state (in Peli) and updates the display (using PeliView).
+    MVC Ohjain
+
+    PeliController lukee ja tulkitsee syötteet. Käsitellyt syötteiden perusteella lasketaan pelille uusi tila.
+    Ohjain piirtää pelin tilan käyttäen peliview-luokkaa.
 */
 
 class PeliController : public IController {
@@ -35,8 +37,6 @@ public:
 	void kasittele_hiiren_paikka(apuvalineet::piste koordinaatit);
 
     void kasittele_komento(const std::string& komento);
-
-	void pyyda_atis();
 
     void anna_selvitys(std::string komento, int toiminto);
 
