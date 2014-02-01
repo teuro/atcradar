@@ -169,6 +169,8 @@ void lentokone::ota_selvitys(int tyyppi, bool lahesty) {
         this->muuta_selvityskorkeutta(baana.alkunousukorkeus);
         this->muuta_selvityssuuntaa(baana.alkunoususuunta);
         this->muuta_selvitysnopeutta(250);
+    } else if (tyyppi == apuvalineet::LASKU) {
+        this->laskuselvitys = true;
     }
 }
 

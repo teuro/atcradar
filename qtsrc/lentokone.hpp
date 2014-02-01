@@ -125,6 +125,7 @@ public:
 
     navipiste anna_kohde() { return this->kohde; }
     bool anna_lahestymisselvitys() { return this->lahestymisselvitys; }
+    bool anna_laskuselvitys() { return this->laskuselvitys; }
 };
 
 #endif
