@@ -42,6 +42,10 @@ private:
     int taso;
 
 public:
+    void aloita() {
+        koska_uusi_kone = 15;
+        pelin_kello = 0;
+    }
     Metar& metar;
     Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis& at, Metar& m);
 
