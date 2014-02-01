@@ -291,6 +291,12 @@ void Peli::hoida_koneet(double intervalliMs) {
 			}
 		}
 
+        if ((*it)->anna_korkeus() >= 10000) {
+            (*it)->muuta_selvitysnopeutta(440);
+        } else if ((*it)->anna_korkeus() >= 4000) {
+            (*it)->muuta_selvitysnopeutta(250);
+        }
+
         (*it)->liiku(intervalliMs);
 	}
 }
