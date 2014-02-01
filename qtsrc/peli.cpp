@@ -141,7 +141,7 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 			kentta.paikka.y = apuvalineet::luvuksi<double>(asiat[2]);
 		} else if (asiat[0] == "K") {
 			apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
-			kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"));
+            kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), apuvalineet::luvuksi<double>(asiat[8]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"));
 			tmpa.liukupolku = 3.0;
 
 			kentta.kiitotiet.push_back(tmpa);
@@ -246,6 +246,7 @@ bool pois(lentokone* kone) {
 void Peli::hoida_koneet(double intervalliMs) {
     tarkista_porrastus();
     std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
+    std::vector <kiitotie> :: iterator haku_lasku = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_laskukiitotie());
 
     std::list <lentokone*> :: iterator loppu;
     loppu = std::remove_if(koneet.begin(), koneet.end(), pois);
@@ -295,6 +296,10 @@ void Peli::hoida_koneet(double intervalliMs) {
             (*it)->muuta_selvitysnopeutta(440);
         } else if ((*it)->anna_korkeus() >= 4000) {
             (*it)->muuta_selvitysnopeutta(250);
+        }
+
+        if ((*it)->anna_korkeus() < haku_lasku->lahestymiskorkeus && (*it)->anna_tyyppi() == Peli::SAAPUVA) {
+            (*it)->ota_selvitys(apuvalineet::LASKU);
         }
 
         (*it)->liiku(intervalliMs);
@@ -366,18 +371,24 @@ bool Peli::onko_vapaata(int tyyppi, int piste) {
 	return true;
 }
 
-bool Peli::tarkista_atis() {
-    std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
-
-    atis.lataa_painerajat("data/painerajat.txt", atis.anna_siirtokorkeus());
-
-    double vasta_lahto = std::cos(std::abs(haku_lahto->suunta - metar.anna_tuuli()));
-    double vasta_lasku = std::cos(std::abs(haku_lahto->suunta - metar.anna_tuuli()));
-    double siirtopinta = atis.laske_siirtopinta(metar.anna_paine());
-
-    if (vasta_lahto < 0 || vasta_lasku < 0 || siirtopinta != atis.anna_siirtopinta()) {
-		return false;
-    }
-
-	return true;
+void Peli::aloita() {
+    koska_uusi_kone = 15;
+    pelin_kello = 0;
 }
+
+void Peli::aseta_taso(int taso) {
+    this->taso = taso;
+}
+
+void Peli::aseta_pelin_kello(double aika){
+    this->pelin_kello += aika;
+}
+
+double Peli::anna_pelin_kello() {
+    return this->pelin_kello;
+}
+
+int Peli::anna_taso() {
+    return this->taso;
+}
+
