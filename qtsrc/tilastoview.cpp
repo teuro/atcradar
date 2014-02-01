@@ -2,8 +2,8 @@
 
 void TilastoView::piirra(IPiirtoPinta& pinta) {
     pinta.kirjoita_tekstia("Tilastoja pelistä", 300, 20);
-    int y = 100;
-    int x = 200;
+    int y = 80;
+    int x = 20;
     int vali = 65;
     double pistesumma = 0;
     double sisaan = 0;
@@ -21,7 +21,7 @@ void TilastoView::piirra(IPiirtoPinta& pinta) {
     otsikot.push_back("Pisteet");
 
     for (unsigned int i = 0; i < otsikot.size(); ++i) {
-        pinta.kirjoita_tekstia(otsikot[i], x+vali*i, y-30);
+        pinta.kirjoita_tekstia(otsikot[i], x+vali*i, y-25);
     }
 
     pinta.lineColor(x-5, y-20, x+vali*otsikot.size() + 5, y-20, 1);
@@ -53,22 +53,29 @@ void TilastoView::piirra(IPiirtoPinta& pinta) {
     pinta.kirjoita_tekstia(apuvalineet::tekstiksi(selvitykset), x+vali*4, y);
     pinta.kirjoita_tekstia(apuvalineet::tekstiksi(pistesumma), x+vali*5, y);
 
-    pinta.lineColor(x-5, y-(peli.koneet.size()+2) * 20 - 5, x+vali*otsikot.size() + 5, y-(peli.koneet.size()+2) * 20 - 5, 1);
+    /* Vasen reuna */
+    pinta.lineColor(x-5, y+5+20, x-5, y-(peli.ajat.size()+2) * 20 - 5, 1);
+
+    /* Oikea reuna */
+    pinta.lineColor(x+vali*otsikot.size() + 5, y+5+20, x+vali*otsikot.size() + 5, y-(peli.ajat.size()+2) * 20 - 5, 1);
+
+    /* Yläreuna */
+    pinta.lineColor(x-5, y-(peli.ajat.size()+2) * 20 - 5, x+vali*otsikot.size() + 5, y-(peli.ajat.size()+2) * 20 - 5, 1);
+
+    /* Alareuna */
     pinta.lineColor(x-5, y+5, x+vali*otsikot.size() + 5, y + 5, 1);
-    pinta.lineColor(x-5, y+5+20, x - 5, y-(peli.koneet.size()+2) * 20 - 5, 1);
-    pinta.lineColor(x+vali*otsikot.size() + 5, y+5+20, x+vali*otsikot.size() + 5, y-(peli.koneet.size()+2) * 20 - 5, 1);
 
     pinta.kirjoita_tekstia("Keskiarvo", x, y+20);
 
-    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(sisaan / peli.koneet.size()), x+vali, y+20);
-    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(pois / peli.koneet.size()), x+vali*2, y+20);
-    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(alueella / peli.koneet.size()), x+vali*3, y+20);
-    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(selvitykset / peli.koneet.size()), x+vali*4, y+20);
-    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(pistesumma / peli.koneet.size()), x+vali*5, y+20);
+    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(sisaan / peli.ajat.size()), x+vali, y+20);
+    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(pois / peli.ajat.size()), x+vali*2, y+20);
+    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(alueella / peli.ajat.size()), x+vali*3, y+20);
+    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(selvitykset / peli.ajat.size()), x+vali*4, y+20);
+    pinta.kirjoita_tekstia(apuvalineet::tekstiksi(pistesumma / peli.ajat.size()), x+vali*5, y+20);
 
     pinta.lineColor(x-5, y+5+20, x+vali*otsikot.size() + 5, y + 5 + 20, 1);
 
     for (unsigned int i = 1; i < otsikot.size(); ++i) {
-        pinta.lineColor(x + vali * i - 5, y-(peli.koneet.size()+2) * 20 - 5, x + vali * i - 5, y+5+20, 1);
+        pinta.lineColor(x + vali * i - 5, y-(peli.ajat.size()+2) * 20 - 5, x + vali * i - 5, y+5+20, 1);
     }
 }

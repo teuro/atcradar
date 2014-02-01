@@ -11,12 +11,12 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
     piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
 
     if (peli.koska_uusi_kone > 0) {
-        piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi((int)(peli.koska_uusi_kone - peli.anna_pelin_kello())), 610, 20);
+        piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi((int)(peli.koska_uusi_kone - peli.anna_pelin_kello())), asetukset.anna_asetus("ruutu_leveys")-150, 20);
     } else {
-        piirtopinta.kirjoita_tekstia("Uutta konetta ei tule", 610, 20);
+        piirtopinta.kirjoita_tekstia("Uutta konetta ei tule", asetukset.anna_asetus("ruutu_leveys")-150, 20);
     }
 
-    piirtopinta.kirjoita_tekstia("pelin kello " + apuvalineet::tekstiksi((int)peli.anna_pelin_kello()) + " s", 610, 40);
+    piirtopinta.kirjoita_tekstia("pelin kello " + apuvalineet::tekstiksi((int)peli.anna_pelin_kello()) + " s", asetukset.anna_asetus("ruutu_leveys")-150, 40);
 
     piirra_metar(piirtopinta);
 	piirtopinta.flip();
@@ -32,7 +32,7 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
     unsigned int ng = IPiirtoPinta::VIRHE;
     unsigned int valittu = IPiirtoPinta::VALITTU;
 
-    int listauskorkeus = 120;
+    int listauskorkeus = 160;
 
     piirtopinta.kirjoita_tekstia("Koneita " + apuvalineet::tekstiksi(peli.koneet.size()) + " / " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_konemaara")), 30, listauskorkeus - 20);
 
@@ -59,11 +59,13 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
             piirtopinta.kirjoita_tekstia((*it)->anna_kutsutunnus(), 30, listauskorkeus, vari);
 
             if ((*it)->anna_reitin_koko() == 0) {
-                if ((*it)->lahestymisselvitys) {
+                if ((*it)->lahestymisselvitys && !(*it)->anna_laskuselvitys()) {
 					piirtopinta.kirjoita_tekstia("ILS", 100, listauskorkeus);
                 } else if ((*it)->anna_oikotie()) {
                     piirtopinta.kirjoita_tekstia((*it)->anna_ulosmenopiste().nimi, 100, listauskorkeus, vari);
-				}
+                } else if ((*it)->anna_laskuselvitys()) {
+                    piirtopinta.kirjoita_tekstia("LAND", 100, listauskorkeus);
+                }
 
                 if (!(*it)->anna_lahestymisselvitys() && !(*it)->anna_oikotie()) {
                     piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi((*it)->anna_selvityssuunta()), 100, listauskorkeus, vari);
@@ -156,13 +158,13 @@ void PeliView::piirra_lentokentta(IPiirtoPinta& piirtopinta) {
 
 void PeliView::piirra_tilanne(IPiirtoPinta& piirtopinta) {
     std::string teksti = "Hoidetut " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
-    piirtopinta.kirjoita_tekstia(teksti, 500, 20);
+    piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys")-300, 20);
 
     teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_porrastusvirhe"));
-    piirtopinta.kirjoita_tekstia(teksti, 500, 40);
+    piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys")-300, 40);
 
     teksti = "muut virheet " + apuvalineet::tekstiksi(peli.muut_virheet);
-    piirtopinta.kirjoita_tekstia(teksti, 500, 60);
+    piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys")-300, 60);
 }
 
 void PeliView::piirra_ohje(IPiirtoPinta& piirtopinta, std::string ohje) {
@@ -181,11 +183,11 @@ void PeliView::piirra_metar(IPiirtoPinta& piirtopinta) {
 	tuuli = apuvalineet::muuta_pituus(tuuli, 3);
 	voimakkuus = apuvalineet::muuta_pituus(voimakkuus, 2);
 
-    piirtopinta.kirjoita_tekstia(peli.kentta.nimi + " " + tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + pilvet + " " + paine, 50, 10);
+    piirtopinta.kirjoita_tekstia(peli.kentta.nimi + " " + tuuli + voimakkuus + "KT " + nakyvyys + " " + lampotila + " / " + kastepiste + " " + pilvet + " " + paine, 150, 10);
 }
 
 void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
     if (peli.odottavat.size()) {
-        piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", 610, 60);
+        piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys")-150, 60);
 	}
 }
