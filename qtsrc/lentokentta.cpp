@@ -1,6 +1,6 @@
 #include "lentokentta.hpp"
 
-kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunoususuunta, double lahestymispiste, double hidastuspiste) {
+kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunoususuunta, double lahestymiskorkeus, double lahestymispiste, double hidastuspiste) {
 	this->alkupiste = alkupiste;
 	this->pituus = pituus;
 	this->suunta = suunta;
@@ -8,6 +8,7 @@ kiitotie::kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus
 	this->alkunousukorkeus = alkunousukorkeus;
 	this->alkunoususuunta = alkunoususuunta;
 	this->nimi = nimi;
+    this->lahestymiskorkeus = lahestymiskorkeus;
 
 	this->loppupiste 		= apuvalineet::uusi_paikka(this->alkupiste, this->suunta, this->pituus);
 	this->lahestymispiste 	= apuvalineet::uusi_paikka(this->alkupiste, this->suunta - 180.0, lahestymispiste/*Asetukset::anna_asetus("lahestymispiste")*/);
