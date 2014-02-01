@@ -150,6 +150,7 @@ int lentokone::kaarron_suunta(double suunta) {
 void lentokone::ota_selvitys(int tyyppi, bool lahesty) {
     if (tyyppi == apuvalineet::OIKOTIE) {
         this->aseta_navipiste(this->ulosmenopiste);
+        this->oikotie = true;
     } else if (tyyppi == apuvalineet::LAHESTYMIS) {
         this->lahestymisselvitys = lahesty;
 
