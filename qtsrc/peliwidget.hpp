@@ -48,10 +48,14 @@ public:
         oikotie = new QPushButton("Oikotie", this);
         oikotie->move(200, 80);
 
+        tallenna = new QPushButton("Tallenna", this);
+        tallenna->move(0, 0);
+
         connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
         connect(lahesty, SIGNAL(pressed()), this, SLOT(OnApproach()));
         connect(keskeyta, SIGNAL(pressed()), this, SLOT(OnCancel()));
         connect(oikotie, SIGNAL(pressed()), this, SLOT(OnShortCut()));
+        connect(tallenna, SIGNAL(pressed()), this, SLOT(kun_tallenna()));
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);
@@ -94,7 +98,7 @@ public slots:
 
         if (peli.valittuKone) {
             okButton->show();
-            if (peli.valittuKone->tyyppi == Peli::LAHTEVA) {
+            if (peli.valittuKone->tyyppi == Peli::LAHTEVA && !peli.valittuKone->anna_oikotie()) {
                 oikotie->show();
             } else if (peli.valittuKone->tyyppi == Peli::SAAPUVA) {
                 if (peli.valittuKone->lahestymisselvitys) {
@@ -147,6 +151,10 @@ public slots:
         peli.valittuKone = NULL;
     }
 
+    void kun_tallenna() {
+
+    }
+
     // Redraw the view completely
     void paintEvent(QPaintEvent*) {
         QPainter p(this);
@@ -191,6 +199,7 @@ private:
     QPushButton* lahesty;
     QPushButton* keskeyta;
     QPushButton* oikotie;
+    QPushButton* tallenna;
 
     struct inputField {
         QLineEdit* field;
