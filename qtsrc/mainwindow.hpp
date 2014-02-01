@@ -58,7 +58,7 @@ public:
         connect(levelMenu, SIGNAL(taso_valittu(int)), this, SLOT(kun_taso_valittu(int)));
         connect(atisWidget, SIGNAL(atis_valmis()), this, SLOT(kun_atis_valmis()));
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
-        //connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
+        connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
     }
 
     void resizeEvent(QResizeEvent* e) {
@@ -83,7 +83,7 @@ public slots:
 
     void kun_atis_valmis() {
         stack->setCurrentIndex(2);
-        peli->koska_uusi_kone = 20;
+        peli->aloita();
 
         for (int i = 0; i < (peli->anna_taso() * 3); ++i) {
             peli->luo_kone();
