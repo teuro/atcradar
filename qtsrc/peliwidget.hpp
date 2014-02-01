@@ -16,6 +16,7 @@
 #include "pelicontroller.hpp"
 #include "QTpiirtopinta.hpp"
 #include "asetukset.hpp"
+#include "tallenna.hpp"
 
 class PeliWidget : public QWidget {
     Q_OBJECT
@@ -31,6 +32,8 @@ public:
 		timer = new QTimer;
         connect(timer, SIGNAL(timeout()), SLOT(animate()));
         timer->start(frameMs);
+
+        peli_tallenne = new Tallenna(peli);
 
         addInputField("Suunta", 100, 20, apuvalineet::SUUNTA);
         addInputField("Nopeus", 100, 40, apuvalineet::NOPEUS);
@@ -78,6 +81,7 @@ public:
 signals:
     void peli_valmis();
     void porrastusvirheet();
+    void tallennettu();
 
 public slots:
     void animate() {
@@ -152,7 +156,8 @@ public slots:
     }
 
     void kun_tallenna() {
-
+        peli_tallenne->tallenna();
+        emit tallennettu();
     }
 
     // Redraw the view completely
@@ -200,6 +205,8 @@ private:
     QPushButton* keskeyta;
     QPushButton* oikotie;
     QPushButton* tallenna;
+
+    Tallenna* peli_tallenne;
 
     struct inputField {
         QLineEdit* field;
