@@ -118,10 +118,6 @@ void PeliController::logita_peliajat() {
 	std::clog << peli.ajat.size() << " " << (ka_alueelle / peli.ajat.size()) << " " << ka_alueella << " " << ka_selvitykset << std::endl;
 }
 
-void PeliController::pyyda_atis() {
-
-}
-
 void PeliController::anna_selvitys(std::string komento, int toiminto) {    
     if (komento == "ILS") {
         peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, true);
