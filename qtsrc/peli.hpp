@@ -39,6 +39,7 @@ private:
     void lataa_kentta(std::string kentta);
     double pelin_kello;
     void logita_aika(lentokone *lk);
+    double edellinen_kone_lahto = -1;
 public:
     Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis& at, Metar& m);
 

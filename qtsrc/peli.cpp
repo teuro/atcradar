@@ -81,12 +81,12 @@ void Peli::luo_kone() {
         std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
         double suunta = haku_lahto->suunta;
 
-		if (!onko_vapaata()) {
+        if (!onko_vapaata()) {
             paikka = haku_lahto->odotuspiste;
-			odotus = true;
-		} else {
+            odotus = true;
+        } else {
             paikka = haku_lahto->alkupiste;
-			odotus = false;
+            odotus = false;
 		}
 
         koneet.push_back(new lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus, kentta, atis, asetukset));
@@ -273,10 +273,13 @@ void Peli::hoida_koneet(double intervalliMs) {
         }
 
         if ((*it)->anna_odotus()) {
-			if (onko_vapaata()) {
+            //std::clog << edellinen_kone_lahto << " " << (pelin_kello-3*60) << std::endl;
+            if (onko_vapaata() && edellinen_kone_lahto < (pelin_kello-asetukset.anna_asetus("lahtevien_porrastus")*60)) {
                 (*it)->paikka = haku_lahto->alkupiste;
                 (*it)->aseta_odotus(false);
 				odottavat.pop();
+                edellinen_kone_lahto = pelin_kello;
+                std::clog << "Edellinen lahti " << edellinen_kone_lahto << std::endl;
 			}
 		}
 
