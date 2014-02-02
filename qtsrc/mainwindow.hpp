@@ -20,7 +20,6 @@
 #include "asetukset.hpp"
 #include "pelicontroller.hpp"
 #include "QTpiirtopinta.hpp"
-#include "tilastoview.hpp"
 #include "tilastowidget.hpp"
 
 class MainWindow : public QDialog {
@@ -41,8 +40,7 @@ public:
         levelMenu = new LevelMenu();
         atisWidget = new AtisWidget(*metar, *atis, *peli);
 
-        tilastoView = new TilastoView(*peli, kieli);
-        tilastoWidget = new TilastoWidget(*tilastoView);
+        tilastoWidget = new TilastoWidget(*peli);
 
         stack = new QStackedWidget();
 
@@ -82,7 +80,7 @@ public slots:
         stack->setCurrentIndex(2);
         peli->aloita();
 
-        for (int i = 0; i < (peli->anna_taso() * 3); ++i) {
+        for (int i = 0; i < (peli->anna_taso() * 5); ++i) {
             peli->luo_kone();
         }
     }
@@ -118,5 +116,4 @@ private:
     PeliWidget* peliWidget;
 
     TilastoWidget* tilastoWidget;
-    TilastoView* tilastoView;
 };
