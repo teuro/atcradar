@@ -13,13 +13,13 @@ HEADERS += \
     apuvalineet.hpp lentokentta.hpp lentokone.hpp navipiste.hpp pelicontroller.hpp \
     piirtopinta.hpp peli.hpp view.hpp kieli.hpp levelwidget.hpp \
     QTpiirtopinta.hpp metar.hpp atiscontroller.hpp \
-    tilastowidget.hpp asetukset.hpp tilastoview.hpp peliwidget.hpp \
+    tilastowidget.hpp asetukset.hpp peliwidget.hpp \
     peliview.hpp atiswidget.hpp mainwindow.hpp \
     tallenna.hpp
 
 SOURCES += \
     apuvalineet.cpp asetukset.cpp lentokentta.cpp lentokone.cpp \
     navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp kieli.cpp \
-    atiscontroller.cpp tilastoview.cpp \
+    atiscontroller.cpp \
     tallenna.cpp
 
