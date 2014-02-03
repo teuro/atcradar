@@ -30,7 +30,7 @@ public:
         metar = new Metar;
         asetukset = new Asetukset;
 
-        peli = new Peli(*asetukset, kieli, std::string("EFRO.txt"), *atis, *metar);
+        peli = new Peli(*asetukset, kieli, *atis, *metar);
 
         peliView = new PeliView(*peli, kieli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
@@ -53,7 +53,7 @@ public:
         layout->addWidget(stack);
         setLayout(layout);
 
-        connect(levelMenu, SIGNAL(taso_valittu(int)), this, SLOT(kun_taso_valittu(int)));
+        connect(levelMenu, SIGNAL(taso_valittu(int, std::string)), this, SLOT(kun_taso_valittu(int, std::string)));
         connect(atisWidget, SIGNAL(atis_valmis()), this, SLOT(kun_atis_valmis()));
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
         connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
@@ -68,7 +68,8 @@ public:
     }
 
 public slots:
-    void kun_taso_valittu(int taso) {
+    void kun_taso_valittu(int taso, std::string kentta) {
+        peli->lataa_kentta(kentta);
         stack->setCurrentIndex(1);
         atisWidget->aseta_taso(taso);
         peli->aseta_taso(taso);

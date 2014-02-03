@@ -6,7 +6,10 @@
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QPushButton>
+#include <QDir>
+#include <QComboBox>
 #include <QString>
+#include <QDebug>
 #include <fstream>
 #include <vector>
 #include <stdexcept>
@@ -29,14 +32,20 @@ public:
         levelLabel->setGeometry(230, 50, 20, 30);
 
 		okButton = new QPushButton("OK", this);
-		okButton->move(80, 85);
+        okButton->move(50, 140);
 
         connect(slider, SIGNAL(valueChanged(int)), levelLabel, SLOT(setNum(int)));
         connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));
+
+        polku = new QDir("kentat/");
+        tiedostot = new QStringList(polku->entryList(QDir::Files));
+        valinta = new QComboBox(this);
+        valinta->setGeometry(50, 100, 100, 20);
+        valinta->addItems(*tiedostot);
+        valinta->show();
 	}
 
-	virtual ~LevelMenu()
-	{
+    virtual ~LevelMenu() {
 		delete slider;
 		delete title;
 		delete levelLabel;
@@ -44,14 +53,13 @@ public:
 	}
 
 public slots:
-    void kun_ok_painettu()
-    {
-        emit taso_valittu(slider->value());
+    void kun_ok_painettu() {
+        emit taso_valittu(slider->value(), valinta->currentText().toStdString());
 		//close();
     }
 
 signals:
-    void taso_valittu(int level);
+    void taso_valittu(int level, std::string kentta);
 
 private:
 	QLabel* title;
@@ -59,25 +67,9 @@ private:
 	QLabel* levelLabel;
     QLabel* ruutu;
     QPushButton* okButton;
-
-    QString getInfo(int level) {
-        std::ifstream sisaan("data/tasot.txt", std::ios::in);
-
-        if (!sisaan) {
-            throw std::runtime_error("Tiedosto data/tasot.txt ei aukea");
-        }
-
-        std::string teksti;
-
-        while (std::getline(sisaan, teksti)) {
-            std::vector <std::string> asiat = apuvalineet::pilko_rivi(teksti, "|");
-            if (apuvalineet::luvuksi<int>(asiat[0]) == level) {
-                std::clog << asiat[1] << std::endl;
-                sisaan.close();
-                return QString::fromStdString(asiat[1]);
-            }
-        }
-    }
+    QDir* polku;
+    QStringList* tiedostot;
+    QComboBox* valinta;
 };
 
 #endif
