@@ -2,7 +2,6 @@
 
 Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis &at, Metar& m) : asetukset(a), kieli(k), atis(at), metar(m), koska_uusi_kone(50) {
 	lataa_kentta(kentta);
-	ohje = " ";
 	porrastusvirheet = 0;
 	muut_virheet = 0;
     kasitellyt = 0;
@@ -12,6 +11,7 @@ Peli::Peli(IAsetukset& a, Kieli& k, std::string kentta, Atis &at, Metar& m) : as
     valittuKone = NULL;
     taso = 1;
     koska_uusi_kone = -1;
+    edellinen_kone_lahto = 0;
 }
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
@@ -65,6 +65,10 @@ void Peli::aseta_virhe(int virhe) {
         default:
             virheteksti = kieli.anna_teksti(Kieli::TEKSTI_TUNTEMATON_VIRHE);
             break;
+    }
+
+    if (virhe != VIRHE_PORRASTUS) {
+        ++muut_virheet;
     }
 
     ulos << virheteksti << " " << this->pelin_kello << std::endl;
@@ -273,7 +277,6 @@ void Peli::hoida_koneet(double intervalliMs) {
         }
 
         if ((*it)->anna_odotus()) {
-            //std::clog << edellinen_kone_lahto << " " << (pelin_kello-3*60) << std::endl;
             if (onko_vapaata() && edellinen_kone_lahto < (pelin_kello-asetukset.anna_asetus("lahtevien_porrastus")*60)) {
                 (*it)->paikka = haku_lahto->alkupiste;
                 (*it)->aseta_odotus(false);

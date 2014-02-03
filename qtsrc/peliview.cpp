@@ -8,7 +8,6 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
 	piirra_lentokentta(piirtopinta);
     piirra_ohje(piirtopinta, peli.ohje);
 	piirra_odottavat(piirtopinta);
-    piirtopinta.kirjoita_tekstia(peli.syote, 50, 70);
 
     if (peli.koska_uusi_kone > 0) {
         piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi((int)(peli.koska_uusi_kone - peli.anna_pelin_kello())), asetukset.anna_asetus("ruutu_leveys")-150, 20);
