@@ -105,7 +105,7 @@ void Peli::luo_kone() {
 			i = apuvalineet::arvo_luku(0, navipisteet.size());
 		} while (!onko_vapaata(SAAPUVA, i));
 
-        koneet.push_back(new lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false, kentta, atis, asetukset));
+        koneet.push_front(new lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false, kentta, atis, asetukset));
 	}
 
 	tilasto tmp;
@@ -297,10 +297,8 @@ void Peli::hoida_koneet(double intervalliMs) {
 			}
 		}
 
-        if ((*it)->anna_korkeus() >= 10000) {
+        if ((*it)->anna_korkeus() >= 10000 && (*it)->anna_tyyppi() == Peli::LAHTEVA) {
             (*it)->muuta_selvitysnopeutta(440);
-        } else if ((*it)->anna_korkeus() >= 4000) {
-            (*it)->muuta_selvitysnopeutta(250);
         }
 
         if ((*it)->anna_korkeus() < haku_lasku->lahestymiskorkeus && (*it)->anna_tyyppi() == Peli::SAAPUVA) {
