@@ -35,11 +35,19 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
     piirtopinta.kirjoita_tekstia("Koneita " + apuvalineet::tekstiksi(peli.koneet.size()) + " / " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_konemaara")), 30, listauskorkeus - 20);
 
+    int tyyppi = peli.koneet.front()->anna_tyyppi();
+    piirtopinta.kirjoita_tekstia("Saapuvat koneet: ", 30, listauskorkeus);
     for (std::list <lentokone*> :: iterator it = peli.koneet.begin(); it != peli.koneet.end(); ++it) {
-        std::clog << (*it)->anna_kutsutunnus() << " " << (*it)->anna_tyyppi() << std::endl;
         if ((*it)->anna_odotus() == false) {
             apuvalineet::piste loppupiste = apuvalineet::uusi_paikka((*it)->paikka, (*it)->anna_suunta(), (*it)->anna_nopeus() * (60.0 / 3600.0));
 
+            if (tyyppi == (*it)->anna_tyyppi()) {
+                listauskorkeus += 20;
+
+            } else {
+                piirtopinta.kirjoita_tekstia("Nousevat koneet: ", 30, listauskorkeus+20);
+                listauskorkeus += 40;
+            }
 
             if ((*it)->onko_porrastus) {
 				vari = ok;
@@ -76,8 +84,6 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
             piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi((*it)->anna_selvityskorkeus()), 160, listauskorkeus, vari);
             piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi((*it)->anna_selvitysnopeus()), 210, listauskorkeus, vari);
-            listauskorkeus += 20;
-
 
             if ((*it)->anna_tyyppi() == Peli::SAAPUVA) {
                 if (((*it)->anna_korkeus() / 100) < atis.anna_siirtopinta()) {
