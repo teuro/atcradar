@@ -36,6 +36,7 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
     piirtopinta.kirjoita_tekstia("Koneita " + apuvalineet::tekstiksi(peli.koneet.size()) + " / " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_konemaara")), 30, listauskorkeus - 20);
 
     for (std::list <lentokone*> :: iterator it = peli.koneet.begin(); it != peli.koneet.end(); ++it) {
+        std::clog << (*it)->anna_kutsutunnus() << " " << (*it)->anna_tyyppi() << std::endl;
         if ((*it)->anna_odotus() == false) {
             apuvalineet::piste loppupiste = apuvalineet::uusi_paikka((*it)->paikka, (*it)->anna_suunta(), (*it)->anna_nopeus() * (60.0 / 3600.0));
 
