@@ -31,18 +31,18 @@ public:
         levelLabel = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(slider->minimum())) , this);
         levelLabel->setGeometry(230, 50, 20, 30);
 
-		okButton = new QPushButton("OK", this);
-        okButton->move(50, 140);
-
-        connect(slider, SIGNAL(valueChanged(int)), levelLabel, SLOT(setNum(int)));
-        connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));
-
         polku = new QDir("kentat/");
         tiedostot = new QStringList(polku->entryList(QDir::Files));
         valinta = new QComboBox(this);
         valinta->setGeometry(50, 100, 100, 20);
         valinta->addItems(*tiedostot);
         valinta->show();
+
+        okButton = new QPushButton("OK", this);
+        okButton->move(50, 140);
+
+        connect(slider, SIGNAL(valueChanged(int)), levelLabel, SLOT(setNum(int)));
+        connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));
 	}
 
     virtual ~LevelMenu() {
