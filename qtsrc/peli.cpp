@@ -155,12 +155,12 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 			navipiste tmp(apuvalineet::tekstiksi(asiat[1]), paikka);
 
 			sisapisteet.push_back(tmp);
-		} else if (asiat[0] == "U") {
-			apuvalineet::piste paikka;
+        } else if (asiat[0] == "U") {
+            apuvalineet::piste paikka;
 
-			paikka = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
+            paikka = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
 
-			navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]));
+            navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]));
 
 			navipisteet.push_back(tmp);
 		} else {

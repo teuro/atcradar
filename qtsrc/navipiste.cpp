@@ -8,7 +8,7 @@ std::clog << "Navipiste::navipiste(" << nimi << ", " << paikka.x << ", " << paik
 	this->paikka = paikka;
 	this->lentokorkeus = korkeus;
 	this->lentonopeus = nopeus;
-	this->lentosuunta = suunta;
+    this->lentosuunta = suunta;
 }
 
 navipiste::navipiste(std::string nimi, apuvalineet::piste paikka) {
