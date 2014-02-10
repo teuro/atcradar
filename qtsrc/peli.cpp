@@ -93,6 +93,15 @@ void Peli::luo_kone() {
 		}
 
         int lahtevat_alkaa = std::distance(navipisteet.begin(), std::find(navipisteet.begin(), navipisteet.end(), Peli::LAHTEVA));
+
+        #ifdef DEBUG;
+            std::clog << lahtevat_alkaa << std::endl;
+        #endif
+
+        if (lahtevat_alkaa == navipisteet.size()) {
+            lahtevat_alkaa = 0;
+        }
+
         koneet.push_back(new lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus, kentta, atis, asetukset));
         koneet.back()->aseta_ulosmenopiste(navipisteet[apuvalineet::arvo_luku(lahtevat_alkaa, navipisteet.size())]);
 
