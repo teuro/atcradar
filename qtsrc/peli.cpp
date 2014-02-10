@@ -92,8 +92,9 @@ void Peli::luo_kone() {
             odotus = false;
 		}
 
+        int lahtevat_alkaa = std::distance(navipisteet.begin(), std::find(navipisteet.begin(), navipisteet.end(), Peli::LAHTEVA));
         koneet.push_back(new lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus, kentta, atis, asetukset));
-        koneet.back()->aseta_ulosmenopiste(navipisteet[apuvalineet::arvo_luku(0, navipisteet.size())]);
+        koneet.back()->aseta_ulosmenopiste(navipisteet[apuvalineet::arvo_luku(lahtevat_alkaa, navipisteet.size())]);
 
         if (koneet.back()->anna_odotus()) {
             odottavat.push(*koneet.back());
@@ -116,6 +117,14 @@ void Peli::luo_kone() {
 	tmp.selvitykset = 0;
 
 	ajat.push_back(tmp);
+}
+
+bool jarjesta_pisteet(const navipiste& a, const navipiste& b) {
+    return a.tyyppi < b.tyyppi;
+}
+
+void tulosta(navipiste& np) {
+    std::clog << np.nimi << " " << np.tyyppi << std::endl;
 }
 
 void Peli::lataa_kentta(std::string kenttaNimi) {
@@ -156,11 +165,17 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 
 			sisapisteet.push_back(tmp);
         } else if (asiat[0] == "U") {
-            apuvalineet::piste paikka;
+            apuvalineet::piste paikka = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
 
-            paikka = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
+            int tyyppi = Peli::MOLEMMAT;
 
-            navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]));
+            if (asiat[7] == "S") {
+                tyyppi = Peli::SAAPUVA;
+            } else if (asiat[7] == "L") {
+                tyyppi = Peli::LAHTEVA;
+            }
+
+            navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]), tyyppi);
 
 			navipisteet.push_back(tmp);
 		} else {
@@ -169,6 +184,13 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 
 		asiat.clear();
 	}
+
+
+    //std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
+    //std::clog << std::endl << "KATKO" << std::endl << std::endl;
+    std::sort(navipisteet.begin(), navipisteet.end(), jarjesta_pisteet);
+
+    //std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
 
 	sisaan.close();
 }

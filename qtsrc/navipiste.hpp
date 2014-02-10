@@ -7,7 +7,7 @@
 
 class navipiste {
 	public:
-        navipiste(std::string nimi, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta);
+        navipiste(std::string nimi, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi);
 		navipiste(std::string nimi, apuvalineet::piste paikka);
         navipiste() {}
 
@@ -18,10 +18,15 @@ class navipiste {
 		double lentosuunta;
 		double lentokorkeus;
 		double lentonopeus;
+        int tyyppi;
 
 		bool operator ==(std::string n) {
 			return (nimi == n);
 		}
+
+        bool operator ==(int tyyppi) {
+            return (this->tyyppi == tyyppi);
+        }
 	};
 
 #endif
