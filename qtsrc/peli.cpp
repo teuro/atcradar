@@ -79,6 +79,7 @@ void Peli::luo_kone() {
 	apuvalineet::piste paikka;
 	bool odotus;
 	std::string tunnus = generoi_tunnus();
+    int lahtevat_alkaa = 0;
 
 	if (j == LAHTEVA) {
         std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
@@ -92,7 +93,7 @@ void Peli::luo_kone() {
             odotus = false;
 		}
 
-        int lahtevat_alkaa = std::distance(navipisteet.begin(), std::find(navipisteet.begin(), navipisteet.end(), Peli::LAHTEVA));
+        lahtevat_alkaa = std::distance(navipisteet.begin(), std::find(navipisteet.begin(), navipisteet.end(), Peli::LAHTEVA));
 
         #ifdef DEBUG;
             std::clog << lahtevat_alkaa << std::endl;
@@ -112,7 +113,7 @@ void Peli::luo_kone() {
 	} else {
 		int i = -1;
 		do {
-			i = apuvalineet::arvo_luku(0, navipisteet.size());
+            i = apuvalineet::arvo_luku(0, navipisteet.size()-lahtevat_alkaa-1);
 		} while (!onko_vapaata(SAAPUVA, i));
 
         koneet.push_front(new lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false, kentta, atis, asetukset));
