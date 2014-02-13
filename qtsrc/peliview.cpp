@@ -10,7 +10,7 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
 	piirra_odottavat(piirtopinta);
 
     if (peli.koska_uusi_kone > 0) {
-        piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::tekstiksi((int)(peli.koska_uusi_kone - peli.anna_pelin_kello())), asetukset.anna_asetus("ruutu_leveys")-150, 20);
+        piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::muotoile_aika("%m:%s", peli.koska_uusi_kone - peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 20);
     } else {
         piirtopinta.kirjoita_tekstia("Uutta konetta ei tule", asetukset.anna_asetus("ruutu_leveys")-150, 20);
     }
