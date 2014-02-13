@@ -42,6 +42,9 @@ private:
 public:
     Peli(IAsetukset& a, Kieli& k, Atis& at, Metar& m);
 
+    Metar& metar;
+    lentokone* valittuKone;
+
     int toiminto;
     int koska_uusi_kone;
     int koska_metar;
@@ -60,9 +63,6 @@ public:
             return kutsutunnus == tunnus;
         }
     };
-
-    Metar& metar;
-    lentokone* valittuKone;
 
     std::vector <std::string> tunnukset;
     std::vector <tilasto> ajat;
@@ -86,6 +86,7 @@ public:
     void lataa_kentta(std::string kentta);
 
     double anna_pelin_kello();
+    std::string anna_aika();
 
     std::string ohje;
     std::string virheteksti;

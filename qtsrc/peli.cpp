@@ -9,7 +9,6 @@ Peli::Peli(IAsetukset& a, Kieli& k, Atis &at, Metar& m) : asetukset(a), kieli(k)
 	generoi_metar();
     valittuKone = NULL;
     taso = 1;
-    koska_uusi_kone = -1;
     edellinen_kone_lahto = 0;
 }
 
@@ -79,7 +78,7 @@ void Peli::luo_kone() {
 	apuvalineet::piste paikka;
 	bool odotus;
 	std::string tunnus = generoi_tunnus();
-    int lahtevat_alkaa = 0;
+    unsigned int lahtevat_alkaa = 0;
 
 	if (j == LAHTEVA) {
         std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
@@ -95,7 +94,7 @@ void Peli::luo_kone() {
 
         lahtevat_alkaa = std::distance(navipisteet.begin(), std::find(navipisteet.begin(), navipisteet.end(), Peli::LAHTEVA));
 
-        #ifdef DEBUG;
+        #ifdef DEBUG
             std::clog << lahtevat_alkaa << std::endl;
         #endif
 
@@ -425,5 +424,18 @@ double Peli::anna_pelin_kello() {
 
 int Peli::anna_taso() {
     return this->taso;
+}
+
+std::string Peli::anna_aika() {
+    int sekunnit = pelin_kello;
+
+    int tunnit = sekunnit / 3600;
+    sekunnit -= tunnit * 3600;
+    int minuutit = sekunnit / 60;
+    sekunnit -= minuutit * 60;
+
+    std::string aika = apuvalineet::muuta_pituus(apuvalineet::tekstiksi(tunnit), 2) + ":" + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(minuutit), 2) + ":" + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(sekunnit), 2);
+
+    return aika;
 }
 
