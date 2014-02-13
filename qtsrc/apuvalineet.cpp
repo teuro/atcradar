@@ -134,3 +134,27 @@ double apuvalineet::laske_vastatuuli(double kiitotie, double tuuli) {
 double apuvalineet::laske_sivutuuli(double kiitotie, double tuuli) {
     return (std::sin(deg2rad(std::abs((tuuli + 180) - kiitotie))));
 }
+
+std::string apuvalineet::muotoile_aika(std::string formaatti, double aika) {
+    int sekunnit = aika;
+
+    int tunnit = sekunnit / 3600;
+    sekunnit -= tunnit * 3600;
+    int minuutit = sekunnit / 60;
+    sekunnit -= minuutit * 60;
+
+    std::map <std::string, int> formaatit;
+
+    formaatit["%h"] = tunnit;
+    formaatit["%m"] = minuutit;
+    formaatit["%s"] = sekunnit;
+
+    for (std::map <std::string, int> :: iterator it = formaatit.begin(); it != formaatit.end(); ++it) {
+        int kohta = formaatti.find(it->first);
+        if (kohta != std::string::npos) {
+            formaatti.replace(formaatti.find(it->first, 0), 2, apuvalineet::muuta_pituus(apuvalineet::tekstiksi(it->second), 2));
+        }
+    }
+
+    return formaatti;
+}

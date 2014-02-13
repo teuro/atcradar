@@ -15,7 +15,7 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
         piirtopinta.kirjoita_tekstia("Uutta konetta ei tule", asetukset.anna_asetus("ruutu_leveys")-150, 20);
     }
 
-    piirtopinta.kirjoita_tekstia("pelin kello " + peli.anna_aika(), asetukset.anna_asetus("ruutu_leveys")-150, 40);
+    piirtopinta.kirjoita_tekstia("pelin kello " + apuvalineet::muotoile_aika("%h:%m:%s", peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 40);
 
     piirra_metar(piirtopinta);
 	piirtopinta.flip();

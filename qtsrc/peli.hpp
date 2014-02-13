@@ -86,7 +86,6 @@ public:
     void lataa_kentta(std::string kentta);
 
     double anna_pelin_kello();
-    std::string anna_aika();
 
     std::string ohje;
     std::string virheteksti;

@@ -425,17 +425,3 @@ double Peli::anna_pelin_kello() {
 int Peli::anna_taso() {
     return this->taso;
 }
-
-std::string Peli::anna_aika() {
-    int sekunnit = pelin_kello;
-
-    int tunnit = sekunnit / 3600;
-    sekunnit -= tunnit * 3600;
-    int minuutit = sekunnit / 60;
-    sekunnit -= minuutit * 60;
-
-    std::string aika = apuvalineet::muuta_pituus(apuvalineet::tekstiksi(tunnit), 2) + ":" + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(minuutit), 2) + ":" + apuvalineet::muuta_pituus(apuvalineet::tekstiksi(sekunnit), 2);
-
-    return aika;
-}
-

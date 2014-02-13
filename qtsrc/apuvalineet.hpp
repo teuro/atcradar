@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 #include <cstdlib>
+#include <algorithm>
 
 namespace apuvalineet {
 	extern double zoom;
@@ -71,6 +72,7 @@ namespace apuvalineet {
     enum lukeminen { SUUNTA = 1, NOPEUS, KORKEUS, TYHJENNA, LAHESTYMIS, OIKOTIE, ODOTUS, POIS, KOHDE, KESKEYTA, LASKU, TYHJA = 0 };
 	const int VASEN = -1;
 	const int OIKEA = 1;
+    std::string muotoile_aika(std::string formaatti, double aika);
 }
 
 #endif
