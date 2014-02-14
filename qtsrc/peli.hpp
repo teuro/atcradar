@@ -38,7 +38,6 @@ private:
     int taso;
     double pelin_kello;
     void logita_aika(lentokone *lk);
-    double edellinen_kone_lahto;
 public:
     Peli(IAsetukset& a, Kieli& k, Atis& at, Metar& m);
 
@@ -86,6 +85,7 @@ public:
     void lataa_kentta(std::string kentta);
 
     double anna_pelin_kello();
+    double edellinen_kone_lahto;
 
     std::string ohje;
     std::string virheteksti;
