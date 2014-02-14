@@ -48,14 +48,14 @@ public:
         oikotie = new QPushButton("Oikotie", this);
         oikotie->move(200, 80);
 
-        tallenna = new QPushButton("Tallenna", this);
-        tallenna->move(0, 0);
+        tilastot = new QPushButton("Tilastot", this);
+        tilastot->move(0, 0);
 
         connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));
         connect(lahesty, SIGNAL(pressed()), this, SLOT(OnApproach()));
         connect(keskeyta, SIGNAL(pressed()), this, SLOT(OnCancel()));
         connect(oikotie, SIGNAL(pressed()), this, SLOT(OnShortCut()));
-        connect(tallenna, SIGNAL(pressed()), this, SLOT(kun_tallenna()));
+        connect(tilastot, SIGNAL(pressed()), this, SLOT(kun_tilastot()));
 
         // To get mouse events continuously even when button is not pressed
         setMouseTracking(true);
@@ -152,7 +152,7 @@ public slots:
         peli.valittuKone = NULL;
     }
 
-    void kun_tallenna() {
+    void kun_tilastot() {
         emit tallennettu();
     }
 
@@ -200,7 +200,7 @@ private:
     QPushButton* lahesty;
     QPushButton* keskeyta;
     QPushButton* oikotie;
-    QPushButton* tallenna;
+    QPushButton* tilastot;
 
     struct inputField {
         QLineEdit* field;
