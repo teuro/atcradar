@@ -148,6 +148,7 @@ std::string apuvalineet::muotoile_aika(std::string formaatti, double aika) {
     formaatit["%h"] = tunnit;
     formaatit["%m"] = minuutit;
     formaatit["%s"] = sekunnit;
+    formaatit["%ms"] = sekunnit * 1000;
 
     for (std::map <std::string, int> :: iterator it = formaatit.begin(); it != formaatit.end(); ++it) {
         int kohta = formaatti.find(it->first);
