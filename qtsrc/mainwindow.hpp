@@ -65,6 +65,8 @@ public:
 
         asetukset->muuta_asetusta("ruutu_leveys", this->width());
         asetukset->muuta_asetusta("ruutu_korkeus", this->height());
+
+        apuvalineet::ruutu_leveys = asetukset->anna_asetus("ruutu_leveys");
     }
 
 public slots:

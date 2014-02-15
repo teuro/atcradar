@@ -12,6 +12,8 @@
 
 namespace apuvalineet {
 	extern double zoom;
+    extern int ruutu_leveys;
+    extern const int matka_vaaka;
 
 	class piste {
 	public:
