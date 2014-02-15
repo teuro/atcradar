@@ -178,7 +178,7 @@ void PeliView::piirra_tilanne(IPiirtoPinta& piirtopinta) {
 }
 
 void PeliView::piirra_ohje(IPiirtoPinta& piirtopinta, std::string ohje) {
-	piirtopinta.kirjoita_tekstia(ohje.c_str(), 50, 30);
+    piirtopinta.kirjoita_tekstia(ohje.c_str(), asetukset.anna_asetus("ruutu_leveys")-150, 100);
 }
 
 void PeliView::piirra_metar(IPiirtoPinta& piirtopinta) {
