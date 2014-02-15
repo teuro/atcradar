@@ -84,7 +84,7 @@ void Peli::luo_kone() {
         std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
         double suunta = haku_lahto->suunta;
 
-        if (!onko_vapaata()) {
+        if (!onko_vapaata() || edellinen_kone_lahto > (pelin_kello-asetukset.anna_asetus("lahtevien_porrastus")*60)) {
             paikka = haku_lahto->odotuspiste;
             odotus = true;
         } else {
