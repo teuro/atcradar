@@ -307,12 +307,14 @@ void Peli::hoida_koneet(double intervalliMs) {
         }
 
         if ((*it)->anna_odotus()) {
-            if (onko_vapaata() && edellinen_kone_lahto < ((pelin_kello - asetukset.anna_asetus("lahtevien_porrastus") * 60)) || edellinen_kone_lahto == -1) {
+            if (onko_vapaata() && (edellinen_kone_lahto < ((pelin_kello - asetukset.anna_asetus("lahtevien_porrastus") * 60)) || (edellinen_kone_lahto == -1))) {
                 (*it)->paikka = haku_lahto->alkupiste;
                 (*it)->aseta_odotus(false);
 				odottavat.pop();
                 edellinen_kone_lahto = pelin_kello;
-                std::clog << "Edellinen lahti " << edellinen_kone_lahto << std::endl;
+                #ifdef DEBUG
+                    std::clog << "Edellinen lahti " << edellinen_kone_lahto << std::endl;
+                #endif
 			}
 		}
 
