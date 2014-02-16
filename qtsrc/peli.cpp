@@ -9,7 +9,7 @@ Peli::Peli(IAsetukset& a, Kieli& k, Atis &at, Metar& m) : asetukset(a), kieli(k)
 	generoi_metar();
     valittuKone = NULL;
     taso = 1;
-    edellinen_kone_lahto = 0;
+    edellinen_kone_lahto = -1;
 }
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
@@ -307,7 +307,7 @@ void Peli::hoida_koneet(double intervalliMs) {
         }
 
         if ((*it)->anna_odotus()) {
-            if (onko_vapaata() && edellinen_kone_lahto < (pelin_kello-asetukset.anna_asetus("lahtevien_porrastus")*60)) {
+            if (onko_vapaata() && edellinen_kone_lahto < ((pelin_kello - asetukset.anna_asetus("lahtevien_porrastus") * 60)) || edellinen_kone_lahto == -1) {
                 (*it)->paikka = haku_lahto->alkupiste;
                 (*it)->aseta_odotus(false);
 				odottavat.pop();

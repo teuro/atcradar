@@ -16,7 +16,7 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
     }
 
     if (peli.odottavat.size()) {
-        piirtopinta.kirjoita_tekstia("Seuraava kone: " + apuvalineet::muotoile_aika("%m:%s", asetukset.anna_asetus("lahtevien_porrastus") * 60 - peli.anna_pelin_kello()-peli.edellinen_kone_lahto), asetukset.anna_asetus("ruutu_leveys")-150, 80);
+        piirtopinta.kirjoita_tekstia("Seuraava kone: " + apuvalineet::muotoile_aika("%m:%s", peli.edellinen_kone_lahto + asetukset.anna_asetus("lahtevien_porrastus") * 60 - peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 80);
     }
 
     piirtopinta.kirjoita_tekstia("pelin kello " + apuvalineet::muotoile_aika("%h:%m:%s", peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 40);
