@@ -58,6 +58,7 @@ public:
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
         connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
         connect(peliWidget, SIGNAL(tallennettu()), this, SLOT(kun_tallennettu()));
+        connect(tilastoWidget, SIGNAL(kunKatsottu()), this, SLOT(palaaPeliin()));
     }
 
     void resizeEvent(QResizeEvent* e) {
@@ -98,6 +99,10 @@ public slots:
 
     void kun_tallennettu() {
         stack->setCurrentIndex(3);
+    }
+
+    void palaaPeliin() {
+        stack->setCurrentIndex(2);
     }
 
 private:
