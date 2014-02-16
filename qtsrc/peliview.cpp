@@ -47,10 +47,10 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
             if (tyyppi == (*it)->anna_tyyppi()) {
                 listauskorkeus += 20;
-
             } else {
                 piirtopinta.kirjoita_tekstia("Nousevat koneet: ", 30, listauskorkeus+20);
                 listauskorkeus += 40;
+                tyyppi = (*it)->anna_tyyppi();
             }
 
             if ((*it)->onko_porrastus) {
