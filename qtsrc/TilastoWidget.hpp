@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include <QStringList>
 #include <QLabel>
+#include <QPushButton>
 
 #include "peli.hpp"
 
@@ -13,6 +14,7 @@ class TilastoWidget : public QWidget {
     Peli& peli;
     QTableWidget* tilastot;
     QStringList otsikot;
+    QPushButton* peliin;
 public:
     // constructor
     TilastoWidget(Peli& p) : peli(p) {
@@ -28,9 +30,20 @@ public:
         tilastot->setSelectionMode(QAbstractItemView::SingleSelection);
         tilastot->setShowGrid(false);
         tilastot->setStyleSheet("QTableView {selection-background-color: red;}");
+
+        peliin = new QPushButton("Peliin", this);
+        peliin->move(0, 0);
+
+        connect(peliin, SIGNAL(pressed()), this, SLOT(kun_peliin()));
     }
+signals:
+    void kunKatsottu();
 
 public slots:
+    void kun_peliin() {
+        emit kunKatsottu();
+    }
+
     // Redraw the view completely
     void paintEvent(QPaintEvent*) {
         tilastot->setRowCount(peli.ajat.size());
@@ -47,6 +60,8 @@ public slots:
         double aluesumma        = laske_sarakkeen_summa(*tilastot, 3);
         double selvityssumma    = laske_sarakkeen_summa(*tilastot, 4);
         double pistesumma       = laske_sarakkeen_summa(*tilastot, 5);
+
+        pistesumma -= (peli.muut_virheet * 10 + peli.porrastusvirheet * 20);
 
         tilastot->setRowCount(peli.ajat.size()+1);
 
