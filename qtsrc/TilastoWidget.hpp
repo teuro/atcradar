@@ -52,7 +52,7 @@ public slots:
             tilastot->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(peli.ajat[i].tunnus)));
             tilastot->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(peli.ajat[i].sisaan))));
             tilastot->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(peli.ajat[i].pois))));
-            tilastot->setItem(i, 3, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(peli.ajat[i].pois - peli.ajat[i].pois))));
+            tilastot->setItem(i, 3, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(peli.ajat[i].pois - peli.ajat[i].sisaan))));
             tilastot->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(peli.ajat[i].selvitykset))));
             tilastot->setItem(i, 5, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(peli.ajat[i].pisteet))));
         }
