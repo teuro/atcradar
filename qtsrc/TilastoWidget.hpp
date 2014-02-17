@@ -19,16 +19,17 @@ public:
     // constructor
     TilastoWidget(Peli& p) : peli(p) {
         tilastot = new QTableWidget(this);
+        tilastot->move(20, 30);
         tilastot->setColumnCount(6);
         tilastot->setRowCount(1);
         otsikot << "Tunnus" << "Aluelle" << "Alueelta" << "Alueella" << "Selvitykset" << "Pisteet";
         tilastot->setHorizontalHeaderLabels(otsikot);
         tilastot->setMinimumWidth(650);
-        tilastot->setMinimumHeight(700);
+        tilastot->setMinimumHeight(500);
         tilastot->setEditTriggers(QAbstractItemView::NoEditTriggers);
         tilastot->setSelectionBehavior(QAbstractItemView::SelectRows);
         tilastot->setSelectionMode(QAbstractItemView::SingleSelection);
-        tilastot->setShowGrid(false);
+        tilastot->setShowGrid(true);
         tilastot->setStyleSheet("QTableView {selection-background-color: red;}");
 
         peliin = new QPushButton("Peliin", this);
@@ -60,8 +61,8 @@ public slots:
         }
 
         double aluesumma        = laske_sarakkeen_summa(*tilastot, 3);
-        double selvityssumma    = laske_sarakkeen_summa(*tilastot, 4);
-        double pistesumma       = laske_sarakkeen_summa(*tilastot, 5);
+        int selvityssumma       = laske_sarakkeen_summa(*tilastot, 4);
+        int pistesumma          = laske_sarakkeen_summa(*tilastot, 5);
 
         pistesumma -= (peli.muut_virheet * 10 + peli.porrastusvirheet * 20);
 

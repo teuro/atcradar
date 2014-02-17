@@ -56,7 +56,7 @@ public:
         double sisaan;
         double pois;
         int selvitykset;
-        double pisteet;
+        int pisteet;
 
         bool operator ==(std::string kutsutunnus) {
             return kutsutunnus == tunnus;
