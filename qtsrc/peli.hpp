@@ -6,7 +6,6 @@
 #include "lentokentta.hpp"
 #include "navipiste.hpp"
 #include "asetukset.hpp"
-#include "kieli.hpp"
 #include "view.hpp"
 #include "AtisController.hpp"
 #include "Metar.hpp"
@@ -23,6 +22,8 @@
 #include <stdexcept>
 #include <string>
 
+#include <QObject>
+
 /*
     MVC Malli
 
@@ -33,13 +34,12 @@
 class Peli {
 private:
     IAsetukset& asetukset;
-    Kieli& kieli;
     Atis& atis;
     int taso;
     double pelin_kello;
     void logita_aika(lentokone *lk);
 public:
-    Peli(IAsetukset& a, Kieli& k, Atis& at, Metar& m);
+    Peli(IAsetukset& a, Atis& at, Metar& m);
 
     Metar& metar;
     lentokone* valittuKone;

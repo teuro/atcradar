@@ -13,9 +13,7 @@
 #include "Metar.hpp"
 #include "piirtopinta.hpp"
 #include "peli.hpp"
-#include "kieli.hpp"
 #include "asetukset.hpp"
-#include "kieli.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -30,11 +28,10 @@ PeliView is responsible of DISPLAYING the game state. Nothing else.
 
 class PeliView : public QWidget {
     Peli& peli;
-    Kieli& kieli;
     Asetukset& asetukset;
     Atis& atis;
 public:
-    PeliView(Peli& p, Kieli& k, Asetukset& a, Atis& at) : peli(p), kieli(k), asetukset(a), atis(at) {}
+    PeliView(Peli& p, Asetukset& a, Atis& at) : peli(p), asetukset(a), atis(at) {}
 
     ~PeliView() { }
 

@@ -6,6 +6,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
+#include <QTranslator>
 
 #include <fstream>
 #include <iostream>
@@ -16,7 +17,6 @@
 #include "Metar.hpp"
 #include "PeliWidget.hpp"
 #include "peli.hpp"
-#include "kieli.hpp"
 #include "asetukset.hpp"
 #include "pelicontroller.hpp"
 #include "QTpiirtopinta.hpp"
@@ -25,14 +25,14 @@
 class MainWindow : public QDialog {
     Q_OBJECT
 public:
-    MainWindow(Kieli& k) : kieli(k) {
+    MainWindow() {
         atis = new Atis;
         metar = new Metar;
         asetukset = new Asetukset;
 
-        peli = new Peli(*asetukset, kieli, *atis, *metar);
+        peli = new Peli(*asetukset, *atis, *metar);
 
-        peliView = new PeliView(*peli, kieli, *asetukset, *atis);
+        peliView = new PeliView(*peli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
         peliController = new PeliController(*peli, *asetukset, *dummyPinta, *atis);
         peliWidget = new PeliWidget(*asetukset, *peliView, *peliController, *peli);
@@ -84,7 +84,7 @@ public slots:
         stack->setCurrentIndex(2);
         peli->aloita();
 
-        for (int i = 0; i < (peli->anna_taso() * 5); ++i) {
+        for (int i = 0; i < (peli->anna_taso() * 3); ++i) {
             peli->luo_kone();
         }
     }
@@ -113,8 +113,6 @@ private:
 
     Metar* metar;
     Asetukset* asetukset;
-
-    Kieli& kieli;
 
     QStackedWidget* stack;
 

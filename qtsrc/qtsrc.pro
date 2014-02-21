@@ -11,13 +11,15 @@ QT += widgets
 
 HEADERS += \
     apuvalineet.hpp lentokentta.hpp lentokone.hpp navipiste.hpp pelicontroller.hpp \
-    piirtopinta.hpp peli.hpp view.hpp kieli.hpp levelwidget.hpp \
+    piirtopinta.hpp peli.hpp view.hpp levelwidget.hpp \
     QTpiirtopinta.hpp metar.hpp atiscontroller.hpp \
     tilastowidget.hpp asetukset.hpp peliwidget.hpp \
     peliview.hpp atiswidget.hpp mainwindow.hpp
 
 SOURCES += \
     apuvalineet.cpp asetukset.cpp lentokentta.cpp lentokone.cpp \
-    navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp kieli.cpp \
+    navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp \
     atiscontroller.cpp
+
+TRANSLATIONS = radar_en.ts
 

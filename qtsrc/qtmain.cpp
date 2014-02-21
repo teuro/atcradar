@@ -4,6 +4,7 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QPushButton>
 #include <qdesktopwidget.h>
+#include <QTranslator>
 
 #include <ctime>
 #include "mainwindow.hpp"
@@ -13,13 +14,15 @@ int main(int argc, char** argv) {
 
     try {
         QApplication app(argc, argv);
-
-        Kieli kieli("fi_FI");
-        MainWindow window(kieli);
+        QTranslator kaantaja;
+        kaantaja.load("radar_en");
+        MainWindow window;
 
         window.resize(800, 750);
         window.setWindowTitle("ATC RADAR");
         window.show();
+
+        app.installTranslator(&kaantaja);
 
         return app.exec();
     } catch (std::exception& e) {

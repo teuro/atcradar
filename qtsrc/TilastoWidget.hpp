@@ -83,7 +83,7 @@ public slots:
     double laske_sarakkeen_summa(QTableWidget& taulu, int sarake) {
         int summa = 0;
         for (int i = 0; i < taulu.rowCount(); ++i) {
-            summa += taulu.item(i, sarake)->text().toDouble();
+            summa += taulu.item(i, sarake)->text().toInt();
         }
         return summa;
     }
