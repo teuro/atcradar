@@ -20,8 +20,6 @@ int main(int argc, char** argv) {
         QTranslator kaantaja;
         QDir polku;
 
-        qDebug() << app.applicationDirPath();
-
         if (kaantaja.load("radar_en.qm", polku.absolutePath() + "/data/")) {
             app.installTranslator(&kaantaja);
         } else {

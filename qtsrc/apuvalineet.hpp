@@ -75,6 +75,7 @@ namespace apuvalineet {
 	const int VASEN = -1;
 	const int OIKEA = 1;
     std::string muotoile_aika(std::string formaatti, double aika);
+    enum kielet{SUOMI, ENGLANTI, RUOTSI};
 }
 
 #endif

@@ -41,11 +41,6 @@ public:
         okButton = new QPushButton(tr("OK"), this);
         okButton->move(50, 140);
 
-        suomi = new QPushButton(tr("suomi"), this);
-        englanti = new QPushButton(tr("englanti"), this);
-
-        suomi->move(250, 20);
-        englanti->move(250, 40);
 
         connect(slider, SIGNAL(valueChanged(int)), levelLabel, SLOT(setNum(int)));
         connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));
@@ -64,13 +59,8 @@ public slots:
 		//close();
     }
 
-    void kun_kieli_valittu() {
-        emit kieli_valittu();
-    }
-
 signals:
     void taso_valittu(int level, std::string kentta);
-    void kieli_valittu();
 
 private:
 	QLabel* title;

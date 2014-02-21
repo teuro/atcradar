@@ -131,6 +131,7 @@ void Peli::luo_kone() {
     tmp.sisaan = this->pelin_kello;
 	tmp.pois = 0.0;
 	tmp.selvitykset = 0;
+    tmp.pisteet = 0;
 
 	ajat.push_back(tmp);
 }
