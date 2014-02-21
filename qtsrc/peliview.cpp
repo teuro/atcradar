@@ -10,16 +10,16 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
 	piirra_odottavat(piirtopinta);
 
     if (peli.koska_uusi_kone > 0) {
-        piirtopinta.kirjoita_tekstia("Uusi kone tulee " + apuvalineet::muotoile_aika("%m:%s", peli.koska_uusi_kone - peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 20);
+        piirtopinta.kirjoita_tekstia(QObject::tr("Uusi kone tulee").toStdString() + " " + apuvalineet::muotoile_aika("%m:%s", peli.koska_uusi_kone - peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 20);
     } else {
-        piirtopinta.kirjoita_tekstia("Uutta konetta ei tule", asetukset.anna_asetus("ruutu_leveys")-150, 20);
+        piirtopinta.kirjoita_tekstia(QObject::tr("Uutta konetta ei tule").toStdString(), asetukset.anna_asetus("ruutu_leveys")-150, 20);
     }
 
     if (peli.odottavat.size()) {
-        piirtopinta.kirjoita_tekstia("Seuraava kone: " + apuvalineet::muotoile_aika("%m:%s", peli.edellinen_kone_lahto + asetukset.anna_asetus("lahtevien_porrastus") * 60 - peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 80);
+        piirtopinta.kirjoita_tekstia(QObject::tr("Seuraava kone:").toStdString() + apuvalineet::muotoile_aika("%m:%s", peli.edellinen_kone_lahto + asetukset.anna_asetus("lahtevien_porrastus") * 60 - peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 80);
     }
 
-    piirtopinta.kirjoita_tekstia("pelin kello " + apuvalineet::muotoile_aika("%h:%m:%s", peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 40);
+    piirtopinta.kirjoita_tekstia(QObject::tr("pelin kello").toStdString() + " " + apuvalineet::muotoile_aika("%h:%m:%s", peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 40);
 
     piirra_metar(piirtopinta);
 	piirtopinta.flip();
@@ -37,10 +37,10 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
     int listauskorkeus = 160;
 
-    piirtopinta.kirjoita_tekstia("Koneita " + apuvalineet::tekstiksi(peli.koneet.size()) + " / " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_konemaara")), 30, listauskorkeus - 20);
+    piirtopinta.kirjoita_tekstia(QObject::tr("Koneita").toStdString() + " " + apuvalineet::tekstiksi(peli.koneet.size()) + " / " + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_konemaara")), 30, listauskorkeus - 20);
 
     int tyyppi = peli.koneet.front()->anna_tyyppi();
-    piirtopinta.kirjoita_tekstia("Saapuvat koneet: ", 30, listauskorkeus);
+    piirtopinta.kirjoita_tekstia(QObject::tr("Saapuvat koneet:").toStdString() + " ", 30, listauskorkeus);
     for (std::list <lentokone*> :: iterator it = peli.koneet.begin(); it != peli.koneet.end(); ++it) {
         if ((*it)->anna_odotus() == false) {
             apuvalineet::piste loppupiste = apuvalineet::uusi_paikka((*it)->paikka, (*it)->anna_suunta(), (*it)->anna_nopeus() * (60.0 / 3600.0));
@@ -48,7 +48,7 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
             if (tyyppi == (*it)->anna_tyyppi()) {
                 listauskorkeus += 20;
             } else {
-                piirtopinta.kirjoita_tekstia("Nousevat koneet: ", 30, listauskorkeus+20);
+                piirtopinta.kirjoita_tekstia(QObject::tr("Nousevat koneet:").toStdString() + " ", 30, listauskorkeus+20);
                 listauskorkeus += 40;
                 tyyppi = (*it)->anna_tyyppi();
             }
@@ -167,13 +167,13 @@ void PeliView::piirra_lentokentta(IPiirtoPinta& piirtopinta) {
 }
 
 void PeliView::piirra_tilanne(IPiirtoPinta& piirtopinta) {
-    std::string teksti = "Hoidetut " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
+    std::string teksti = QObject::tr("Hoidetut").toStdString() + " " + apuvalineet::tekstiksi(peli.kasitellyt) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("vaadittavat_kasitellyt"));
     piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys")-300, 20);
 
-    teksti = "porrastusvirheet " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_porrastusvirhe"));
+    teksti = QObject::tr("porrastusvirheet").toStdString() + " " + apuvalineet::tekstiksi(peli.porrastusvirheet) + std::string("/") + apuvalineet::tekstiksi(asetukset.anna_asetus("maks_porrastusvirhe"));
     piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys")-300, 40);
 
-    teksti = "muut virheet " + apuvalineet::tekstiksi(peli.muut_virheet);
+    teksti = QObject::tr("muut virheet").toStdString() + " " + apuvalineet::tekstiksi(peli.muut_virheet);
     piirtopinta.kirjoita_tekstia(teksti, asetukset.anna_asetus("ruutu_leveys")-300, 60);
 }
 
@@ -198,6 +198,6 @@ void PeliView::piirra_metar(IPiirtoPinta& piirtopinta) {
 
 void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
     if (peli.odottavat.size()) {
-        piirtopinta.kirjoita_tekstia("Odottavia koneita " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys")-150, 60);
+        piirtopinta.kirjoita_tekstia(QObject::tr("Odottavia koneita").toStdString() + " " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys")-150, 60);
 	}
 }

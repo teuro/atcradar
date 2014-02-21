@@ -54,7 +54,7 @@ public:
         syottokentat.back()->setValidator(new QIntValidator(alaraja, ylaraja));
 
         syottokentta = new QLabel(nimi, this);
-        syottokentta->setGeometry(x-80, y-0, 200, 20);
+        syottokentta->setGeometry(x-100, y-0, 200, 20);
 
         if (ohjeteksti.length()) {
             ohjekentta = new QLabel(ohjeteksti, this);

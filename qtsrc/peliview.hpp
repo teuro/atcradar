@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QTimer>
+#include <QObject>
 
 #include "AtisController.hpp"
 #include "Metar.hpp"
