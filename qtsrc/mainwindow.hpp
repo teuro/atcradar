@@ -6,7 +6,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
-#include <QTranslator>
 
 #include <fstream>
 #include <iostream>
