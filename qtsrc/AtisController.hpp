@@ -1,6 +1,8 @@
 #ifndef ATISCONTROLLER_HPP
 #define ATISCONTROLLER_HPP
 
+#include <QObject>
+
 #include <string>
 #include <fstream>
 #include <vector>

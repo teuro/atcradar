@@ -5,6 +5,9 @@
 #include <QtWidgets/QPushButton>
 #include <qdesktopwidget.h>
 #include <QTranslator>
+#include <QDir>
+#include <QFileInfo>
+#include <QDebug>
 
 #include <ctime>
 #include "mainwindow.hpp"
@@ -15,14 +18,21 @@ int main(int argc, char** argv) {
     try {
         QApplication app(argc, argv);
         QTranslator kaantaja;
-        kaantaja.load("radar_en");
+        QDir polku;
+
+        qDebug() << app.applicationDirPath();
+
+        if (kaantaja.load("radar_en.qm", polku.absolutePath() + "/data/")) {
+            app.installTranslator(&kaantaja);
+        } else {
+            qWarning("Käännöstiedostoa ei löydy");
+        }
+
         MainWindow window;
 
         window.resize(800, 750);
         window.setWindowTitle("ATC RADAR");
         window.show();
-
-        app.installTranslator(&kaantaja);
 
         return app.exec();
     } catch (std::exception& e) {

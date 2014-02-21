@@ -23,7 +23,7 @@ class AtisWidget : public QWidget {
 	Q_OBJECT
 public:
     AtisWidget(Metar& m, Atis& at, Peli& p) : metar(m), atis(at), peli(p) {
-        otsikko = new QLabel("ATIS Valinta", this);
+        otsikko = new QLabel(tr("ATIS Valinta"), this);
         otsikko->setGeometry(0, 20, 150, 30);
         this->taso = 6;
         this->ekaPiirto = true;
@@ -31,12 +31,12 @@ public:
         metarkentta = new QLabel(m.getMessage(), this);
         metarkentta->setGeometry(0, 0, 600, 10);
 
-        lisaa_syottokentta("Lähtökiitotie", 100, 60, 1, 36);
-        lisaa_syottokentta("Laskukiitotie", 100, 80, 1, 36);
-        lisaa_syottokentta("Siirtokorkeus", 100, 100, 3000, 18000);
-        lisaa_syottokentta("Siirtopinta", 100, 120, 30, 220);
+        lisaa_syottokentta(tr("Lähtökiitotie"), 100, 60, 1, 36);
+        lisaa_syottokentta(tr("Laskukiitotie"), 100, 80, 1, 36);
+        lisaa_syottokentta(tr("Siirtokorkeus"), 100, 100, 3000, 18000);
+        lisaa_syottokentta(tr("Siirtopinta"), 100, 120, 30, 220);
 
-        ok_nappi = new QPushButton("OK", this);
+        ok_nappi = new QPushButton(tr("OK"), this);
         ok_nappi->move(100, 160);
 
         connect(ok_nappi, SIGNAL(pressed()), this, SLOT(kun_ok_painettu()));

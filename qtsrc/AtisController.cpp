@@ -4,7 +4,7 @@ void Atis::lataa_painerajat(std::string tiedosto, int siirtokorkeus) {
     std::ifstream in(tiedosto.c_str(), std::ios::in);
 
     if (!in) {
-        throw std::runtime_error("File " + tiedosto + " cannot be open");
+        throw std::runtime_error(QObject::tr("Tieddostoa painerajat.txt ei aukea tai se puuttuu").toStdString());
     }
 
     std::string line;

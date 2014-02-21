@@ -22,7 +22,7 @@ public:
         tilastot->move(20, 30);
         tilastot->setColumnCount(6);
         tilastot->setRowCount(1);
-        otsikot << "Tunnus" << "Aluelle" << "Alueelta" << "Alueella" << "Selvitykset" << "Pisteet";
+        otsikot << tr("Tunnus") << tr("Aluelle") << tr("Alueelta") << tr("Alueella") << tr("Selvitykset") << tr("Pisteet");
         tilastot->setHorizontalHeaderLabels(otsikot);
         tilastot->setMinimumWidth(650);
         tilastot->setMinimumHeight(500);
@@ -32,7 +32,7 @@ public:
         tilastot->setShowGrid(true);
         tilastot->setStyleSheet("QTableView {selection-background-color: red;}");
 
-        peliin = new QPushButton("Peliin", this);
+        peliin = new QPushButton(tr("Peliin"), this);
         peliin->move(0, 0);
 
         connect(peliin, SIGNAL(pressed()), this, SLOT(kun_peliin()));
@@ -68,13 +68,13 @@ public slots:
 
         tilastot->setRowCount(peli.ajat.size()+1);
 
-        tilastot->setItem(peli.ajat.size(), 0, new QTableWidgetItem("Summa"));
+        tilastot->setItem(peli.ajat.size(), 0, new QTableWidgetItem(tr("Summa")));
         tilastot->setItem(peli.ajat.size(), 4, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(selvityssumma))));
         tilastot->setItem(peli.ajat.size(), 5, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(pistesumma))));
 
         tilastot->setRowCount(peli.ajat.size()+2);
 
-        tilastot->setItem(peli.ajat.size()+1, 0, new QTableWidgetItem("Keskiarvo"));
+        tilastot->setItem(peli.ajat.size()+1, 0, new QTableWidgetItem(tr("Keskiarvo")));
         tilastot->setItem(peli.ajat.size()+1, 4, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(selvityssumma / peli.ajat.size()))));
         tilastot->setItem(peli.ajat.size()+1, 5, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(pistesumma / peli.ajat.size()))));
         tilastot->setItem(peli.ajat.size()+1, 3, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(aluesumma / peli.ajat.size()))));

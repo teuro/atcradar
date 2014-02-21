@@ -32,23 +32,23 @@ public:
         connect(timer, SIGNAL(timeout()), SLOT(animate()));
         timer->start(frameMs);
 
-        addInputField("Suunta", 100, 20, apuvalineet::SUUNTA);
-        addInputField("Nopeus", 100, 40, apuvalineet::NOPEUS);
-        addInputField("Korkeus", 100, 60, apuvalineet::KORKEUS);
+        addInputField(tr("Suunta"), 100, 20, apuvalineet::SUUNTA);
+        addInputField(tr("Nopeus"), 100, 40, apuvalineet::NOPEUS);
+        addInputField(tr("Korkeus"), 100, 60, apuvalineet::KORKEUS);
 
-        okButton = new QPushButton("OK", this);
+        okButton = new QPushButton(tr("OK"), this);
         okButton->move(100, 80);
 
-        lahesty = new QPushButton("Lähesty", this);
+        lahesty = new QPushButton(tr("Lähesty"), this);
         lahesty->move(200, 80);
 
-        keskeyta = new QPushButton("Keskeyta", this);
+        keskeyta = new QPushButton(tr("Keskeyta"), this);
         keskeyta->move(200, 80);
 
-        oikotie = new QPushButton("Oikotie", this);
+        oikotie = new QPushButton(tr("Oikotie"), this);
         oikotie->move(200, 80);
 
-        tilastot = new QPushButton("Tilastot", this);
+        tilastot = new QPushButton(tr("Tilastot"), this);
         tilastot->move(0, 0);
 
         connect(okButton, SIGNAL(pressed()), this, SLOT(OnOkPressed()));

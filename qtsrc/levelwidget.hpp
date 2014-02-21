@@ -25,7 +25,7 @@ public:
         slider->setMinimum(1);
         slider->setMaximum(4);
 
-		title = new QLabel("Valitse vaikeustaso: ", this);
+        title = new QLabel(tr("Valitse vaikeustaso:"), this);
         title->setGeometry(50, 20, 150, 30);
 
         levelLabel = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(slider->minimum())) , this);
@@ -38,7 +38,7 @@ public:
         valinta->addItems(*tiedostot);
         valinta->show();
 
-        okButton = new QPushButton("OK", this);
+        okButton = new QPushButton(tr("OK"), this);
         okButton->move(50, 140);
 
         connect(slider, SIGNAL(valueChanged(int)), levelLabel, SLOT(setNum(int)));
