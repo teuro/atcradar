@@ -38,6 +38,7 @@ private:
     int taso;
     double pelin_kello;
     void logita_aika(lentokone *lk);
+    double piirretty;
 public:
     Peli(IAsetukset& a, Atis& at, Metar& m);
 
@@ -63,10 +64,16 @@ public:
         }
     };
 
+    struct jalki {
+        int x;
+        int y;
+    };
+
     std::vector <std::string> tunnukset;
     std::vector <tilasto> ajat;
     std::vector <navipiste> navipisteet;
     std::vector <navipiste> sisapisteet;
+    std::vector <jalki> jaljet;
 
     std::string syote;
 

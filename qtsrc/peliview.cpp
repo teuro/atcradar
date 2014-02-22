@@ -22,6 +22,7 @@ void PeliView::piirra(IPiirtoPinta& piirtopinta) {
     piirtopinta.kirjoita_tekstia(QObject::tr("pelin kello").toStdString() + " " + apuvalineet::muotoile_aika("%h:%m:%s", peli.anna_pelin_kello()), asetukset.anna_asetus("ruutu_leveys")-150, 40);
 
     piirra_metar(piirtopinta);
+    piirra_jaljet(piirtopinta);
 	piirtopinta.flip();
 }
 
@@ -200,4 +201,10 @@ void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
     if (peli.odottavat.size()) {
         piirtopinta.kirjoita_tekstia(QObject::tr("Odottavia koneita").toStdString() + " " + apuvalineet::tekstiksi(peli.odottavat.size()) + " kpl", asetukset.anna_asetus("ruutu_leveys")-150, 60);
 	}
+}
+
+void PeliView::piirra_jaljet(IPiirtoPinta &piirtopinta) {
+    for (unsigned int i = 0; i < peli.jaljet.size(); ++i) {
+        piirtopinta.circleColor(peli.jaljet[i].x, peli.jaljet[i].y, 1, IPiirtoPinta::NORMAALI);
+    }
 }

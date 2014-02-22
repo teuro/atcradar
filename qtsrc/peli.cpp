@@ -10,6 +10,7 @@ Peli::Peli(IAsetukset& a, Atis &at, Metar& m) : asetukset(a), atis(at), metar(m)
     valittuKone = NULL;
     taso = 1;
     edellinen_kone_lahto = -1;
+    piirretty = 5;
 }
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
@@ -293,6 +294,7 @@ void Peli::hoida_koneet(double intervalliMs) {
     std::list <lentokone*> :: iterator loppu;
     loppu = std::remove_if(koneet.begin(), koneet.end(), pois);
     koneet.erase(loppu, koneet.end());
+    bool jaljet_muistiin = false;
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         if ((*it)->anna_tyyppi() == Peli::LAHTEVA) {
@@ -347,7 +349,19 @@ void Peli::hoida_koneet(double intervalliMs) {
         }
 
         (*it)->liiku(intervalliMs);
+        if ((int)pelin_kello >= piirretty) {
+            jalki tmp = {(*it)->anna_paikka().x, (*it)->anna_paikka().y};
+            jaljet.push_back(tmp);
+            jaljet_muistiin = true;
+        } else {
+            jaljet_muistiin = false;
+        }
 	}
+
+    if (jaljet_muistiin) {
+        //std::clog << "Piirretty " << jaljet.size() <<  std::endl;
+        piirretty += 30;
+    }
 }
 
 void Peli::lisaa_selvityksia() {

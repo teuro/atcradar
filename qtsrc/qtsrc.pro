@@ -21,5 +21,5 @@ SOURCES += \
     navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp \
     atiscontroller.cpp
 
-TRANSLATIONS = radar_en.ts
+TRANSLATIONS = radar_en.ts radar_se.ts
 

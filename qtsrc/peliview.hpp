@@ -51,6 +51,7 @@ private:
     void piirra_metar(IPiirtoPinta& piirtopinta);
     void piirra_odottavat(IPiirtoPinta& piirtopinta);
     void piirra_ohje(IPiirtoPinta& piirtopinta, std::string ohje);
+    void piirra_jaljet(IPiirtoPinta& piirtopinta);
 };
 
 #endif
