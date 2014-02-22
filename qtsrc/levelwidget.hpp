@@ -10,20 +10,56 @@
 #include <QComboBox>
 #include <QString>
 #include <QDebug>
+#include <QTableWidget>
+#include <QStringList>
 #include <fstream>
 #include <vector>
 #include <stdexcept>
 #include "apuvalineet.hpp"
 
-class LevelMenu : public QWidget
-{
+class LevelMenu : public QWidget {
 	Q_OBJECT
+    QTableWidget* tilastot;
+    QStringList otsikot;
 public:
     LevelMenu(QWidget* parent = 0) : QWidget(parent) {
 		slider = new QSlider(Qt::Horizontal, this);
 		slider->setGeometry(50, 50, 130, 30);
         slider->setMinimum(1);
         slider->setMaximum(4);
+
+        tilastot = new QTableWidget(this);
+        tilastot->move(300, 30);
+        tilastot->setColumnCount(2);
+        tilastot->setRowCount(4);
+        otsikot << tr("Taso") << tr("Pisteet");
+        tilastot->setHorizontalHeaderLabels(otsikot);
+        tilastot->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tilastot->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tilastot->setSelectionMode(QAbstractItemView::SingleSelection);
+        tilastot->setShowGrid(true);
+        tilastot->setStyleSheet("QTableView {selection-background-color: red;}");
+
+        std::ifstream sisaan("data/pisteet.txt", std::ios::in);
+
+        if (!sisaan) {
+            throw std::runtime_error(tr("Tiedosto data/pisteet.txt ei aukea tai se puuttuu").toStdString());
+        }
+
+        std::vector <std::string> kohdat;
+        std::string rivi;
+        std::map <int, int> pisteet;
+
+        while (std::getline(sisaan, rivi)) {
+            kohdat = apuvalineet::pilko_rivi(rivi, "|");
+
+            pisteet[apuvalineet::luvuksi<int>(kohdat[0])] = apuvalineet::luvuksi<int>(kohdat[1]);
+        }
+
+        for (std::map <int, int> ::iterator it = pisteet.begin(); it != pisteet.end(); ++it) {
+            tilastot->setItem(it->first-1, 0, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(it->first))));
+            tilastot->setItem(it->first-1, 1, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(it->second))));
+        }
 
         title = new QLabel(tr("Valitse vaikeustaso:"), this);
         title->setGeometry(50, 20, 150, 30);
@@ -40,7 +76,6 @@ public:
 
         okButton = new QPushButton(tr("OK"), this);
         okButton->move(50, 140);
-
 
         connect(slider, SIGNAL(valueChanged(int)), levelLabel, SLOT(setNum(int)));
         connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));

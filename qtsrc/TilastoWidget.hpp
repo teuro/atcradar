@@ -15,6 +15,10 @@ class TilastoWidget : public QWidget {
     QTableWidget* tilastot;
     QStringList otsikot;
     QPushButton* peliin;
+
+    int pistesumma;
+    int selvityssumma;
+    double aluesumma;
 public:
     // constructor
     TilastoWidget(Peli& p) : peli(p) {
@@ -37,6 +41,11 @@ public:
 
         connect(peliin, SIGNAL(pressed()), this, SLOT(kun_peliin()));
     }
+
+    int anna_pistesumma() {
+       return this->pistesumma;
+    }
+
 signals:
     void kunKatsottu();
 
@@ -60,9 +69,9 @@ public slots:
             tilastot->setItem(i, 5, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(peli.ajat[i].pisteet))));
         }
 
-        double aluesumma        = laske_sarakkeen_summa(*tilastot, 3);
-        int selvityssumma       = laske_sarakkeen_summa(*tilastot, 4);
-        int pistesumma          = laske_sarakkeen_summa(*tilastot, 5);
+        aluesumma       = laske_sarakkeen_summa(*tilastot, 3);
+        selvityssumma   = laske_sarakkeen_summa(*tilastot, 4);
+        pistesumma      = laske_sarakkeen_summa(*tilastot, 5);
 
         pistesumma -= (peli.muut_virheet * 10 + peli.porrastusvirheet * 20);
 

@@ -26,6 +26,11 @@ int main(int argc, char** argv) {
             qWarning("Käännöstiedostoa ei löydy");
         }
 
+        //app.removeTranslator(&kaantaja);
+
+        //kaantaja.load("radar_fi.qm", polku.absolutePath() + "/data/");
+        //app.installTranslator(&kaantaja);
+
         MainWindow window;
 
         window.resize(800, 750);

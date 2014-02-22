@@ -9,6 +9,8 @@
 #include <QPainter>
 #include <QTimer>
 #include <QObject>
+#include <QTableWidget>
+#include <QStringList>
 
 #include "AtisController.hpp"
 #include "Metar.hpp"
@@ -31,14 +33,17 @@ class PeliView : public QWidget {
     Peli& peli;
     Asetukset& asetukset;
     Atis& atis;
+    QTableWidget* muuttujat;
+    QStringList otsikot;
 public:
-    PeliView(Peli& p, Asetukset& a, Atis& at) : peli(p), asetukset(a), atis(at) {}
+    PeliView(Peli& p, Asetukset& a, Atis& at) : peli(p), asetukset(a), atis(at) {
+
+    }
 
     ~PeliView() { }
 
     void piirra(IPiirtoPinta& pinta);
 private:
-
     void piirra_koneet(IPiirtoPinta& piirtopinta);
     void piirra_navipisteet(IPiirtoPinta& piirtopinta);
     void piirra_lentokentta(IPiirtoPinta& piirtopinta);
