@@ -153,7 +153,8 @@ std::string apuvalineet::muotoile_aika(std::string formaatti, double aika) {
     formaatit["%ms"] = sekunnit * 1000;
 
     for (std::map <std::string, int> :: iterator it = formaatit.begin(); it != formaatit.end(); ++it) {
-        int kohta = formaatti.find(it->first);
+        unsigned int kohta = formaatti.find(it->first);
+
         if (kohta != std::string::npos) {
             formaatti.replace(formaatti.find(it->first, 0), 2, apuvalineet::muuta_pituus(apuvalineet::tekstiksi(it->second), 2));
         }
