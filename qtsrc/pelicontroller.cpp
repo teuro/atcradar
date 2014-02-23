@@ -82,9 +82,9 @@ bool PeliController::kasittele_aikaa(double intervallisek) {
     peli.hoida_koneet(intervallisek);
 
     if (!peli.valittuKone) {
-        peli.ohje = "Valitse kone";
+        peli.ohje = QObject::tr("Valitse kone").toStdString();
     } else {
-        peli.ohje = "Anna koneelle vektoreita";
+        peli.ohje = QObject::tr("Anna koneelle ohjeita").toStdString();
     }
 
     if (peli.anna_pelin_kello() >= peli.koska_uusi_kone && peli.koska_uusi_kone > 0) {

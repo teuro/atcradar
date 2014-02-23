@@ -106,7 +106,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peli.cpp" line="21"/>
+        <location filename="peli.cpp" line="22"/>
         <source>Tiedosto tunnukset.txt ei aukea tai se puuttuu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -131,38 +131,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peliview.cpp" line="40"/>
+        <location filename="peliview.cpp" line="41"/>
         <source>Koneita</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peliview.cpp" line="43"/>
+        <location filename="peliview.cpp" line="44"/>
         <source>Saapuvat koneet:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peliview.cpp" line="51"/>
+        <location filename="peliview.cpp" line="52"/>
         <source>Nousevat koneet:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peliview.cpp" line="170"/>
+        <location filename="peliview.cpp" line="171"/>
         <source>Hoidetut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peliview.cpp" line="173"/>
+        <location filename="peliview.cpp" line="174"/>
         <source>porrastusvirheet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peliview.cpp" line="176"/>
+        <location filename="peliview.cpp" line="177"/>
         <source>muut virheet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="peliview.cpp" line="201"/>
+        <location filename="peliview.cpp" line="202"/>
         <source>Odottavia koneita</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pelicontroller.cpp" line="85"/>
+        <source>Valitse kone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pelicontroller.cpp" line="87"/>
+        <source>Anna koneelle ohjeita</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

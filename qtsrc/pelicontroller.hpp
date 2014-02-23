@@ -1,6 +1,8 @@
 #ifndef _PELI_CONTROLLER_HPP
 #define _PELI_CONTROLLER_HPP
 
+#include <QObject>
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -12,10 +14,6 @@
 #include "asetukset.hpp"
 #include "peli.hpp"
 #include "AtisController.hpp"
-
-class PeliView;
-class Peli;
-class IAsetukset;
 
 /*
     MVC Ohjain
