@@ -171,8 +171,7 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 			kentta.paikka.y = apuvalineet::luvuksi<double>(asiat[2]);
 		} else if (asiat[0] == "K") {
 			apuvalineet::piste alku = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
-            kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), apuvalineet::luvuksi<double>(asiat[8]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"));
-			tmpa.liukupolku = 3.0;
+            kiitotie tmpa(asiat[1], alku, apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[6]), apuvalineet::luvuksi<double>(asiat[7]), apuvalineet::luvuksi<double>(asiat[8]), asetukset.anna_asetus("lahestymispiste"), asetukset.anna_asetus("hidastuspiste"), apuvalineet::luvuksi<double>(asiat[9]), apuvalineet::luvuksi<double>(asiat[10]));
 
 			kentta.kiitotiet.push_back(tmpa);
 		} else if (asiat[0] == "L") {
@@ -336,7 +335,9 @@ void Peli::hoida_koneet(double intervalliMs) {
             if ((*it)->anna_nopeus() > 150) {
                 (*it)->muuta_selvityskorkeutta(haku_lahto->alkunousukorkeus);
                 (*it)->muuta_selvitysnopeutta(asetukset.anna_asetus("alkunousunopeus"));
-                (*it)->muuta_selvityssuuntaa(haku_lahto->alkunoususuunta);
+                if ((*it)->anna_korkeus() >= kentta.korkeus + haku_lahto->minimi_nousukorkeus) {
+                   (*it)->muuta_selvityssuuntaa(haku_lahto->alkunoususuunta);
+                }
 			}
 		}
 

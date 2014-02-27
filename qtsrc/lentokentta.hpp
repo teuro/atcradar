@@ -21,8 +21,9 @@ public:
 	double alkunoususuunta;
 	double liukupolku;
     double lahestymiskorkeus;
+    double minimi_nousukorkeus;
 
-    kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunousuuunta, double lahestymiskorkeus, double lahestymispiste, double hidastuspiste);
+    kiitotie(std::string nimi, apuvalineet::piste alkupiste, double pituus, double suunta, double alkunousukorkeus, double alkunousuuunta, double lahestymiskorkeus, double lahestymispiste, double hidastuspiste, double minimi_nousu, double liukupolku);
     kiitotie(){}
 
 	bool operator ==(std::string n) {
