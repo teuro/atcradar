@@ -308,6 +308,7 @@ void Peli::hoida_koneet(double intervalliMs) {
                 (*it)->poistetaanko = true;
                 ++kasitellyt;
                 logita_aika((*it));
+                laskeutuvaKone = false;
             }
         }
 
