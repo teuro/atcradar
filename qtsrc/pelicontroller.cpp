@@ -126,9 +126,9 @@ void PeliController::logita_peliajat() {
 
 void PeliController::anna_selvitys(std::string komento, int toiminto) {    
     if (komento == "ILS") {
-        peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS, true);
+        peli.valittuKone->ota_selvitys(apuvalineet::LAHESTYMIS);
     } else if (komento == "CNL") {
-        peli.valittuKone->ota_selvitys(apuvalineet::KESKEYTA, false);
+        peli.valittuKone->ota_selvitys(apuvalineet::KESKEYTA);
     } else if (komento == "DCT") {
         peli.valittuKone->ota_selvitys(apuvalineet::OIKOTIE);
     } else if (komento == "HOLD") {

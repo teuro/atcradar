@@ -74,7 +74,7 @@ public:
 
     apuvalineet::piste paikka;
 
-    void ota_selvitys(int tyyppi, bool lahesty = false);
+    void ota_selvitys(int tyyppi);
 
     void muuta_selvityskorkeutta(double korkeus);
     void muuta_selvitysnopeutta(double nopeus);

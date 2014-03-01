@@ -353,7 +353,7 @@ void Peli::hoida_koneet(double intervalliMs) {
                     (*it)->ota_selvitys(apuvalineet::LASKU);
                     laskeutuvaKone = true;
                 } else {
-                    (*it)->ota_selvitys(apuvalineet::KESKEYTA, false);
+                    (*it)->ota_selvitys(apuvalineet::KESKEYTA);
                 }
             }
         }
@@ -400,7 +400,7 @@ std::vector <std::string> Peli::lataa_pilvet(std::string pilvet) {
 void Peli::generoi_metar() {
     metar.aseta_tuuli(apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5));
     metar.aseta_voimakkuus(apuvalineet::arvo_luku(asetukset.anna_asetus("tuuli_voimakkuus_ala"), asetukset.anna_asetus("tuuli_voimakkuus_yla")));
-    metar.aseta_paine(apuvalineet::arvo_luku(asetukset.anna_asetus("ilmanpaine_ala"), asetukset.anna_asetus("ilmanpaine_yla")));
+    metar.aseta_paine(apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("ilmanpaine_ala"), asetukset.anna_asetus("ilmanpaine_yla")), 100);
     metar.aseta_nakyvyys(apuvalineet::arvo_luku(asetukset.anna_asetus("nakyvyys_ala"), asetukset.anna_asetus("nakyvyys_yla")));
     metar.aseta_lampotila(apuvalineet::arvo_luku(asetukset.anna_asetus("lampotila_ala"), asetukset.anna_asetus("lampotila_yla")));
     metar.aseta_ilmankosteus(apuvalineet::arvo_luku(asetukset.anna_asetus("ilmankosteus_ala"), asetukset.anna_asetus("ilmankosteus_yla")));
