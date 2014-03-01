@@ -8,6 +8,7 @@ Peli::Peli(IAsetukset& a, Atis &at, Metar& m) : asetukset(a), atis(at), metar(m)
 	lataa_tunnukset("data/tunnukset.txt");
 	generoi_metar();
     valittuKone = NULL;
+    laskeutuvaKone = false;
     taso = 1;
     edellinen_kone_lahto = -1;
     piirretty = 5;
@@ -345,8 +346,15 @@ void Peli::hoida_koneet(double intervalliMs) {
             (*it)->muuta_selvitysnopeutta(440);
         }
 
-        if ((*it)->anna_korkeus() < haku_lasku->lahestymiskorkeus && (*it)->anna_tyyppi() == Peli::SAAPUVA) {
-            (*it)->ota_selvitys(apuvalineet::LASKU);
+        if ((*it)->anna_korkeus() <= kentta.korkeus + haku_lasku->lahestymiskorkeus && (*it)->anna_tyyppi() == Peli::SAAPUVA) {
+            if (!(*it)->anna_laskuselvitys()) {
+                if (!laskeutuvaKone) {
+                    (*it)->ota_selvitys(apuvalineet::LASKU);
+                    laskeutuvaKone = true;
+                } else {
+                    (*it)->ota_selvitys(apuvalineet::KESKEYTA, false);
+                }
+            }
         }
 
         (*it)->liiku(intervalliMs);

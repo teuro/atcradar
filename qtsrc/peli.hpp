@@ -44,6 +44,7 @@ public:
 
     Metar& metar;
     lentokone* valittuKone;
+    bool laskeutuvaKone;
 
     int toiminto;
     int koska_uusi_kone;
