@@ -42,6 +42,7 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
     int tyyppi = peli.koneet.front()->anna_tyyppi();
     piirtopinta.kirjoita_tekstia(QObject::tr("Saapuvat koneet:").toStdString() + " ", 30, listauskorkeus);
+
     for (std::list <lentokone*> :: iterator it = peli.koneet.begin(); it != peli.koneet.end(); ++it) {
         if ((*it)->anna_odotus() == false) {
             apuvalineet::piste loppupiste = apuvalineet::uusi_paikka((*it)->paikka, (*it)->anna_suunta(), (*it)->anna_nopeus() * (60.0 / 3600.0));

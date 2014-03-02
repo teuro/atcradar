@@ -3,6 +3,8 @@
 
 // Abstrakti piirtopinta, jota n‰kym‰t (View) voivat k‰ytt‰‰ piirt‰miseen
 
+#include "apuvalineet.hpp"
+
 class IPiirtoPinta {
 public:
     virtual void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) = 0;
@@ -12,6 +14,7 @@ public:
 
     //virtual void piirra_kuva(const char* tiedosto, int x, int y, bool keskikohta = false) = 0;
     virtual void kirjoita_tekstia(std::string teksti, int x, int y, unsigned int color = 0) = 0;
+    virtual void kirjoita_tekstia(std::string teksti, apuvalineet::piste paikka, unsigned int color = 0) = 0;
 
 	virtual int get_fontinkoko() = 0;
 	virtual void flip() = 0;

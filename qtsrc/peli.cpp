@@ -271,7 +271,7 @@ void Peli::tarkista_porrastus() {
 void Peli::logita_aika(lentokone* lk) {
     std::vector <tilasto> :: iterator haku_pois = std::find(ajat.begin(), ajat.end(), lk->anna_kutsutunnus());
     haku_pois->pois = this->pelin_kello;
-    haku_pois->pisteet += 100 * 7 / haku_pois->selvitykset;
+    haku_pois->pisteet += 100;
 }
 
 bool pois(lentokone* kone) {

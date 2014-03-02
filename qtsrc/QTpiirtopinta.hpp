@@ -50,6 +50,11 @@ public:
         m_painter->drawText(x, y, teksti.c_str());
     }
 
+    void kirjoita_tekstia(std::string teksti, apuvalineet::piste paikka, unsigned int color) {
+        m_painter->setPen(*colors[color]);
+        m_painter->drawText(paikka.x, paikka.y, teksti.c_str());
+    }
+
     int get_fontinkoko() { return 16; }
 
     void flip() { }
