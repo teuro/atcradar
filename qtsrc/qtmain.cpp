@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 
         MainWindow window;
 
-        window.resize(800, 750);
+        window.resize(800, 600);
         window.setWindowTitle("ATC RADAR");
         window.show();
 

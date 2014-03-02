@@ -38,7 +38,7 @@ private:
     int taso;
     double pelin_kello;
     void logita_aika(lentokone *lk);
-    double piirretty;
+    double jaljet_intervalli;
 public:
     Peli(IAsetukset& a, Atis& at, Metar& m);
 
