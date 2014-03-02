@@ -73,11 +73,11 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 
             if ((*it)->anna_reitin_koko() == 0) {
                 if ((*it)->lahestymisselvitys && !(*it)->anna_laskuselvitys()) {
-					piirtopinta.kirjoita_tekstia("ILS", 100, listauskorkeus);
+                    piirtopinta.kirjoita_tekstia("ILS", 100, listauskorkeus, vari);
                 } else if ((*it)->anna_oikotie()) {
                     piirtopinta.kirjoita_tekstia((*it)->anna_ulosmenopiste().nimi, 100, listauskorkeus, vari);
                 } else if ((*it)->anna_laskuselvitys()) {
-                    piirtopinta.kirjoita_tekstia("LAND", 100, listauskorkeus);
+                    piirtopinta.kirjoita_tekstia("LAND", 100, listauskorkeus, vari);
                 }
 
                 if (!(*it)->anna_lahestymisselvitys() && !(*it)->anna_oikotie()) {
