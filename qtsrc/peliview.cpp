@@ -68,7 +68,9 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
             piirtopinta.lineColor((*it)->paikka.x, (*it)->paikka.y, loppupiste.x, loppupiste.y, vari);
             piirtopinta.circleColor((*it)->paikka.x, (*it)->paikka.y, apuvalineet::nm2px(1.5), vari);
 
-            piirtopinta.kirjoita_tekstia((*it)->anna_kutsutunnus(), (*it)->paikka.x, (*it)->paikka.y, vari);
+            apuvalineet::piste kone_paikka = apuvalineet::uusi_paikka((*it)->paikka, 45, 5);
+
+            piirtopinta.kirjoita_tekstia((*it)->anna_kutsutunnus(), kone_paikka, vari);
 
             piirtopinta.kirjoita_tekstia((*it)->anna_kutsutunnus(), 30, listauskorkeus, vari);
 
@@ -123,14 +125,15 @@ void PeliView::piirra_koneet(IPiirtoPinta& piirtopinta) {
 				}
 			}
 
-            piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(lentokorkeus) + " / " + apuvalineet::tekstiksi(selvityskorkeus), (*it)->paikka.x, (*it)->paikka.y + piirtopinta.get_fontinkoko() + 3, vari);
+            piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(lentokorkeus) + " / " + apuvalineet::tekstiksi(selvityskorkeus), kone_paikka.x, kone_paikka.y + piirtopinta.get_fontinkoko() + 3, vari);
+            piirtopinta.lineColor((*it)->paikka, kone_paikka, vari);
 
             if (peli.valittuKone == (*it)) {
-                piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor((*it)->anna_nopeus())) + " / " + apuvalineet::tekstiksi((*it)->anna_selvitysnopeus()), (*it)->paikka.x, (*it)->paikka.y + (2 * piirtopinta.get_fontinkoko()) + 3, vari);
-                piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor((*it)->anna_suunta())) + " / " + apuvalineet::tekstiksi((*it)->anna_selvityssuunta()), (*it)->paikka.x, (*it)->paikka.y + (3 * piirtopinta.get_fontinkoko()) + 3, vari);
+                piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor((*it)->anna_nopeus())) + " / " + apuvalineet::tekstiksi((*it)->anna_selvitysnopeus()), kone_paikka.x, kone_paikka.y + (2 * piirtopinta.get_fontinkoko()) + 3, vari);
+                piirtopinta.kirjoita_tekstia(apuvalineet::tekstiksi(std::floor((*it)->anna_suunta())) + " / " + apuvalineet::tekstiksi((*it)->anna_selvityssuunta()), kone_paikka.x, kone_paikka.y + (3 * piirtopinta.get_fontinkoko()) + 3, vari);
 
                 if ((*it)->tyyppi == Peli::LAHTEVA) {
-                    piirtopinta.kirjoita_tekstia((*it)->anna_ulosmenopiste().nimi, (*it)->paikka.x, (*it)->paikka.y + (4 * piirtopinta.get_fontinkoko()) + 3, vari);
+                    piirtopinta.kirjoita_tekstia((*it)->anna_ulosmenopiste().nimi, kone_paikka.x, kone_paikka.y + (4 * piirtopinta.get_fontinkoko()) + 3, vari);
 				}
 
                 piirtopinta.lineColor((*it)->paikka.x, (*it)->paikka.y, peli.hiiren_paikka.x, peli.hiiren_paikka.y, vari);
