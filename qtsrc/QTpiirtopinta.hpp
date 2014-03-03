@@ -34,6 +34,11 @@ public:
         m_painter->drawLine(x1, y1, x2, y2);
     }
 
+    void lineColor(apuvalineet::piste& a, apuvalineet::piste& b, unsigned int color) {
+        m_painter->setPen(*colors[color]);
+        m_painter->drawLine(a.x, a.y, b.x, b.y);
+    }
+
     void circleColor(unsigned short x, unsigned short y, unsigned short rad, unsigned int color) {
         m_painter->setPen(*colors[color]);
         m_painter->drawEllipse(QPointF(x, y), rad, rad);

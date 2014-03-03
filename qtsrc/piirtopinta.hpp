@@ -9,6 +9,7 @@ class IPiirtoPinta {
 public:
     virtual void rectangleColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) = 0;
     virtual void lineColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned int color) = 0;
+    virtual void lineColor(apuvalineet::piste& a, apuvalineet::piste& b, unsigned int color) = 0;
     virtual void circleColor(unsigned short x, unsigned short y, unsigned short rad, unsigned int color) = 0;
     virtual void trigonColor(unsigned short x1, unsigned short y1, unsigned short x2, unsigned short y2, unsigned short x3, unsigned short y3, unsigned int color) = 0;
 
