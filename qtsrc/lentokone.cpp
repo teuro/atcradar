@@ -7,8 +7,8 @@ lentokone::lentokone(std::string kutsutunnus, apuvalineet::piste paikka, double 
 
 	this->paikka = paikka;
 
-	this->kohde.paikka.x = 0;
-	this->kohde.paikka.y = 0;
+    this->kohde.paikka.x = 0;
+    this->kohde.paikka.y = 0;
 
 	onko_porrastus = true;
 	this->tyyppi = tyyppi;

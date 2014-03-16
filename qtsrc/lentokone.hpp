@@ -4,7 +4,7 @@
 #include "apuvalineet.hpp"
 #include "navipiste.hpp"
 #include "lentokentta.hpp"
-#include "AtisController.hpp"
+#include "atiscontroller.hpp"
 #include "asetukset.hpp"
 
 #define _USE_MATH_DEFINES
@@ -61,7 +61,7 @@ private:
 
 	std::queue <navipiste> reitti;
 
-	navipiste kohde;
+    navipiste kohde;
 	navipiste ulosmenopiste;
 
 	void aseta_navipiste(apuvalineet::piste paikka);

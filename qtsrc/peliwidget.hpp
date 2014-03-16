@@ -172,6 +172,11 @@ public slots:
             inputFields[0].field->setText(QString::fromStdString(apuvalineet::tekstiksi(peli.valittuKone->anna_selvityssuunta())));
             inputFields[1].field->setText(QString::fromStdString(apuvalineet::tekstiksi(peli.valittuKone->anna_selvitysnopeus())));
             inputFields[2].field->setText(QString::fromStdString(apuvalineet::tekstiksi(peli.valittuKone->anna_selvityskorkeus())));
+        } else {
+            for (unsigned int i = 0; i < inputFields.size(); ++i) {
+                inputFields[i].field->hide();
+                inputFields[i].label->hide();
+            }
         }
 
         update();
