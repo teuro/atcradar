@@ -19,7 +19,8 @@ HEADERS += \
 SOURCES += \
     apuvalineet.cpp asetukset.cpp lentokentta.cpp lentokone.cpp \
     navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp \
-    atiscontroller.cpp
+    atiscontroller.cpp \
+    metar.cpp
 
 TRANSLATIONS = radar_en.ts radar_se.ts
 

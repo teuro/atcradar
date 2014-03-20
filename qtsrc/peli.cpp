@@ -392,28 +392,11 @@ std::vector <std::string> Peli::lataa_pilvet(std::string pilvet) {
 void Peli::generoi_metar() {
     metar.aseta_tuuli(apuvalineet::pyorista(apuvalineet::arvo_luku(0, 360), 5));
     metar.aseta_paine(apuvalineet::arvo_luku(asetukset.anna_asetus("ilmanpaine_ala"), asetukset.anna_asetus("ilmanpaine_yla")));
-    metar.aseta_voimakkuus(std::abs(1013 - metar.anna_paine()) * 1.75);
-    metar.aseta_nakyvyys(apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("nakyvyys_ala"), asetukset.anna_asetus("nakyvyys_yla")), 100));
+
     metar.aseta_lampotila(apuvalineet::arvo_luku(asetukset.anna_asetus("lampotila_ala"), asetukset.anna_asetus("lampotila_yla")));
     metar.aseta_ilmankosteus(apuvalineet::arvo_luku(asetukset.anna_asetus("ilmankosteus_ala"), asetukset.anna_asetus("ilmankosteus_yla")));
-    metar.aseta_kastepiste(metar.anna_lampotila() - ((100 - metar.anna_ilmankosteus()) / 5));
 
-    int pilvia = apuvalineet::arvo_luku(asetukset.anna_asetus("pilvet_ala"), asetukset.anna_asetus("pilvet_yla"));
-    std::string pilvi;
-
-    if (pilvia) {
-        std::vector <std::string> tyypit = lataa_pilvet("data/pilvet.txt");
-        std::string tyyppi;
-
-        for (int i = 0; i < pilvia; ++i) {
-            tyyppi = tyypit[apuvalineet::arvo_luku(0, tyypit.size()-1)];
-            pilvi += tyyppi + apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(asetukset.anna_asetus("pilvenkorkeus_ala"), asetukset.anna_asetus("pilvenkorkeus_yla")), 100)) + " ";
-        }
-    } else {
-        pilvi = "CAVOK";
-    }
-
-    metar.aseta_pilvet(pilvi);
+    metar.aseta_tila();
 }
 
 bool Peli::onko_vapaata(int tyyppi, int piste) {
