@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include <sstream>
 #include <vector>
@@ -62,6 +63,8 @@ namespace apuvalineet {
 
     double laske_vastatuuli(double kiitotie, double tuuli);
     double laske_sivutuuli(double kiitotie, double tuuli);
+
+    std::vector <std::string> lue_tiedosto(std::string tiedosto);
 
 	double etaisyys(const piste& a, const piste& b);
 	piste uusi_paikka(const piste& a, double suunta, double pituus);

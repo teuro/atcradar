@@ -15,17 +15,7 @@ Peli::Peli(IAsetukset& a, Atis &at, Metar& m) : asetukset(a), atis(at), metar(m)
 }
 
 void Peli::lataa_tunnukset(std::string tunnukset) {
-	std::string tmp;
-
-	std::ifstream sisaan(tunnukset.c_str(), std::ios::in);
-
-	if (!sisaan) {
-        throw std::runtime_error(QObject::tr("Tiedosto tunnukset.txt ei aukea tai se puuttuu").toStdString());
-	}
-
-	while (sisaan >> tmp) {
-		this->tunnukset.push_back(tmp);
-	}
+    this->tunnukset = apuvalineet::lue_tiedosto(tunnukset);
 }
 
 void Peli::aseta_virhe(int virhe) {
@@ -145,15 +135,10 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 	std::string kansio = "kentat/";
 	std::string tmp = kansio + kenttaNimi;
 
-	std::ifstream sisaan(tmp.c_str(), std::ios::in);
-	if (!sisaan) {
-		throw std::runtime_error("Tiedostoa " + tmp + " ei ole tai se ei aukea");
-	}
+    std::vector <std::string> rivit = apuvalineet::lue_tiedosto(tmp);
 
-	std::string rivi;
-
-	while (std::getline(sisaan, rivi)) {
-        std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivi, "|");
+    for (unsigned int i = 0; i < rivit.size(); ++i) {
+        std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivit[i], "|");
 
 		if (asiat[0] == "N") {
 			kentta.nimi = asiat[1];
@@ -201,8 +186,6 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
     std::sort(navipisteet.begin(), navipisteet.end(), jarjesta_pisteet);
 
     //std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
-
-	sisaan.close();
 }
 
 std::string Peli::generoi_tunnus() {

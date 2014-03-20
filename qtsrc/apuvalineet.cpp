@@ -162,3 +162,22 @@ std::string apuvalineet::muotoile_aika(std::string formaatti, double aika) {
 
     return formaatti;
 }
+
+std::vector <std::string> apuvalineet::lue_tiedosto(std::string tiedosto) {
+    std::vector <std::string> tmp;
+
+    std::ifstream sisaan(tiedosto.c_str(), std::ios::in);
+    std::string rivi;
+
+    if (!sisaan) {
+        throw std::runtime_error("Tiedosto " + tiedosto + " ei aukea tai se puuttuu ");
+    }
+
+    while (std::getline(sisaan, rivi)) {
+        tmp.push_back(rivi);
+    }
+
+    sisaan.close();
+
+    return tmp;
+}
