@@ -132,10 +132,8 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 #ifdef DEBUG
 	std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
 #endif
-	std::string kansio = "kentat/";
-	std::string tmp = kansio + kenttaNimi;
 
-    std::vector <std::string> rivit = apuvalineet::lue_tiedosto(tmp);
+    std::vector <std::string> rivit = apuvalineet::lue_tiedosto("kentat/" + kenttaNimi);
 
     for (unsigned int i = 0; i < rivit.size(); ++i) {
         std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivit[i], "|");

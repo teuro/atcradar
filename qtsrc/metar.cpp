@@ -7,19 +7,20 @@ void Metar::aseta_tila() {
 
     int pilvia = apuvalineet::arvo_luku(0, 4 - (this->lampotila - this->kastepiste));
     std::string pilvi;
-    std::vector <std::string> tyypit;
 
-    tyypit.push_back("SKC");
-    tyypit.push_back("FEW");
-    tyypit.push_back("SCT");
-    tyypit.push_back("BKN");
-    tyypit.push_back("OVC");
+    std::vector <std::string> tyypit = apuvalineet::lue_tiedosto("data/pilvet.txt");
 
     for (int i = 0; i < pilvia; ++i) {
         pilvi += tyypit[apuvalineet::arvo_luku(0, tyypit.size())] +apuvalineet::tekstiksi(apuvalineet::pyorista(apuvalineet::arvo_luku(500, 8000), 100)) + " ";
     }
 
     this->aseta_pilvet(pilvi);
+    //Paine kasvaa yhdellä näkyvyys 136
+    this->nakyvyys = apuvalineet::pyorista(3200 + (this->paine - 980) * 136, 100);
+
+    if (this->nakyvyys > 9999) {
+        this->nakyvyys = 9999;
+    }
 }
 
 int Metar::anna_tuuli() {return this->tuuli; }
