@@ -15,14 +15,16 @@ HEADERS += \
     QTpiirtopinta.hpp metar.hpp atiscontroller.hpp \
     tilastowidget.hpp asetukset.hpp peliwidget.hpp \
     peliview.hpp atiswidget.hpp mainwindow.hpp \
-    pelisuorite.hpp
+    pelisuorite.hpp \
+    pelaaja.hpp
 
 SOURCES += \
     apuvalineet.cpp asetukset.cpp lentokentta.cpp lentokone.cpp \
     navipiste.cpp pelicontroller.cpp qtmain.cpp peliview.cpp peli.cpp \
     atiscontroller.cpp \
     metar.cpp \
-    pelisuorite.cpp
+    pelisuorite.cpp \
+    pelaaja.cpp
 
 TRANSLATIONS = radar_en.ts radar_se.ts
 

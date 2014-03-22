@@ -32,10 +32,6 @@ public:
 
         peli = new Peli(*asetukset, *atis, *metar);
 
-        pelisuorite suorite(5, 2, 41, 0, 0, 2245);
-        std::clog << suorite.tarkista(690321) << std::endl;
-        std::clog << suorite.anna_suorite() << std::endl;
-
         peliView = new PeliView(*peli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
         peliController = new PeliController(*peli, *asetukset, *dummyPinta, *atis);
