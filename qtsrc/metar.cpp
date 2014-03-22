@@ -15,7 +15,6 @@ void Metar::aseta_tila() {
     }
 
     this->aseta_pilvet(pilvi);
-    //Paine kasvaa yhdellä näkyvyys 136
     this->nakyvyys = apuvalineet::pyorista(3200 + (this->paine - 980) * 136, 100);
 
     if (this->nakyvyys > 9999) {

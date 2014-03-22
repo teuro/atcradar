@@ -20,6 +20,7 @@
 #include "pelicontroller.hpp"
 #include "QTpiirtopinta.hpp"
 #include "tilastowidget.hpp"
+#include "pelisuorite.hpp"
 
 class MainWindow : public QDialog {
     Q_OBJECT
@@ -30,6 +31,10 @@ public:
         asetukset = new Asetukset;
 
         peli = new Peli(*asetukset, *atis, *metar);
+
+        pelisuorite suorite(5, 2, 41, 0, 0, 2245);
+        std::clog << suorite.tarkista(690321) << std::endl;
+        std::clog << suorite.anna_suorite() << std::endl;
 
         peliView = new PeliView(*peli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;

@@ -7,8 +7,8 @@
 #include "navipiste.hpp"
 #include "asetukset.hpp"
 #include "view.hpp"
-#include "AtisController.hpp"
-#include "Metar.hpp"
+#include "atiscontroller.hpp"
+#include "metar.hpp"
 
 #include <iostream>
 #include <fstream>
