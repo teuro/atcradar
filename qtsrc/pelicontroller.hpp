@@ -14,7 +14,6 @@
 #include "asetukset.hpp"
 #include "peli.hpp"
 #include "atiscontroller.hpp"
-#include "pelisuorite.hpp"
 
 /*
     MVC Ohjain

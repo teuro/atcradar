@@ -95,6 +95,7 @@ public:
 
     double anna_pelin_kello();
     double edellinen_kone_lahto;
+    int anna_pisteet();
 
     std::string ohje;
     std::string virheteksti;

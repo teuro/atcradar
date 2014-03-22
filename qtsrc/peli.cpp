@@ -421,3 +421,13 @@ double Peli::anna_pelin_kello() {
 int Peli::anna_taso() {
     return this->taso;
 }
+
+int Peli::anna_pisteet() {
+    int tmp = 0;
+
+    for (unsigned int i = 0; i < ajat.size(); ++i) {
+        tmp += ajat[i].pisteet;
+    }
+
+    return tmp;
+}

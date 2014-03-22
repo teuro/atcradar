@@ -16,6 +16,7 @@
 #include "pelicontroller.hpp"
 #include "QTpiirtopinta.hpp"
 #include "asetukset.hpp"
+#include "pelisuorite.hpp"
 
 class PeliWidget : public QWidget {
     Q_OBJECT
@@ -84,6 +85,8 @@ public slots:
     void animate() {
         if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
             if (peli.koneet.size() == 0) {
+                pelisuorite suorite(1, peli.anna_taso(), peli.ajat.size(), peli.porrastusvirheet, peli.muut_virheet, peli.anna_pisteet());
+                std::clog << suorite.anna_suorite() << " " << suorite.laske_tiiviste() << std::endl;
                 emit peli_valmis();
             }
         } else if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
