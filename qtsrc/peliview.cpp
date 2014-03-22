@@ -209,6 +209,6 @@ void PeliView::piirra_odottavat(IPiirtoPinta& piirtopinta) {
 
 void PeliView::piirra_jaljet(IPiirtoPinta &piirtopinta) {
     for (unsigned int i = 0; i < peli.jaljet.size(); ++i) {
-        piirtopinta.circleColor(peli.jaljet[i].x, peli.jaljet[i].y, 1, IPiirtoPinta::NORMAALI);
+        piirtopinta.circleColor(peli.jaljet[i].paikka.x, peli.jaljet[i].paikka.y, 1, IPiirtoPinta::NORMAALI);
     }
 }

@@ -13,7 +13,8 @@
 #include "controller.hpp"
 #include "asetukset.hpp"
 #include "peli.hpp"
-#include "AtisController.hpp"
+#include "atiscontroller.hpp"
+#include "pelisuorite.hpp"
 
 /*
     MVC Ohjain
