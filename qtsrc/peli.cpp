@@ -332,8 +332,9 @@ void Peli::hoida_koneet(double intervalliMs) {
         }
 
         (*it)->liiku(intervalliMs);
+
         if ((int)pelin_kello >= jaljet_intervalli) {
-            jalki tmp = {(*it)->anna_paikka().x, (*it)->anna_paikka().y};
+            jalki tmp = {(*it)->anna_paikka()};
             jaljet.push_back(tmp);
             jaljet_muistiin = true;
         } else {

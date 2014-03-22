@@ -9,6 +9,7 @@
 #include "view.hpp"
 #include "atiscontroller.hpp"
 #include "metar.hpp"
+#include "pelaaja.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -66,8 +67,7 @@ public:
     };
 
     struct jalki {
-        int x;
-        int y;
+       apuvalineet::piste paikka;
     };
 
     std::vector <std::string> tunnukset;
@@ -75,6 +75,7 @@ public:
     std::vector <navipiste> navipisteet;
     std::vector <navipiste> sisapisteet;
     std::vector <jalki> jaljet;
+    std::vector <pelaaja> pelaajat;
 
     std::string syote;
 
