@@ -11,6 +11,14 @@ class pelaaja {
     std::string sukunimi;
 public:
     pelaaja(int id, std::string etunimi, std::string sukunimi);
+    std::string anna_etunimi();
+    std::string anna_sukunimi();
+
+    pelaaja operator ==(int id) {
+        if (id == this->id) {
+            return *(this);
+        }
+    }
 };
 
 #endif // PELAAJA_HPP
