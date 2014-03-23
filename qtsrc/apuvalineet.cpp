@@ -166,6 +166,10 @@ std::string apuvalineet::muotoile_aika(std::string formaatti, double aika) {
 std::vector <std::string> apuvalineet::lue_tiedosto(std::string tiedosto) {
     std::vector <std::string> tmp;
 
+    #ifdef DEBUG
+        std::clog << "Ladataan tiedosto " << tiedosto << std::endl;
+    #endif
+
     std::ifstream sisaan(tiedosto.c_str(), std::ios::in);
     std::string rivi;
 

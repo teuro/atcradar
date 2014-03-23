@@ -21,6 +21,7 @@
 #include "QTpiirtopinta.hpp"
 #include "tilastowidget.hpp"
 #include "pelisuorite.hpp"
+#include "pelaajawidget.hpp"
 
 class MainWindow : public QDialog {
     Q_OBJECT
@@ -31,6 +32,8 @@ public:
         asetukset = new Asetukset;
 
         peli = new Peli(*asetukset, *atis, *metar);
+
+        pelaajaWidget = new Pelaajawidget(*peli);
 
         peliView = new PeliView(*peli, *asetukset, *atis);
         dummyPinta = new QPainterPiirtoPinta;
@@ -44,6 +47,7 @@ public:
 
         stack = new QStackedWidget();
 
+        stack->addWidget(pelaajaWidget);
         stack->addWidget(levelMenu);
         stack->addWidget(atisWidget);
         stack->addWidget(peliWidget);
@@ -53,6 +57,7 @@ public:
         layout->addWidget(stack);
         setLayout(layout);
 
+        connect(pelaajaWidget, SIGNAL(pelaaja_valittu(std::string)), this, SLOT(kun_pelaaja_valittu(std::string)));
         connect(levelMenu, SIGNAL(taso_valittu(int, std::string)), this, SLOT(kun_taso_valittu(int, std::string)));
         connect(atisWidget, SIGNAL(atis_valmis()), this, SLOT(kun_atis_valmis()));
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
@@ -71,9 +76,14 @@ public:
     }
 
 public slots:
+    void kun_pelaaja_valittu(std::string tunnus) {
+        peli->aseta_pelaaja(tunnus);
+        stack->setCurrentIndex(1);
+    }
+
     void kun_taso_valittu(int taso, std::string kentta) {
         peli->lataa_kentta(kentta);
-        stack->setCurrentIndex(1);
+        stack->setCurrentIndex(2);
         atisWidget->aseta_taso(taso);
         peli->aseta_taso(taso);
         asetukset->muuta_asetusta("vaadittavat_kasitellyt", asetukset->anna_asetus("vaadittavat_kasitellyt") * taso);
@@ -81,7 +91,7 @@ public slots:
 	}
 
     void kun_atis_valmis() {
-        stack->setCurrentIndex(2);
+        stack->setCurrentIndex(3);
         peli->aloita();
 
         for (int i = 0; i < (peli->anna_taso() * 3); ++i) {
@@ -99,19 +109,19 @@ public slots:
         ulos << peli->anna_taso() << "|" << tilastoWidget->anna_pistesumma() << peli->ajat.size() << "|" << std::endl;
         ulos.close();
 
-        stack->setCurrentIndex(3);
+        stack->setCurrentIndex(4);
     }
 
     void porrastusvirheet_taynna() {
-        stack->setCurrentIndex(3);
+        stack->setCurrentIndex(4);
     }
 
     void kun_tallennettu() {
-        stack->setCurrentIndex(3);
+        stack->setCurrentIndex(4);
     }
 
     void palaaPeliin() {
-        stack->setCurrentIndex(2);
+        stack->setCurrentIndex(3);
     }
 
 private:
@@ -129,6 +139,7 @@ private:
     QPainterPiirtoPinta* dummyPinta;
     PeliController *peliController;
     PeliWidget* peliWidget;
+    Pelaajawidget* pelaajaWidget;
 
     TilastoWidget* tilastoWidget;
 };

@@ -1,3 +1,5 @@
-1|Juha|Teurokoski|
-2|Päivi|Teurokoski|
-3|Markku|Pitkänen|
+0|teuro|
+1|simo|
+2|kalevi|
+3|juki|
+4|soppa|

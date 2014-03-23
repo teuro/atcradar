@@ -85,7 +85,7 @@ public slots:
     void animate() {
         if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
             if (peli.koneet.size() == 0) {
-                pelisuorite suorite(1, peli.anna_taso(), peli.ajat.size(), peli.porrastusvirheet, peli.muut_virheet, peli.anna_pisteet());
+                pelisuorite suorite(peli.peluri.anna_id(), peli.anna_taso(), peli.ajat.size(), peli.porrastusvirheet, peli.muut_virheet, peli.anna_pisteet());
                 std::clog << suorite.anna_suorite() << " " << suorite.laske_tiiviste() << std::endl;
                 emit peli_valmis();
             }

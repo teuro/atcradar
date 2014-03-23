@@ -77,6 +77,8 @@ public:
     std::vector <jalki> jaljet;
     std::vector <pelaaja> pelaajat;
 
+    pelaaja peluri;
+
     std::string syote;
 
     void lataa_tunnukset(std::string tunnukset);
@@ -92,10 +94,14 @@ public:
     void aseta_pelin_kello(double aika);
     void aloita();
     void lataa_kentta(std::string kentta);
+    void aseta_pelaaja(int id);
+    void aseta_pelaaja(std::string tunnus);
+    void lataa_pelaajat(std::string tiedosto);
 
     double anna_pelin_kello();
     double edellinen_kone_lahto;
     int anna_pisteet();
+    pelaaja anna_pelaja();
 
     std::string ohje;
     std::string virheteksti;

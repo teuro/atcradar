@@ -6,6 +6,7 @@ Peli::Peli(IAsetukset& a, Atis &at, Metar& m) : asetukset(a), atis(at), metar(m)
     kasitellyt = 0;
 	koska_metar = asetukset.anna_asetus("koska_metar");
 	lataa_tunnukset("data/tunnukset.txt");
+    lataa_pelaajat("data/pelaajat.txt");
 	generoi_metar();
     valittuKone = NULL;
     laskeutuvaKone = false;
@@ -430,4 +431,48 @@ int Peli::anna_pisteet() {
     }
 
     return tmp;
+}
+
+void Peli::aseta_pelaaja(std::string tunnus) {
+    std::vector <pelaaja> :: iterator p = std::find(pelaajat.begin(), pelaajat.end(), tunnus);
+
+    if (p == pelaajat.end()) {
+        this->pelaajat.push_back(pelaaja(this->pelaajat.size(), tunnus));
+        #ifdef DEBUG
+            std::clog << this->pelaajat.back().anna_tunnus() << std::endl;
+        #endif
+        this->peluri = pelaajat.back();
+    } else {
+        #ifdef DEBUG
+            std::clog << p->anna_tunnus() << std::endl;
+        #endif
+        this->peluri = pelaajat[std::distance(pelaajat.begin(), p)];
+    }
+
+    std::ofstream ulos("data/pelaajat.txt", std::ios::out);
+
+    for (unsigned int i = 0; i < this->pelaajat.size(); ++i) {
+        #ifdef DEBUG
+            std::clog << pelaajat[i].anna_id() << "|" << pelaajat[i].anna_tunnus() << std::endl;
+        #endif
+        ulos << pelaajat[i].anna_id() << "|" << pelaajat[i].anna_tunnus() << "|" << std::endl;
+    }
+}
+
+pelaaja Peli::anna_pelaja() {
+    return this->peluri;
+}
+
+void Peli::lataa_pelaajat(std::string tiedosto) {
+    std::vector <std::string> rivit = apuvalineet::lue_tiedosto(tiedosto);
+
+    for (unsigned int i = 0; i < rivit.size(); ++i) {
+        #ifdef DEBUG
+            std::clog << rivit[i] << std::endl;
+        #endif
+        std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivit[i], "|");
+
+        this->pelaajat.push_back(pelaaja(apuvalineet::luvuksi<int>(asiat[0]), asiat[1]));
+    }
+
 }

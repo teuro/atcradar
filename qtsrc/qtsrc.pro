@@ -16,7 +16,8 @@ HEADERS += \
     tilastowidget.hpp asetukset.hpp peliwidget.hpp \
     peliview.hpp atiswidget.hpp mainwindow.hpp \
     pelisuorite.hpp \
-    pelaaja.hpp
+    pelaaja.hpp \
+    pelaajawidget.hpp
 
 SOURCES += \
     apuvalineet.cpp asetukset.cpp lentokentta.cpp lentokone.cpp \

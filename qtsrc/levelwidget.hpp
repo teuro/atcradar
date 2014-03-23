@@ -31,7 +31,7 @@ public:
         title = new QLabel(tr("Valitse vaikeustaso:"), this);
         title->setGeometry(50, 20, 150, 30);
 
-        levelLabel = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(slider->minimum())) , this);
+        levelLabel = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(slider->minimum())), this);
         levelLabel->setGeometry(230, 50, 20, 30);
 
         polku = new QDir("kentat/");
@@ -53,6 +53,10 @@ public:
 		delete title;
 		delete levelLabel;
 		delete okButton;
+        delete valinta;
+        delete ruutu;
+        delete polku;
+        delete tiedostot;
 	}
 
 public slots:
@@ -73,8 +77,6 @@ private:
     QDir* polku;
     QStringList* tiedostot;
     QComboBox* valinta;
-    QPushButton* suomi;
-    QPushButton* englanti;
 };
 
 #endif
