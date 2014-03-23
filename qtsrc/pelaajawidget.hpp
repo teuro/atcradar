@@ -14,6 +14,7 @@
 
 #include "apuvalineet.hpp"
 #include "peli.hpp"
+#include "pelisuorite.hpp"
 
 class Pelaajawidget : public QWidget {
     Q_OBJECT
@@ -32,20 +33,34 @@ public:
         std::vector <std::string> rivit = apuvalineet::lue_tiedosto("data/pisteet.txt");
         std::vector <std::string> solut;
         std::clog << rivit.size() << std::endl;
+
         int y = 50;
+
+        std::vector <pelisuorite> pistevektori;
 
         for (unsigned int i = 0; i < rivit.size(); ++i) {
             solut = apuvalineet::pilko_rivi(rivit[i], "|");
-            int id = apuvalineet::luvuksi<int>(solut[0]);
-            std::string pisteet = solut[5];
+            int id          = apuvalineet::luvuksi<int>(solut[0]);
+            int taso        = apuvalineet::luvuksi<int>(solut[1]);
+            int koneita     = apuvalineet::luvuksi<int>(solut[2]);
+            int porrastus   = apuvalineet::luvuksi<int>(solut[3]);
+            int muut        = apuvalineet::luvuksi<int>(solut[4]);
+            int pisteet     = apuvalineet::luvuksi<int>(solut[5]);
+            int tarkiste    = apuvalineet::luvuksi<int>(solut[6]);
 
-            QLabel* pistetunnus = new QLabel(QString::fromStdString(peli.pelaajat[id].anna_tunnus()), this);
-            pistetunnus->move(220, y);
+            pistevektori.push_back(pelisuorite(id, taso, koneita, porrastus, muut, pisteet));
 
-            QLabel* pistearvo = new QLabel(QString::fromStdString(pisteet), this);
-            pistearvo->move(270, y);
+            if (pistevektori.back().tarkista(tarkiste)) {
+                QLabel* pistetunnus = new QLabel(QString::fromStdString(peli.pelaajat[id].anna_tunnus()), this);
+                pistetunnus->move(220, y);
 
-            y += 20;
+                QLabel* pistearvo = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(pisteet)), this);
+                pistearvo->move(270, y);
+
+                y += 20;
+            } else {
+                std::clog << solut[6] << " != " << pistevektori.back().laske_tiiviste() << std::endl;
+            }
         }
 
         connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));

@@ -361,7 +361,7 @@ std::vector <std::string> Peli::lataa_pilvet(std::string pilvet) {
 
 	if (!sisaan) {
 		throw std::runtime_error("Tiedosto " + pilvet + " ei aukea");
-	}
+    }
 
 	while (sisaan >> pilvi) {
 		tyypit.push_back(pilvi);
