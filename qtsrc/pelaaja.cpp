@@ -2,6 +2,7 @@
 
 pelaaja::pelaaja(int id, std::string tunnus, std::string etunimi, std::string sukunimi) {
     this->id = id;
+    this->tunnus = tunnus;
     this->etunimi = etunimi;
     this->sukunimi = sukunimi;
 }

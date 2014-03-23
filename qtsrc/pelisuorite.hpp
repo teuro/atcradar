@@ -17,6 +17,8 @@ public:
     std::string anna_suorite();
     int laske_tiiviste();
     bool tarkista(int tarkiste);
+    int anna_id();
+    int anna_pisteet();
 };
 
 #endif // PELISUORITE_HPP

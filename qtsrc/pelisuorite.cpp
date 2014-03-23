@@ -30,3 +30,11 @@ int pelisuorite::laske_tiiviste() {
 bool pelisuorite::tarkista(int tarkiste) {
     return tarkiste == this->laske_tiiviste();
 }
+
+int pelisuorite::anna_id() {
+    return this->pelaaja_id;
+}
+
+int pelisuorite::anna_pisteet() {
+    return this->pisteet;
+}

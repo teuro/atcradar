@@ -10,6 +10,7 @@
 #include "atiscontroller.hpp"
 #include "metar.hpp"
 #include "pelaaja.hpp"
+#include "pelisuorite.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -97,6 +98,8 @@ public:
     void aseta_pelaaja(int id);
     void aseta_pelaaja(std::string tunnus);
     void lataa_pelaajat(std::string tiedosto);
+    void lataa_pisteet(std::string tiedosto);
+    void muodosta_suorite();
 
     double anna_pelin_kello();
     double edellinen_kone_lahto;
@@ -113,6 +116,8 @@ public:
 
     apuvalineet::piste hiiren_paikka;
     lentokentta kentta;
+
+    std::vector <pelisuorite> pistevektori;
 
     bool onko_vapaata(int tyyppi = LAHTEVA, int piste = -1);
 

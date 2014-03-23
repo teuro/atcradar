@@ -84,6 +84,7 @@ public slots:
     void animate() {
         if (peli.kasitellyt >= asetukset.anna_asetus("vaadittavat_kasitellyt")) {
             if (peli.koneet.size() == 0) {
+                peli.muodosta_suorite();
                 emit peli_valmis();
             }
         } else if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {

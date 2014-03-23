@@ -7,6 +7,7 @@ Peli::Peli(IAsetukset& a, Atis &at, Metar& m) : asetukset(a), atis(at), metar(m)
 	koska_metar = asetukset.anna_asetus("koska_metar");
 	lataa_tunnukset("data/tunnukset.txt");
     lataa_pelaajat("data/pelaajat.txt");
+    lataa_pisteet("data/pisteet.txt");
 	generoi_metar();
     valittuKone = NULL;
     laskeutuvaKone = false;
@@ -475,4 +476,28 @@ void Peli::lataa_pelaajat(std::string tiedosto) {
         this->pelaajat.push_back(pelaaja(apuvalineet::luvuksi<int>(asiat[0]), asiat[1]));
     }
 
+}
+
+void Peli::lataa_pisteet(std::string tiedosto) {
+    std::vector <std::string> rivit = apuvalineet::lue_tiedosto(tiedosto);
+    std::vector <std::string> solut;
+    std::clog << rivit.size() << std::endl;
+
+    for (unsigned int i = 0; i < rivit.size(); ++i) {
+        solut           = apuvalineet::pilko_rivi(rivit[i], "|");
+
+        int id          = apuvalineet::luvuksi<int>(solut[0]);
+        int taso        = apuvalineet::luvuksi<int>(solut[1]);
+        int koneita     = apuvalineet::luvuksi<int>(solut[2]);
+        int porrastus   = apuvalineet::luvuksi<int>(solut[3]);
+        int muut        = apuvalineet::luvuksi<int>(solut[4]);
+        int pisteet     = apuvalineet::luvuksi<int>(solut[5]);
+        //int tarkiste    = apuvalineet::luvuksi<int>(solut[6]);
+
+        pistevektori.push_back(pelisuorite(id, taso, koneita, porrastus, muut, pisteet));
+    }
+}
+
+void Peli::muodosta_suorite() {
+    pistevektori.push_back(pelisuorite(peluri.anna_id(), taso, ajat.size(), porrastusvirheet, muut_virheet, anna_pisteet()));
 }
