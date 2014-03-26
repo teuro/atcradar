@@ -2,6 +2,7 @@
 #define PELISUORITE_HPP
 
 #include <string>
+#include <ostream>
 
 #include "apuvalineet.hpp"
 

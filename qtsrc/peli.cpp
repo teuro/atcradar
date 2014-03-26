@@ -254,7 +254,7 @@ void Peli::tarkista_porrastus() {
 void Peli::logita_aika(lentokone* lk) {
     std::vector <tilasto> :: iterator haku_pois = std::find(ajat.begin(), ajat.end(), lk->anna_kutsutunnus());
     haku_pois->pois = this->pelin_kello;
-    haku_pois->pisteet += 1000 - apuvalineet::pyorista((haku_pois->pois - haku_pois->sisaan) * haku_pois->selvitykset, 10);
+    haku_pois->pisteet += 10000 - apuvalineet::pyorista((haku_pois->pois - haku_pois->sisaan) * haku_pois->selvitykset, 10);
 }
 
 bool pois(lentokone* kone) {
@@ -500,4 +500,12 @@ void Peli::lataa_pisteet(std::string tiedosto) {
 
 void Peli::muodosta_suorite() {
     pistevektori.push_back(pelisuorite(peluri.anna_id(), taso, ajat.size(), porrastusvirheet, muut_virheet, anna_pisteet()));
+}
+
+void Peli::tallenna_pisteet() {
+    std::ofstream ulos("data/pisteet.txt", std::ios::out);
+
+    for (unsigned int i = 0; i < this->pistevektori.size(); ++i) {
+        ulos << pistevektori[i].anna_suorite() << std::endl;
+    }
 }

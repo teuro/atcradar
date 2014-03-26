@@ -128,6 +128,8 @@ public:
     enum virheet { VIRHE_KORKEUS_ALA = 1, VIRHE_KORKEUS_YLA, VIRHE_NOPEUS_ALA, VIRHE_NOPEUS_YLA, VIRHE_LAHESTYMISNOPEUS, VIRHE_LAHESTYMISKORKEUS, VIRHE_LAHESTYMISSUUNTA, VIRHE_OIKOTIE, VIRHE_PORRASTUS, VIRHE_ALUEELTA };
 
     std::vector <std::string> lataa_pilvet(std::string pilvet);
+
+    void tallenna_pisteet();
 };
 
 #endif
