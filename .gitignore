@@ -1,6 +1,5 @@
 ohjelma/radar
 ohjelma/*.txt
-ohjelma/*.dll
 *.o
 .depend
 
@@ -8,7 +7,6 @@ ohjelma/*.dll
 ## Eclipse
 #################
 
-*.exe
 *.pydevproject
 .project
 .metadata
