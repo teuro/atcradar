@@ -134,15 +134,17 @@ void PeliController::anna_selvitys(std::string komento, int toiminto) {
 	int kaarto;
 	std::vector <navipiste> :: iterator kohde;
 
-	if (komento.substr(0, 1) == "O") {
-        kaarto = apuvalineet::OIKEA;
-        komento = komento.substr(1);
-	} else if (komento.substr(0, 1) == "V") {
-        kaarto = apuvalineet::VASEN;
-        komento = komento.substr(1);
-	} else {
-        kaarto = apuvalineet::VASEN;
-	}
+    if (komento.length() < 5) {
+        if (komento.substr(0, 1) == "O") {
+            kaarto = apuvalineet::OIKEA;
+            komento = komento.substr(1);
+        } else if (komento.substr(0, 1) == "V") {
+            kaarto = apuvalineet::VASEN;
+            komento = komento.substr(1);
+        } else {
+            kaarto = apuvalineet::VASEN;
+        }
+    }
 
     if (komento.length() == 5 && toiminto == apuvalineet::SUUNTA) {
         kohde = std::find(peli.sisapisteet.begin(), peli.sisapisteet.end(), komento);
@@ -155,6 +157,7 @@ void PeliController::anna_selvitys(std::string komento, int toiminto) {
 	switch (toiminto) {
 		case apuvalineet::KOHDE:
             peli.valittuKone->aseta_navipiste(*kohde);
+            std::clog << kohde->nimi << std::endl;
 			break;
         case apuvalineet::NOPEUS:
             peli.valittuKone->muuta_selvitysnopeutta(apuvalineet::luvuksi<double>(komento));

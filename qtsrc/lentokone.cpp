@@ -109,12 +109,14 @@ void lentokone::liiku(double aika) {
     this->muuta_tilaa(aika);
 
     if (this->reitti.size()) {
-        if (this->kohde.nimi == this->anna_piste().nimi) {
-            this->tarkista_suunta_kohteeseen();
-        } else {
-            this->kohde = this->anna_piste();
+        tarkista_suunta_kohteeseen();
+
+        if (apuvalineet::onko_alueella(this->paikka, this->kohde.paikka)) {
+            this->poista_reitti();
         }
-    } else if (this->lahestymisselvitys) {
+    }
+
+    if (this->lahestymisselvitys) {
         this->lahesty();
     }
 
@@ -123,6 +125,7 @@ void lentokone::liiku(double aika) {
 
 void lentokone::aseta_navipiste(navipiste piste) {
     this->reitti.push(piste);
+    this->kohde.paikka = piste.paikka;
 }
 
 void lentokone::aseta_navipiste(apuvalineet::piste paikka) {
@@ -209,5 +212,7 @@ void lentokone::poista_reitti() {
 }
 
 navipiste lentokone::anna_piste() {
-	return reitti.front();
+    navipiste tmp = this->reitti.front();
+    this->reitti.pop();
+    return tmp;
 }
