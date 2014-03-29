@@ -13,13 +13,16 @@ class pelisuorite {
     int porrastusvirheet;
     int muut_virheet;
     int pisteet;
+    int tarkiste;
 public:
+    pelisuorite(int pelaaja_id, int taso, int konemaara, int porrastusvirheet, int muut_virheet, int pisteet, int tarkiste);
     pelisuorite(int pelaaja_id, int taso, int konemaara, int porrastusvirheet, int muut_virheet, int pisteet);
     std::string anna_suorite();
     int laske_tiiviste();
     bool tarkista(int tarkiste);
     int anna_id();
     int anna_pisteet();
+    int anna_tarkiste();
 };
 
 #endif // PELISUORITE_HPP

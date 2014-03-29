@@ -1,5 +1,15 @@
 #include "pelisuorite.hpp"
 
+pelisuorite::pelisuorite(int pelaaja_id, int taso, int konemaara, int porrastusvirheet, int muut_virheet, int pisteet, int tarkiste) {
+    this->pelaaja_id = pelaaja_id;
+    this->taso = taso;
+    this->konemaara = konemaara;
+    this->porrastusvirheet = porrastusvirheet;
+    this->muut_virheet = muut_virheet;
+    this->pisteet = pisteet;
+    this->tarkiste = tarkiste;
+}
+
 pelisuorite::pelisuorite(int pelaaja_id, int taso, int konemaara, int porrastusvirheet, int muut_virheet, int pisteet) {
     this->pelaaja_id = pelaaja_id;
     this->taso = taso;
@@ -37,4 +47,8 @@ int pelisuorite::anna_id() {
 
 int pelisuorite::anna_pisteet() {
     return this->pisteet;
+}
+
+int pelisuorite::anna_tarkiste() {
+    return this->tarkiste;
 }
