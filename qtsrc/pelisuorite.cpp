@@ -49,6 +49,22 @@ int pelisuorite::anna_pisteet() {
     return this->pisteet;
 }
 
+int pelisuorite::anna_konemaara() {
+    return this->konemaara;
+}
+
+int pelisuorite::anna_porrastusvirheet() {
+    return this->porrastusvirheet;
+}
+
+int pelisuorite::anna_virheet() {
+    return this->muut_virheet;
+}
+
+int pelisuorite::anna_taso() {
+    return this->taso;
+}
+
 int pelisuorite::anna_tarkiste() {
     return this->tarkiste;
 }

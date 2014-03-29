@@ -54,7 +54,6 @@ public:
 		delete levelLabel;
 		delete okButton;
         delete valinta;
-        delete ruutu;
         delete polku;
         delete tiedostot;
 	}

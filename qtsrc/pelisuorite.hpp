@@ -22,6 +22,10 @@ public:
     bool tarkista(int tarkiste);
     int anna_id();
     int anna_pisteet();
+    int anna_konemaara();
+    int anna_porrastusvirheet();
+    int anna_virheet();
+    int anna_taso();
     int anna_tarkiste();
 };
 

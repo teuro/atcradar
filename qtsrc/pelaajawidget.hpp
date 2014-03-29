@@ -6,6 +6,7 @@
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QPushButton>
+#include <QTableWidget>
 #include <QLineEdit>
 #include <QString>
 #include <fstream>
@@ -24,24 +25,36 @@ public:
         title = new QLabel(tr("Valitse tunnus:"), this);
         title->setGeometry(50, 20, 150, 30);
 
+        QTableWidget* pistetaulu;
+        QStringList otsikot;
+
         tunnus = new QLineEdit("", this);
         tunnus->move(50, 50);
 
         okButton = new QPushButton(tr("OK"), this);
         okButton->move(50, 80);
 
-        int y = 50;
+        pistetaulu = new QTableWidget(this);
+        pistetaulu->move(250, 50);
+        pistetaulu->setColumnCount(6);
+        pistetaulu->setRowCount(peli.pistevektori.size()+1);
+        otsikot << tr("Tunnus") << tr("Pisteet") << tr("Taso") << tr("Porrastusvirheet") << tr("Virheet");
+        pistetaulu->setHorizontalHeaderLabels(otsikot);
+        pistetaulu->setMinimumWidth(650);
+        pistetaulu->setMinimumHeight(500);
+        pistetaulu->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        pistetaulu->setSelectionBehavior(QAbstractItemView::SelectRows);
+        pistetaulu->setSelectionMode(QAbstractItemView::SingleSelection);
+        pistetaulu->setShowGrid(true);
+        pistetaulu->setStyleSheet("QTableView {selection-background-color: red;}");
 
         for (unsigned int i = 0; i < peli.pistevektori.size(); ++i) {
-            QLabel* pistetunnus = new QLabel(QString::fromStdString(peli.pelaajat[peli.pistevektori[i].anna_id()].anna_tunnus()), this);
-            pistetunnus->move(220, y);
-
-            if (peli.pistevektori[i].anna_tarkiste() == peli.pistevektori[i].laske_tiiviste()) {
-                QLabel* pistearvo = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(peli.pistevektori[i].anna_pisteet())), this);
-                pistearvo->move(270, y);
-
-            }
-            y += 20;
+            pelisuorite tmp = peli.pistevektori[i];
+            pistetaulu->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(peli.pelaajat[tmp.anna_id()].anna_tunnus())));
+            pistetaulu->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(tmp.anna_pisteet()))));
+            pistetaulu->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(tmp.anna_taso()))));
+            pistetaulu->setItem(i, 3, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(tmp.anna_porrastusvirheet()))));
+            pistetaulu->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(apuvalineet::tekstiksi(tmp.anna_virheet()))));
         }
 
         connect(okButton, SIGNAL(clicked()), this, SLOT(kun_ok_painettu()));
@@ -56,6 +69,10 @@ public slots:
     void kun_ok_painettu() {
         emit pelaaja_valittu(tunnus->text().toStdString());
         //close();
+    }
+
+    void paintEvent(QPaintEvent*) {
+
     }
 
 signals:
