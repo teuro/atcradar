@@ -25,8 +25,8 @@ double apuvalineet::rad2deg(double rad) {
 	return deg;
 }
 int apuvalineet::arvo_luku(int ala, int yla) {
-    if (yla == 0) {
-        throw std::logic_error("Jako nollalla!");
+    if (yla <= 0) {
+        return 0;
     }
     int tmp_luku;
 

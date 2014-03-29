@@ -269,7 +269,7 @@ void Peli::hoida_koneet(double intervalliMs) {
     std::list <lentokone*> :: iterator loppu;
     loppu = std::remove_if(koneet.begin(), koneet.end(), pois);
     koneet.erase(loppu, koneet.end());
-    bool jaljet_muistiin = false;
+    bool jaljet_muistiin = true;
 
     for (std::list <lentokone*> :: iterator it = koneet.begin(); it != koneet.end(); ++it) {
         if ((*it)->anna_tyyppi() == Peli::LAHTEVA) {
@@ -484,6 +484,7 @@ void Peli::lataa_pisteet(std::string tiedosto) {
     std::clog << rivit.size() << std::endl;
 
     for (unsigned int i = 0; i < rivit.size(); ++i) {
+        //std::clog << rivit[i] << std::endl;
         solut           = apuvalineet::pilko_rivi(rivit[i], "|");
 
         int id          = apuvalineet::luvuksi<int>(solut[0]);
@@ -492,9 +493,9 @@ void Peli::lataa_pisteet(std::string tiedosto) {
         int porrastus   = apuvalineet::luvuksi<int>(solut[3]);
         int muut        = apuvalineet::luvuksi<int>(solut[4]);
         int pisteet     = apuvalineet::luvuksi<int>(solut[5]);
-        //int tarkiste    = apuvalineet::luvuksi<int>(solut[6]);
+        int tarkiste    = apuvalineet::luvuksi<int>(solut[6]);
 
-        pistevektori.push_back(pelisuorite(id, taso, koneita, porrastus, muut, pisteet));
+        pistevektori.push_back(pelisuorite(id, taso, koneita, porrastus, muut, pisteet, tarkiste));
     }
 }
 

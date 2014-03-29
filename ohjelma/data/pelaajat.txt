@@ -1,7 +1,2 @@
 0|teuro|
-1|simo|
-2|kalevi|
-3|juki|
-4|soppa|
-5||
-6|TEURO|
+1|Jukka|

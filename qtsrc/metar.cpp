@@ -6,6 +6,7 @@ void Metar::aseta_tila() {
     this->aseta_voimakkuus(std::abs(1013 - this->paine) * 1.75);
 
     int pilvia = apuvalineet::arvo_luku(0, 4 - (this->lampotila - this->kastepiste));
+
     std::string pilvi;
 
     std::vector <std::string> tyypit = apuvalineet::lue_tiedosto("data/pilvet.txt");

@@ -33,13 +33,14 @@ public:
         int y = 50;
 
         for (unsigned int i = 0; i < peli.pistevektori.size(); ++i) {
-
             QLabel* pistetunnus = new QLabel(QString::fromStdString(peli.pelaajat[peli.pistevektori[i].anna_id()].anna_tunnus()), this);
             pistetunnus->move(220, y);
 
-            QLabel* pistearvo = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(peli.pistevektori[i].anna_pisteet())), this);
-            pistearvo->move(270, y);
+            if (peli.pistevektori[i].anna_tarkiste() == peli.pistevektori[i].laske_tiiviste()) {
+                QLabel* pistearvo = new QLabel(QString::fromStdString(apuvalineet::tekstiksi(peli.pistevektori[i].anna_pisteet())), this);
+                pistearvo->move(270, y);
 
+            }
             y += 20;
         }
 
