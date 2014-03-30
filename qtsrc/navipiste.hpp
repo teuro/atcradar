@@ -8,6 +8,7 @@
 class navipiste {
 	public:
         navipiste(std::string nimi, apuvalineet::piste paikka, double korkeus, double nopeus, double suunta, int tyyppi);
+        navipiste(std::string nimi, apuvalineet::piste paikka, int tyyppi);
 		navipiste(std::string nimi, apuvalineet::piste paikka);
         navipiste() {}
 

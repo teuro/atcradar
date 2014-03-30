@@ -71,7 +71,16 @@ void Peli::luo_kone() {
 	apuvalineet::piste paikka;
 	bool odotus;
 	std::string tunnus = generoi_tunnus();
-    unsigned int lahtevat_alkaa = 0;
+
+    unsigned int lahtevat_alkaa = std::distance(navipisteet.begin(), std::find(navipisteet.begin(), navipisteet.end(), Peli::LAHTEVA));
+    unsigned int lahtevat_loppuu = navipisteet.size() - 1;
+    unsigned int saapuvat_alkaa = 0;
+    unsigned int saapuvat_loppuu = lahtevat_alkaa - 1;
+
+    #ifdef DEBUG
+        std::clog << "lahtevat_alkaa = " << navipisteet[lahtevat_alkaa].nimi << std::endl;
+        std::clog << "lahtevat_loppuu = " << navipisteet[lahtevat_loppuu].nimi << std::endl;
+    #endif
 
 	if (j == LAHTEVA) {
         std::vector <kiitotie> :: iterator haku_lahto = std::find(kentta.kiitotiet.begin(), kentta.kiitotiet.end(), atis.anna_lahtokiitotie());
@@ -84,11 +93,8 @@ void Peli::luo_kone() {
             paikka = haku_lahto->alkupiste;
             odotus = false;
 		}
-
-        lahtevat_alkaa = std::distance(navipisteet.begin(), std::find(navipisteet.begin(), navipisteet.end(), Peli::LAHTEVA));
-
         #ifdef DEBUG
-            std::clog << lahtevat_alkaa << std::endl;
+            std::clog << "lahtevat_alkaa = " << lahtevat_alkaa << " lahtevat_loppuu = " << lahtevat_loppuu << std::endl;
         #endif
 
         if (lahtevat_alkaa == navipisteet.size()) {
@@ -96,7 +102,7 @@ void Peli::luo_kone() {
         }
 
         koneet.push_back(new lentokone(tunnus, paikka, kentta.korkeus, 0.0, suunta, LAHTEVA, odotus, kentta, atis, asetukset));
-        koneet.back()->aseta_ulosmenopiste(navipisteet[apuvalineet::arvo_luku(lahtevat_alkaa, navipisteet.size())]);
+        koneet.back()->aseta_ulosmenopiste(navipisteet[apuvalineet::arvo_luku(lahtevat_alkaa, lahtevat_loppuu)]);
 
         if (koneet.back()->anna_odotus()) {
             odottavat.push(*koneet.back());
@@ -104,8 +110,11 @@ void Peli::luo_kone() {
 
 	} else {
 		int i = -1;
+        #ifdef DEBUG
+            std::clog << "saapuvat_alkaa = " << saapuvat_alkaa << " saapuvat_loppuu = " << saapuvat_loppuu << std::endl;
+        #endif
 		do {
-            i = apuvalineet::arvo_luku(0, navipisteet.size()-lahtevat_alkaa-1);
+            i = apuvalineet::arvo_luku(saapuvat_alkaa, saapuvat_loppuu);
 		} while (!onko_vapaata(SAAPUVA, i));
 
         koneet.push_front(new lentokone(tunnus, navipisteet[i].paikka, navipisteet[i].lentokorkeus, navipisteet[i].lentonopeus, navipisteet[i].lentosuunta, SAAPUVA, false, kentta, atis, asetukset));
@@ -161,18 +170,25 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 			sisapisteet.push_back(tmp);
         } else if (asiat[0] == "U") {
             apuvalineet::piste paikka = apuvalineet::uusi_paikka(kentta.paikka, apuvalineet::luvuksi<double>(asiat[2]), apuvalineet::luvuksi<double>(asiat[3]));
-
+            navipiste tmp_piste;
             int tyyppi = Peli::MOLEMMAT;
 
-            if (asiat[7] == "S") {
+            if (asiat.back() == "S") {
                 tyyppi = Peli::SAAPUVA;
-            } else if (asiat[7] == "L") {
+            } else if (asiat.back() == "L") {
                 tyyppi = Peli::LAHTEVA;
             }
 
-            navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]), tyyppi);
+            if (tyyppi == Peli::SAAPUVA || tyyppi == Peli::MOLEMMAT) {
+                navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]), tyyppi);
+                tmp_piste = tmp;
+            } else if (tyyppi == Peli::LAHTEVA) {
+                std::clog << "Lahteva" << std::endl;
+                navipiste tmp(asiat[1], paikka, tyyppi);
+                tmp_piste = tmp;
+            }
 
-			navipisteet.push_back(tmp);
+            navipisteet.push_back(tmp_piste);
 		} else {
             throw std::runtime_error("Tiedosto " + kenttaNimi + " on väärässä formaatissa");
 		}
@@ -181,11 +197,11 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 	}
 
 
-    //std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
-    //std::clog << std::endl << "KATKO" << std::endl << std::endl;
+    std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
+    std::clog << std::endl << "KATKO" << std::endl << std::endl;
     std::sort(navipisteet.begin(), navipisteet.end(), jarjesta_pisteet);
 
-    //std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
+    std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
 }
 
 std::string Peli::generoi_tunnus() {

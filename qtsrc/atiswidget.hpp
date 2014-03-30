@@ -51,8 +51,6 @@ public:
         syottokentat.push_back(new QLineEdit(oletusarvo, this));
         syottokentat.back()->move(x, y);
 
-        syottokentat.back()->setValidator(new QIntValidator(alaraja, ylaraja));
-
         syottokentta = new QLabel(nimi, this);
         syottokentta->setGeometry(x-100, y-0, 200, 20);
 

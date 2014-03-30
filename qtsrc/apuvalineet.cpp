@@ -4,7 +4,7 @@ static double PII = 3.1415927;
 
 namespace apuvalineet {
     int ruutu_leveys = 900;
-    const int matka_vaaka = 80;
+    const int matka_vaaka = 100;
 }
 
 double apuvalineet::px2nm(double px) {

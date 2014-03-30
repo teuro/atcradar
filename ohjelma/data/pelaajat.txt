@@ -1,2 +1,5 @@
 0|teuro|
 1|Jukka|
+2||
+3|T|
+4|TEURO|
