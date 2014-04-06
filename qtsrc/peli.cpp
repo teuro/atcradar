@@ -136,13 +136,15 @@ bool jarjesta_pisteet(const navipiste& a, const navipiste& b) {
 }
 
 void tulosta(navipiste& np) {
-    std::clog << np.nimi << " " << np.tyyppi << std::endl;
+    #ifdef DEBUG
+        std::clog << np.nimi << " " << np.tyyppi << std::endl;
+    #endif
 }
 
 void Peli::lataa_kentta(std::string kenttaNimi) {
-#ifdef DEBUG
-	std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
-#endif
+    #ifdef DEBUG
+        std::clog << "Peli::lataa_kentta(" << kenttaNimi << ")" << std::endl;
+    #endif
 
     std::vector <std::string> rivit = apuvalineet::lue_tiedosto("kentat/" + kenttaNimi);
 
@@ -150,6 +152,9 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
         std::vector <std::string> asiat = apuvalineet::pilko_rivi(rivit[i], "|");
 
 		if (asiat[0] == "N") {
+            if (asiat[1] == "") {
+                throw std::runtime_error("Kentän nimi puuttuu " + kenttaNimi + " rivillä " + apuvalineet::tekstiksi(i));
+            }
 			kentta.nimi = asiat[1];
 		} else if (asiat[0] == "H") {
 			kentta.korkeus = apuvalineet::luvuksi<double>(asiat[1]);
@@ -183,7 +188,9 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
                 navipiste tmp(asiat[1], paikka, apuvalineet::luvuksi<double>(asiat[4]), apuvalineet::luvuksi<double>(asiat[5]), apuvalineet::luvuksi<double>(asiat[6]), tyyppi);
                 tmp_piste = tmp;
             } else if (tyyppi == Peli::LAHTEVA) {
-                std::clog << "Lahteva" << std::endl;
+                #ifdef DEBUG
+                    std::clog << "Lahteva" << std::endl;
+                #endif
                 navipiste tmp(asiat[1], paikka, tyyppi);
                 tmp_piste = tmp;
             }
@@ -198,7 +205,9 @@ void Peli::lataa_kentta(std::string kenttaNimi) {
 
 
     std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
-    std::clog << std::endl << "KATKO" << std::endl << std::endl;
+    #ifdef DEBUG
+        std::clog << std::endl << "KATKO" << std::endl << std::endl;
+    #endif
     std::sort(navipisteet.begin(), navipisteet.end(), jarjesta_pisteet);
 
     std::for_each(navipisteet.begin(), navipisteet.end(), tulosta);
@@ -361,7 +370,6 @@ void Peli::hoida_koneet(double intervalliMs) {
 	}
 
     if (jaljet_muistiin) {
-        //std::clog << "Piirretty " << jaljet.size() <<  std::endl;
         jaljet_intervalli += 30;
     }
 }
@@ -497,10 +505,14 @@ void Peli::lataa_pelaajat(std::string tiedosto) {
 void Peli::lataa_pisteet(std::string tiedosto) {
     std::vector <std::string> rivit = apuvalineet::lue_tiedosto(tiedosto);
     std::vector <std::string> solut;
-    std::clog << rivit.size() << std::endl;
+    #ifdef DEBUG
+        std::clog << "peli::lataa_pisteet(" << tiedosto << ") rivien määrä " << rivit.size() << std::endl;
+    #endif
 
     for (unsigned int i = 0; i < rivit.size(); ++i) {
-        //std::clog << rivit[i] << std::endl;
+        #ifdef DEBUG
+            std::clog << rivit[i] << std::endl;
+        #endif
         solut           = apuvalineet::pilko_rivi(rivit[i], "|");
 
         int id          = apuvalineet::luvuksi<int>(solut[0]);
