@@ -100,15 +100,6 @@ public slots:
     }
 
     void kun_peli_valmis() {
-        std::ofstream ulos("pisteet.txt", std::ios::out);
-
-        if (!ulos) {
-            throw std::runtime_error(tr("Pisteiden tallennus ei onnistunut").toStdString());
-        }
-
-        ulos << peli->anna_taso() << "|" << tilastoWidget->anna_pistesumma() << peli->ajat.size() << "|" << std::endl;
-        ulos.close();
-
         stack->setCurrentIndex(4);
     }
 

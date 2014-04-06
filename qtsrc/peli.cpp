@@ -525,4 +525,6 @@ void Peli::tallenna_pisteet() {
     for (unsigned int i = 0; i < this->pistevektori.size(); ++i) {
         ulos << pistevektori[i].anna_suorite() << std::endl;
     }
+
+    ulos.close();
 }
