@@ -245,17 +245,19 @@ void Peli::tarkista_porrastus() {
 			}
 
             if (!(*it)->anna_odotus() && !(*jt)->anna_odotus()) {
-                if (apuvalineet::etaisyys((*it)->paikka, (*jt)->paikka) < asetukset.anna_asetus("porrastus_vaaka")) {
-                    if (std::abs((*it)->anna_korkeus() - (*jt)->anna_korkeus()) < asetukset.anna_asetus("porrastus_pysty")) {
-                        alittuu.push_back((*it));
-                        alittuu.push_back((*jt));
+                if ((*it)->anna_korkeus() >= 1000 && (*jt)->anna_korkeus() >= 1000) {
+                    if (apuvalineet::etaisyys((*it)->paikka, (*jt)->paikka) < asetukset.anna_asetus("porrastus_vaaka")) {
+                        if (std::abs((*it)->anna_korkeus() - (*jt)->anna_korkeus()) < asetukset.anna_asetus("porrastus_pysty")) {
+                            alittuu.push_back((*it));
+                            alittuu.push_back((*jt));
 
-                        if ((*it)->onko_porrastus || (*jt)->onko_porrastus) {
-                            ++virheita;
+                            if ((*it)->onko_porrastus || (*jt)->onko_porrastus) {
+                                ++virheita;
+                            }
+
+                            (*it)->onko_porrastus = false;
+                            (*jt)->onko_porrastus = false;
                         }
-
-                        (*it)->onko_porrastus = false;
-                        (*jt)->onko_porrastus = false;
                     }
                 }
             }
@@ -279,7 +281,7 @@ void Peli::tarkista_porrastus() {
 void Peli::logita_aika(lentokone* lk) {
     std::vector <tilasto> :: iterator haku_pois = std::find(ajat.begin(), ajat.end(), lk->anna_kutsutunnus());
     haku_pois->pois = this->pelin_kello;
-    haku_pois->pisteet += 10000 - apuvalineet::pyorista((haku_pois->pois - haku_pois->sisaan) * haku_pois->selvitykset, 10);
+    haku_pois->pisteet += 100000 - apuvalineet::pyorista((haku_pois->pois - haku_pois->sisaan) * haku_pois->selvitykset, 10);
 }
 
 bool pois(lentokone* kone) {
@@ -535,6 +537,9 @@ void Peli::tallenna_pisteet() {
     std::ofstream ulos("data/pisteet.txt", std::ios::out);
 
     for (unsigned int i = 0; i < this->pistevektori.size(); ++i) {
+        #ifdef DEBUG
+            std::clog << pistevektori[i].anna_suorite() << std::endl;
+        #endif
         ulos << pistevektori[i].anna_suorite() << std::endl;
     }
 

@@ -44,13 +44,16 @@ void lentokone::muuta_selvitysnopeutta(double nopeus) {
 	selvitysnopeus = nopeus;
 }
 
-void lentokone::muuta_selvityssuuntaa(double _suunta, int kaarto) {
-	if (_suunta > 360) {
-		_suunta -= 360;
-	} else if (_suunta < 0) {
-		_suunta += 360;
+void lentokone::muuta_selvityssuuntaa(double suunta, int kaarto) {
+    while (suunta > 360) {
+        suunta -= 360;
+    }
+
+    while (suunta < 0) {
+        suunta += 360;
 	}
-	selvityssuunta = _suunta;
+
+    selvityssuunta = suunta;
 	this->kaarto = kaarto;
 }
 
@@ -93,15 +96,18 @@ void lentokone::muuta_nopeutta(double aika) {
 }
 
 void lentokone::muuta_suuntaa(double aika) {
-	if (suunta < 0) {
-		suunta += 360.0;
-	} else if (suunta > 360.0) {
-		suunta -= 360.0;
+    while (this->suunta < 0) {
+        this->suunta += 360.0;
+    }
+
+    while(this->suunta > 360.0) {
+        this->suunta -= 360.0;
 	}
-	if (std::abs(suunta - selvityssuunta) > 0.5) {
-        suunta += kaarto * aika * this->suunta_muutos;
+
+    if (std::abs(this->suunta - this->selvityssuunta) > 0.5) {
+        this->suunta += this->kaarto * aika * this->suunta_muutos;
     } else {
-		suunta = selvityssuunta;
+        this->suunta = this->selvityssuunta;
 	}
 }
 
@@ -125,7 +131,7 @@ void lentokone::liiku(double aika) {
 
 void lentokone::aseta_navipiste(navipiste piste) {
     this->reitti.push(piste);
-    this->kohde.paikka = piste.paikka;
+    this->kohde = piste;
 }
 
 void lentokone::aseta_navipiste(apuvalineet::piste paikka) {

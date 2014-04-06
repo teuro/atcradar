@@ -1,6 +1,6 @@
 #ifndef _APUVALINEET_HPP
 #define _APUVALINEET_HPP
-#define DEBUG 1
+//#define DEBUG 1
 
 #include <cmath>
 #include <iostream>
