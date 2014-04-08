@@ -100,6 +100,7 @@ public:
     void lataa_pelaajat(std::string tiedosto);
     void lataa_pisteet(std::string tiedosto);
     void muodosta_suorite();
+    void tyhjenna_koneet();
 
     double anna_pelin_kello();
     double edellinen_kone_lahto;

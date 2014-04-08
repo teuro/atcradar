@@ -87,6 +87,7 @@ public slots:
                 emit peli_valmis();
             }
         } else if (peli.porrastusvirheet >= asetukset.anna_asetus("maks_porrastusvirhe")) {
+            peli.tyhjenna_koneet();
             emit porrastusvirheet();
         }
 
@@ -153,11 +154,7 @@ public slots:
     }
 
     void kun_tilastot() {
-        if (peli.koneet.size() == 0) {
-            peli.muodosta_suorite();
-            peli.tallenna_pisteet();
-            emit tallennettu();
-        }
+
     }
 
     // Redraw the view completely

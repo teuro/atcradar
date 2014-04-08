@@ -100,6 +100,11 @@ public slots:
     }
 
     void kun_peli_valmis() {
+        if (peli->koneet.size() == 0) {
+            peli->muodosta_suorite();
+            peli->tallenna_pisteet();
+        }
+
         stack->setCurrentIndex(4);
     }
 

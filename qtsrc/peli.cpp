@@ -545,3 +545,7 @@ void Peli::tallenna_pisteet() {
 
     ulos.close();
 }
+
+void Peli::tyhjenna_koneet() {
+    this->koneet.clear();
+}
