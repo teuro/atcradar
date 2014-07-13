@@ -79,6 +79,7 @@ signals:
     void peli_valmis();
     void porrastusvirheet();
     void tallennettu();
+    void nayta_tilastot();
 
 public slots:
     void animate() {
@@ -154,7 +155,7 @@ public slots:
     }
 
     void kun_tilastot() {
-
+        emit nayta_tilastot();
     }
 
     // Redraw the view completely

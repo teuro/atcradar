@@ -63,6 +63,7 @@ public:
         connect(peliWidget, SIGNAL(peli_valmis()), this, SLOT(kun_peli_valmis()));
         connect(peliWidget, SIGNAL(porrastusvirheet()), this, SLOT(porrastusvirheet_taynna()));
         connect(peliWidget, SIGNAL(tallennettu()), this, SLOT(kun_tallennettu()));
+        connect(peliWidget, SIGNAL(nayta_tilastot()), this, SLOT(kun_tilastot()));
         connect(tilastoWidget, SIGNAL(kunKatsottu()), this, SLOT(palaaPeliin()));
     }
 
@@ -97,6 +98,10 @@ public slots:
         for (int i = 0; i < (peli->anna_taso() * 3); ++i) {
             peli->luo_kone();
         }
+    }
+
+    void kun_tilastot() {
+        stack->setCurrentIndex(4);
     }
 
     void kun_peli_valmis() {
