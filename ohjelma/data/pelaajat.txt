@@ -1,5 +1,2 @@
 0|teuro|
-1|Jukka|
-2|tapsa|
-3|TEURO|
-4|pekka|
+1|teurio|
